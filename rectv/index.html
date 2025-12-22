@@ -3,43 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INADINA TV</title>
+    <title>INADINA TV - Web Player</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mpegts.js/dist/mpegts.js"></script>
     <style>
         :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; }
-        body { background: var(--bg); color: #e8e6e3; font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 20px; }
-        .top-bar { padding: 15px 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #ff0040, #ff4d00); -webkit-background-clip: text; color: transparent; }
+        body { background: var(--bg); color: #fff; font-family: sans-serif; margin: 0; overflow-x: hidden; }
+        .top-bar { padding: 15px 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; }
+        .logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); }
         .container { padding: 15px; }
-        .card { background: rgba(255,255,255,0.06); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.03); }
-        .img-box { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
-        .card-img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
-        .badge-yeni { position: absolute; top: -5px; right: -5px; background: #ffab00; color: black; font-size: 0.6rem; padding: 2px 5px; border-radius: 4px; font-weight: 800; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .card { background: rgba(255,255,255,0.06); border-radius: 12px; padding: 10px; margin-bottom: 10px; display: flex; align-items: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); }
+        .img-box { position: relative; width: 50px; height: 50px; flex-shrink: 0; }
+        .card-img { width: 100%; height: 100%; border-radius: 8px; object-fit: cover; }
+        .badge-yeni { position: absolute; top: -5px; right: -5px; background: #ffab00; color: #000; font-size: 0.6rem; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
         .card-info { flex: 1; margin-left: 12px; }
-        .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; }
-        .card-meta { font-size: 0.75rem; opacity: 0.5; }
-        .play-icon { color: var(--primary); font-size: 1.4rem; margin-left: 10px; }
+        .card-name { font-weight: bold; font-size: 0.95rem; }
+        
+        /* PLAYER MODAL */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; justify-content:center; align-items:center; }
-        .modal-box { background: #1a1825; width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; }
+        .modal-box { background: #1a1825; width: 90%; max-width: 400px; border-radius: 20px; padding: 20px; text-align: center; }
+        .opt { display: flex; align-items: center; padding: 12px; margin: 10px 0; border-radius: 12px; background: rgba(255,255,255,0.05); cursor: pointer; gap: 15px; text-align: left; }
+        .opt i { font-size: 1.3rem; color: var(--primary); }
+
+        /* GİZLİ VİDEO OYNATICI (spor.html mantığı) */
+        #playerContainer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 2000; flex-direction: column; }
+        video { width: 100%; height: auto; max-height: 80vh; background: #000; }
+        .player-controls { padding: 20px; display: flex; justify-content: space-around; background: #1a1825; }
+        .close-p { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; color: white; cursor: pointer; z-index: 2100; }
     </style>
 </head>
 <body>
-    <div class="top-bar"><div class="logo">INADINA TV</div><a href="https://t.me/inadinatv" style="color:white; font-size:1.4rem;"><i class="fab fa-telegram"></i></a></div>
-    <div class="container"><div id="list"></div></div>
-    <div class="modal" id="modal">
-        <div class="modal-box">
-            <h3 id="mTitle" style="text-align:center; margin-top:0;"></h3>
-            <div class="opt" id="wuffy"><i class="fas fa-play" style="color:var(--primary)"></i> <b>Wuffy Player</b></div>
-            <div class="opt" id="xpola"><i class="fas fa-rocket" style="color:var(--primary)"></i> <b>Xpola Player</b></div>
-            <div class="opt" id="down"><i class="fas fa-download" style="color:var(--primary)"></i> <b>İndir / Web Sayfası</b></div>
-            <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:10px; border-radius:10px; border:none; background:#333; color:white; margin-top:10px;">Vazgeç</button>
+    <div class="top-bar"><div class="logo">INADINA TV</div><a href="https://t.me/inadinatv" style="color:white;"><i class="fab fa-telegram"></i></a></div>
+    
+    <div id="playerContainer">
+        <i class="fas fa-times close-p" onclick="closePlayer()"></i>
+        <video id="videoPlayer" controls playsinline></video>
+        <div class="player-controls">
+            <div id="status" style="font-size: 0.8rem; color: #ffab00;">Oynatılıyor...</div>
         </div>
     </div>
+
+    <div class="container"><div id="list"></div></div>
+
+    <div class="modal" id="modal">
+        <div class="modal-box">
+            <h3 id="mTitle"></h3>
+            <div class="opt" onclick="playInBrowser()"><i class="fas fa-play-circle"></i> <div><b>Sistem Oynatıcısı</b><br><small>Tarayıcıda Hemen İzle</small></div></div>
+            <div class="opt" onclick="playExternal('wuffy')"><i class="fas fa-external-link-alt"></i> <div><b>Wuffy Player</b><br><small>Dış Uygulama</small></div></div>
+            <div class="opt" onclick="playExternal('xpola')"><i class="fas fa-rocket"></i> <div><b>Xpola Player</b><br><small>Dış Uygulama</small></div></div>
+            <div class="opt" onclick="openWeb()"><i class="fas fa-download"></i> <div><b>İndirme Linki</b><br><small>Web Sayfası</small></div></div>
+            <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:10px; background:none; border:1px solid #444; color:white; border-radius:10px; margin-top:10px;">Vazgeç</button>
+        </div>
+    </div>
+
     <script>
-        const categoryData = {"iptv_list": {"name": "IPTV Listeleri", "icon": "list-ul", "items": [{"title": "HİYPER İPTV", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F90c121487ac97817%23ABygvp9wZ3hXZYD55ih4tKAF3z6WuUwp3DJVWHBHg6z", "is_new": true, "added_date": "22.12.2025"}, {"title": "Spor iptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F9e5647dfc5121267%23GeupXSf1dX1ALr9q7QkQ3wMfHk6QKxkPt3FcGhYRwBKZ", "is_new": false, "added_date": "22.12.2025"}, {"title": "2450 X iptv", "url": "http://190502.tomtv.eu/get.php?username=mehmetkilic7578&password=trx68502602&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F2464417c73d9c36d%2314D5aXAatfgVpVY4N5L9jvpdeBxevRyQSuCbcGkHa78A", "is_new": false, "added_date": "22.12.2025"}, {"title": "Yeni İptv link", "url": "https://file.garden/Z-hq5n4Shk27aY58/Goodplay-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3Fd30a7708a51baa97%23gbmY8p2VSmESy1388tXXq8rfajMwEg26mmkU2MWXiQ4", "is_new": false, "added_date": "22.12.2025"}], "displayedItemsCount": 0}}; const activeCategoryKey = 'iptv_list';
-        let current = {};
+        const categoryData = {"iptv_list": {"name": "IPTV Listeleri", "icon": "list-ul", "items": [{"title": "HİYPER İPTV", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F90c121487ac97817%23ABygvp9wZ3hXZYD55ih4tKAF3z6WuUwp3DJVWHBHg6z", "is_new": true, "added_date": "22.12.2025"}, {"title": "Spor iptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F9e5647dfc5121267%23GeupXSf1dX1ALr9q7QkQ3wMfHk6QKxkPt3FcGhYRwBKZ", "is_new": false, "added_date": "22.12.2025"}, {"title": "2450 X iptv", "url": "http://190502.tomtv.eu/get.php?username=mehmetkilic7578&password=trx68502602&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F2464417c73d9c36d%2314D5aXAatfgVpVY4N5L9jvpdeBxevRyQSuCbcGkHa78A", "is_new": false, "added_date": "22.12.2025"}, {"title": "Yeni İptv link", "url": "https://file.garden/Z-hq5n4Shk27aY58/Goodplay-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3Fd30a7708a51baa97%23gbmY8p2VSmESy1388tXXq8rfajMwEg26mmkU2MWXiQ4", "is_new": false, "added_date": "22.12.2025"}]}}; const activeCategoryKey = 'iptv_list';
+        let s = {};
+        const video = document.getElementById('videoPlayer');
+        const pCont = document.getElementById('playerContainer');
+        let hls;
+
         function render() {
             const container = document.getElementById('list');
             const items = categoryData[activeCategoryKey].items;
@@ -49,16 +73,42 @@
                 card.className = 'card';
                 card.innerHTML = `
                     <div class="img-box"><img src="${item.image}" class="card-img">${item.is_new ? '<span class="badge-yeni">YENİ</span>' : ''}</div>
-                    <div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta">${item.added_date}</div></div>
-                    <i class="fas fa-play-circle play-icon"></i>
+                    <div class="card-info"><div class="card-name">${item.title}</div><div style="font-size:0.7rem; opacity:0.5;">${item.added_date}</div></div>
+                    <i class="fas fa-play-circle" style="color:var(--primary); font-size:1.3rem;"></i>
                 `;
-                card.onclick = () => { current = item; document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; };
+                card.onclick = () => { s=item; document.getElementById('mTitle').innerText=item.title; document.getElementById('modal').style.display='flex'; };
                 container.appendChild(card);
             });
         }
-        document.getElementById('wuffy').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
-        document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
-        document.getElementById('down').onclick = () => { if(current.web_link_url!="#") window.open(current.web_link_url, '_blank'); };
+
+        function playInBrowser() {
+            document.getElementById('modal').style.display='none';
+            pCont.style.display = 'flex';
+            if (Hls.isSupported()) {
+                if(hls) hls.destroy();
+                hls = new Hls();
+                hls.loadSource(s.url);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+            } else {
+                video.src = s.url;
+                video.play();
+            }
+        }
+
+        function closePlayer() {
+            pCont.style.display = 'none';
+            video.pause();
+            if(hls) hls.destroy();
+        }
+
+        function playExternal(type) {
+            const scheme = type === 'wuffy' ? 'xmtv' : 'xmtv-m3u';
+            window.location.href = `intent://${btoa(s.url)}#Intent;scheme=${scheme};package=co.${type}.player;end`;
+        }
+
+        function openWeb() { if(s.web_link_url!="#") window.open(s.web_link_url, '_blank'); }
+
         render();
     </script>
 </body>
