@@ -3,544 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INADINA TV - IPTV Player</title>
+    <title>INADINA TV</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        :root {
-            --primary-gradient: linear-gradient(135deg, #ff0844 0%, #ff6b35 100%);
-            --bg-dark: #0a0e27;
-            --surface-dark: #141b2d;
-            --surface-light: #1e2a47;
-            --text-primary: #ffffff;
-            --text-secondary: #a0aec0;
-            --accent: #ff0844;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-            padding-bottom: 30px;
-        }
-        
-        /* Header Styles */
-        .top-bar {
-            background: var(--surface-dark);
-            padding: 18px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow);
-            border-bottom: 2px solid rgba(255, 8, 68, 0.3);
-        }
-        
-        .logo {
-            font-size: 1.6rem;
-            font-weight: 800;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        
-        .telegram-btn {
-            color: var(--text-primary);
-            font-size: 1.8rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .telegram-btn:hover {
-            color: var(--accent);
-            transform: scale(1.1);
-        }
-        
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 16px;
-        }
-        
-        /* Stats Bar */
-        .stats-bar {
-            background: var(--surface-light);
-            border-radius: 16px;
-            padding: 16px 20px;
-            margin-bottom: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-        }
-        
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .stat-icon {
-            font-size: 1.4rem;
-            color: var(--accent);
-        }
-        
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-        
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-        
-        /* Channel Cards */
-        #list {
-            display: grid;
-            gap: 16px;
-        }
-        
-        .card {
-            background: var(--surface-light);
-            border-radius: 16px;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--primary-gradient);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow);
-            border-color: var(--accent);
-        }
-        
-        .card:hover::before {
-            opacity: 0.05;
-        }
-        
-        .card:active {
-            transform: translateY(-2px);
-        }
-        
-        /* Image Box */
-        .img-box {
-            position: relative;
-            width: 70px;
-            height: 70px;
-            flex-shrink: 0;
-            z-index: 1;
-        }
-        
-        .card-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 12px;
-            object-fit: cover;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-        
-        .badge-yeni {
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            background: linear-gradient(135deg, #ffd700, #ffb700);
-            color: #000;
-            font-size: 0.65rem;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-weight: 800;
-            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        /* Card Info */
-        .card-info {
-            flex: 1;
-            z-index: 1;
-        }
-        
-        .card-name {
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 4px;
-            color: var(--text-primary);
-        }
-        
-        .card-meta {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .meta-icon {
-            font-size: 0.75rem;
-        }
-        
-        /* Play Icon */
-        .play-icon {
-            font-size: 2rem;
-            color: var(--accent);
-            z-index: 1;
-            transition: all 0.3s ease;
-        }
-        
-        .card:hover .play-icon {
-            transform: scale(1.2);
-        }
-        
-        /* Modal */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.92);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .modal-box {
-            background: var(--surface-dark);
-            width: 100%;
-            max-width: 420px;
-            border-radius: 24px;
-            padding: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
-            animation: modalIn 0.3s ease;
-        }
-        
-        @keyframes modalIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-        
-        #mTitle {
-            text-align: center;
-            margin: 0 0 24px 0;
-            font-size: 1.4rem;
-            font-weight: 700;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Option Buttons */
-        .opt {
-            display: flex;
-            align-items: center;
-            padding: 18px 20px;
-            margin: 12px 0;
-            border-radius: 14px;
-            background: var(--surface-light);
-            gap: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-        }
-        
-        .opt:hover {
-            background: rgba(255, 8, 68, 0.1);
-            border-color: var(--accent);
-            transform: translateX(4px);
-        }
-        
-        .opt i {
-            font-size: 1.5rem;
-            color: var(--accent);
-        }
-        
-        .opt b {
-            font-size: 1rem;
-            font-weight: 600;
-        }
-        
-        .opt-desc {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 2px;
-        }
-        
-        /* Cancel Button */
-        .cancel-btn {
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: none;
-            background: var(--surface-light);
-            color: var(--text-primary);
-            margin-top: 16px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .cancel-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .logo { font-size: 1.3rem; }
-            .telegram-btn { font-size: 1.5rem; }
-            .stats-bar { flex-direction: column; gap: 12px; }
-            .card-name { font-size: 1rem; }
-            .play-icon { font-size: 1.6rem; }
-        }
-        
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: var(--bg-dark);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 5px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff2055;
-        }
+        :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; }
+        body { background: var(--bg); color: #e8e6e3; font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 20px; }
+        .top-bar { padding: 15px 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #ff0040, #ff4d00); -webkit-background-clip: text; color: transparent; }
+        .container { padding: 15px; }
+        .card { background: rgba(255,255,255,0.06); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.03); }
+        .img-box { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
+        .card-img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
+        .badge-yeni { position: absolute; top: -5px; right: -5px; background: #ffab00; color: black; font-size: 0.6rem; padding: 2px 5px; border-radius: 4px; font-weight: 800; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .card-info { flex: 1; margin-left: 12px; }
+        .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; }
+        .card-meta { font-size: 0.75rem; opacity: 0.5; }
+        .play-icon { color: var(--primary); font-size: 1.4rem; margin-left: 10px; }
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; justify-content:center; align-items:center; }
+        .modal-box { background: #1a1825; width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="top-bar">
-        <div class="logo">
-            <i class="fas fa-tv"></i> INADINA TV
-        </div>
-        <a href="https://t.me/inadinatv" class="telegram-btn" target="_blank" title="Telegram Kanalımız">
-            <i class="fab fa-telegram"></i>
-        </a>
-    </div>
-    
-    <!-- Main Container -->
-    <div class="container">
-        <!-- Stats Bar -->
-        <div class="stats-bar">
-            <div class="stat-item">
-                <i class="fas fa-broadcast-tower stat-icon"></i>
-                <div>
-                    <div class="stat-value" id="totalChannels">0</div>
-                    <div class="stat-label">Toplam Kanal</div>
-                </div>
-            </div>
-            <div class="stat-item">
-                <i class="fas fa-star stat-icon"></i>
-                <div>
-                    <div class="stat-value" id="newChannels">0</div>
-                    <div class="stat-label">Yeni Eklenen</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Channel List -->
-        <div id="list"></div>
-        
-        <!-- Empty State -->
-        <div id="emptyState" style="display:none; text-align:center; padding:60px 20px;">
-            <i class="fas fa-inbox" style="font-size:4rem; color:var(--text-secondary); margin-bottom:20px;"></i>
-            <h3 style="color:var(--text-secondary); font-weight:400;">Henüz kanal eklenmemiş</h3>
-        </div>
-    </div>
-    
-    <!-- Modal -->
+    <div class="top-bar"><div class="logo">INADINA TV</div><a href="https://t.me/inadinatv" style="color:white; font-size:1.4rem;"><i class="fab fa-telegram"></i></a></div>
+    <div class="container"><div id="list"></div></div>
     <div class="modal" id="modal">
         <div class="modal-box">
-            <h3 id="mTitle"></h3>
-            
-            <div class="opt" id="wuffy">
-                <i class="fas fa-play-circle"></i>
-                <div>
-                    <b>Wuffy Player'da Aç</b>
-                    <div class="opt-desc">Hızlı ve stabil oynatma</div>
-                </div>
-            </div>
-            
-            <div class="opt" id="xpola">
-                <i class="fas fa-rocket"></i>
-                <div>
-                    <b>Xpola Player'da Aç</b>
-                    <div class="opt-desc">Gelişmiş özellikler</div>
-                </div>
-            </div>
-            
-            <div class="opt" id="down">
-                <i class="fas fa-download"></i>
-                <div>
-                    <b>Liste İndir / Web</b>
-                    <div class="opt-desc">M3U dosyasını kaydet</div>
-                </div>
-            </div>
-            
-            <button class="cancel-btn" onclick="closeModal()">
-                <i class="fas fa-times"></i> Kapat
-            </button>
+            <h3 id="mTitle" style="text-align:center; margin-top:0;"></h3>
+            <div class="opt" id="wuffy"><i class="fas fa-play" style="color:var(--primary)"></i> <b>Wuffy Player</b></div>
+            <div class="opt" id="xpola"><i class="fas fa-rocket" style="color:var(--primary)"></i> <b>Xpola Player</b></div>
+            <div class="opt" id="down"><i class="fas fa-download" style="color:var(--primary)"></i> <b>İndir / Web Sayfası</b></div>
+            <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:10px; border-radius:10px; border:none; background:#333; color:white; margin-top:10px;">Vazgeç</button>
         </div>
     </div>
-    
     <script>
-        const categoryData = {"iptv_list": {"name": "IPTV Listeleri", "icon": "list-ul", "items": [{"title": "HİYPER İPTV", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F90c121487ac97817%23ABygvp9wZ3hXZYD55ih4tKAF3z6WuUwp3DJVWHBHg6z", "is_new": true, "added_date": "22.12.2025"}, {"title": "Spor iptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F9e5647dfc5121267%23GeupXSf1dX1ALr9q7QkQ3wMfHk6QKxkPt3FcGhYRwBKZ", "is_new": false, "added_date": "22.12.2025"}, {"title": "2450 X iptv", "url": "http://190502.tomtv.eu/get.php?username=mehmetkilic7578&password=trx68502602&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F2464417c73d9c36d%2314D5aXAatfgVpVY4N5L9jvpdeBxevRyQSuCbcGkHa78A", "is_new": false, "added_date": "22.12.2025"}, {"title": "Yeni İptv link", "url": "https://file.garden/Z-hq5n4Shk27aY58/Goodplay-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3Fd30a7708a51baa97%23gbmY8p2VSmESy1388tXXq8rfajMwEg26mmkU2MWXiQ4", "is_new": false, "added_date": "22.12.2025"}], "displayedItemsCount": 4}};
-const activeCategoryKey = 'iptv_list';
-        
-        let currentChannel = {};
-        
+        const categoryData = {"iptv_list": {"name": "IPTV Listeleri", "icon": "list-ul", "items": [{"title": "HİYPER İPTV", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F90c121487ac97817%23ABygvp9wZ3hXZYD55ih4tKAF3z6WuUwp3DJVWHBHg6z", "is_new": true, "added_date": "22.12.2025"}, {"title": "Spor iptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F9e5647dfc5121267%23GeupXSf1dX1ALr9q7QkQ3wMfHk6QKxkPt3FcGhYRwBKZ", "is_new": false, "added_date": "22.12.2025"}, {"title": "2450 X iptv", "url": "http://190502.tomtv.eu/get.php?username=mehmetkilic7578&password=trx68502602&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F2464417c73d9c36d%2314D5aXAatfgVpVY4N5L9jvpdeBxevRyQSuCbcGkHa78A", "is_new": false, "added_date": "22.12.2025"}, {"title": "Yeni İptv link", "url": "https://file.garden/Z-hq5n4Shk27aY58/Goodplay-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3Fd30a7708a51baa97%23gbmY8p2VSmESy1388tXXq8rfajMwEg26mmkU2MWXiQ4", "is_new": false, "added_date": "22.12.2025"}], "displayedItemsCount": 0}}; const activeCategoryKey = 'iptv_list';
+        let current = {};
         function render() {
             const container = document.getElementById('list');
-            const emptyState = document.getElementById('emptyState');
             const items = categoryData[activeCategoryKey].items;
-            
-            // İstatistikleri güncelle
-            document.getElementById('totalChannels').textContent = items.length;
-            document.getElementById('newChannels').textContent = items.filter(i => i.is_new).length;
-            
             container.innerHTML = '';
-            
-            if (items.length === 0) {
-                emptyState.style.display = 'block';
-                return;
-            }
-            
-            emptyState.style.display = 'none';
-            
-            items.forEach((item, index) => {
+            items.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
-                    <div class="img-box">
-                        <img src="${item.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'}" 
-                             class="card-img" 
-                             onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"
-                             alt="${item.title}">
-                        ${item.is_new ? '<span class="badge-yeni">YENİ</span>' : ''}
-                    </div>
-                    <div class="card-info">
-                        <div class="card-name">${item.title}</div>
-                        <div class="card-meta">
-                            <i class="far fa-calendar meta-icon"></i>
-                            <span>${item.added_date || 'Tarih yok'}</span>
-                        </div>
-                    </div>
+                    <div class="img-box"><img src="${item.image}" class="card-img">${item.is_new ? '<span class="badge-yeni">YENİ</span>' : ''}</div>
+                    <div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta">${item.added_date}</div></div>
                     <i class="fas fa-play-circle play-icon"></i>
                 `;
-                
-                card.onclick = () => openModal(item);
+                card.onclick = () => { current = item; document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; };
                 container.appendChild(card);
             });
         }
-        
-        function openModal(item) {
-            currentChannel = item;
-            document.getElementById('mTitle').innerText = item.title;
-            document.getElementById('modal').style.display = 'flex';
-        }
-        
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-        }
-        
-        // Modal dışına tıklanınca kapat
-        document.getElementById('modal').onclick = function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        };
-        
-        // ESC tuşu ile kapat
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
-        
-        // Oynatıcı butonları
-        document.getElementById('wuffy').onclick = function() {
-            if (currentChannel.url && currentChannel.url !== "#") {
-                const encodedUrl = btoa(currentChannel.url);
-                window.location.href = `intent://${encodedUrl}#Intent;scheme=xmtv;package=co.wuffy.player;end`;
-            } else {
-                alert('⚠️ M3U linki bulunamadı!');
-            }
-        };
-        
-        document.getElementById('xpola').onclick = function() {
-            if (currentChannel.url && currentChannel.url !== "#") {
-                const encodedUrl = btoa(currentChannel.url);
-                window.location.href = `intent://${encodedUrl}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`;
-            } else {
-                alert('⚠️ M3U linki bulunamadı!');
-            }
-        };
-        
-        document.getElementById('down').onclick = function() {
-            if (currentChannel.web_link_url && currentChannel.web_link_url !== "#") {
-                window.open(currentChannel.web_link_url, '_blank');
-            } else {
-                alert('⚠️ İndirme linki bulunamadı!');
-            }
-        };
-        
-        // Sayfa yüklendiğinde render et
+        document.getElementById('wuffy').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
+        document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
+        document.getElementById('down').onclick = () => { if(current.web_link_url!="#") window.open(current.web_link_url, '_blank'); };
         render();
-        
-        // Sayfa başlığını güncelle
-        document.title = `INADINA TV - ${categoryData[activeCategoryKey].items.length} Kanal`;
     </script>
 </body>
 </html>
