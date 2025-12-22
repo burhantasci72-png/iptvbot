@@ -1,10 +1,101 @@
-<!DOCTYPE html><html lang="tr"><head><meta charset="UTF-8"><title>IPTV</title></head>
-        <body style="background:#000; color:#fff;">
-        <h1>IPTV Listesi</h1>
-        <div id="channelsContainer"></div>
-        <script>const initialItemsToShow = 20; const itemsPerLoadMore = 20; const categoryData = {"iptv_cat": {"name": "IPTV Listeleri", "icon": "list-ul", "items": [{"title": "djr", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fdevuploads.com%2F3v8tm7vfj5ha", "is_new": true, "added_date": "22.12.2025"}, {"title": "yeni", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fdeathless.short.gy%2FHibrit-iptv.m3u", "is_new": true, "added_date": "22.12.2025"}, {"title": "jdjrk", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fdeathless.short.gy%2FHibrit-iptv.m3u", "is_new": true, "added_date": "22.12.2025"}, {"title": "spor iptv", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fdevuploads.com%2F3v8tm7vfj5ha", "is_new": true, "added_date": "22.12.2025"}, {"title": "Spor iptv", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F9e5647dfc5121267%23GeupXSf1dX1ALr9q7QkQ3wMfHk6QKxkPt3FcGhYRwBKZ", "is_new": true, "added_date": "22.12.2025"}, {"title": "Spor iptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F9e5647dfc5121267%23GeupXSf1dX1ALr9q7QkQ3wMfHk6QKxkPt3FcGhYRwBKZ", "is_new": false, "added_date": "22.12.2025"}, {"title": "2450 X iptv", "url": "http://190502.tomtv.eu/get.php?username=mehmetkilic7578&password=trx68502602&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F2464417c73d9c36d%2314D5aXAatfgVpVY4N5L9jvpdeBxevRyQSuCbcGkHa78A", "is_new": false, "added_date": "22.12.2025"}, {"title": "Yeni İptv link", "url": "https://file.garden/Z-hq5n4Shk27aY58/Goodplay-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3Fd30a7708a51baa97%23gbmY8p2VSmESy1388tXXq8rfajMwEg26mmkU2MWXiQ4", "is_new": false, "added_date": "22.12.2025"}], "displayedItemsCount": 0}}; const activeCategoryKey = 'iptv_cat';</script>
-        <script>
-            // Buraya senin orijinal JavaScript kodlarını ekle
-            console.log(categoryData);
-        </script>
-        </body></html>
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPTV Listeleri - INADINA TV</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <style>
+        :root {
+            --hue: 345; --primary-color: hsl(var(--hue), 100%, 50%);
+            --primary-gradient: linear-gradient(135deg, hsl(var(--hue), 100%, 40%) 0%, var(--primary-color) 100%);
+            --bg-color: #0f0c29; --text-color: #f5f5f5; --card-bg: rgba(255, 255, 255, 0.1);
+            --surface-light: #1a1a3a; --card-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        body { background: var(--bg-color); color: var(--text-color); font-family: 'Poppins', sans-serif; margin: 0; }
+        .app-container { padding: 20px; padding-top: 80px; opacity: 1; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; width: 100%; padding: 10px 20px; background: var(--surface-light); z-index: 1000; }
+        .app-logo { font-size: 1.5rem; font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; color: transparent; }
+        .menu-container { display: flex; gap: 10px; overflow-x: auto; padding: 10px; margin-bottom: 20px; }
+        .category-card { background: var(--card-bg); padding: 10px 20px; border-radius: 10px; text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; min-width: 100px; }
+        .category-card.active { background: var(--primary-gradient); }
+        .channel-card { background: var(--card-bg); border-radius: 15px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; box-shadow: var(--card-shadow); cursor: pointer; }
+        .channel-img { width: 60px; height: 60px; border-radius: 10px; margin-right: 15px; }
+        .channel-name { font-size: 1.1rem; font-weight: 600; }
+        .badge { font-size: 0.7rem; padding: 2px 5px; border-radius: 4px; margin-left: 5px; background: red; color: white; }
+        .new-badge { background: #ffab00; color: black; }
+        .player-container { position: fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:9999; display:none; }
+        /* Player options ve diğer stiller senin orijinal kodunla aynı... */
+    </style>
+</head>
+<body class="dark-theme">
+    <div class="top-bar">
+        <div class="app-logo">INADINA TV</div>
+    </div>
+    <div class="app-container">
+        <div class="menu-container" id="categoryMenu"></div>
+        <div class="channels-container" id="channelsContainer"></div>
+    </div>
+
+    <script>
+        
+        const initialItemsToShow = 20;
+        const itemsPerLoadMore = 20;
+        const categoryData = {"api:live": {"name": "Canlı TV (API)", "icon": "broadcast-tower", "goLink": "#", "items": []}, "iptvlisteleri_2": {"name": "IPTV Listeleri", "icon": "list-ul", "goLink": "#", "items": [{"title": "djr", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fdevuploads.com%2F3v8tm7vfj5ha", "is_new": true, "added_date": "22.12.2025"}, {"title": "yeni", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fdeathless.short.gy%2FHibrit-iptv.m3u", "is_new": true, "added_date": "22.12.2025"}, {"title": "jdjrk", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fdeathless.short.gy%2FHibrit-iptv.m3u", "is_new": true, "added_date": "22.12.2025"}, {"title": "spor iptv", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fdevuploads.com%2F3v8tm7vfj5ha", "is_new": true, "added_date": "22.12.2025"}, {"title": "Spor iptv", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F9e5647dfc5121267%23GeupXSf1dX1ALr9q7QkQ3wMfHk6QKxkPt3FcGhYRwBKZ", "is_new": true, "added_date": "22.12.2025"}, {"title": "Spor iptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F9e5647dfc5121267%23GeupXSf1dX1ALr9q7QkQ3wMfHk6QKxkPt3FcGhYRwBKZ", "is_new": false, "added_date": "22.12.2025"}, {"title": "2450 X iptv", "url": "http://190502.tomtv.eu/get.php?username=mehmetkilic7578&password=trx68502602&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F2464417c73d9c36d%2314D5aXAatfgVpVY4N5L9jvpdeBxevRyQSuCbcGkHa78A", "is_new": false, "added_date": "22.12.2025"}, {"title": "Yeni İptv link", "url": "https://file.garden/Z-hq5n4Shk27aY58/Goodplay-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3Fd30a7708a51baa97%23gbmY8p2VSmESy1388tXXq8rfajMwEg26mmkU2MWXiQ4", "is_new": false, "added_date": "22.12.2025"}], "item_count": 8, "displayedItemsCount": 0}, "ekstralinkler_3": {"name": "Ekstra", "icon": "link", "goLink": "#", "items": []}};
+        const activeCategoryKey = "iptvlisteleri_2";
+        
+
+        function renderChannelList(categoryKey) {
+            const container = document.getElementById('channelsContainer');
+            const menu = document.getElementById('categoryMenu');
+            const data = categoryData[categoryKey];
+            
+            // Menüyü oluştur
+            menu.innerHTML = '';
+            Object.keys(categoryData).forEach(key => {
+                const cat = categoryData[key];
+                menu.innerHTML += `
+                    <div class="category-card ${key === categoryKey ? 'active' : ''}" onclick="renderChannelList('${key}')">
+                        <i class="fas fa-${cat.icon}"></i>
+                        <span>${cat.name}</span>
+                    </div>`;
+            });
+
+            // Kanalları oluştur
+            container.innerHTML = `<h2 style="margin-bottom:15px; border-left:4px solid red; padding-left:10px;">${data.name}</h2>`;
+            if (data.items.length === 0) {
+                container.innerHTML += '<p>Bu kategoride içerik yok.</p>';
+                return;
+            }
+
+            data.items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'channel-card';
+                card.innerHTML = `
+                    <img src="${item.image}" class="channel-img">
+                    <div style="flex:1">
+                        <div class="channel-name">${item.title} ${item.is_new ? '<span class="badge new-badge">YENİ</span>' : ''}</div>
+                        <div style="font-size:0.8rem; opacity:0.6;">${item.added_date}</div>
+                    </div>
+                    <div style="background:red; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                        <i class="fas fa-play" style="font-size:0.8rem;"></i>
+                    </div>
+                `;
+                card.onclick = () => {
+                    if(item.url !== "#") window.location.href = `intent://${btoa(item.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`;
+                };
+                container.appendChild(card);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderChannelList(activeCategoryKey);
+        });
+    </script>
+</body>
+</html>
