@@ -1,151 +1,76 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPTV Listeleri - INADINA TV</title>
+    <title>IPTV Listeleri</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --hue: 345; --primary-color: hsl(var(--hue), 100%, 50%);
-            --primary-gradient: linear-gradient(135deg, hsl(var(--hue), 100%, 40%) 0%, var(--primary-color) 100%);
-            --bg-color: #0f0c29; --text-color: #f5f5f5; --card-bg: rgba(255, 255, 255, 0.1);
-            --surface-light: #1a1a3a; --surface-dark: #0f0a1a; --card-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            --link-color: #4CAF50;
-        }
-        body { background: var(--bg-color); color: var(--text-color); font-family: 'Poppins', sans-serif; margin: 0; overflow-x: hidden; }
-        .app-container { padding: 20px; padding-top: 80px; }
-        .top-bar { display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; width: 100%; padding: 10px 20px; background: var(--surface-light); z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .app-logo { font-size: 1.5rem; font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; color: transparent; }
-        .menu-container { display: flex; gap: 15px; overflow-x: auto; padding: 10px 0; margin-bottom: 20px; scrollbar-width: none; }
-        .category-card { background: var(--card-bg); padding: 12px 20px; border-radius: 12px; text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; min-width: 110px; border: 1px solid transparent; transition: 0.3s; }
-        .category-card.active { background: var(--primary-gradient); box-shadow: 0 5px 15px rgba(255,0,0,0.3); }
-        .channels-container { display: flex; flex-direction: column; gap: 15px; }
-        .channel-card { background: var(--card-bg); border-radius: 15px; padding: 15px; display: flex; align-items: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
-        .channel-card:hover { transform: translateY(-3px); border-color: var(--primary-color); }
-        .channel-img { width: 65px; height: 65px; border-radius: 12px; object-fit: cover; margin-right: 15px; }
-        .channel-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 5px; }
-        .badge { font-size: 0.7rem; padding: 3px 7px; border-radius: 4px; background: red; color: white; margin-left: 8px; }
-        .new-badge { background: linear-gradient(135deg, #ffab00, #ffea00); color: #000; }
-        
-        /* MODAL STILLERI */
-        .player-options-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .player-options-container { background: var(--surface-light); border-radius: 20px; padding: 25px; width: 90%; max-width: 450px; border: 1px solid rgba(255,255,255,0.1); }
-        .player-option { display: flex; align-items: center; padding: 15px; margin: 10px 0; border-radius: 12px; background: rgba(255,255,255,0.05); cursor: pointer; transition: 0.2s; }
-        .player-option:hover { background: rgba(255,255,255,0.1); transform: scale(1.02); }
-        .player-option i { font-size: 1.5rem; margin-right: 15px; color: var(--primary-color); }
-        .player-option-title { font-weight: 600; font-size: 1rem; }
-        .player-option-desc { font-size: 0.8rem; opacity: 0.7; }
+        :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; --card: rgba(255,255,255,0.06); }
+        body { background: var(--bg); color: #e8e6e3; font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 50px; }
+        .top-bar { padding: 15px 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #ff0040, #ff4d00); -webkit-background-clip: text; color: transparent; }
+        .container { padding: 15px; }
+        .cat-btn { background: var(--primary); color: white; padding: 12px 20px; border-radius: 12px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+        .title { margin: 20px 0; font-size: 1.2rem; border-left: 4px solid var(--primary); padding-left: 10px; }
+        .card { background: var(--card); border-radius: 15px; padding: 10px; margin-bottom: 10px; display: flex; align-items: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.03); transition: 0.2s; }
+        .card:hover { transform: scale(1.01); background: rgba(255,255,255,0.1); }
+        .img-box { width: 55px; height: 55px; flex-shrink: 0; }
+        .card-img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
+        .card-info { flex: 1; margin-left: 12px; overflow: hidden; }
+        .card-name { font-weight: 700; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-meta { font-size: 0.75rem; opacity: 0.6; margin-top: 3px; display: flex; align-items: center; gap: 5px; }
+        .play-btn { color: var(--primary); font-size: 1.3rem; margin-left: 10px; }
+        .badge { background: #ffab00; color: black; font-size: 0.6rem; padding: 2px 5px; border-radius: 4px; font-weight: 800; }
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; justify-content:center; align-items:center; }
+        .modal-box { background: #1a1825; width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .opt { display: flex; align-items: center; padding: 12px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); cursor: pointer; gap: 12px; }
+        .opt i { font-size: 1.3rem; color: var(--primary); }
     </style>
 </head>
-<body class="dark-theme">
-    <!-- SEÇENEK PENCERESİ (MODAL) -->
-    <div class="player-options-modal" id="playerOptionsModal">
-        <div class="player-options-container">
-            <h3 id="playerOptionsTitle" style="margin-bottom:20px; text-align:center;">Oynatma Seçenekleri</h3>
-            <div class="player-option" id="playInWuffyPlayer">
-                <i class="fas fa-external-link-alt"></i>
-                <div>
-                    <div class="player-option-title">Wuffy Player'da Aç</div>
-                    <div class="player-option-desc">M3U ve Header desteği ile açar.</div>
-                </div>
-            </div>
-            <div class="player-option" id="playInXpolaPlayer">
-                <i class="fas fa-rocket"></i>
-                <div>
-                    <div class="player-option-title">Xpola Player'da Aç</div>
-                    <div class="player-option-desc">Hızlı ve güvenli oynatma.</div>
-                </div>
-            </div>
-            <div class="player-option" id="downloadIptvLink">
-                <i class="fas fa-download"></i>
-                <div>
-                    <div class="player-option-title">IPTV İndir / Web</div>
-                    <div class="player-option-desc">Listenin web sayfasını açar.</div>
-                </div>
-            </div>
-            <button onclick="document.getElementById('playerOptionsModal').style.display='none'" style="width:100%; padding:10px; margin-top:10px; border-radius:10px; border:none; background:rgba(255,255,255,0.1); color:white; cursor:pointer;">Kapat</button>
+<body>
+    <div class="top-bar"><div class="logo">INADINA TV</div><a href="https://t.me/inadinatv" style="color:white; font-size:1.3rem;"><i class="fab fa-telegram"></i></a></div>
+    <div class="container">
+        <div class="cat-btn"><i class="fas fa-list"></i> IPTV Listeleri</div>
+        <div class="title">Tüm Listeler</div>
+        <div id="list"></div>
+    </div>
+    <div class="modal" id="modal">
+        <div class="modal-box">
+            <h3 id="mTitle" style="text-align:center; margin:0 0 15px 0;"></h3>
+            <div class="opt" id="wuffy"><i class="fas fa-play-circle"></i> <div><b>Wuffy Player</b><br><small>Hızlı Yayın</small></div></div>
+            <div class="opt" id="xpola"><i class="fas fa-rocket"></i> <div><b>Xpola Player</b><br><small>HD Yayın</small></div></div>
+            <div class="opt" id="down"><i class="fas fa-download"></i> <div><b>İndir / Web</b><br><small>Tarayıcıda Gör</small></div></div>
+            <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:10px; margin-top:10px; background:none; border:1px solid #444; color:white; border-radius:10px;">Vazgeç</button>
         </div>
     </div>
-
-    <div class="top-bar">
-        <div class="app-logo">INADINA TV</div>
-    </div>
-
-    <div class="app-container">
-        <div class="menu-container" id="categoryMenu"></div>
-        <div class="channels-container" id="channelsContainer"></div>
-    </div>
-
     <script>
-        
-        const initialItemsToShow = 20;
-        const itemsPerLoadMore = 20;
-        const categoryData = {"iptvlisteleri_2": {"name": "IPTV Listeleri", "icon": "list-ul", "goLink": "#", "items": [{"title": "djr", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fdevuploads.com%2F3v8tm7vfj5ha", "is_new": true, "added_date": "22.12.2025"}, {"title": "yeni", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fdeathless.short.gy%2FHibrit-iptv.m3u", "is_new": true, "added_date": "22.12.2025"}, {"title": "jdjrk", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fdeathless.short.gy%2FHibrit-iptv.m3u", "is_new": true, "added_date": "22.12.2025"}, {"title": "spor iptv", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fdevuploads.com%2F3v8tm7vfj5ha", "is_new": true, "added_date": "22.12.2025"}, {"title": "Spor iptv", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F9e5647dfc5121267%23GeupXSf1dX1ALr9q7QkQ3wMfHk6QKxkPt3FcGhYRwBKZ", "is_new": true, "added_date": "22.12.2025"}, {"title": "Spor iptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F9e5647dfc5121267%23GeupXSf1dX1ALr9q7QkQ3wMfHk6QKxkPt3FcGhYRwBKZ", "is_new": false, "added_date": "22.12.2025"}, {"title": "2450 X iptv", "url": "http://190502.tomtv.eu/get.php?username=mehmetkilic7578&password=trx68502602&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F2464417c73d9c36d%2314D5aXAatfgVpVY4N5L9jvpdeBxevRyQSuCbcGkHa78A", "is_new": false, "added_date": "22.12.2025"}, {"title": "Yeni İptv link", "url": "https://file.garden/Z-hq5n4Shk27aY58/Goodplay-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3Fd30a7708a51baa97%23gbmY8p2VSmESy1388tXXq8rfajMwEg26mmkU2MWXiQ4", "is_new": false, "added_date": "22.12.2025"}], "item_count": 8, "displayedItemsCount": 0}};
-        const activeCategoryKey = "iptvlisteleri_2";
-        
-
-        let currentUrl = "", currentName = "", currentWebUrl = "";
-
-        function renderPage(catKey) {
-            const data = categoryData[catKey];
-            const container = document.getElementById('channelsContainer');
-            const menu = document.getElementById('categoryMenu');
-            
-            menu.innerHTML = '';
-            Object.keys(categoryData).forEach(key => {
-                menu.innerHTML += `
-                <div class="category-card ${key === catKey ? 'active' : ''}" onclick="renderPage('${key}')">
-                    <i class="fas fa-${categoryData[key].icon}"></i>
-                    <span style="font-size:0.8rem; margin-top:5px;">${categoryData[key].name}</span>
-                </div>`;
-            });
-
-            container.innerHTML = `<h2 style="border-left:4px solid var(--primary-color); padding-left:10px; margin-bottom:20px;">${data.name}</h2>`;
-            
-            data.items.forEach(item => {
+        const initialItemsToShow = 20; const itemsPerLoadMore = 20; const categoryData = {"iptv_list": {"name": "IPTV Listeleri", "icon": "list-ul", "items": [{"title": "Spor iptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F9e5647dfc5121267%23GeupXSf1dX1ALr9q7QkQ3wMfHk6QKxkPt3FcGhYRwBKZ", "is_new": false, "added_date": "22.12.2025"}, {"title": "2450 X iptv", "url": "http://190502.tomtv.eu/get.php?username=mehmetkilic7578&password=trx68502602&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3F2464417c73d9c36d%2314D5aXAatfgVpVY4N5L9jvpdeBxevRyQSuCbcGkHa78A", "is_new": false, "added_date": "22.12.2025"}, {"title": "Yeni İptv link", "url": "https://file.garden/Z-hq5n4Shk27aY58/Goodplay-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "type": "iptv", "goUrl": "iptv:playlist", "web_link_url": "http://bc.vc/350724/https%3A%2F%2Fpastequest.com%2F%3Fd30a7708a51baa97%23gbmY8p2VSmESy1388tXXq8rfajMwEg26mmkU2MWXiQ4", "is_new": false, "added_date": "22.12.2025"}], "item_count": 3, "displayedItemsCount": 0}}; const activeCategoryKey = "iptv_list";
+        let s = {};
+        function render() {
+            const list = document.getElementById('list');
+            const items = categoryData[activeCategoryKey].items;
+            list.innerHTML = '';
+            items.forEach(item => {
                 const card = document.createElement('div');
-                card.className = 'channel-card';
+                card.className = 'card';
                 card.innerHTML = `
-                    <img src="${item.image}" class="channel-img">
-                    <div style="flex:1">
-                        <div class="channel-name">${item.title} ${item.is_new ? '<span class="badge new-badge">YENİ</span>' : ''}</div>
-                        <div style="font-size:0.8rem; opacity:0.6;"><i class="fas fa-calendar-alt"></i> ${item.added_date}</div>
+                    <div class="img-box"><img src="${item.image}" class="card-img"></div>
+                    <div class="card-info">
+                        <div class="card-name">${item.title} ${item.is_new ? '<span class="badge">YENİ</span>' : ''}</div>
+                        <div class="card-meta"><i class="fas fa-calendar"></i> ${item.added_date}</div>
                     </div>
-                    <div style="color:var(--primary-color); font-size:1.5rem;"><i class="fas fa-play-circle"></i></div>
+                    <i class="fas fa-play-circle play-btn"></i>
                 `;
-                card.onclick = () => {
-                    currentUrl = item.url;
-                    currentName = item.title;
-                    currentWebUrl = item.web_link_url;
-                    document.getElementById('playerOptionsTitle').innerText = currentName;
-                    document.getElementById('playerOptionsModal').style.display = 'flex';
-                };
-                container.appendChild(card);
+                card.onclick = () => { s = item; document.getElementById('mTitle').innerText=item.title; document.getElementById('modal').style.display='flex'; };
+                list.appendChild(card);
             });
         }
-
-        // MODAL BUTONLARI
-        document.getElementById('playInWuffyPlayer').onclick = () => {
-            if(currentUrl === "#") return;
-            window.location.href = `intent://${btoa(currentUrl)}#Intent;scheme=xmtv;package=co.wuffy.player;end`;
-        };
-
-        document.getElementById('playInXpolaPlayer').onclick = () => {
-            if(currentUrl === "#") return;
-            window.location.href = `intent://${btoa(currentUrl)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`;
-        };
-
-        document.getElementById('downloadIptvLink').onclick = () => {
-            if(currentWebUrl !== "#") window.open(currentWebUrl, '_blank');
-        };
-
-        document.addEventListener('DOMContentLoaded', () => renderPage(activeCategoryKey));
+        document.getElementById('wuffy').onclick = () => { if(s.url!="#") window.location.href=`intent://${btoa(s.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
+        document.getElementById('xpola').onclick = () => { if(s.url!="#") window.location.href=`intent://${btoa(s.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
+        document.getElementById('down').onclick = () => { if(s.web_link_url!="#") window.open(s.web_link_url, '_blank'); };
+        render();
     </script>
 </body>
 </html>
