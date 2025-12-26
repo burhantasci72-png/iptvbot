@@ -15,53 +15,98 @@
         .card { background: rgba(255,255,255,0.06); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.03); position: relative; }
         .img-box { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
         .card-img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
-        .badge { position: absolute; top: -8px; right: -8px; font-size: 0.65rem; padding: 3px 8px; border-radius: 6px; font-weight: 800; z-index: 10; animation: pulse 2s infinite; }
-        .badge-yeni { background: linear-gradient(135deg, #ffab00, #ffea00); color: #000; }
-        .badge-iptv { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: #fff; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        
+        .badge { 
+            position: absolute; top: -8px; right: -8px; 
+            font-size: 0.65rem; padding: 3px 8px; 
+            border-radius: 6px; font-weight: 800; 
+            z-index: 10; text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+        .badge-yeni { background: linear-gradient(135deg, #ffab00, #ffea00); color: #000; box-shadow: 0 0 10px rgba(255, 171, 0, 0.6); }
+        .badge-iptv { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: #fff; box-shadow: 0 0 10px rgba(0, 210, 255, 0.6); }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.05); filter: brightness(1.3); box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); }
+            100% { transform: scale(1); filter: brightness(1); }
+        }
+        
         .card-info { flex: 1; margin-left: 12px; }
-        .card-name { font-weight: 700; font-size: 1rem; }
+        .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; }
         .card-meta { font-size: 0.75rem; opacity: 0.5; }
         .play-icon { color: var(--primary); font-size: 1.4rem; margin-left: 10px; }
+        
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; justify-content:center; align-items:center; }
         .modal-box { background: #1a1825; width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; color: white; text-decoration: none; font-weight: bold;}
+        .opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; color: white; text-decoration: none; }
+        .opt:active { background: rgba(255,255,255,0.1); }
     </style>
 </head>
 <body>
-    <div class="top-bar"><div class="logo">INADINA TV</div><a href="https://t.me/inadinatv" style="color:white; font-size:1.4rem;"><i class="fab fa-telegram"></i></a></div>
+    <div class="top-bar">
+        <div class="logo">INADINA TV</div>
+        <a href="https://t.me/inadinatv" style="color:white; font-size:1.4rem;"><i class="fab fa-telegram"></i></a>
+    </div>
+    
     <div class="container"><div id="list"></div></div>
+
     <div class="modal" id="modal">
         <div class="modal-box">
-            <h3 id="mTitle" style="text-align:center; color:var(--primary); margin-top:0;"></h3>
-            <div class="opt" id="wuffy"><i class="fas fa-play"></i> Wuffy Player</div>
-            <div class="opt" id="xpola"><i class="fas fa-rocket"></i> Xpola Player</div>
-            <div class="opt" id="externalWeb" style="border:1px solid #ffab00; color:#ffab00;"><i class="fas fa-external-link-alt"></i> Tarayıcıda Aç / İndir</div>
-            <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:10px; margin-top:10px; background:#333; color:white; border:none; border-radius:10px; cursor:pointer;">Kapat</button>
+            <h3 id="mTitle" style="text-align:center; margin-top:0; color:var(--primary);"></h3>
+            <div class="opt" id="wuffy"><i class="fas fa-play" style="color:var(--primary)"></i> <b>Wuffy Player</b></div>
+            <div class="opt" id="xpola"><i class="fas fa-rocket" style="color:var(--primary)"></i> <b>Xpola Player</b></div>
+            <div class="opt" id="externalWeb" style="background: rgba(255,171,0,0.1); border: 1px solid #ffab00;">
+                <i class="fas fa-external-link-alt" style="color:#ffab00"></i> <b style="color:#ffab00">Tarayıcıda Aç / İndir</b>
+            </div>
+            <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:12px; border-radius:10px; border:none; background:#333; color:white; margin-top:10px; cursor:pointer; font-weight:bold;">Vazgeç</button>
         </div>
     </div>
+
     <script>
-        const categoryData = {"iptv_list": {"items": [{"title": "yenii", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%3A%2F%2Fpastequest.com%2F%3Fead7321d7cb88f97%238E6xaRqY8iNAypoyMjyshWvowgmqXunZppMMPLLn2Qpc", "is_new": true, "added_date": "26.12.2025"}, {"title": "Lavne İptv liste", "url": "https://file.garden/Z-hq5n4Shk27aY58/lewane-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%253A%252F%252Fpastequest.com%252F%253F8c94847e83ca6efd%25239c9fyF7W3FKPFb3CwsknSTdhmX46LRtb95Sby8sqb8AU", "is_new": true, "added_date": "26.12.2025"}, {"title": "YENİ İPTV LİNK", "url": "http://tvmerkezi4.org:8080/get.php?username=Simonn63637&password=aSp9ZbPSzN&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%253A%252F%252Fpastequest.com%252F%253Fead7321d7cb88f97%25238E6xaRqY8iNAypoyMjyshWvowgmqXunZppMMPLLn2Qpc", "is_new": false, "added_date": "25.12.2025"}, {"title": "100 Bin Kisilik iotv", "url": "https://DeaTHLesS.short.gy/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%253A%252F%252Fpastequest.com%252F%253F405f118de8e47fa3%2523DaCn6zzv1YmmRvacYod8WnDZHYEHLXP5YhiRRUfWXbCU", "is_new": false, "added_date": "24.12.2025"}, {"title": "HİYPER İPTV", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%253A%252F%252Fpastequest.com%252F%253F90c121487ac97817%2523ABygvp9wZ3hXZYD55ih4tKAF3z6WuUwp3DJVWHBHg6z", "is_new": false, "added_date": "22.12.2025"}, {"title": "Spor iptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%253A%252F%252Fpastequest.com%252F%253F9e5647dfc5121267%2523GeupXSf1dX1ALr9q7QkQ3wMfHk6QKxkPt3FcGhYRwBKZ", "is_new": false, "added_date": "22.12.2025"}, {"title": "2450 X iptv", "url": "http://190502.tomtv.eu/get.php?username=mehmetkilic7578&password=trx68502602&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%253A%252F%252Fpastequest.com%252F%253F2464417c73d9c36d%252314D5aXAatfgVpVY4N5L9jvpdeBxevRyQSuCbcGkHa78A", "is_new": false, "added_date": "22.12.2025"}, {"title": "Yeni İptv link", "url": "https://file.garden/Z-hq5n4Shk27aY58/Goodplay-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%253A%252F%252Fpastequest.com%252F%253Fd30a7708a51baa97%2523gbmY8p2VSmESy1388tXXq8rfajMwEg26mmkU2MWXiQ4", "is_new": false, "added_date": "22.12.2025"}]}}; const activeCategoryKey = 'iptv_list';
+        const categoryData = {"iptv_list": {"items": [{"title": "Lavne İptv liste", "url": "https://file.garden/Z-hq5n4Shk27aY58/lewane-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%253A%252F%252Fpastequest.com%252F%253F8c94847e83ca6efd%25239c9fyF7W3FKPFb3CwsknSTdhmX46LRtb95Sby8sqb8AU", "is_new": true, "added_date": "26.12.2025"}, {"title": "YENİ İPTV LİNK", "url": "http://tvmerkezi4.org:8080/get.php?username=Simonn63637&password=aSp9ZbPSzN&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%253A%252F%252Fpastequest.com%252F%253Fead7321d7cb88f97%25238E6xaRqY8iNAypoyMjyshWvowgmqXunZppMMPLLn2Qpc", "is_new": false, "added_date": "25.12.2025"}, {"title": "100 Bin Kisilik iotv", "url": "https://DeaTHLesS.short.gy/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%253A%252F%252Fpastequest.com%252F%253F405f118de8e47fa3%2523DaCn6zzv1YmmRvacYod8WnDZHYEHLXP5YhiRRUfWXbCU", "is_new": false, "added_date": "24.12.2025"}, {"title": "HİYPER İPTV", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%253A%252F%252Fpastequest.com%252F%253F90c121487ac97817%2523ABygvp9wZ3hXZYD55ih4tKAF3z6WuUwp3DJVWHBHg6z", "is_new": false, "added_date": "22.12.2025"}, {"title": "Spor iptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%253A%252F%252Fpastequest.com%252F%253F9e5647dfc5121267%2523GeupXSf1dX1ALr9q7QkQ3wMfHk6QKxkPt3FcGhYRwBKZ", "is_new": false, "added_date": "22.12.2025"}, {"title": "2450 X iptv", "url": "http://190502.tomtv.eu/get.php?username=mehmetkilic7578&password=trx68502602&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%253A%252F%252Fpastequest.com%252F%253F2464417c73d9c36d%252314D5aXAatfgVpVY4N5L9jvpdeBxevRyQSuCbcGkHa78A", "is_new": false, "added_date": "22.12.2025"}, {"title": "Yeni İptv link", "url": "https://file.garden/Z-hq5n4Shk27aY58/Goodplay-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/st/?api=cce8efcdd2693c8adde90f05832332f7f30fbf41&url=https%253A%252F%252Fpastequest.com%252F%253Fd30a7708a51baa97%2523gbmY8p2VSmESy1388tXXq8rfajMwEg26mmkU2MWXiQ4", "is_new": false, "added_date": "22.12.2025"}]}}; const activeCategoryKey = 'iptv_list';
         let current = {};
+
         function render() {
             const container = document.getElementById('list');
-            if(!window.categoryData) return;
-            const items = categoryData.iptv_list.items;
+            const items = categoryData[activeCategoryKey].items;
             container.innerHTML = '';
             items.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
+                const badgeHTML = item.is_new 
+                    ? '<span class="badge badge-yeni">YENİ</span>' 
+                    : '<span class="badge badge-iptv">IPTV</span>';
+
                 card.innerHTML = `
-                    <div class="img-box"><img src="${item.image}" class="card-img"><span class="badge ${item.is_new ? 'badge-yeni' : 'badge-iptv'}">${item.is_new ? 'YENİ' : 'IPTV'}</span></div>
-                    <div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta">${item.added_date}</div></div>
-                    <i class="fas fa-play-circle play-icon"></i>`;
-                card.onclick = () => { current = item; document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; };
+                    <div class="img-box"><img src="${item.image}" class="card-img">${badgeHTML}</div>
+                    <div class="card-info">
+                        <div class="card-name">${item.title}</div>
+                        <div class="card-meta">${item.added_date}</div>
+                    </div>
+                    <i class="fas fa-play-circle play-icon"></i>
+                `;
+                card.onclick = () => { 
+                    current = item; 
+                    document.getElementById('mTitle').innerText = item.title; 
+                    document.getElementById('modal').style.display = 'flex'; 
+                };
                 container.appendChild(card);
             });
         }
-        document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url != "#") window.location.href = current.web_link_url; };
-        document.getElementById('wuffy').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
-        document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
+
+        document.getElementById('externalWeb').onclick = () => {
+            if(current.web_link_url && current.web_link_url !== "#") {
+                window.location.href = current.web_link_url;
+            }
+        };
+        document.getElementById('wuffy').onclick = () => { 
+            if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; 
+        };
+        document.getElementById('xpola').onclick = () => { 
+            if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; 
+        };
         window.onclick = (e) => { if(e.target == document.getElementById('modal')) document.getElementById('modal').style.display='none'; }
         render();
     </script>
