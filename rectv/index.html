@@ -11,6 +11,28 @@
         body { background: var(--bg); color: #e8e6e3; font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 20px; }
         .top-bar { padding: 15px 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #ff0040, #ff4d00); -webkit-background-clip: text; color: transparent; }
+        
+        /* Yenile Butonu Stili */
+        .refresh-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        .refresh-btn:hover { background: rgba(255, 255, 255, 0.15); }
+        .refresh-btn:active { transform: scale(0.92); }
+        .refresh-btn i { color: #ff0040; transition: transform 0.5s ease; }
+        .refresh-btn:hover i { transform: rotate(180deg); }
+
         .container { padding: 15px; }
         .card { background: rgba(255,255,255,0.06); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.03); position: relative; }
         .img-box { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
@@ -47,7 +69,12 @@
 <body>
     <div class="top-bar">
         <div class="logo">INADINA TV</div>
-        <a href="https://t.me/inadinatv" style="color:white; font-size:1.4rem;"><i class="fab fa-telegram"></i></a>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <button class="refresh-btn" onclick="location.reload()">
+                <i class="fas fa-sync-alt"></i> Yenile
+            </button>
+            <a href="https://t.me/inadinatv" style="color:white; font-size:1.4rem;"><i class="fab fa-telegram"></i></a>
+        </div>
     </div>
     
     <div class="container"><div id="list"></div></div>
