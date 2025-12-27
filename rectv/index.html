@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <script>const categoryData = { 'iptv_list': { 'items': [{"title": "jdjd", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/MpODAA", "is_new": true, "added_date": "27.12.2025"}, {"title": "jjdjd", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}, {"title": "iptv loste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}] } }; const activeCategoryKey = 'iptv_list';</script>
+    <script>const categoryData = { 'iptv_list': { 'items': [{"title": "jdjr7", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/h12e", "is_new": true, "added_date": "27.12.2025"}, {"title": "jdjd", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/MpODAA", "is_new": true, "added_date": "27.12.2025"}, {"title": "jjdjd", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}, {"title": "iptv loste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}] } }; const activeCategoryKey = 'iptv_list';</script>
 
     <script>
         let current = {};
@@ -81,16 +81,22 @@
             });
         }
         
+        // HARİCİ TARAYICIDA AÇ - GÜNCELLENMİŞ VERSİYON
         document.getElementById('externalWeb').onclick = () => { 
             if(current.web_link_url && current.web_link_url !== "#") {
                 const url = current.web_link_url;
+                
+                // Android Intent sistemi ile harici tarayıcı açma
                 if (/android/i.test(navigator.userAgent)) {
-                    const cleanUrl = url.replace(/^https?:\/\//, '');
-                    const scheme = url.startsWith('https') ? 'https' : 'http';
-                    window.location.href = `intent://${cleanUrl}#Intent;scheme=${scheme};action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;end`;
+                    // Intent kullanarak mutlaka harici tarayıcıda aç
+                    window.location.href = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=${url.startsWith('https') ? 'https' : 'http'};action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;S.browser_fallback_url=${encodeURIComponent(url)};end`;
                 } else {
-                    window.open(url, '_blank');
+                    // iOS ve diğer platformlar için
+                    window.open(url, '_blank', 'noopener,noreferrer');
                 }
+                
+                // Modal'ı kapat
+                document.getElementById('modal').style.display='none';
             }
         };
 
