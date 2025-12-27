@@ -11,7 +11,7 @@
         body { background: var(--bg); color: #e8e6e3; font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 20px; }
         .top-bar { padding: 15px 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #ff0040, #ff4d00); -webkit-background-clip: text; color: transparent; }
-        .refresh-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .refresh-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 600; }
         .container { padding: 15px; }
         .card { background: rgba(255,255,255,0.06); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.03); position: relative; }
         .img-box { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
@@ -50,7 +50,6 @@
         </div>
     </div>
     <script>
-        const categoryData = {"iptv_list": {"items": [{"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}]}}; const activeCategoryKey = 'iptv_list';
         let current = {};
         function render() {
             const container = document.getElementById('list');
@@ -68,10 +67,17 @@
             });
         }
         
-        // GÜNCELLEME: Harici Sekmede Açma (target _blank etkisi)
+        // ANDROID INTENT: Dış tarayıcıyı zorla
         document.getElementById('externalWeb').onclick = () => { 
             if(current.web_link_url && current.web_link_url !== "#") {
-                window.open(current.web_link_url, '_blank'); 
+                const url = current.web_link_url;
+                if (/android/i.test(navigator.userAgent)) {
+                    const cleanUrl = url.replace(/^https?:\/\//, '');
+                    const scheme = url.startsWith('https') ? 'https' : 'http';
+                    window.location.href = `intent://${cleanUrl}#Intent;scheme=${scheme};action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;end`;
+                } else {
+                    window.open(url, '_blank');
+                }
             }
         };
 
