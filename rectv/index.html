@@ -67,7 +67,14 @@
                 container.appendChild(card);
             });
         }
-        document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url !== "#") window.location.href = current.web_link_url; };
+        
+        // GÜNCELLEME: Harici Sekmede Açma (target _blank etkisi)
+        document.getElementById('externalWeb').onclick = () => { 
+            if(current.web_link_url && current.web_link_url !== "#") {
+                window.open(current.web_link_url, '_blank'); 
+            }
+        };
+
         document.getElementById('wuffy').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
         document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
         window.onclick = (e) => { if(e.target == document.getElementById('modal')) document.getElementById('modal').style.display='none'; }
