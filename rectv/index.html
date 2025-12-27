@@ -49,21 +49,28 @@
             <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:12px; border-radius:10px; border:none; background:#333; color:white; margin-top:10px; cursor:pointer; font-weight:bold;">Vazgeç</button>
         </div>
     </div>
-    <script>
-        const categoryData = {"iptv_list": {"items": [{"title": "jjdjd", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}, {"title": "iptv loste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}]}}; const activeCategoryKey = 'iptv_list';
-        let current = {};
 
+    <script>const categoryData = { 'iptv_list': { 'items': [{"title": "jdjd", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/MpODAA", "is_new": true, "added_date": "27.12.2025"}, {"title": "jjdjd", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}, {"title": "iptv loste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}] } }; const activeCategoryKey = 'iptv_list';</script>
+
+    <script>
+        let current = {};
         function render() {
             const container = document.getElementById('list');
-            if (!window.categoryData) return;
+            if (typeof categoryData === 'undefined') return;
+            
             const items = categoryData[activeCategoryKey].items;
             container.innerHTML = '';
+            
             items.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 const badgeHTML = item.is_new ? '<span class="badge badge-yeni">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>';
-                card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img">${badgeHTML}</div>
-                    <div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta">${item.added_date}</div></div>
+                card.innerHTML = `
+                    <div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${badgeHTML}</div>
+                    <div class="card-info">
+                        <div class="card-name">${item.title}</div>
+                        <div class="card-meta">${item.added_date}</div>
+                    </div>
                     <i class="fas fa-play-circle play-icon"></i>`;
                 card.onclick = () => { 
                     current = item; 
@@ -90,7 +97,10 @@
         document.getElementById('wuffy').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
         document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
         window.onclick = (e) => { if(e.target == document.getElementById('modal')) document.getElementById('modal').style.display='none'; }
-        render();
+        
+        // Veri yüklendikten sonra render'ı çalıştır
+        document.addEventListener('DOMContentLoaded', render);
+        render(); // Hemen bir kez daha dene
     </script>
 </body>
 </html>
