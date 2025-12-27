@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; }
-        body { background: var(--bg); color: #e8e6e3; font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 20px; }
-        .top-bar { padding: 15px 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; --text: #e8e6e3; --card-bg: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.03); }
+        body { background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 20px; transition: background 0.3s, color 0.3s; }
+        body.light-theme { --bg: #f5f5f5; --surface: #ffffff; --text: #1a1a1a; --card-bg: #ffffff; --border: #e0e0e0; }
+        .top-bar { padding: 15px 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: background 0.3s; }
         .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #ff0040, #ff4d00); -webkit-background-clip: text; color: transparent; }
-        .refresh-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 600; }
+        .theme-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; transition: all 0.3s; }
+        .light-theme .theme-btn { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #1a1a1a; }
         .container { padding: 15px; }
-        .card { background: rgba(255,255,255,0.06); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.03); position: relative; }
+        .card { background: var(--card-bg); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid var(--border); position: relative; transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .light-theme .card { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
         .img-box { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
         .card-img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
         .badge { position: absolute; top: -8px; right: -8px; font-size: 0.65rem; padding: 3px 8px; border-radius: 6px; font-weight: 800; z-index: 10; animation: pulse-glow 2s infinite ease-in-out; }
@@ -25,7 +28,8 @@
         .card-meta { font-size: 0.75rem; opacity: 0.5; }
         .play-icon { color: var(--primary); font-size: 1.4rem; margin-left: 10px; }
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; justify-content:center; align-items:center; }
-        .modal-box { background: #1a1825; width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .light-theme .modal { background:rgba(0,0,0,0.5); }
+        .modal-box { background: var(--surface); width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid var(--border); transition: background 0.3s; }
         .opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; color: white; text-decoration: none; }
     </style>
 </head>
@@ -33,8 +37,10 @@
     <div class="top-bar">
         <div class="logo">INADINA TV</div>
         <div style="display: flex; align-items: center; gap: 12px;">
-            <button class="refresh-btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Yenile</button>
-            <a href="https://t.me/inadinatv2" style="color:white; font-size:1.4rem;"><i class="fab fa-telegram"></i></a>
+            <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="https://t.me/inadinatv" style="color:white; font-size:1.4rem;"><i class="fab fa-telegram"></i></a>
         </div>
     </div>
     <div class="container"><div id="list"></div></div>
@@ -50,10 +56,40 @@
         </div>
     </div>
 
-    <script>const categoryData = { 'iptv_list': { 'items': [{"title": "838338", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/h12e", "is_new": true, "added_date": "27.12.2025"}, {"title": "jdjr7", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/h12e", "is_new": true, "added_date": "27.12.2025"}, {"title": "jdjd", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/MpODAA", "is_new": true, "added_date": "27.12.2025"}, {"title": "jjdjd", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}, {"title": "iptv loste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}] } }; const activeCategoryKey = 'iptv_list';</script>
+    <script>const categoryData = { 'iptv_list': { 'items': [{"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": true, "added_date": "27.12.2025"}] } }; const activeCategoryKey = 'iptv_list';</script>
 
     <script>
         let current = {};
+        
+        // TEMA DEĞIŞTIRME FONKSİYONU
+        function toggleTheme() {
+            const body = document.body;
+            const themeBtn = document.getElementById('themeBtn');
+            const icon = themeBtn.querySelector('i');
+            
+            body.classList.toggle('light-theme');
+            
+            if (body.classList.contains('light-theme')) {
+                icon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'light');
+            } else {
+                icon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        // SAYFA YÜKLENDIĞINDE TEMA AYARINI YÜKLE
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeBtn = document.getElementById('themeBtn');
+            const icon = themeBtn.querySelector('i');
+            
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                icon.className = 'fas fa-sun';
+            }
+        }
+        
         function render() {
             const container = document.getElementById('list');
             if (typeof categoryData === 'undefined') return;
@@ -110,7 +146,11 @@
         window.onclick = (e) => { if(e.target == document.getElementById('modal')) document.getElementById('modal').style.display='none'; }
         
         // Veri yüklendikten sonra render'ı çalıştır
-        document.addEventListener('DOMContentLoaded', render);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            render();
+        });
+        loadTheme(); // Hemen tema yükle
         render(); // Hemen bir kez daha dene
     </script>
 </body>
