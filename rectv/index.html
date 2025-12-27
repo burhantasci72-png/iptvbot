@@ -24,13 +24,15 @@
         .badge-iptv { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: #fff; }
         @keyframes pulse-glow { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .card-info { flex: 1; margin-left: 12px; }
-        .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; }
-        .card-meta { font-size: 0.75rem; opacity: 0.5; }
+        .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; color: var(--text); }
+        .card-meta { font-size: 0.75rem; opacity: 0.5; color: var(--text); }
         .play-icon { color: var(--primary); font-size: 1.4rem; margin-left: 10px; }
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; justify-content:center; align-items:center; }
         .light-theme .modal { background:rgba(0,0,0,0.5); }
         .modal-box { background: var(--surface); width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid var(--border); transition: background 0.3s; }
-        .opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; color: white; text-decoration: none; }
+        .opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; color: white; text-decoration: none; transition: all 0.3s; }
+        .light-theme .opt { background: rgba(0,0,0,0.05); color: #1a1a1a; border: 1px solid rgba(0,0,0,0.1); }
+        .light-theme .opt:hover { background: rgba(0,0,0,0.08); }
     </style>
 </head>
 <body>
@@ -40,7 +42,7 @@
             <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">
                 <i class="fas fa-moon"></i>
             </button>
-            <a href="https://t.me/inadinatv" style="color:white; font-size:1.4rem;"><i class="fab fa-telegram"></i></a>
+            <a href="https://t.me/inadinatv" id="telegramBtn" style="color:white; font-size:1.4rem; transition: color 0.3s;"><i class="fab fa-telegram"></i></a>
         </div>
     </div>
     <div class="container"><div id="list"></div></div>
@@ -52,7 +54,7 @@
             <div class="opt" id="externalWeb" style="background: rgba(255,171,0,0.1); border: 1px solid #ffab00;">
                 <i class="fas fa-external-link-alt" style="color:#ffab00"></i> <b style="color:#ffab00">Tarayıcıda Aç / İndir</b>
             </div>
-            <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:12px; border-radius:10px; border:none; background:#333; color:white; margin-top:10px; cursor:pointer; font-weight:bold;">Vazgeç</button>
+            <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:12px; border-radius:10px; border:none; background:#333; color:white; margin-top:10px; cursor:pointer; font-weight:bold;" id="modalCloseBtn">Vazgeç</button>
         </div>
     </div>
 
@@ -65,15 +67,23 @@
         function toggleTheme() {
             const body = document.body;
             const themeBtn = document.getElementById('themeBtn');
+            const telegramBtn = document.getElementById('telegramBtn');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
             const icon = themeBtn.querySelector('i');
             
             body.classList.toggle('light-theme');
             
             if (body.classList.contains('light-theme')) {
                 icon.className = 'fas fa-sun';
+                telegramBtn.style.color = '#1a1a1a';
+                modalCloseBtn.style.background = '#e0e0e0';
+                modalCloseBtn.style.color = '#1a1a1a';
                 localStorage.setItem('theme', 'light');
             } else {
                 icon.className = 'fas fa-moon';
+                telegramBtn.style.color = 'white';
+                modalCloseBtn.style.background = '#333';
+                modalCloseBtn.style.color = 'white';
                 localStorage.setItem('theme', 'dark');
             }
         }
@@ -82,11 +92,16 @@
         function loadTheme() {
             const savedTheme = localStorage.getItem('theme');
             const themeBtn = document.getElementById('themeBtn');
+            const telegramBtn = document.getElementById('telegramBtn');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
             const icon = themeBtn.querySelector('i');
             
             if (savedTheme === 'light') {
                 document.body.classList.add('light-theme');
                 icon.className = 'fas fa-sun';
+                telegramBtn.style.color = '#1a1a1a';
+                modalCloseBtn.style.background = '#e0e0e0';
+                modalCloseBtn.style.color = '#1a1a1a';
             }
         }
         
