@@ -1,5 +1,12 @@
 [
     {
+        "title": "FİLM EKSENİ İPTV",
+        "m3u_url": "https://raw.githubusercontent.com/sultansmgr/smart/refs/heads/main/FilmEkseni.m3u",
+        "web_link_url": "https://ay.live/qCS",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESVvVD7PLGjrzbMvNGvIFOhRBoSxzoGBFLm3iG-xX1ZEArpkhkSItDVY&s=10",
+        "added_date": "28.12.2025"
+    },
+    {
         "title": "B. Conneckt İptv",
         "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/b-connect.m3u",
         "web_link_url": "https://ay.live/67w",
