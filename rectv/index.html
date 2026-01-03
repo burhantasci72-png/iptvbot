@@ -16,6 +16,7 @@
         .light-theme .theme-btn { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #1a1a1a; }
         .container { padding: 15px; }
         .card { background: var(--card-bg); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid var(--border); position: relative; transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .card.hidden { display: none; }
         .light-theme .card { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
         .img-box { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
         .card-img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
@@ -27,6 +28,36 @@
         .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; color: var(--text); }
         .card-meta { font-size: 0.75rem; opacity: 0.5; color: var(--text); }
         .play-icon { color: var(--primary); font-size: 1.4rem; margin-left: 10px; }
+        
+        .load-more-btn { 
+            width: calc(100% - 30px); 
+            margin: 20px 15px; 
+            padding: 15px; 
+            border: none; 
+            border-radius: 15px; 
+            background: linear-gradient(135deg, var(--primary), #ff4d00); 
+            color: white; 
+            font-weight: 700; 
+            font-size: 1rem; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 0, 64, 0.3);
+        }
+        .load-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 0, 64, 0.4);
+        }
+        .load-more-btn.hidden {
+            display: none;
+        }
+        .light-theme .load-more-btn {
+            box-shadow: 0 4px 15px rgba(255, 0, 64, 0.2);
+        }
+        
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; justify-content:center; align-items:center; }
         .light-theme .modal { background:rgba(0,0,0,0.5); }
         .modal-box { background: var(--surface); width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid var(--border); transition: background 0.3s; }
@@ -46,6 +77,13 @@
         </div>
     </div>
     <div class="container"><div id="list"></div></div>
+    
+    <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">
+        <i class="fas fa-chevron-down"></i>
+        <span>Daha Fazla Göster</span>
+        <i class="fas fa-chevron-down"></i>
+    </button>
+    
     <div class="modal" id="modal">
         <div class="modal-box">
             <h3 id="mTitle" style="text-align:center; margin-top:0; color:var(--primary);"></h3>
@@ -62,6 +100,8 @@
 
     <script>
         let current = {};
+        let itemsPerPage = 10; // İlk yüklemede gösterilecek kanal sayısı
+        let currentlyShown = itemsPerPage;
         
         // TEMA DEĞIŞTIRME FONKSİYONU
         function toggleTheme() {
@@ -105,16 +145,46 @@
             }
         }
         
+        // DAHA FAZLA GÖSTER FONKSİYONU
+        function loadMore() {
+            const items = categoryData[activeCategoryKey].items;
+            const cards = document.querySelectorAll('.card');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            
+            // Sonraki 10 kartı göster
+            for (let i = currentlyShown; i < Math.min(currentlyShown + itemsPerPage, items.length); i++) {
+                if (cards[i]) {
+                    cards[i].classList.remove('hidden');
+                }
+            }
+            
+            currentlyShown += itemsPerPage;
+            
+            // Tüm kartlar gösterildiyse butonu gizle
+            if (currentlyShown >= items.length) {
+                loadMoreBtn.classList.add('hidden');
+            }
+        }
+        
         function render() {
             const container = document.getElementById('list');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            
             if (typeof categoryData === 'undefined') return;
             
             const items = categoryData[activeCategoryKey].items;
             container.innerHTML = '';
+            currentlyShown = itemsPerPage;
             
-            items.forEach(item => {
+            items.forEach((item, index) => {
                 const card = document.createElement('div');
                 card.className = 'card';
+                
+                // İlk 10 karttan sonrakileri gizle
+                if (index >= itemsPerPage) {
+                    card.classList.add('hidden');
+                }
+                
                 const badgeHTML = item.is_new ? '<span class="badge badge-yeni">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>';
                 card.innerHTML = `
                     <div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${badgeHTML}</div>
@@ -130,6 +200,13 @@
                 };
                 container.appendChild(card);
             });
+            
+            // Eğer 10'dan fazla kanal varsa butonu göster, değilse gizle
+            if (items.length > itemsPerPage) {
+                loadMoreBtn.classList.remove('hidden');
+            } else {
+                loadMoreBtn.classList.add('hidden');
+            }
         }
         
         // HARİCİ CHROME TARAYICIDA AÇMA - APPCREATOR İÇİN ÖZEL
