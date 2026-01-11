@@ -70,16 +70,37 @@
         .light-theme .toast { background-color: #fff; color: #333; border-color: #ddd; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         .toast.show { visibility: visible; opacity: 1; bottom: 90px; }
         
-        /* CHAT STYLES */
-        .chat-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: linear-gradient(135deg, #00d2ff, #3a7bd5); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 200; transition: transform 0.3s; }
-        .chat-btn:hover { transform: scale(1.1); }
+        /* CHAT STYLES + HEARTBEAT ANIMATION (YENİ) */
+        @keyframes pulse-beat {
+            0% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+            50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(0, 210, 255, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        }
+        
+        .chat-btn { 
+            position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; 
+            background: linear-gradient(135deg, #00d2ff, #3a7bd5); border-radius: 50%; 
+            display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 200; 
+            animation: pulse-beat 2s infinite ease-in-out;
+        }
+        .chat-btn:hover { animation: none; transform: scale(1.1); }
         
         .chat-modal { position: fixed; bottom: -100%; left: 0; width: 100%; height: 80%; background: var(--surface); border-radius: 20px 20px 0 0; z-index: 201; transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); }
         .chat-modal.active { bottom: 0; }
         .chat-header { padding: 15px; background: rgba(0,0,0,0.2); display: flex; justify-content: space-between; align-items: center; border-radius: 20px 20px 0 0; }
         .chat-close { font-size: 1.5rem; cursor: pointer; color: var(--text); }
         
-        .chat-rules { background: rgba(255, 0, 64, 0.15); border-bottom: 1px solid rgba(255, 0, 64, 0.3); color: #ff4d4d; padding: 10px; font-size: 0.8rem; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        /* CHAT RULES BANNER (GİZLENİP AÇILAN - YENİ) */
+        .chat-rules { 
+            background: rgba(255, 0, 64, 0.15); border-bottom: 1px solid rgba(255, 0, 64, 0.3); 
+            color: #ff4d4d; padding: 10px; font-size: 0.8rem; text-align: center; font-weight: bold; 
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: all 0.5s ease-in-out; opacity: 1; max-height: 100px;
+        }
+        .chat-rules.hidden {
+            opacity: 0; max-height: 0; padding: 0; margin: 0; overflow: hidden; border: none;
+        }
         .light-theme .chat-rules { background: #ffe6e6; color: #cc0000; }
 
         .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
@@ -108,7 +129,7 @@
         
         .banned-screen { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:black; z-index:5000; color:red; flex-direction:column; justify-content:center; align-items:center; text-align:center; font-size:1.5rem; font-weight:bold; }
 
-        /* CUSTOM CONFIRM MODAL (YENİ) */
+        /* CUSTOM CONFIRM MODAL */
         .btn-confirm { background: #ff0040; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         .btn-cancel { background: #444; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
     </style>
@@ -122,7 +143,7 @@
         <div style="font-size:1rem; color:white; margin-top:10px;">Sohbet kurallarına uymadığınız için erişiminiz kapatıldı.</div>
     </div>
 
-    <!-- CUSTOM CONFIRM MODAL (Modern Onay Penceresi) -->
+    <!-- CUSTOM CONFIRM MODAL -->
     <div id="confirmModal" class="modal">
         <div class="modal-box" style="text-align:center;">
             <i class="fas fa-exclamation-circle" style="font-size:3rem; color:#ff4d4d; margin-bottom:15px;"></i>
@@ -138,7 +159,7 @@
     <div class="top-bar">
         <div class="logo">INADINA TV</div>
         <div class="header-actions">
-            <!-- ONLINE COUNTER (YENİ) -->
+            <!-- ONLINE COUNTER -->
             <div class="online-badge" title="Online Sayısı">
                 <i class="fas fa-users"></i> <span id="onlineCount">0</span>
             </div>
@@ -160,7 +181,8 @@
             <i class="fas fa-times chat-close" onclick="toggleChat()"></i>
         </div>
         
-        <div class="chat-rules">
+        <!-- AUTO HIDE BANNER -->
+        <div class="chat-rules" id="chatRulesBanner">
             <i class="fas fa-exclamation-triangle"></i>
             UYARI: Argo ve sohbet dışı mesaj atanlar SÜRESİZ banlanır!
         </div>
@@ -228,19 +250,11 @@
             localStorage.setItem('chat_username', myUserName);
         }
 
-        // ================= ONLINE COUNTER LOGIC =================
         function initPresence() {
-            // Firebase'de "online_users" altına her giriş yapanda geçici bir anahtar oluştur
             const onlineRef = database.ref('online_users');
             const myCon = onlineRef.push();
-            
-            // Bağlantı kopunca (sayfa kapanınca) silinsin
             myCon.onDisconnect().remove();
-            
-            // Bağlanınca "true" olarak işaretle
             myCon.set(true);
-            
-            // Sayıyı dinle
             onlineRef.on('value', (s) => {
                 const count = s.numChildren();
                 document.getElementById('onlineCount').innerText = count;
@@ -307,12 +321,10 @@
         function toggleLike(e, title) {
             e.stopPropagation(); 
             const safeKey = sanitizeKey(title);
-            
             if(myLikes.includes(safeKey)) {
                 showToast("Zaten beğendin!", "fa-check-double");
                 return;
             }
-            
             myLikes.push(safeKey);
             localStorage.setItem('my_likes', JSON.stringify(myLikes));
             database.ref('channel_likes/' + safeKey).transaction(curr => (curr || 0) + 1);
@@ -320,8 +332,24 @@
             showToast("Favorilere Eklendi!", "fa-heart");
         }
 
+        // ================= CHAT & RULES TOGGLE LOGIC =================
+        let rulesTimeout;
         function toggleChat() {
-            document.getElementById('chatModal').classList.toggle('active');
+            const modal = document.getElementById('chatModal');
+            modal.classList.toggle('active');
+            
+            // Eğer sohbet açıldıysa uyarıyı göster ve zamanlayıcı başlat
+            if(modal.classList.contains('active')) {
+                const rules = document.getElementById('chatRulesBanner');
+                rules.classList.remove('hidden'); // Göster
+                
+                if(rulesTimeout) clearTimeout(rulesTimeout);
+                
+                // 4 Saniye sonra gizle
+                rulesTimeout = setTimeout(() => {
+                    rules.classList.add('hidden');
+                }, 4000);
+            }
         }
         
         function sendMsg() {
@@ -377,7 +405,7 @@
         }
 
         // ================= CUSTOM CONFIRM MODAL LOGIC =================
-        let pendingAction = null; // { type: 'ban'|'del', target: 'id' }
+        let pendingAction = null; 
 
         window.openConfirmModal = function(type, target) {
             pendingAction = { type: type, target: target };
@@ -392,7 +420,6 @@
                 title.innerText = "Mesajı Sil?";
                 text.innerText = "Bu mesaj kalıcı olarak silinecek.";
             }
-            
             modal.style.display = 'flex';
         };
 
@@ -403,7 +430,6 @@
 
         document.getElementById('btnConfirmAction').onclick = function() {
             if(!pendingAction) return;
-            
             if(pendingAction.type === 'ban') {
                 database.ref('banned_users/' + pendingAction.target).set(true);
                 showToast("Kullanıcı Engellendi!", "fa-ban");
@@ -500,7 +526,7 @@
             if(isAdmin) document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️";
             render();
             setTimeout(listenToData, 500);
-            setTimeout(initPresence, 1000); // Online sayacı başlat
+            setTimeout(initPresence, 1000);
         })();
     </script>
 </body>
