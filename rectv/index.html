@@ -26,7 +26,9 @@
         @keyframes pulse-glow { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .card-info { flex: 1; margin-left: 12px; }
         .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; color: var(--text); }
-        .card-meta { font-size: 0.75rem; opacity: 0.5; color: var(--text); }
+        .card-meta { font-size: 0.75rem; opacity: 0.5; color: var(--text); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .view-count { display: inline-flex; align-items: center; gap: 4px; background: rgba(255, 0, 64, 0.15); padding: 2px 8px; border-radius: 8px; font-size: 0.7rem; font-weight: 600; color: var(--primary); border: 1px solid rgba(255, 0, 64, 0.3); }
+        .light-theme .view-count { background: rgba(255, 0, 64, 0.1); }
         .play-icon { color: var(--primary); font-size: 1.4rem; margin-left: 10px; }
         
         .load-more-btn { 
@@ -100,10 +102,50 @@
 
     <script>
         let current = {};
-        let itemsPerPage = 10; // İlk yüklemede gösterilecek kanal sayısı
+        let itemsPerPage = 10; 
         let currentlyShown = itemsPerPage;
+        let viewCounts = {}; 
         
-        // TEMA DEĞIŞTIRME FONKSİYONU
+        async function loadViewCounts() {
+            try {
+                // AppCreator24 storage kontrolü, yoksa localStorage
+                if (window.storage) {
+                    const result = await window.storage.get('iptv_view_counts', true);
+                    if (result && result.value) {
+                        viewCounts = JSON.parse(result.value);
+                    }
+                } else {
+                    const localData = localStorage.getItem('iptv_view_counts');
+                    if(localData) viewCounts = JSON.parse(localData);
+                }
+            } catch (error) {
+                console.log('View counts yükleme hatası:', error);
+                viewCounts = {};
+            }
+        }
+        
+        async function incrementViewCount(title) {
+            const key = title.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50);
+            viewCounts[key] = (viewCounts[key] || 0) + 1;
+            
+            try {
+                const jsonVal = JSON.stringify(viewCounts);
+                if (window.storage) {
+                    await window.storage.set('iptv_view_counts', jsonVal, true);
+                } else {
+                    localStorage.setItem('iptv_view_counts', jsonVal);
+                }
+            } catch (error) {
+                console.log('View count kaydetme hatası:', error);
+            }
+            return viewCounts[key];
+        }
+        
+        function getViewCount(title) {
+            const key = title.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50);
+            return viewCounts[key] || 0;
+        }
+        
         function toggleTheme() {
             const body = document.body;
             const themeBtn = document.getElementById('themeBtn');
@@ -128,7 +170,6 @@
             }
         }
         
-        // SAYFA YÜKLENDIĞINDE TEMA AYARINI YÜKLE
         function loadTheme() {
             const savedTheme = localStorage.getItem('theme');
             const themeBtn = document.getElementById('themeBtn');
@@ -145,22 +186,17 @@
             }
         }
         
-        // DAHA FAZLA GÖSTER FONKSİYONU
         function loadMore() {
             const items = categoryData[activeCategoryKey].items;
             const cards = document.querySelectorAll('.card');
             const loadMoreBtn = document.getElementById('loadMoreBtn');
             
-            // Sonraki 10 kartı göster
             for (let i = currentlyShown; i < Math.min(currentlyShown + itemsPerPage, items.length); i++) {
                 if (cards[i]) {
                     cards[i].classList.remove('hidden');
                 }
             }
-            
             currentlyShown += itemsPerPage;
-            
-            // Tüm kartlar gösterildiyse butonu gizle
             if (currentlyShown >= items.length) {
                 loadMoreBtn.classList.add('hidden');
             }
@@ -179,56 +215,41 @@
             items.forEach((item, index) => {
                 const card = document.createElement('div');
                 card.className = 'card';
-                
-                // İlk 10 karttan sonrakileri gizle
-                if (index >= itemsPerPage) {
-                    card.classList.add('hidden');
-                }
+                if (index >= itemsPerPage) card.classList.add('hidden');
                 
                 const badgeHTML = item.is_new ? '<span class="badge badge-yeni">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>';
+                const views = getViewCount(item.title);
+                const viewCountHTML = `<span class="view-count"><i class="fas fa-eye"></i> ${views}</span>`;
+                
                 card.innerHTML = `
                     <div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${badgeHTML}</div>
                     <div class="card-info">
                         <div class="card-name">${item.title}</div>
-                        <div class="card-meta">${item.added_date}</div>
+                        <div class="card-meta"><span>${item.added_date}</span> ${viewCountHTML}</div>
                     </div>
                     <i class="fas fa-play-circle play-icon"></i>`;
-                card.onclick = () => { 
-                    current = item; 
+                card.onclick = async () => { 
+                    current = item;
+                    const newCount = await incrementViewCount(item.title);
+                    const viewCountElement = card.querySelector('.view-count');
+                    if (viewCountElement) {
+                        viewCountElement.innerHTML = `<i class="fas fa-eye"></i> ${newCount}`;
+                    }
                     document.getElementById('mTitle').innerText = item.title; 
                     document.getElementById('modal').style.display = 'flex'; 
                 };
                 container.appendChild(card);
             });
             
-            // Eğer 10'dan fazla kanal varsa butonu göster, değilse gizle
-            if (items.length > itemsPerPage) {
-                loadMoreBtn.classList.remove('hidden');
-            } else {
-                loadMoreBtn.classList.add('hidden');
-            }
+            if (items.length > itemsPerPage) loadMoreBtn.classList.remove('hidden');
+            else loadMoreBtn.classList.add('hidden');
         }
         
-        // HARİCİ CHROME TARAYICIDA AÇMA - APPCREATOR İÇİN ÖZEL
         document.getElementById('externalWeb').onclick = () => { 
             if(current.web_link_url && current.web_link_url !== "#") {
                 const url = current.web_link_url;
-                
-                // Önce window.open ile dene (bazı sistemlerde çalışır)
-                const opened = window.open(url, '_system');
-                
-                // Eğer açılmazsa, Android Intent ile zorla
-                if (!opened || opened === null) {
-                    // Googlechrome:// protokolü ile Chrome'da aç
-                    window.location.href = 'googlechrome://navigate?url=' + encodeURIComponent(url);
-                    
-                    // Alternatif: Intent ile sistem tarayıcısını çağır
-                    setTimeout(() => {
-                        window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=' + (url.startsWith('https') ? 'https' : 'http') + ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;component=com.android.chrome/com.google.android.apps.chrome.Main;end';
-                    }, 100);
-                }
-                
-                // Modal'ı kapat
+                // AppCreator native dış tarayıcı açma
+                window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=' + (url.startsWith('https') ? 'https' : 'http') + ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;component=com.android.chrome/com.google.android.apps.chrome.Main;end';
                 document.getElementById('modal').style.display='none';
             }
         };
@@ -237,13 +258,12 @@
         document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
         window.onclick = (e) => { if(e.target == document.getElementById('modal')) document.getElementById('modal').style.display='none'; }
         
-        // Veri yüklendikten sonra render'ı çalıştır
-        document.addEventListener('DOMContentLoaded', () => {
+        // Başlat
+        (async function() {
             loadTheme();
+            await loadViewCounts();
             render();
-        });
-        loadTheme(); // Hemen tema yükle
-        render(); // Hemen bir kez daha dene
+        })();
     </script>
 </body>
 </html>
