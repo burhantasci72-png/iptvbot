@@ -6,6 +6,11 @@
     <title>INADINA TV</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- FIREBASE (CDN Versiyonu) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
     <style>
         :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; --text: #e8e6e3; --card-bg: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.03); }
         body { background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 20px; transition: background 0.3s, color 0.3s; }
@@ -72,9 +77,7 @@
     <div class="top-bar">
         <div class="logo">INADINA TV</div>
         <div style="display: flex; align-items: center; gap: 12px;">
-            <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">
-                <i class="fas fa-moon"></i>
-            </button>
+            <button class="theme-btn" onclick="toggleTheme()" id="themeBtn"><i class="fas fa-moon"></i></button>
             <a href="https://t.me/inadinatv" id="telegramBtn" style="color:white; font-size:1.4rem; transition: color 0.3s;"><i class="fab fa-telegram"></i></a>
         </div>
     </div>
@@ -101,49 +104,69 @@
     <script>const categoryData = { 'iptv_list': { 'items': [{"title": "MEGA İPTV İNDİR", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/G7TFl", "is_new": true, "added_date": "11.01.2026"}, {"title": "1500 MAX SPORTS İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/nadina-1500-Max-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Se6xQ", "is_new": false, "added_date": "09.01.2026"}, {"title": "QUANTUM İPTV LİST", "url": "https://file.garden/Z-hq5n4Shk27aY58/Kuantum-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8Xy9", "is_new": false, "added_date": "08.01.2026"}, {"title": "FULL BOT İPTV SPORTS", "url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ld7M", "is_new": false, "added_date": "07.01.2026"}, {"title": "Ekalite iptv m3u", "url": "http://ekalite.xyz:8080/get.php?username=ibrahimtak&password=qwkRZHAwaK&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/4eoXDj", "is_new": false, "added_date": "06.01.2026"}, {"title": "D SPORTS M3U ADRESİ EKLEND", "url": "https://file.garden/Z-hq5n4Shk27aY58/DTH-Sports.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/w2Avb", "is_new": false, "added_date": "05.01.2026"}, {"title": "30 ADET İPTV M3U LİSTE", "url": "http://maisonxp.click/get.php?username=thay123&password=thay123&type=m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/zcn3j7", "is_new": false, "added_date": "04.01.2026"}, {"title": "ELİTE MAC ADRESLERİ İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/playlist.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DfpE", "is_new": false, "added_date": "04.01.2026"}, {"title": "KARMA İPTV 23K", "url": "https://file.garden/Z-hq5n4Shk27aY58/Karma-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6WmReB", "is_new": false, "added_date": "03.01.2026"}, {"title": "Yeni iptv liste", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/0cKg", "is_new": false, "added_date": "02.01.2026"}, {"title": "Turkiye Connect iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Turkiye-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6Dr", "is_new": false, "added_date": "01.01.2026"}, {"title": "9500 İPTV M3U LİNKLER YİLBASİ OZEL", "url": "http://ss.wancolonel.xyz:8080/get.php?username=Denisurlu&password=Muri3091&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/3hJ9te", "is_new": false, "added_date": "31.12.2025"}, {"title": "3 Adet İptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/KCwKj", "is_new": false, "added_date": "30.12.2025"}, {"title": "XTREAM İPTV LİSTELER EKLENDİ", "url": "http://s1.eldest99.xyz:8080/get.php?username=hdkaptantv3706&password=kptn@8723706&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Clqz", "is_new": false, "added_date": "29.12.2025"}, {"title": "FİLM EKSENİ İPTV", "url": "https://raw.githubusercontent.com/sultansmgr/smart/refs/heads/main/FilmEkseni.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESVvVD7PLGjrzbMvNGvIFOhRBoSxzoGBFLm3iG-xX1ZEArpkhkSItDVY&s=10", "web_link_url": "https://ay.live/qCS", "is_new": false, "added_date": "28.12.2025"}, {"title": "B. Conneckt İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/b-connect.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/67w", "is_new": false, "added_date": "28.12.2025"}, {"title": "Spor Kanallari bot iptv", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/9GlX", "is_new": false, "added_date": "27.12.2025"}, {"title": "100 Bin kisilik iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6QE", "is_new": false, "added_date": "27.12.2025"}, {"title": "Hibrit İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Toplu-Paket-V.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/eAAA7K", "is_new": false, "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": false, "added_date": "27.12.2025"}] } }; const activeCategoryKey = 'iptv_list';</script>
 
     <script>
+        // ================================================================
+        // FIREBASE AYARLARI (SENİN VERDİĞİN KODLAR)
+        // ================================================================
+        const firebaseConfig = {
+          apiKey: "AIzaSyCZFwiLcV4K3EnRDWpPPlXPrXSJxAuMfaQ",
+          authDomain: "iptvbotcoun.firebaseapp.com",
+          // Veritabanı URL'si proje ID'sine göre eklendi:
+          databaseURL: "https://iptvbotcoun-default-rtdb.firebaseio.com",
+          projectId: "iptvbotcoun",
+          storageBucket: "iptvbotcoun.firebasestorage.app",
+          messagingSenderId: "229841892818",
+          appId: "1:229841892818:web:a91dd3792919140a5d440b"
+        };
+        // ================================================================
+
+        // Firebase Başlat
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
         let current = {};
         let itemsPerPage = 10; 
         let currentlyShown = itemsPerPage;
-        let viewCounts = {}; 
-        
-        async function loadViewCounts() {
-            try {
-                // AppCreator24 storage kontrolü, yoksa localStorage
-                if (window.storage) {
-                    const result = await window.storage.get('iptv_view_counts', true);
-                    if (result && result.value) {
-                        viewCounts = JSON.parse(result.value);
-                    }
-                } else {
-                    const localData = localStorage.getItem('iptv_view_counts');
-                    if(localData) viewCounts = JSON.parse(localData);
+        let globalViewCounts = {}; 
+
+        // Firebase'den verileri CANLI dinle
+        function listenToViews() {
+            const countsRef = database.ref('channel_views');
+            countsRef.on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    globalViewCounts = data;
+                    updateViewCountsInDOM();
                 }
-            } catch (error) {
-                console.log('View counts yükleme hatası:', error);
-                viewCounts = {};
-            }
+            });
+        }
+
+        // DOM üzerindeki sayıları güncelle
+        function updateViewCountsInDOM() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const titleElement = card.querySelector('.card-name');
+                if(titleElement){
+                    const title = titleElement.innerText;
+                    const safeKey = sanitizeKey(title);
+                    const count = globalViewCounts[safeKey] || 0;
+                    const viewSpan = card.querySelector('.view-count');
+                    if(viewSpan) viewSpan.innerHTML = `<i class="fas fa-eye"></i> ${count}`;
+                }
+            });
         }
         
-        async function incrementViewCount(title) {
-            const key = title.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50);
-            viewCounts[key] = (viewCounts[key] || 0) + 1;
-            
-            try {
-                const jsonVal = JSON.stringify(viewCounts);
-                if (window.storage) {
-                    await window.storage.set('iptv_view_counts', jsonVal, true);
-                } else {
-                    localStorage.setItem('iptv_view_counts', jsonVal);
-                }
-            } catch (error) {
-                console.log('View count kaydetme hatası:', error);
-            }
-            return viewCounts[key];
+        // Tıklama sayısını artır (Transaction)
+        function incrementViewCount(title) {
+            const safeKey = sanitizeKey(title);
+            const countRef = database.ref('channel_views/' + safeKey);
+            countRef.transaction((current_value) => {
+                return (current_value || 0) + 1;
+            });
         }
         
-        function getViewCount(title) {
-            const key = title.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50);
-            return viewCounts[key] || 0;
+        // Firebase için geçersiz karakterleri temizle
+        function sanitizeKey(key) {
+            return key.replace(/[.#$\/\[\]]/g, '_').substring(0, 50);
         }
         
         function toggleTheme() {
@@ -152,9 +175,7 @@
             const telegramBtn = document.getElementById('telegramBtn');
             const modalCloseBtn = document.getElementById('modalCloseBtn');
             const icon = themeBtn.querySelector('i');
-            
             body.classList.toggle('light-theme');
-            
             if (body.classList.contains('light-theme')) {
                 icon.className = 'fas fa-sun';
                 telegramBtn.style.color = '#1a1a1a';
@@ -176,7 +197,6 @@
             const telegramBtn = document.getElementById('telegramBtn');
             const modalCloseBtn = document.getElementById('modalCloseBtn');
             const icon = themeBtn.querySelector('i');
-            
             if (savedTheme === 'light') {
                 document.body.classList.add('light-theme');
                 icon.className = 'fas fa-sun';
@@ -190,24 +210,17 @@
             const items = categoryData[activeCategoryKey].items;
             const cards = document.querySelectorAll('.card');
             const loadMoreBtn = document.getElementById('loadMoreBtn');
-            
             for (let i = currentlyShown; i < Math.min(currentlyShown + itemsPerPage, items.length); i++) {
-                if (cards[i]) {
-                    cards[i].classList.remove('hidden');
-                }
+                if (cards[i]) cards[i].classList.remove('hidden');
             }
             currentlyShown += itemsPerPage;
-            if (currentlyShown >= items.length) {
-                loadMoreBtn.classList.add('hidden');
-            }
+            if (currentlyShown >= items.length) loadMoreBtn.classList.add('hidden');
         }
         
         function render() {
             const container = document.getElementById('list');
             const loadMoreBtn = document.getElementById('loadMoreBtn');
-            
             if (typeof categoryData === 'undefined') return;
-            
             const items = categoryData[activeCategoryKey].items;
             container.innerHTML = '';
             currentlyShown = itemsPerPage;
@@ -218,29 +231,24 @@
                 if (index >= itemsPerPage) card.classList.add('hidden');
                 
                 const badgeHTML = item.is_new ? '<span class="badge badge-yeni">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>';
-                const views = getViewCount(item.title);
-                const viewCountHTML = `<span class="view-count"><i class="fas fa-eye"></i> ${views}</span>`;
+                const safeKey = sanitizeKey(item.title);
+                const views = globalViewCounts[safeKey] || 0;
                 
                 card.innerHTML = `
                     <div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${badgeHTML}</div>
                     <div class="card-info">
                         <div class="card-name">${item.title}</div>
-                        <div class="card-meta"><span>${item.added_date}</span> ${viewCountHTML}</div>
+                        <div class="card-meta"><span>${item.added_date}</span> <span class="view-count"><i class="fas fa-eye"></i> ${views}</span></div>
                     </div>
                     <i class="fas fa-play-circle play-icon"></i>`;
-                card.onclick = async () => { 
+                card.onclick = () => { 
                     current = item;
-                    const newCount = await incrementViewCount(item.title);
-                    const viewCountElement = card.querySelector('.view-count');
-                    if (viewCountElement) {
-                        viewCountElement.innerHTML = `<i class="fas fa-eye"></i> ${newCount}`;
-                    }
+                    incrementViewCount(item.title);
                     document.getElementById('mTitle').innerText = item.title; 
                     document.getElementById('modal').style.display = 'flex'; 
                 };
                 container.appendChild(card);
             });
-            
             if (items.length > itemsPerPage) loadMoreBtn.classList.remove('hidden');
             else loadMoreBtn.classList.add('hidden');
         }
@@ -248,7 +256,6 @@
         document.getElementById('externalWeb').onclick = () => { 
             if(current.web_link_url && current.web_link_url !== "#") {
                 const url = current.web_link_url;
-                // AppCreator native dış tarayıcı açma
                 window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=' + (url.startsWith('https') ? 'https' : 'http') + ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;component=com.android.chrome/com.google.android.apps.chrome.Main;end';
                 document.getElementById('modal').style.display='none';
             }
@@ -258,10 +265,9 @@
         document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
         window.onclick = (e) => { if(e.target == document.getElementById('modal')) document.getElementById('modal').style.display='none'; }
         
-        // Başlat
-        (async function() {
+        (function() {
             loadTheme();
-            await loadViewCounts();
+            listenToViews();
             render();
         })();
     </script>
