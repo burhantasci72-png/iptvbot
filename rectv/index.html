@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- FIREBASE (CDN Versiyonu) -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <!-- FIREBASE (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
     <style>
         :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; --text: #e8e6e3; --card-bg: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.03); }
@@ -20,6 +20,7 @@
         .theme-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; transition: all 0.3s; }
         .light-theme .theme-btn { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #1a1a1a; }
         .container { padding: 15px; }
+        
         .card { background: var(--card-bg); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid var(--border); position: relative; transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         .card.hidden { display: none; }
         .light-theme .card { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
@@ -31,46 +32,45 @@
         @keyframes pulse-glow { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .card-info { flex: 1; margin-left: 12px; }
         .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; color: var(--text); }
-        .card-meta { font-size: 0.75rem; opacity: 0.5; color: var(--text); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .view-count { display: inline-flex; align-items: center; gap: 4px; background: rgba(255, 0, 64, 0.15); padding: 2px 8px; border-radius: 8px; font-size: 0.7rem; font-weight: 600; color: var(--primary); border: 1px solid rgba(255, 0, 64, 0.3); }
-        .light-theme .view-count { background: rgba(255, 0, 64, 0.1); }
+        .card-meta { font-size: 0.75rem; opacity: 0.5; color: var(--text); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        
+        .stat-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255, 255, 255, 0.05); padding: 2px 8px; border-radius: 8px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .light-theme .stat-badge { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); }
+        .stat-eye { color: var(--primary); }
+        .stat-heart { color: #ff3d3d; cursor: pointer; transition: transform 0.2s; }
+        .stat-heart:active { transform: scale(1.3); }
+        .stat-heart.liked { color: #ff0000; text-shadow: 0 0 10px rgba(255,0,0,0.5); }
+        
         .play-icon { color: var(--primary); font-size: 1.4rem; margin-left: 10px; }
         
-        .load-more-btn { 
-            width: calc(100% - 30px); 
-            margin: 20px 15px; 
-            padding: 15px; 
-            border: none; 
-            border-radius: 15px; 
-            background: linear-gradient(135deg, var(--primary), #ff4d00); 
-            color: white; 
-            font-weight: 700; 
-            font-size: 1rem; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 10px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 0, 64, 0.3);
-        }
-        .load-more-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 0, 64, 0.4);
-        }
-        .load-more-btn.hidden {
-            display: none;
-        }
-        .light-theme .load-more-btn {
-            box-shadow: 0 4px 15px rgba(255, 0, 64, 0.2);
-        }
+        .load-more-btn { width: calc(100% - 30px); margin: 20px 15px; padding: 15px; border: none; border-radius: 15px; background: linear-gradient(135deg, var(--primary), #ff4d00); color: white; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255, 0, 64, 0.3); }
+        .load-more-btn.hidden { display: none; }
+        
+        /* CHAT STYLES */
+        .chat-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: linear-gradient(135deg, #00d2ff, #3a7bd5); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 200; transition: transform 0.3s; }
+        .chat-btn:hover { transform: scale(1.1); }
+        
+        .chat-modal { position: fixed; bottom: -100%; left: 0; width: 100%; height: 80%; background: var(--surface); border-radius: 20px 20px 0 0; z-index: 201; transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); }
+        .chat-modal.active { bottom: 0; }
+        .chat-header { padding: 15px; background: rgba(0,0,0,0.2); display: flex; justify-content: space-between; align-items: center; border-radius: 20px 20px 0 0; }
+        .chat-close { font-size: 1.5rem; cursor: pointer; color: var(--text); }
+        
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .message-bubble { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; position: relative; word-wrap: break-word; }
+        .msg-left { align-self: flex-start; background: rgba(255,255,255,0.1); color: var(--text); border-bottom-left-radius: 2px; }
+        .light-theme .msg-left { background: #e0e0e0; color: #333; }
+        .msg-right { align-self: flex-end; background: var(--primary); color: white; border-bottom-right-radius: 2px; }
+        .msg-user { font-size: 0.65rem; opacity: 0.7; margin-bottom: 2px; display: block; }
+        
+        .chat-input-area { padding: 10px; display: flex; gap: 10px; background: rgba(0,0,0,0.2); }
+        .chat-input { flex: 1; padding: 10px; border-radius: 20px; border: none; outline: none; background: rgba(255,255,255,0.1); color: var(--text); }
+        .light-theme .chat-input { background: white; color: black; }
+        .chat-send { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; }
         
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; justify-content:center; align-items:center; }
-        .light-theme .modal { background:rgba(0,0,0,0.5); }
-        .modal-box { background: var(--surface); width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid var(--border); transition: background 0.3s; }
-        .opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; color: white; text-decoration: none; transition: all 0.3s; }
-        .light-theme .opt { background: rgba(0,0,0,0.05); color: #1a1a1a; border: 1px solid rgba(0,0,0,0.1); }
-        .light-theme .opt:hover { background: rgba(0,0,0,0.08); }
+        .modal-box { background: var(--surface); width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid var(--border); }
+        .opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; color: white; }
+        .light-theme .opt { background: rgba(0,0,0,0.05); color: #1a1a1a; }
     </style>
 </head>
 <body>
@@ -78,17 +78,30 @@
         <div class="logo">INADINA TV</div>
         <div style="display: flex; align-items: center; gap: 12px;">
             <button class="theme-btn" onclick="toggleTheme()" id="themeBtn"><i class="fas fa-moon"></i></button>
-            <a href="https://t.me/inadinatv" id="telegramBtn" style="color:white; font-size:1.4rem; transition: color 0.3s;"><i class="fab fa-telegram"></i></a>
+            <a href="https://t.me/inadinatv" id="telegramBtn" style="color:white; font-size:1.4rem;"><i class="fab fa-telegram"></i></a>
         </div>
     </div>
     <div class="container"><div id="list"></div></div>
     
-    <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">
-        <i class="fas fa-chevron-down"></i>
-        <span>Daha Fazla Göster</span>
-        <i class="fas fa-chevron-down"></i>
-    </button>
+    <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">Daha Fazla Göster</button>
+
+    <!-- CHAT BUTTON -->
+    <div class="chat-btn" onclick="toggleChat()"><i class="fas fa-comment-dots"></i></div>
     
+    <!-- CHAT MODAL -->
+    <div class="chat-modal" id="chatModal">
+        <div class="chat-header">
+            <span style="font-weight:bold;">Canlı Sohbet 🟢</span>
+            <i class="fas fa-times chat-close" onclick="toggleChat()"></i>
+        </div>
+        <div class="chat-messages" id="chatContainer"></div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="msgInput" placeholder="Mesaj yaz...">
+            <button class="chat-send" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    
+    <!-- CHANNEL MODAL -->
     <div class="modal" id="modal">
         <div class="modal-box">
             <h3 id="mTitle" style="text-align:center; margin-top:0; color:var(--primary);"></h3>
@@ -105,13 +118,15 @@
 
     <script>
         // ================================================================
-        // FIREBASE AYARLARI (SENİN VERDİĞİN KODLAR)
+        // 👇👇 BURAYI MUTLAKA DOLDUR (Geçen seferki link) 👇👇
         // ================================================================
         const firebaseConfig = {
           apiKey: "AIzaSyCZFwiLcV4K3EnRDWpPPlXPrXSJxAuMfaQ",
           authDomain: "iptvbotcoun.firebaseapp.com",
-          // Veritabanı URL'si proje ID'sine göre eklendi:
+          
+          // AŞAĞIYA FIREBASE DATA LINKINI YAPIŞTIR
           databaseURL: "https://iptvbotcoun-default-rtdb.firebaseio.com",
+          
           projectId: "iptvbotcoun",
           storageBucket: "iptvbotcoun.firebasestorage.app",
           messagingSenderId: "229841892818",
@@ -119,104 +134,127 @@
         };
         // ================================================================
 
-        // Firebase Başlat
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
         let current = {};
         let itemsPerPage = 10; 
         let currentlyShown = itemsPerPage;
-        let globalViewCounts = {}; 
+        let globalViewCounts = {};
+        let globalLikeCounts = {};
+        let myLikes = JSON.parse(localStorage.getItem('my_likes') || "[]");
+        let myUserName = localStorage.getItem('chat_username');
 
-        // Firebase'den verileri CANLI dinle
-        function listenToViews() {
-            const countsRef = database.ref('channel_views');
-            countsRef.on('value', (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    globalViewCounts = data;
-                    updateViewCountsInDOM();
-                }
+        // Kullanıcı adı yoksa oluştur
+        if(!myUserName) {
+            myUserName = "Misafir_" + Math.floor(Math.random() * 9000 + 1000);
+            localStorage.setItem('chat_username', myUserName);
+        }
+
+        // ================= FIREBASE LISTENERS =================
+        function listenToData() {
+            // İZLENMELERİ DİNLE
+            database.ref('channel_views').on('value', (s) => {
+                if(s.exists()) { globalViewCounts = s.val(); updateStatsInDOM(); }
+            });
+            // BEĞENİLERİ DİNLE
+            database.ref('channel_likes').on('value', (s) => {
+                if(s.exists()) { globalLikeCounts = s.val(); updateStatsInDOM(); }
+            });
+            // SOHBETİ DİNLE
+            database.ref('global_chat').limitToLast(50).on('child_added', (snapshot) => {
+                const msg = snapshot.val();
+                appendMessage(msg.user, msg.text, msg.user === myUserName);
             });
         }
 
-        // DOM üzerindeki sayıları güncelle
-        function updateViewCountsInDOM() {
+        // ================= DOM UPDATE =================
+        function updateStatsInDOM() {
             const cards = document.querySelectorAll('.card');
             cards.forEach(card => {
                 const titleElement = card.querySelector('.card-name');
                 if(titleElement){
                     const title = titleElement.innerText;
                     const safeKey = sanitizeKey(title);
-                    const count = globalViewCounts[safeKey] || 0;
-                    const viewSpan = card.querySelector('.view-count');
-                    if(viewSpan) viewSpan.innerHTML = `<i class="fas fa-eye"></i> ${count}`;
+                    
+                    const views = globalViewCounts[safeKey] || 0;
+                    const likes = globalLikeCounts[safeKey] || 0;
+                    
+                    const viewSpan = card.querySelector('.count-val-eye');
+                    if(viewSpan) viewSpan.innerText = views;
+                    
+                    const likeSpan = card.querySelector('.count-val-heart');
+                    if(likeSpan) likeSpan.innerText = likes;
                 }
             });
         }
-        
-        // Tıklama sayısını artır (Transaction)
+
+        // ================= ACTIONS =================
         function incrementViewCount(title) {
             const safeKey = sanitizeKey(title);
-            const countRef = database.ref('channel_views/' + safeKey);
-            countRef.transaction((current_value) => {
-                return (current_value || 0) + 1;
+            database.ref('channel_views/' + safeKey).transaction(curr => (curr || 0) + 1);
+        }
+
+        function toggleLike(e, title) {
+            e.stopPropagation(); // Karta tıklamayı engelle
+            const safeKey = sanitizeKey(title);
+            
+            if(myLikes.includes(safeKey)) {
+                alert("Zaten beğendin!");
+                return;
+            }
+            
+            // Beğeniyi kaydet
+            myLikes.push(safeKey);
+            localStorage.setItem('my_likes', JSON.stringify(myLikes));
+            
+            // Firebase artır
+            database.ref('channel_likes/' + safeKey).transaction(curr => (curr || 0) + 1);
+            
+            // Kalbi kırmızı yap
+            e.target.classList.add('liked');
+        }
+
+        // ================= CHAT FUNCTIONS =================
+        function toggleChat() {
+            document.getElementById('chatModal').classList.toggle('active');
+        }
+        
+        function sendMsg() {
+            const inp = document.getElementById('msgInput');
+            const txt = inp.value.trim();
+            if(!txt) return;
+            
+            database.ref('global_chat').push({
+                user: myUserName,
+                text: txt,
+                time: Date.now()
             });
+            inp.value = "";
         }
         
-        // Firebase için geçersiz karakterleri temizle
-        function sanitizeKey(key) {
-            return key.replace(/[.#$\/\[\]]/g, '_').substring(0, 50);
+        function appendMessage(user, text, isMe) {
+            const container = document.getElementById('chatContainer');
+            const div = document.createElement('div');
+            div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'}`;
+            div.innerHTML = `<span class="msg-user">${user}</span>${text}`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
         }
-        
+
+        function sanitizeKey(key) { return key.replace(/[.#$\/\[\]]/g, '_').substring(0, 50); }
+
+        // ================= RENDER & THEME =================
         function toggleTheme() {
-            const body = document.body;
-            const themeBtn = document.getElementById('themeBtn');
-            const telegramBtn = document.getElementById('telegramBtn');
-            const modalCloseBtn = document.getElementById('modalCloseBtn');
-            const icon = themeBtn.querySelector('i');
-            body.classList.toggle('light-theme');
-            if (body.classList.contains('light-theme')) {
-                icon.className = 'fas fa-sun';
-                telegramBtn.style.color = '#1a1a1a';
-                modalCloseBtn.style.background = '#e0e0e0';
-                modalCloseBtn.style.color = '#1a1a1a';
-                localStorage.setItem('theme', 'light');
-            } else {
-                icon.className = 'fas fa-moon';
-                telegramBtn.style.color = 'white';
-                modalCloseBtn.style.background = '#333';
-                modalCloseBtn.style.color = 'white';
-                localStorage.setItem('theme', 'dark');
-            }
+            document.body.classList.toggle('light-theme');
+            const isLight = document.body.classList.contains('light-theme');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            document.getElementById('themeBtn').innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            document.getElementById('telegramBtn').style.color = isLight ? '#1a1a1a' : 'white';
+            document.getElementById('modalCloseBtn').style.background = isLight ? '#e0e0e0' : '#333';
+            document.getElementById('modalCloseBtn').style.color = isLight ? '#1a1a1a' : 'white';
         }
-        
-        function loadTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            const themeBtn = document.getElementById('themeBtn');
-            const telegramBtn = document.getElementById('telegramBtn');
-            const modalCloseBtn = document.getElementById('modalCloseBtn');
-            const icon = themeBtn.querySelector('i');
-            if (savedTheme === 'light') {
-                document.body.classList.add('light-theme');
-                icon.className = 'fas fa-sun';
-                telegramBtn.style.color = '#1a1a1a';
-                modalCloseBtn.style.background = '#e0e0e0';
-                modalCloseBtn.style.color = '#1a1a1a';
-            }
-        }
-        
-        function loadMore() {
-            const items = categoryData[activeCategoryKey].items;
-            const cards = document.querySelectorAll('.card');
-            const loadMoreBtn = document.getElementById('loadMoreBtn');
-            for (let i = currentlyShown; i < Math.min(currentlyShown + itemsPerPage, items.length); i++) {
-                if (cards[i]) cards[i].classList.remove('hidden');
-            }
-            currentlyShown += itemsPerPage;
-            if (currentlyShown >= items.length) loadMoreBtn.classList.add('hidden');
-        }
-        
+
         function render() {
             const container = document.getElementById('list');
             const loadMoreBtn = document.getElementById('loadMoreBtn');
@@ -233,14 +271,21 @@
                 const badgeHTML = item.is_new ? '<span class="badge badge-yeni">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>';
                 const safeKey = sanitizeKey(item.title);
                 const views = globalViewCounts[safeKey] || 0;
+                const likes = globalLikeCounts[safeKey] || 0;
+                const isLiked = myLikes.includes(safeKey) ? 'liked' : '';
                 
                 card.innerHTML = `
                     <div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${badgeHTML}</div>
                     <div class="card-info">
                         <div class="card-name">${item.title}</div>
-                        <div class="card-meta"><span>${item.added_date}</span> <span class="view-count"><i class="fas fa-eye"></i> ${views}</span></div>
+                        <div class="card-meta">
+                            <span>${item.added_date}</span> 
+                            <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span>
+                            <span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span>
+                        </div>
                     </div>
                     <i class="fas fa-play-circle play-icon"></i>`;
+                    
                 card.onclick = () => { 
                     current = item;
                     incrementViewCount(item.title);
@@ -253,6 +298,17 @@
             else loadMoreBtn.classList.add('hidden');
         }
         
+        function loadMore() {
+            const items = categoryData[activeCategoryKey].items;
+            const cards = document.querySelectorAll('.card');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            for (let i = currentlyShown; i < Math.min(currentlyShown + itemsPerPage, items.length); i++) {
+                if (cards[i]) cards[i].classList.remove('hidden');
+            }
+            currentlyShown += itemsPerPage;
+            if (currentlyShown >= items.length) loadMoreBtn.classList.add('hidden');
+        }
+
         document.getElementById('externalWeb').onclick = () => { 
             if(current.web_link_url && current.web_link_url !== "#") {
                 const url = current.web_link_url;
@@ -260,15 +316,15 @@
                 document.getElementById('modal').style.display='none';
             }
         };
-
         document.getElementById('wuffy').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
         document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
         window.onclick = (e) => { if(e.target == document.getElementById('modal')) document.getElementById('modal').style.display='none'; }
-        
+
         (function() {
-            loadTheme();
-            listenToViews();
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') toggleTheme();
             render();
+            setTimeout(listenToData, 500);
         })();
     </script>
 </body>
