@@ -82,12 +82,13 @@
         .reply-preview-bar { background: #2a2a2a; border-top: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; display: none; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #ddd; border-left: 4px solid var(--primary); }
         .light-theme .reply-preview-bar { background: #f0f0f0; color: #333; }
         
-        /* MSG ACTIONS (NEW) */
-        .msg-actions { display: flex; gap: 10px; margin-top: 5px; justify-content: flex-end; font-size: 0.75rem; opacity: 0.8; }
-        .action-btn { cursor: pointer; display: flex; align-items: center; gap: 3px; transition: color 0.2s; color: rgba(255,255,255,0.7); }
+        /* MSG ACTIONS - UPDATED COLORS */
+        .msg-actions { display: flex; gap: 10px; margin-top: 5px; justify-content: flex-end; font-size: 0.75rem; opacity: 0.9; }
+        .action-btn { cursor: pointer; display: flex; align-items: center; gap: 3px; transition: all 0.2s; color: rgba(255,255,255,0.7); }
         .action-btn:hover { opacity: 1; color: white; }
-        .action-btn.active-like { color: #4caf50; }
-        .action-btn.active-dislike { color: #f44336; }
+        /* NEW: YELLOW LIKE BUTTON */
+        .action-btn.active-like { color: #ffeb3b; font-weight: bold; text-shadow: 0 0 5px rgba(0,0,0,0.5); transform: scale(1.1); }
+        .action-btn.active-dislike { color: #f44336; font-weight: bold; text-shadow: 0 0 5px rgba(0,0,0,0.5); transform: scale(1.1); }
         .light-theme .action-btn { color: rgba(0,0,0,0.6); }
         
         .admin-controls { display: none; margin-top: 5px; gap: 5px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; }
@@ -515,7 +516,6 @@
                 if(s.exists()) { globalLikeCounts = s.val(); updateStatsInDOM(); }
             });
             database.ref('global_chat').limitToLast(50).on('child_changed', (snapshot) => {
-                // Update likes/dislikes live without re-rendering everything
                 const msg = snapshot.val();
                 const likeEl = document.getElementById(`like-count-${snapshot.key}`);
                 const dislikeEl = document.getElementById(`dislike-count-${snapshot.key}`);
@@ -614,7 +614,6 @@
                 inp.value = "";
                 document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️";
                 document.getElementById('adminBtn').style.display = "flex";
-                // Bakım modunda olsa bile admin görebilmeli
                 location.reload();
                 return;
             }
@@ -640,26 +639,20 @@
         }
         
         function toggleChatReaction(key, type) {
-            // Check local state
             let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}");
-            let current = myReactions[key]; // 'like' or 'dislike' or undefined
+            let current = myReactions[key]; 
 
             if (current === type) {
-                // Removing reaction (toggle off)
                 database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) - 1);
                 delete myReactions[key];
-                // Remove styling immediately for better UX
                 const btn = document.getElementById(`btn-${type}-${key}`);
                 if(btn) btn.classList.remove(`active-${type}`);
             } else {
-                // Adding new reaction
                 if(current) {
-                    // Remove old one first
                     database.ref(`global_chat/${key}/${current}s`).transaction(c => (c || 0) - 1);
                     const oldBtn = document.getElementById(`btn-${current}-${key}`);
                     if(oldBtn) oldBtn.classList.remove(`active-${current}`);
                 }
-                // Add new
                 database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) + 1);
                 myReactions[key] = type;
                 const newBtn = document.getElementById(`btn-${type}-${key}`);
@@ -713,7 +706,6 @@
                 </div>`;
             }
             
-            // Check active state for buttons
             let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}");
             let myReact = myReactions[key];
             let likeClass = myReact === 'like' ? 'active-like' : '';
@@ -734,7 +726,7 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        // ================= ADMIN PANEL LOGIC (AKORDİYON) =================
+        // ================= ADMIN PANEL LOGIC =================
         function openAdminPanel() {
             document.getElementById('adminPanelModal').style.display = 'flex';
             
