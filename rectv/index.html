@@ -88,11 +88,20 @@
         .btn-del { background: #555; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
 
         .chat-input-area { padding: 10px; display: flex; gap: 10px; background: rgba(0,0,0,0.2); flex-direction: column; }
-        .input-row { display: flex; gap: 10px; width: 100%; }
+        .input-row { display: flex; gap: 10px; width: 100%; align-items: center; }
         .chat-input { flex: 1; padding: 10px; border-radius: 20px; border: none; outline: none; background: rgba(255,255,255,0.1); color: var(--text); }
         .light-theme .chat-input { background: white; color: black; }
-        .chat-send { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+        .chat-send { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
+        .chat-img-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
+        .light-theme .chat-img-btn { background: rgba(0,0,0,0.1); color: #333; }
         
+        .chat-img { max-width: 100%; border-radius: 10px; margin-top: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
+        
+        /* IMAGE PREVIEW MODAL */
+        #imgPreviewModal { background: rgba(0,0,0,0.95); display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 5000; justify-content: center; align-items: center; }
+        #imgPreviewModal img { max-width: 95%; max-height: 90%; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        #imgPreviewModal i { position: absolute; top: 20px; right: 20px; font-size: 2rem; color: white; cursor: pointer; }
+
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; justify-content:center; align-items:center; }
         .modal-box { background: var(--surface); width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid var(--border); }
         .opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; color: white; }
@@ -103,30 +112,14 @@
         .btn-cancel { background: #444; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         .admin-panel-btn { position: fixed; bottom: 20px; left: 20px; width: 50px; height: 50px; background: #ff0040; border-radius: 50%; display: none; justify-content: center; align-items: center; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.5); cursor: pointer; z-index: 200; }
         
-        /* MODERN ADMIN PANEL STYLES (YENİ) */
-        #adminPanelModal .modal-box {
-            display: flex; flex-direction: column; max-height: 90vh; /* Ekranın %90'ı kadar yükseklik */
-            position: relative; padding-bottom: 70px; /* Kapat butonu için boşluk */
-        }
-        .admin-modal-body {
-            overflow-y: auto; text-align: left; padding-right: 5px; flex: 1;
-        }
-        /* Sticky Close Button */
-        #modalCloseBtn2 {
-            position: absolute; bottom: 20px; left: 5%; width: 90%; 
-            background: #333; box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
-        }
+        #adminPanelModal .modal-box { display: flex; flex-direction: column; max-height: 90vh; position: relative; padding-bottom: 70px; }
+        .admin-modal-body { overflow-y: auto; text-align: left; padding-right: 5px; flex: 1; }
+        #modalCloseBtn2 { position: absolute; bottom: 20px; left: 5%; width: 90%; background: #333; box-shadow: 0 -2px 10px rgba(0,0,0,0.5); }
         
-        /* Accordion Style */
-        .admin-menu-btn {
-            background: rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; margin-top: 15px;
-            color: #ffeb3b; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-            border: 1px solid rgba(255, 235, 59, 0.3);
-        }
+        .admin-menu-btn { background: rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; margin-top: 15px; color: #ffeb3b; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255, 235, 59, 0.3); }
         .admin-menu-btn:hover { background: rgba(255, 235, 59, 0.1); }
         .admin-submenu { display: none; margin-top: 10px; padding-left: 5px; border-left: 2px solid #ffeb3b; }
         .admin-submenu.active { display: block; animation: slideDown 0.3s; }
-        
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
         .report-item { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid rgba(255,0,64,0.3); }
@@ -135,10 +128,7 @@
         .light-theme .report-msg { color: #333; }
         .light-theme .report-item { background: rgba(0,0,0,0.05); }
         
-        .delete-all-btn {
-            background: #ff0040; color: white; border: none; padding: 8px; width: 100%; border-radius: 8px;
-            margin-bottom: 10px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
+        .delete-all-btn { background: #ff0040; color: white; border: none; padding: 8px; width: 100%; border-radius: 8px; margin-bottom: 10px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
         #nameChangeModal .modal-box { text-align: center; }
         .custom-input { width: 90%; padding: 12px; margin: 15px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; outline: none; font-size: 1rem; text-align: center; }
@@ -153,7 +143,12 @@
         <div style="font-size:1rem; color:white; margin-top:10px;">Sohbet kurallarına uymadığınız için erişiminiz kapatıldı.</div>
     </div>
 
-    <!-- CUSTOM CONFIRM MODAL -->
+    <!-- IMAGE PREVIEW MODAL -->
+    <div id="imgPreviewModal" onclick="this.style.display='none'">
+        <i class="fas fa-times"></i>
+        <img id="imgPreview" src="">
+    </div>
+
     <div id="confirmModal" class="modal">
         <div class="modal-box" style="text-align:center;">
             <i class="fas fa-exclamation-circle" style="font-size:3rem; color:#ff4d4d; margin-bottom:15px;"></i>
@@ -166,7 +161,6 @@
         </div>
     </div>
 
-    <!-- NAME CHANGE MODAL -->
     <div id="nameChangeModal" class="modal">
         <div class="modal-box">
             <h3 style="color:var(--primary); margin-top:0;">İsim Değiştir</h3>
@@ -179,13 +173,11 @@
         </div>
     </div>
 
-    <!-- MODERN ADMIN PANEL MODAL -->
     <div id="adminPanelModal" class="modal">
         <div class="modal-box">
             <h3 style="text-align:center; color:#ff0040; margin-top:0;">🛡️ Yönetici Paneli</h3>
             
             <div class="admin-modal-body">
-                <!-- AÇILIŞ MESAJI -->
                 <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:10px; margin-bottom:10px;">
                     <h4 style="margin:0 0 10px 0;">📢 Açılış Mesajı</h4>
                     <input type="text" id="adminToastInput" class="custom-input" placeholder="Mesajınız..." style="width:100%; box-sizing:border-box;">
@@ -195,7 +187,6 @@
                     <button onclick="saveStartupMessage()" class="btn-confirm" style="width:100%; margin-top:10px;">Kaydet</button>
                 </div>
 
-                <!-- RAPORLAR MENÜSÜ (AKORDİYON) -->
                 <div class="admin-menu-btn" onclick="toggleReports()">
                     <span>⚠️ Kullanıcı Bildirimleri (<span id="reportCount">0</span>)</span>
                     <i class="fas fa-chevron-down"></i>
@@ -209,7 +200,6 @@
                 </div>
             </div>
 
-            <!-- SABİT KAPAT BUTONU -->
             <button onclick="document.getElementById('adminPanelModal').style.display='none'" id="modalCloseBtn2">Kapat</button>
         </div>
     </div>
@@ -254,6 +244,12 @@
 
         <div class="chat-input-area">
             <div class="input-row">
+                <!-- RESİM YÜKLEME BUTONU -->
+                <button class="chat-img-btn" onclick="document.getElementById('imgUpload').click()">
+                    <i class="fas fa-image"></i>
+                </button>
+                <input type="file" id="imgUpload" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
+                
                 <input type="text" class="chat-input" id="msgInput" placeholder="Mesaj yaz...">
                 <button class="chat-send" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
             </div>
@@ -353,6 +349,65 @@
             setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000);
         }
 
+        // --- RESİM İŞLEME VE SIKIŞTIRMA ---
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            showToast("Resim işleniyor...", "fa-cog fa-spin");
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    // Maksimum boyut 600px
+                    const MAX_WIDTH = 600;
+                    if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                    }
+                    
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    // Sıkıştırılmış veri (JPEG %60 kalite)
+                    const dataURL = canvas.toDataURL('image/jpeg', 0.6);
+                    
+                    // Firebase'e gönder
+                    sendImageMsg(dataURL);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            
+            // Input'u temizle (aynı resim tekrar seçilebilsin)
+            event.target.value = '';
+        }
+
+        function sendImageMsg(imgData) {
+            const messageData = {
+                user: isAdmin ? "YÖNETİCİ" : myUserName,
+                image: imgData,
+                uuid: myUUID,
+                isAdminMsg: isAdmin,
+                time: Date.now()
+            };
+            database.ref('global_chat').push(messageData);
+            showToast("Resim gönderildi", "fa-check");
+        }
+
+        // --- RESİM ÖNİZLEME ---
+        function showImagePreview(src) {
+            document.getElementById('imgPreview').src = src;
+            document.getElementById('imgPreviewModal').style.display = 'flex';
+        }
+
         function listenToData() {
             database.ref('startup_message').on('value', (s) => {
                 if(s.exists()) {
@@ -384,7 +439,7 @@
             });
             database.ref('global_chat').limitToLast(50).on('child_added', (snapshot) => {
                 const msg = snapshot.val();
-                appendMessage(msg.user, msg.text, msg.user === myUserName, snapshot.key, msg.uuid, msg.isAdminMsg, msg.replyTo);
+                appendMessage(msg.user, msg.text, msg.user === myUserName, snapshot.key, msg.uuid, msg.isAdminMsg, msg.replyTo, msg.image);
             });
             database.ref('global_chat').on('child_removed', (snapshot) => {
                 const el = document.getElementById('msg-' + snapshot.key);
@@ -451,7 +506,7 @@
         function startReply(user, text) {
             currentReply = { user: user, text: text };
             document.getElementById('replyToUser').innerText = user;
-            document.getElementById('replyToText').innerText = text.substring(0, 30) + (text.length>30 ? '...' : '');
+            document.getElementById('replyToText').innerText = text ? (text.substring(0, 30) + (text.length>30 ? '...' : '')) : "Resim";
             document.getElementById('replyPreviewBar').style.display = 'flex';
             document.getElementById('msgInput').focus();
         }
@@ -494,7 +549,7 @@
             cancelReply();
         }
         
-        function appendMessage(user, text, isMe, key, senderUUID, isAdminMsg, replyTo) {
+        function appendMessage(user, text, isMe, key, senderUUID, isAdminMsg, replyTo, image) {
             const container = document.getElementById('chatContainer');
             const div = document.createElement('div');
             div.id = 'msg-' + key;
@@ -512,11 +567,19 @@
                 quoteHTML = `
                 <div class="quoted-msg">
                     <span class="quote-user">${replyTo.user}</span>
-                    <span>${replyTo.text}</span>
+                    <span>${replyTo.text || "Resim"}</span>
                 </div>`;
             }
 
-            let replyIcon = `<i class="fas fa-reply reply-btn-icon" onclick="startReply('${user}', '${text.replace(/'/g, "\'")}')"></i>`;
+            // İçerik: Yazı veya Resim
+            let contentHTML = "";
+            if (image) {
+                contentHTML = `<img src="${image}" class="chat-img" onclick="showImagePreview('${image}')">`;
+            } else {
+                contentHTML = text;
+            }
+
+            let replyIcon = `<i class="fas fa-reply reply-btn-icon" onclick="startReply('${user}', '${text ? text.replace(/'/g, "\'") : ""}')"></i>`;
 
             let adminControls = "";
             if(isAdmin && !isMe) {
@@ -532,21 +595,21 @@
                 </div>`;
             }
 
-            div.innerHTML = `${quoteHTML}<span class="msg-user">${userDisplay} ${replyIcon}</span>${text}${adminControls}`;
+            div.innerHTML = `${quoteHTML}<span class="msg-user">${userDisplay} ${replyIcon}</span>${contentHTML}${adminControls}`;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
         }
 
-        // ================= ADMIN PANEL LOGIC (GÜNCELLENDİ) =================
+        // ================= ADMIN PANEL LOGIC =================
         function openAdminPanel() {
             document.getElementById('adminPanelModal').style.display = 'flex';
+            const list = document.getElementById('adminReportsList');
+            list.innerHTML = '<p style="text-align:center;">Yükleniyor...</p>';
             
-            // Sadece sayıları çek
             database.ref('reports').once('value', (s) => {
                 const count = s.exists() ? s.numChildren() : 0;
                 document.getElementById('reportCount').innerText = count;
-                // Liste kapalı başlasın, içeriği temizle
-                document.getElementById('adminReportsList').innerHTML = '';
+                list.innerHTML = '';
                 document.getElementById('reportsContainer').classList.remove('active');
             });
         }
@@ -589,10 +652,8 @@
 
         window.deleteReport = function(key) {
             database.ref('reports/' + key).remove().then(() => {
-                // Listeyi yenilemeden sadece o öğeyi kaldır
-                // Basitlik için paneli tekrar açıp kapatıyoruz gibi yapalım
-                toggleReports(); toggleReports(); // Refresh hack
-                openAdminPanel(); // Sayıyı güncelle
+                toggleReports(); toggleReports(); 
+                openAdminPanel(); 
             });
         };
 
