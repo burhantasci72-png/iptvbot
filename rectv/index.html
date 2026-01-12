@@ -70,19 +70,15 @@
 
         .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
         .message-bubble { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; position: relative; word-wrap: break-word; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        
         .msg-left { align-self: flex-start; border-bottom-left-radius: 2px; }
         .msg-right { align-self: flex-end; background: var(--primary); border-bottom-right-radius: 2px; }
-        
         .msg-user { font-size: 0.65rem; opacity: 0.8; margin-bottom: 2px; display: block; font-weight: bold; }
         .msg-admin { color: #ffeb3b; }
         
         .quoted-msg { background: rgba(0,0,0,0.2); border-left: 3px solid #ff4d4d; padding: 5px 8px; border-radius: 4px; margin-bottom: 5px; font-size: 0.75rem; display: flex; flex-direction: column; opacity: 0.9; }
         .quote-user { font-weight: bold; color: #ffeb3b; margin-bottom: 2px; }
-        
         .reply-btn-icon { margin-left: 8px; opacity: 0.6; cursor: pointer; transition: opacity 0.2s; font-size: 0.8rem; }
         .reply-btn-icon:hover { opacity: 1; color: white; }
-        
         .reply-preview-bar { background: #2a2a2a; border-top: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; display: none; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #ddd; border-left: 4px solid var(--primary); }
         .light-theme .reply-preview-bar { background: #f0f0f0; color: #333; }
         
@@ -106,12 +102,43 @@
         .btn-confirm { background: #ff0040; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         .btn-cancel { background: #444; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         .admin-panel-btn { position: fixed; bottom: 20px; left: 20px; width: 50px; height: 50px; background: #ff0040; border-radius: 50%; display: none; justify-content: center; align-items: center; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.5); cursor: pointer; z-index: 200; }
-        .admin-modal-body { max-height: 60vh; overflow-y: auto; text-align: left; }
+        
+        /* MODERN ADMIN PANEL STYLES (YENİ) */
+        #adminPanelModal .modal-box {
+            display: flex; flex-direction: column; max-height: 90vh; /* Ekranın %90'ı kadar yükseklik */
+            position: relative; padding-bottom: 70px; /* Kapat butonu için boşluk */
+        }
+        .admin-modal-body {
+            overflow-y: auto; text-align: left; padding-right: 5px; flex: 1;
+        }
+        /* Sticky Close Button */
+        #modalCloseBtn2 {
+            position: absolute; bottom: 20px; left: 5%; width: 90%; 
+            background: #333; box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+        }
+        
+        /* Accordion Style */
+        .admin-menu-btn {
+            background: rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; margin-top: 15px;
+            color: #ffeb3b; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            border: 1px solid rgba(255, 235, 59, 0.3);
+        }
+        .admin-menu-btn:hover { background: rgba(255, 235, 59, 0.1); }
+        .admin-submenu { display: none; margin-top: 10px; padding-left: 5px; border-left: 2px solid #ffeb3b; }
+        .admin-submenu.active { display: block; animation: slideDown 0.3s; }
+        
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
         .report-item { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid rgba(255,0,64,0.3); }
         .report-header { display: flex; justify-content: space-between; font-size: 0.8rem; color: #aaa; margin-bottom: 5px; }
         .report-msg { font-weight: bold; color: white; }
         .light-theme .report-msg { color: #333; }
         .light-theme .report-item { background: rgba(0,0,0,0.05); }
+        
+        .delete-all-btn {
+            background: #ff0040; color: white; border: none; padding: 8px; width: 100%; border-radius: 8px;
+            margin-bottom: 10px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
 
         #nameChangeModal .modal-box { text-align: center; }
         .custom-input { width: 90%; padding: 12px; margin: 15px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; outline: none; font-size: 1rem; text-align: center; }
@@ -152,26 +179,38 @@
         </div>
     </div>
 
-    <!-- ADMIN PANEL MODAL -->
+    <!-- MODERN ADMIN PANEL MODAL -->
     <div id="adminPanelModal" class="modal">
         <div class="modal-box">
             <h3 style="text-align:center; color:#ff0040; margin-top:0;">🛡️ Yönetici Paneli</h3>
             
-            <!-- AÇILIŞ MESAJI YÖNETİMİ (YENİ) -->
-            <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:10px; margin-bottom:15px;">
-                <h4 style="margin:0 0 10px 0;">📢 Açılış Mesajı</h4>
-                <input type="text" id="adminToastInput" class="custom-input" placeholder="Mesajınız..." style="width:100%; box-sizing:border-box;">
-                <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
-                    <input type="checkbox" id="adminToastActive" style="width:20px; height:20px;"> <label for="adminToastActive">Aktif Et</label>
+            <div class="admin-modal-body">
+                <!-- AÇILIŞ MESAJI -->
+                <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:10px; margin-bottom:10px;">
+                    <h4 style="margin:0 0 10px 0;">📢 Açılış Mesajı</h4>
+                    <input type="text" id="adminToastInput" class="custom-input" placeholder="Mesajınız..." style="width:100%; box-sizing:border-box;">
+                    <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
+                        <input type="checkbox" id="adminToastActive" style="width:20px; height:20px;"> <label for="adminToastActive">Aktif Et</label>
+                    </div>
+                    <button onclick="saveStartupMessage()" class="btn-confirm" style="width:100%; margin-top:10px;">Kaydet</button>
                 </div>
-                <button onclick="saveStartupMessage()" class="btn-confirm" style="width:100%; margin-top:10px;">Kaydet</button>
+
+                <!-- RAPORLAR MENÜSÜ (AKORDİYON) -->
+                <div class="admin-menu-btn" onclick="toggleReports()">
+                    <span>⚠️ Kullanıcı Bildirimleri (<span id="reportCount">0</span>)</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                
+                <div id="reportsContainer" class="admin-submenu">
+                    <button class="delete-all-btn" onclick="deleteAllReports()"><i class="fas fa-trash-alt"></i> TÜMÜNÜ SİL</button>
+                    <div id="adminReportsList">
+                        <p style="text-align:center; opacity:0.5;">Yükleniyor...</p>
+                    </div>
+                </div>
             </div>
 
-            <h4 style="margin:0 0 10px 0; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;">⚠️ Raporlar</h4>
-            <div class="admin-modal-body" id="adminReportsList">
-                <p style="text-align:center; opacity:0.5;">Yükleniyor...</p>
-            </div>
-            <button onclick="document.getElementById('adminPanelModal').style.display='none'" style="width:100%; padding:12px; border-radius:10px; border:none; background:#333; color:white; margin-top:10px; cursor:pointer;" id="modalCloseBtn2">Kapat</button>
+            <!-- SABİT KAPAT BUTONU -->
+            <button onclick="document.getElementById('adminPanelModal').style.display='none'" id="modalCloseBtn2">Kapat</button>
         </div>
     </div>
 
@@ -311,21 +350,17 @@
             const t = document.getElementById('toast');
             t.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
             t.className = "toast show";
-            setTimeout(() => { t.className = t.className.replace("show", ""); }, 4000);
+            setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000);
         }
 
         function listenToData() {
-            // AÇILIŞ MESAJINI DİNLE
             database.ref('startup_message').on('value', (s) => {
                 if(s.exists()) {
                     const data = s.val();
-                    // Eğer mesaj aktifse ve daha önce bu oturumda gösterilmediyse
                     if(data.active && !sessionStorage.getItem('startup_msg_shown')) {
                         showToast(data.text, "fa-bullhorn");
                         sessionStorage.setItem('startup_msg_shown', 'true');
                     }
-                    
-                    // Admin panelinde inputları doldur
                     if(document.getElementById('adminToastInput')) {
                         document.getElementById('adminToastInput').value = data.text;
                         document.getElementById('adminToastActive').checked = data.active;
@@ -502,46 +537,73 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        // ================= ADMIN PANEL LOGIC =================
+        // ================= ADMIN PANEL LOGIC (GÜNCELLENDİ) =================
         function openAdminPanel() {
             document.getElementById('adminPanelModal').style.display = 'flex';
-            const list = document.getElementById('adminReportsList');
-            list.innerHTML = '<p style="text-align:center;">Yükleniyor...</p>';
             
+            // Sadece sayıları çek
             database.ref('reports').once('value', (s) => {
-                list.innerHTML = '';
-                if(!s.exists()) {
-                    list.innerHTML = '<p style="text-align:center;">Henüz rapor yok.</p>';
-                    return;
-                }
-                
-                s.forEach((child) => {
-                    const r = child.val();
-                    const item = document.createElement('div');
-                    item.className = 'report-item';
-                    item.innerHTML = `
-                        <div class="report-header">
-                            <span><i class="fas fa-user"></i> ${r.user}</span>
-                            <span>${r.time}</span>
-                        </div>
-                        <div class="report-msg">
-                            <i class="fas fa-tv"></i> ${r.channel}
-                        </div>
-                        <div style="text-align:right; margin-top:5px;">
-                            <button onclick="deleteReport('${child.key}')" style="background:#555; border:none; color:white; padding:3px 8px; border-radius:4px;">Sil</button>
-                        </div>
-                    `;
-                    list.appendChild(item);
-                });
+                const count = s.exists() ? s.numChildren() : 0;
+                document.getElementById('reportCount').innerText = count;
+                // Liste kapalı başlasın, içeriği temizle
+                document.getElementById('adminReportsList').innerHTML = '';
+                document.getElementById('reportsContainer').classList.remove('active');
             });
         }
 
+        function toggleReports() {
+            const container = document.getElementById('reportsContainer');
+            container.classList.toggle('active');
+            
+            if(container.classList.contains('active')) {
+                const list = document.getElementById('adminReportsList');
+                list.innerHTML = '<p style="text-align:center;">Yükleniyor...</p>';
+                
+                database.ref('reports').once('value', (s) => {
+                    list.innerHTML = '';
+                    if(!s.exists()) {
+                        list.innerHTML = '<p style="text-align:center;">Henüz bildirim yok. 🧼</p>';
+                        return;
+                    }
+                    s.forEach((child) => {
+                        const r = child.val();
+                        const item = document.createElement('div');
+                        item.className = 'report-item';
+                        item.innerHTML = `
+                            <div class="report-header">
+                                <span><i class="fas fa-user"></i> ${r.user}</span>
+                                <span>${r.time}</span>
+                            </div>
+                            <div class="report-msg">
+                                <i class="fas fa-tv"></i> ${r.channel}
+                            </div>
+                            <div style="text-align:right; margin-top:5px;">
+                                <button onclick="deleteReport('${child.key}')" style="background:#555; border:none; color:white; padding:3px 8px; border-radius:4px;">Sil</button>
+                            </div>
+                        `;
+                        list.appendChild(item);
+                    });
+                });
+            }
+        }
+
         window.deleteReport = function(key) {
-            database.ref('reports/' + key).remove();
-            openAdminPanel(); // Listeyi yenile
+            database.ref('reports/' + key).remove().then(() => {
+                // Listeyi yenilemeden sadece o öğeyi kaldır
+                // Basitlik için paneli tekrar açıp kapatıyoruz gibi yapalım
+                toggleReports(); toggleReports(); // Refresh hack
+                openAdminPanel(); // Sayıyı güncelle
+            });
         };
 
-        // YENİ: AÇILIŞ MESAJI KAYDET
+        window.deleteAllReports = function() {
+            if(confirm("Tüm bildirimleri silmek istediğine emin misin?")) {
+                database.ref('reports').remove();
+                document.getElementById('adminReportsList').innerHTML = '<p style="text-align:center;">Temizlendi! ✨</p>';
+                document.getElementById('reportCount').innerText = 0;
+            }
+        };
+
         window.saveStartupMessage = function() {
             const msg = document.getElementById('adminToastInput').value;
             const active = document.getElementById('adminToastActive').checked;
