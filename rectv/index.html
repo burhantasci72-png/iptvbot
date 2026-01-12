@@ -60,13 +60,7 @@
         .chat-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: linear-gradient(135deg, #00d2ff, #3a7bd5); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 200; animation: pulse-beat 2s infinite ease-in-out; }
         .chat-btn:hover { animation: none; transform: scale(1.1); }
         
-        /* FULL SCREEN CHAT MODAL (YENİ) */
-        .chat-modal { 
-            position: fixed; bottom: -100%; left: 0; width: 100%; height: 96%; /* NEREDEYSE TAM EKRAN */
-            background: var(--surface); border-radius: 20px 20px 0 0; z-index: 201; 
-            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            display: flex; flex-direction: column; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); 
-        }
+        .chat-modal { position: fixed; bottom: -100%; left: 0; width: 100%; height: 96%; background: var(--surface); border-radius: 20px 20px 0 0; z-index: 201; transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); }
         .chat-modal.active { bottom: 0; }
         .chat-header { padding: 15px; background: rgba(0,0,0,0.2); display: flex; justify-content: space-between; align-items: center; border-radius: 20px 20px 0 0; }
         .chat-close { font-size: 1.5rem; cursor: pointer; color: var(--text); }
@@ -119,7 +113,6 @@
         .light-theme .report-msg { color: #333; }
         .light-theme .report-item { background: rgba(0,0,0,0.05); }
 
-        /* CUSTOM NAME INPUT MODAL (YENİ) */
         #nameChangeModal .modal-box { text-align: center; }
         .custom-input { width: 90%; padding: 12px; margin: 15px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; outline: none; font-size: 1rem; text-align: center; }
         .light-theme .custom-input { background: white; color: #333; border: 1px solid #ccc; }
@@ -146,7 +139,7 @@
         </div>
     </div>
 
-    <!-- NAME CHANGE MODAL (YENİ) -->
+    <!-- NAME CHANGE MODAL -->
     <div id="nameChangeModal" class="modal">
         <div class="modal-box">
             <h3 style="color:var(--primary); margin-top:0;">İsim Değiştir</h3>
@@ -163,6 +156,18 @@
     <div id="adminPanelModal" class="modal">
         <div class="modal-box">
             <h3 style="text-align:center; color:#ff0040; margin-top:0;">🛡️ Yönetici Paneli</h3>
+            
+            <!-- AÇILIŞ MESAJI YÖNETİMİ (YENİ) -->
+            <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:10px; margin-bottom:15px;">
+                <h4 style="margin:0 0 10px 0;">📢 Açılış Mesajı</h4>
+                <input type="text" id="adminToastInput" class="custom-input" placeholder="Mesajınız..." style="width:100%; box-sizing:border-box;">
+                <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
+                    <input type="checkbox" id="adminToastActive" style="width:20px; height:20px;"> <label for="adminToastActive">Aktif Et</label>
+                </div>
+                <button onclick="saveStartupMessage()" class="btn-confirm" style="width:100%; margin-top:10px;">Kaydet</button>
+            </div>
+
+            <h4 style="margin:0 0 10px 0; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;">⚠️ Raporlar</h4>
             <div class="admin-modal-body" id="adminReportsList">
                 <p style="text-align:center; opacity:0.5;">Yükleniyor...</p>
             </div>
@@ -267,7 +272,6 @@
             localStorage.setItem('chat_username', myUserName);
         }
 
-        // --- İSİM DEĞİŞTİRME YENİ MODAL ---
         function openNameModal() {
             document.getElementById('nameChangeModal').style.display = 'flex';
             document.getElementById('newNameInput').value = myUserName;
@@ -307,10 +311,28 @@
             const t = document.getElementById('toast');
             t.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
             t.className = "toast show";
-            setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000);
+            setTimeout(() => { t.className = t.className.replace("show", ""); }, 4000);
         }
 
         function listenToData() {
+            // AÇILIŞ MESAJINI DİNLE
+            database.ref('startup_message').on('value', (s) => {
+                if(s.exists()) {
+                    const data = s.val();
+                    // Eğer mesaj aktifse ve daha önce bu oturumda gösterilmediyse
+                    if(data.active && !sessionStorage.getItem('startup_msg_shown')) {
+                        showToast(data.text, "fa-bullhorn");
+                        sessionStorage.setItem('startup_msg_shown', 'true');
+                    }
+                    
+                    // Admin panelinde inputları doldur
+                    if(document.getElementById('adminToastInput')) {
+                        document.getElementById('adminToastInput').value = data.text;
+                        document.getElementById('adminToastActive').checked = data.active;
+                    }
+                }
+            });
+
             database.ref('banned_users/' + myUUID).on('value', (s) => {
                 if(s.exists()) {
                     document.getElementById('bannedScreen').style.display = 'flex';
@@ -517,6 +539,14 @@
         window.deleteReport = function(key) {
             database.ref('reports/' + key).remove();
             openAdminPanel(); // Listeyi yenile
+        };
+
+        // YENİ: AÇILIŞ MESAJI KAYDET
+        window.saveStartupMessage = function() {
+            const msg = document.getElementById('adminToastInput').value;
+            const active = document.getElementById('adminToastActive').checked;
+            database.ref('startup_message').set({ text: msg, active: active });
+            showToast("Mesaj Güncellendi!", "fa-save");
         };
 
         // ================= CUSTOM CONFIRM MODAL =================
