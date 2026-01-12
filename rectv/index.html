@@ -82,6 +82,14 @@
         .reply-preview-bar { background: #2a2a2a; border-top: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; display: none; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #ddd; border-left: 4px solid var(--primary); }
         .light-theme .reply-preview-bar { background: #f0f0f0; color: #333; }
         
+        /* MSG ACTIONS (NEW) */
+        .msg-actions { display: flex; gap: 10px; margin-top: 5px; justify-content: flex-end; font-size: 0.75rem; opacity: 0.8; }
+        .action-btn { cursor: pointer; display: flex; align-items: center; gap: 3px; transition: color 0.2s; color: rgba(255,255,255,0.7); }
+        .action-btn:hover { opacity: 1; color: white; }
+        .action-btn.active-like { color: #4caf50; }
+        .action-btn.active-dislike { color: #f44336; }
+        .light-theme .action-btn { color: rgba(0,0,0,0.6); }
+        
         .admin-controls { display: none; margin-top: 5px; gap: 5px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; }
         .is-admin .admin-controls { display: flex; }
         .btn-ban { background: #ff0040; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
@@ -141,6 +149,10 @@
         
         /* MAINTENANCE SCREEN */
         #maintenanceScreen { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#111; z-index:9000; color:#ffeb3b; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
+        
+        /* EMERGENCY LOGIN INPUT */
+        .emergency-input { background: rgba(255,255,255,0.1); border: 1px solid #ffeb3b; color: #fff; padding: 10px; margin-top: 20px; border-radius: 5px; width: 200px; text-align: center; }
+        .emergency-btn { background: #ffeb3b; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-top: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -150,6 +162,10 @@
         <i class="fas fa-tools" style="font-size:4rem; margin-bottom:20px;"></i>
         <h1>BAKIM MODU</h1>
         <p style="color:#fff; opacity:0.7;">Şu an sistem güncelleniyor.<br>Lütfen daha sonra tekrar deneyin.</p>
+        
+        <!-- GİZLİ YÖNETİCİ GİRİŞİ -->
+        <input type="password" id="emergencyPass" class="emergency-input" placeholder="Yönetici Şifresi">
+        <button onclick="emergencyLogin()" class="emergency-btn">Giriş Yap</button>
     </div>
 
     <div id="bannedScreen" class="banned-screen">
@@ -420,7 +436,9 @@
                 image: imgData,
                 uuid: myUUID,
                 isAdminMsg: isAdmin,
-                time: Date.now()
+                time: Date.now(),
+                likes: 0,
+                dislikes: 0
             };
             database.ref('global_chat').push(messageData);
             showToast("Resim gönderildi", "fa-check");
@@ -431,12 +449,22 @@
             document.getElementById('imgPreviewModal').style.display = 'flex';
         }
 
+        function emergencyLogin() {
+            const pass = document.getElementById('emergencyPass').value;
+            if(pass === ADMIN_PASS) {
+                localStorage.setItem('is_admin', 'true');
+                isAdmin = true;
+                alert("Yönetici girişi başarılı! Bakım modu hala açık, kapatmak için panelden kapatın.");
+                location.reload();
+            } else {
+                alert("Hatalı şifre!");
+            }
+        }
+
         function listenToData() {
-            // SETTINGS LISTENER
             database.ref('settings').on('value', (s) => {
                 if(s.exists()) {
                     const settings = s.val();
-                    // Maintenance
                     if(settings.maintenance && !isAdmin) {
                         document.getElementById('maintenanceScreen').style.display = 'flex';
                     } else {
@@ -444,7 +472,6 @@
                     }
                     if(document.getElementById('maintenanceToggle')) document.getElementById('maintenanceToggle').checked = settings.maintenance;
                     
-                    // Chat Lock
                     isChatLocked = settings.chat_locked;
                     if(isChatLocked) {
                         document.getElementById('chatStatus').innerText = "Sohbet Kilitli 🔒";
@@ -487,9 +514,18 @@
             database.ref('channel_likes').on('value', (s) => {
                 if(s.exists()) { globalLikeCounts = s.val(); updateStatsInDOM(); }
             });
+            database.ref('global_chat').limitToLast(50).on('child_changed', (snapshot) => {
+                // Update likes/dislikes live without re-rendering everything
+                const msg = snapshot.val();
+                const likeEl = document.getElementById(`like-count-${snapshot.key}`);
+                const dislikeEl = document.getElementById(`dislike-count-${snapshot.key}`);
+                if(likeEl) likeEl.innerText = msg.likes || 0;
+                if(dislikeEl) dislikeEl.innerText = msg.dislikes || 0;
+            });
+            
             database.ref('global_chat').limitToLast(50).on('child_added', (snapshot) => {
                 const msg = snapshot.val();
-                appendMessage(msg.user, msg.text, msg.user === myUserName, snapshot.key, msg.uuid, msg.isAdminMsg, msg.replyTo, msg.image);
+                appendMessage(msg.user, msg.text, msg.user === myUserName, snapshot.key, msg.uuid, msg.isAdminMsg, msg.replyTo, msg.image, msg.likes, msg.dislikes);
             });
             database.ref('global_chat').on('child_removed', (snapshot) => {
                 const el = document.getElementById('msg-' + snapshot.key);
@@ -578,13 +614,8 @@
                 inp.value = "";
                 document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️";
                 document.getElementById('adminBtn').style.display = "flex";
-                // Bakım modunda olsa bile admin görebilmeli, sayfayı yenile
+                // Bakım modunda olsa bile admin görebilmeli
                 location.reload();
-                return;
-            }
-            
-            if(isChatLocked && !isAdmin) {
-                showToast("Sohbet şu an kilitli!", "fa-lock");
                 return;
             }
             
@@ -593,7 +624,9 @@
                 text: txt,
                 uuid: myUUID,
                 isAdminMsg: isAdmin,
-                time: Date.now()
+                time: Date.now(),
+                likes: 0,
+                dislikes: 0
             };
 
             if(currentReply) {
@@ -606,7 +639,36 @@
             cancelReply();
         }
         
-        function appendMessage(user, text, isMe, key, senderUUID, isAdminMsg, replyTo, image) {
+        function toggleChatReaction(key, type) {
+            // Check local state
+            let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}");
+            let current = myReactions[key]; // 'like' or 'dislike' or undefined
+
+            if (current === type) {
+                // Removing reaction (toggle off)
+                database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) - 1);
+                delete myReactions[key];
+                // Remove styling immediately for better UX
+                const btn = document.getElementById(`btn-${type}-${key}`);
+                if(btn) btn.classList.remove(`active-${type}`);
+            } else {
+                // Adding new reaction
+                if(current) {
+                    // Remove old one first
+                    database.ref(`global_chat/${key}/${current}s`).transaction(c => (c || 0) - 1);
+                    const oldBtn = document.getElementById(`btn-${current}-${key}`);
+                    if(oldBtn) oldBtn.classList.remove(`active-${current}`);
+                }
+                // Add new
+                database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) + 1);
+                myReactions[key] = type;
+                const newBtn = document.getElementById(`btn-${type}-${key}`);
+                if(newBtn) newBtn.classList.add(`active-${type}`);
+            }
+            localStorage.setItem('chat_reactions', JSON.stringify(myReactions));
+        }
+        
+        function appendMessage(user, text, isMe, key, senderUUID, isAdminMsg, replyTo, image, likes = 0, dislikes = 0) {
             const container = document.getElementById('chatContainer');
             const div = document.createElement('div');
             div.id = 'msg-' + key;
@@ -650,8 +712,24 @@
                     <button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button>
                 </div>`;
             }
+            
+            // Check active state for buttons
+            let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}");
+            let myReact = myReactions[key];
+            let likeClass = myReact === 'like' ? 'active-like' : '';
+            let dislikeClass = myReact === 'dislike' ? 'active-dislike' : '';
 
-            div.innerHTML = `${quoteHTML}<span class="msg-user">${userDisplay} ${replyIcon}</span>${contentHTML}${adminControls}`;
+            let actionsHTML = `
+            <div class="msg-actions">
+                <span id="btn-like-${key}" class="action-btn ${likeClass}" onclick="toggleChatReaction('${key}', 'like')">
+                    <i class="fas fa-thumbs-up"></i> <span id="like-count-${key}">${likes || 0}</span>
+                </span>
+                <span id="btn-dislike-${key}" class="action-btn ${dislikeClass}" onclick="toggleChatReaction('${key}', 'dislike')">
+                    <i class="fas fa-thumbs-down"></i> <span id="dislike-count-${key}">${dislikes || 0}</span>
+                </span>
+            </div>`;
+
+            div.innerHTML = `${quoteHTML}<span class="msg-user">${userDisplay} ${replyIcon}</span>${contentHTML}${actionsHTML}${adminControls}`;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
         }
@@ -660,7 +738,6 @@
         function openAdminPanel() {
             document.getElementById('adminPanelModal').style.display = 'flex';
             
-            // Rapor Sayısını Çek
             database.ref('reports').once('value', (s) => {
                 const count = s.exists() ? s.numChildren() : 0;
                 document.getElementById('reportCount').innerText = count;
@@ -693,7 +770,7 @@
 
         window.unbanUser = function(key) {
             database.ref('banned_users/' + key).remove().then(() => {
-                toggleBannedList(); toggleBannedList(); // Refresh
+                toggleBannedList(); toggleBannedList(); 
                 showToast("Yasak Kaldırıldı", "fa-check");
             });
         };
@@ -775,7 +852,6 @@
             }
         };
 
-        // ================= CUSTOM CONFIRM MODAL =================
         let pendingAction = null; 
 
         window.openConfirmModal = function(type, target) {
