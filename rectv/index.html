@@ -94,10 +94,8 @@
         .chat-send { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
         .chat-img-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
         .light-theme .chat-img-btn { background: rgba(0,0,0,0.1); color: #333; }
-        
         .chat-img { max-width: 100%; border-radius: 10px; margin-top: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
         
-        /* IMAGE PREVIEW MODAL */
         #imgPreviewModal { background: rgba(0,0,0,0.95); display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 5000; justify-content: center; align-items: center; }
         #imgPreviewModal img { max-width: 95%; max-height: 90%; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
         #imgPreviewModal i { position: absolute; top: 20px; right: 20px; font-size: 2rem; color: white; cursor: pointer; }
@@ -133,10 +131,20 @@
         #nameChangeModal .modal-box { text-align: center; }
         .custom-input { width: 90%; padding: 12px; margin: 15px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; outline: none; font-size: 1rem; text-align: center; }
         .light-theme .custom-input { background: white; color: #333; border: 1px solid #ccc; }
+        
+        /* MAINTENANCE SCREEN */
+        #maintenanceScreen { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#111; z-index:9000; color:#ffeb3b; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
     </style>
 </head>
 <body>
     <div id="toast" class="toast"></div>
+    
+    <div id="maintenanceScreen">
+        <i class="fas fa-tools" style="font-size:4rem; margin-bottom:20px;"></i>
+        <h1>BAKIM MODU</h1>
+        <p style="color:#fff; opacity:0.7;">Şu an sistem güncelleniyor.<br>Lütfen daha sonra tekrar deneyin.</p>
+    </div>
+
     <div id="bannedScreen" class="banned-screen">
         <i class="fas fa-ban" style="font-size:4rem; margin-bottom:20px;"></i>
         <div>ENGELLENDİNİZ</div>
@@ -173,13 +181,31 @@
         </div>
     </div>
 
+    <!-- ADMIN PANEL MODAL -->
     <div id="adminPanelModal" class="modal">
         <div class="modal-box">
             <h3 style="text-align:center; color:#ff0040; margin-top:0;">🛡️ Yönetici Paneli</h3>
             
             <div class="admin-modal-body">
-                <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:10px; margin-bottom:10px;">
-                    <h4 style="margin:0 0 10px 0;">📢 Açılış Mesajı</h4>
+                <!-- GENEL AYARLAR -->
+                <div class="admin-menu-btn" onclick="toggleSubMenu('settingsContainer')">
+                    <span>⚙️ Genel Ayarlar</span> <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="settingsContainer" class="admin-submenu">
+                    <div style="margin-bottom:10px;">
+                        <input type="checkbox" id="maintenanceToggle" onchange="toggleMaintenance()"> <label>🚧 Bakım Modu</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="chatLockToggle" onchange="toggleChatLock()"> <label>🔒 Sohbeti Kilitle</label>
+                    </div>
+                    <button class="delete-all-btn" style="background:#555; margin-top:10px;" onclick="clearChat()">🧹 Sohbeti Temizle</button>
+                </div>
+
+                <!-- AÇILIŞ MESAJI -->
+                <div class="admin-menu-btn" onclick="toggleSubMenu('toastContainer')">
+                    <span>📢 Açılış Mesajı</span> <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="toastContainer" class="admin-submenu">
                     <input type="text" id="adminToastInput" class="custom-input" placeholder="Mesajınız..." style="width:100%; box-sizing:border-box;">
                     <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
                         <input type="checkbox" id="adminToastActive" style="width:20px; height:20px;"> <label for="adminToastActive">Aktif Et</label>
@@ -187,16 +213,21 @@
                     <button onclick="saveStartupMessage()" class="btn-confirm" style="width:100%; margin-top:10px;">Kaydet</button>
                 </div>
 
-                <div class="admin-menu-btn" onclick="toggleReports()">
-                    <span>⚠️ Kullanıcı Bildirimleri (<span id="reportCount">0</span>)</span>
-                    <i class="fas fa-chevron-down"></i>
+                <!-- YASAKLILAR -->
+                <div class="admin-menu-btn" onclick="toggleBannedList()">
+                    <span>🚫 Yasaklı Kullanıcılar</span> <i class="fas fa-chevron-down"></i>
                 </div>
-                
+                <div id="bannedContainer" class="admin-submenu">
+                    <div id="bannedList"><p style="opacity:0.5">Yükleniyor...</p></div>
+                </div>
+
+                <!-- RAPORLAR -->
+                <div class="admin-menu-btn" onclick="toggleReports()">
+                    <span>⚠️ Bildirimler (<span id="reportCount">0</span>)</span> <i class="fas fa-chevron-down"></i>
+                </div>
                 <div id="reportsContainer" class="admin-submenu">
                     <button class="delete-all-btn" onclick="deleteAllReports()"><i class="fas fa-trash-alt"></i> TÜMÜNÜ SİL</button>
-                    <div id="adminReportsList">
-                        <p style="text-align:center; opacity:0.5;">Yükleniyor...</p>
-                    </div>
+                    <div id="adminReportsList"><p style="opacity:0.5">Yükleniyor...</p></div>
                 </div>
             </div>
 
@@ -244,7 +275,6 @@
 
         <div class="chat-input-area">
             <div class="input-row">
-                <!-- RESİM YÜKLEME BUTONU -->
                 <button class="chat-img-btn" onclick="document.getElementById('imgUpload').click()">
                     <i class="fas fa-image"></i>
                 </button>
@@ -294,6 +324,7 @@
         let myUUID = localStorage.getItem('user_uuid');
         let isAdmin = localStorage.getItem('is_admin') === 'true';
         let currentReply = null; 
+        let isChatLocked = false;
 
         const ADMIN_PASS = "burhan_baba_72";
 
@@ -349,13 +380,12 @@
             setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000);
         }
 
-        // --- RESİM İŞLEME VE SIKIŞTIRMA ---
         function handleImageUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
+            if(isChatLocked && !isAdmin) { showToast("Sohbet kilitli!", "fa-lock"); return; }
             
             showToast("Resim işleniyor...", "fa-cog fa-spin");
-            
             const reader = new FileReader();
             reader.onload = (e) => {
                 const img = new Image();
@@ -363,30 +393,17 @@
                     const canvas = document.createElement('canvas');
                     let width = img.width;
                     let height = img.height;
-                    
-                    // Maksimum boyut 600px
                     const MAX_WIDTH = 600;
-                    if (width > MAX_WIDTH) {
-                        height *= MAX_WIDTH / width;
-                        width = MAX_WIDTH;
-                    }
-                    
-                    canvas.width = width;
-                    canvas.height = height;
+                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                    canvas.width = width; canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-                    
-                    // Sıkıştırılmış veri (JPEG %60 kalite)
                     const dataURL = canvas.toDataURL('image/jpeg', 0.6);
-                    
-                    // Firebase'e gönder
                     sendImageMsg(dataURL);
                 };
                 img.src = e.target.result;
             };
             reader.readAsDataURL(file);
-            
-            // Input'u temizle (aynı resim tekrar seçilebilsin)
             event.target.value = '';
         }
 
@@ -402,13 +419,39 @@
             showToast("Resim gönderildi", "fa-check");
         }
 
-        // --- RESİM ÖNİZLEME ---
         function showImagePreview(src) {
             document.getElementById('imgPreview').src = src;
             document.getElementById('imgPreviewModal').style.display = 'flex';
         }
 
         function listenToData() {
+            // SETTINGS LISTENER
+            database.ref('settings').on('value', (s) => {
+                if(s.exists()) {
+                    const settings = s.val();
+                    // Maintenance
+                    if(settings.maintenance && !isAdmin) {
+                        document.getElementById('maintenanceScreen').style.display = 'flex';
+                    } else {
+                        document.getElementById('maintenanceScreen').style.display = 'none';
+                    }
+                    if(document.getElementById('maintenanceToggle')) document.getElementById('maintenanceToggle').checked = settings.maintenance;
+                    
+                    // Chat Lock
+                    isChatLocked = settings.chat_locked;
+                    if(isChatLocked) {
+                        document.getElementById('chatStatus').innerText = "Sohbet Kilitli 🔒";
+                        document.getElementById('msgInput').placeholder = "Sohbet yönetici tarafından kilitlendi.";
+                        document.getElementById('msgInput').disabled = !isAdmin;
+                    } else {
+                        document.getElementById('chatStatus').innerText = isAdmin ? "Canlı Sohbet (YÖNETİCİ) 👮‍♂️" : "Canlı Sohbet 🟢";
+                        document.getElementById('msgInput').placeholder = "Mesaj yaz...";
+                        document.getElementById('msgInput').disabled = false;
+                    }
+                    if(document.getElementById('chatLockToggle')) document.getElementById('chatLockToggle').checked = settings.chat_locked;
+                }
+            });
+
             database.ref('startup_message').on('value', (s) => {
                 if(s.exists()) {
                     const data = s.val();
@@ -528,6 +571,13 @@
                 inp.value = "";
                 document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️";
                 document.getElementById('adminBtn').style.display = "flex";
+                // Bakım modunda olsa bile admin görebilmeli, sayfayı yenile
+                location.reload();
+                return;
+            }
+            
+            if(isChatLocked && !isAdmin) {
+                showToast("Sohbet şu an kilitli!", "fa-lock");
                 return;
             }
             
@@ -571,7 +621,6 @@
                 </div>`;
             }
 
-            // İçerik: Yazı veya Resim
             let contentHTML = "";
             if (image) {
                 contentHTML = `<img src="${image}" class="chat-img" onclick="showImagePreview('${image}')">`;
@@ -600,19 +649,47 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        // ================= ADMIN PANEL LOGIC =================
+        // ================= ADMIN PANEL LOGIC (AKORDİYON) =================
         function openAdminPanel() {
             document.getElementById('adminPanelModal').style.display = 'flex';
-            const list = document.getElementById('adminReportsList');
-            list.innerHTML = '<p style="text-align:center;">Yükleniyor...</p>';
             
+            // Rapor Sayısını Çek
             database.ref('reports').once('value', (s) => {
                 const count = s.exists() ? s.numChildren() : 0;
                 document.getElementById('reportCount').innerText = count;
-                list.innerHTML = '';
-                document.getElementById('reportsContainer').classList.remove('active');
             });
         }
+
+        function toggleSubMenu(id) {
+            const el = document.getElementById(id);
+            el.classList.toggle('active');
+        }
+
+        function toggleBannedList() {
+            const container = document.getElementById('bannedContainer');
+            container.classList.toggle('active');
+            if(container.classList.contains('active')) {
+                const list = document.getElementById('bannedList');
+                list.innerHTML = '<p style="opacity:0.5;">Yükleniyor...</p>';
+                database.ref('banned_users').once('value', (s) => {
+                    list.innerHTML = '';
+                    if(!s.exists()) { list.innerHTML = '<p style="opacity:0.5;">Yasaklı kullanıcı yok.</p>'; return; }
+                    s.forEach(child => {
+                        const div = document.createElement('div');
+                        div.style = "display:flex; justify-content:space-between; margin-bottom:5px; background:rgba(255,255,255,0.1); padding:5px; border-radius:5px;";
+                        div.innerHTML = `<span>User ID: ${child.key.substring(0,8)}...</span> <button onclick="unbanUser('${child.key}')" style="background:#4caf50; border:none; color:white; border-radius:3px;">Aç</button>`;
+                        list.appendChild(div);
+                    });
+                });
+            }
+        }
+
+        window.unbanUser = function(key) {
+            database.ref('banned_users/' + key).remove().then(() => {
+                toggleBannedList(); toggleBannedList(); // Refresh
+                showToast("Yasak Kaldırıldı", "fa-check");
+            });
+        };
 
         function toggleReports() {
             const container = document.getElementById('reportsContainer');
@@ -670,6 +747,25 @@
             const active = document.getElementById('adminToastActive').checked;
             database.ref('startup_message').set({ text: msg, active: active });
             showToast("Mesaj Güncellendi!", "fa-save");
+        };
+        
+        window.toggleMaintenance = function() {
+            const val = document.getElementById('maintenanceToggle').checked;
+            database.ref('settings/maintenance').set(val);
+            showToast(val ? "Bakım Modu AÇIK" : "Bakım Modu KAPALI", "fa-tools");
+        };
+        
+        window.toggleChatLock = function() {
+            const val = document.getElementById('chatLockToggle').checked;
+            database.ref('settings/chat_locked').set(val);
+            showToast(val ? "Sohbet KİLİTLENDİ" : "Sohbet AÇILDI", "fa-lock");
+        };
+        
+        window.clearChat = function() {
+            if(confirm("DİKKAT: Tüm sohbet geçmişi silinecek!")) {
+                database.ref('global_chat').remove();
+                showToast("Sohbet Temizlendi", "fa-trash");
+            }
         };
 
         // ================= CUSTOM CONFIRM MODAL =================
