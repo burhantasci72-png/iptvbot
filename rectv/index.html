@@ -18,6 +18,19 @@
         .top-bar { padding: 15px 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: background 0.3s; }
         .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #ff0040, #ff4d00); -webkit-background-clip: text; color: transparent; }
         
+        /* MARQUEE (KAYAN YAZI) - YENİ */
+        .marquee-container {
+            background: linear-gradient(90deg, #ff0040, #ff4d00);
+            color: white; font-size: 0.9rem; font-weight: bold;
+            padding: 5px 0; overflow: hidden; white-space: nowrap;
+            position: relative; display: none; /* Başlangıçta gizli */
+        }
+        .marquee-text {
+            display: inline-block; padding-left: 100%;
+            animation: marquee 15s linear infinite;
+        }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
         .header-actions { display: flex; align-items: center; gap: 12px; }
         .theme-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; transition: all 0.3s; }
         .light-theme .theme-btn { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #1a1a1a; }
@@ -82,11 +95,10 @@
         .reply-preview-bar { background: #2a2a2a; border-top: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; display: none; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #ddd; border-left: 4px solid var(--primary); }
         .light-theme .reply-preview-bar { background: #f0f0f0; color: #333; }
         
-        /* MSG ACTIONS - UPDATED COLORS */
+        /* MSG ACTIONS - YELLOW LIKE */
         .msg-actions { display: flex; gap: 10px; margin-top: 5px; justify-content: flex-end; font-size: 0.75rem; opacity: 0.9; }
         .action-btn { cursor: pointer; display: flex; align-items: center; gap: 3px; transition: all 0.2s; color: rgba(255,255,255,0.7); }
         .action-btn:hover { opacity: 1; color: white; }
-        /* NEW: YELLOW LIKE BUTTON */
         .action-btn.active-like { color: #ffeb3b; font-weight: bold; text-shadow: 0 0 5px rgba(0,0,0,0.5); transform: scale(1.1); }
         .action-btn.active-dislike { color: #f44336; font-weight: bold; text-shadow: 0 0 5px rgba(0,0,0,0.5); transform: scale(1.1); }
         .light-theme .action-btn { color: rgba(0,0,0,0.6); }
@@ -123,11 +135,10 @@
         .admin-modal-body { overflow-y: auto; text-align: left; padding-right: 5px; flex: 1; }
         #modalCloseBtn2 { position: absolute; bottom: 20px; left: 5%; width: 90%; background: #333; box-shadow: 0 -2px 10px rgba(0,0,0,0.5); }
         
-        /* ADMIN PANEL COLOR OVERRIDES */
+        /* ADMIN PANEL COLOR OVERRIDES (LIGHT THEME FIXED) */
         .admin-menu-btn { background: rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; margin-top: 15px; color: #ffeb3b; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255, 235, 59, 0.3); }
         .admin-menu-btn:hover { background: rgba(255, 235, 59, 0.1); }
         
-        /* LIGHT THEME FOR ADMIN PANEL */
         .light-theme .admin-menu-btn { color: #b35900; background: #fff; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .light-theme .admin-menu-btn:hover { background: #fff8e1; }
         .light-theme .admin-submenu { border-left: 2px solid #b35900; }
@@ -154,6 +165,13 @@
         /* EMERGENCY LOGIN INPUT */
         .emergency-input { background: rgba(255,255,255,0.1); border: 1px solid #ffeb3b; color: #fff; padding: 10px; margin-top: 20px; border-radius: 5px; width: 200px; text-align: center; }
         .emergency-btn { background: #ffeb3b; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-top: 10px; cursor: pointer; }
+        
+        /* STAT BOXES (YENİ) */
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+        .stat-box { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; text-align: center; }
+        .light-theme .stat-box { background: #eee; }
+        .stat-num { display: block; font-size: 1.2rem; font-weight: bold; color: var(--primary); }
+        .stat-label { font-size: 0.7rem; opacity: 0.7; }
     </style>
 </head>
 <body>
@@ -211,6 +229,34 @@
             <h3 style="text-align:center; color:#ff0040; margin-top:0;">🛡️ Yönetici Paneli</h3>
             
             <div class="admin-modal-body">
+                <!-- ISTATISTIKLER (YENİ) -->
+                <div class="stat-grid">
+                    <div class="stat-box">
+                        <span class="stat-num" id="statViews">0</span>
+                        <span class="stat-label">İzlenme</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num" id="statLikes">0</span>
+                        <span class="stat-label">Beğeni</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num" id="statMsgs">0</span>
+                        <span class="stat-label">Mesaj</span>
+                    </div>
+                </div>
+
+                <!-- HABER BANDI (YENİ) -->
+                <div class="admin-menu-btn" onclick="toggleSubMenu('marqueeContainer')">
+                    <span>📰 Haber Bandı (Kayan Yazı)</span> <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="marqueeContainer" class="admin-submenu">
+                    <input type="text" id="marqueeInput" class="custom-input" placeholder="Kayan yazı metni..." style="width:100%; box-sizing:border-box;">
+                    <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
+                        <input type="checkbox" id="marqueeActive" style="width:20px; height:20px;"> <label for="marqueeActive" style="color:inherit">Aktif Et</label>
+                    </div>
+                    <button onclick="saveMarquee()" class="btn-confirm" style="width:100%; margin-top:10px;">Kaydet</button>
+                </div>
+
                 <!-- GENEL AYARLAR -->
                 <div class="admin-menu-btn" onclick="toggleSubMenu('settingsContainer')">
                     <span>⚙️ Genel Ayarlar</span> <i class="fas fa-chevron-down"></i>
@@ -223,6 +269,10 @@
                         <input type="checkbox" id="chatLockToggle" onchange="toggleChatLock()"> <label style="color:inherit">🔒 Sohbeti Kilitle</label>
                     </div>
                     <button class="delete-all-btn" style="background:#555; margin-top:10px;" onclick="clearChat()">🧹 Sohbeti Temizle</button>
+                    <div style="margin-top:10px; display:flex; gap:5px;">
+                        <button onclick="resetStats('views')" style="flex:1; background:#888; border:none; color:white; padding:5px; border-radius:5px;">İzlenme Sıfırla</button>
+                        <button onclick="resetStats('likes')" style="flex:1; background:#888; border:none; color:white; padding:5px; border-radius:5px;">Beğeni Sıfırla</button>
+                    </div>
                 </div>
 
                 <!-- AÇILIŞ MESAJI -->
@@ -257,6 +307,11 @@
 
             <button onclick="document.getElementById('adminPanelModal').style.display='none'" id="modalCloseBtn2">Kapat</button>
         </div>
+    </div>
+
+    <!-- MARQUEE BAR -->
+    <div id="marqueeBar" class="marquee-container">
+        <span id="marqueeText" class="marquee-text"></span>
     </div>
 
     <div class="top-bar">
@@ -463,6 +518,7 @@
         }
 
         function listenToData() {
+            // SETTINGS LISTENER
             database.ref('settings').on('value', (s) => {
                 if(s.exists()) {
                     const settings = s.val();
@@ -484,6 +540,18 @@
                         document.getElementById('msgInput').disabled = false;
                     }
                     if(document.getElementById('chatLockToggle')) document.getElementById('chatLockToggle').checked = settings.chat_locked;
+                    
+                    // MARQUEE UPDATE
+                    if(settings.marquee && settings.marquee.active) {
+                        document.getElementById('marqueeBar').style.display = 'block';
+                        document.getElementById('marqueeText').innerText = settings.marquee.text;
+                    } else {
+                        document.getElementById('marqueeBar').style.display = 'none';
+                    }
+                    if(document.getElementById('marqueeInput')) {
+                        document.getElementById('marqueeInput').value = (settings.marquee ? settings.marquee.text : "");
+                        document.getElementById('marqueeActive').checked = (settings.marquee ? settings.marquee.active : false);
+                    }
                 }
             });
 
@@ -510,10 +578,24 @@
             });
 
             database.ref('channel_views').on('value', (s) => {
-                if(s.exists()) { globalViewCounts = s.val(); updateStatsInDOM(); }
+                if(s.exists()) { 
+                    globalViewCounts = s.val(); 
+                    updateStatsInDOM();
+                    // ADMIN PANEL STATS
+                    let total = 0;
+                    Object.values(globalViewCounts).forEach(v => total += v);
+                    document.getElementById('statViews').innerText = total;
+                }
             });
             database.ref('channel_likes').on('value', (s) => {
-                if(s.exists()) { globalLikeCounts = s.val(); updateStatsInDOM(); }
+                if(s.exists()) { 
+                    globalLikeCounts = s.val(); 
+                    updateStatsInDOM();
+                    // ADMIN PANEL STATS
+                    let total = 0;
+                    Object.values(globalLikeCounts).forEach(v => total += v);
+                    document.getElementById('statLikes').innerText = total;
+                }
             });
             database.ref('global_chat').limitToLast(50).on('child_changed', (snapshot) => {
                 const msg = snapshot.val();
@@ -523,6 +605,10 @@
                 if(dislikeEl) dislikeEl.innerText = msg.dislikes || 0;
             });
             
+            database.ref('global_chat').on('value', (s) => {
+                 if(s.exists()) document.getElementById('statMsgs').innerText = s.numChildren();
+            });
+
             database.ref('global_chat').limitToLast(50).on('child_added', (snapshot) => {
                 const msg = snapshot.val();
                 appendMessage(msg.user, msg.text, msg.user === myUserName, snapshot.key, msg.uuid, msg.isAdminMsg, msg.replyTo, msg.image, msg.likes, msg.dislikes);
@@ -726,7 +812,7 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        // ================= ADMIN PANEL LOGIC =================
+        // ================= ADMIN PANEL LOGIC (AKORDİYON) =================
         function openAdminPanel() {
             document.getElementById('adminPanelModal').style.display = 'flex';
             
@@ -823,6 +909,20 @@
             const active = document.getElementById('adminToastActive').checked;
             database.ref('startup_message').set({ text: msg, active: active });
             showToast("Mesaj Güncellendi!", "fa-save");
+        };
+        
+        window.saveMarquee = function() {
+            const msg = document.getElementById('marqueeInput').value;
+            const active = document.getElementById('marqueeActive').checked;
+            database.ref('settings/marquee').set({ text: msg, active: active });
+            showToast("Haber Bandı Güncellendi!", "fa-save");
+        };
+        
+        window.resetStats = function(type) {
+            if(confirm(type === 'views' ? "Tüm izlenmeler sıfırlansın mı?" : "Tüm beğeniler sıfırlansın mı?")) {
+                database.ref(type === 'views' ? 'channel_views' : 'channel_likes').remove();
+                showToast("İstatistikler Sıfırlandı", "fa-trash");
+            }
         };
         
         window.toggleMaintenance = function() {
