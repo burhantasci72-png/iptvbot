@@ -56,6 +56,25 @@
         .light-theme .toast { background-color: #fff; color: #333; border-color: #ddd; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         .toast.show { visibility: visible; opacity: 1; bottom: 90px; }
         
+        /* COUNTDOWN & POLL STYLES (YENİ) */
+        .feature-container { margin: 15px; display: flex; flex-direction: column; gap: 15px; }
+        
+        .countdown-box { background: linear-gradient(135deg, #1a1825, #000); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; }
+        .countdown-title { color: var(--primary); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .countdown-timer { display: flex; justify-content: center; gap: 10px; font-size: 1.5rem; font-weight: bold; color: white; font-family: monospace; }
+        .time-unit { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 8px; min-width: 40px; }
+        .time-label { font-size: 0.6rem; opacity: 0.7; font-family: sans-serif; margin-top: 2px; }
+        .live-blink { color: #ff0040; animation: blink 1s infinite; font-size: 2rem; font-weight: 800; display: none; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        
+        .poll-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; display: none; }
+        .poll-question { font-weight: bold; margin-bottom: 10px; color: var(--text); display: block; }
+        .poll-option { margin-bottom: 8px; position: relative; cursor: pointer; }
+        .poll-bar-bg { background: rgba(255,255,255,0.1); height: 35px; border-radius: 8px; overflow: hidden; position: relative; }
+        .poll-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #ff4d00); width: 0%; transition: width 0.5s ease; opacity: 0.7; }
+        .poll-text { position: absolute; top: 0; left: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
+        .poll-percent { position: absolute; top: 0; right: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
+
         @keyframes pulse-beat { 0% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); } 50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(0, 210, 255, 0.6); } 100% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); } }
         .chat-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: linear-gradient(135deg, #00d2ff, #3a7bd5); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 200; animation: pulse-beat 2s infinite ease-in-out; }
         .chat-btn:hover { animation: none; transform: scale(1.1); }
@@ -64,17 +83,8 @@
         .chat-modal.active { bottom: 0; }
         .chat-header { padding: 15px; background: rgba(0,0,0,0.2); display: flex; justify-content: space-between; align-items: center; border-radius: 20px 20px 0 0; }
         .chat-close { font-size: 1.5rem; cursor: pointer; color: var(--text); }
-        
-        /* FIX: CHAT RULES - DEFAULT HIDDEN */
-        .chat-rules { 
-            background: rgba(255, 0, 64, 0.15); border-bottom: 1px solid rgba(255, 0, 64, 0.3); 
-            color: #ff4d4d; padding: 10px; font-size: 0.8rem; text-align: center; font-weight: bold; 
-            display: flex; align-items: center; justify-content: center; gap: 8px; 
-            transition: all 0.5s ease-in-out; opacity: 1; max-height: 100px;
-        }
-        .chat-rules.hidden { 
-            opacity: 0; max-height: 0; padding: 0; margin: 0; overflow: hidden; border: none; 
-        }
+        .chat-rules { background: rgba(255, 0, 64, 0.15); border-bottom: 1px solid rgba(255, 0, 64, 0.3); color: #ff4d4d; padding: 10px; font-size: 0.8rem; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.5s ease-in-out; opacity: 1; max-height: 100px; }
+        .chat-rules.hidden { opacity: 0; max-height: 0; padding: 0; margin: 0; overflow: hidden; border: none; }
         .light-theme .chat-rules { background: #ffe6e6; color: #cc0000; }
 
         .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
@@ -204,10 +214,39 @@
         </div>
     </div>
 
+    <!-- ADMIN PANEL MODAL -->
     <div id="adminPanelModal" class="modal">
         <div class="modal-box">
             <h3 style="text-align:center; color:#ff0040; margin-top:0;">🛡️ Yönetici Paneli</h3>
+            
             <div class="admin-modal-body">
+                <!-- POLL & COUNTDOWN ADMIN SECTION -->
+                <div class="admin-menu-btn" onclick="toggleSubMenu('pollAdmin')">
+                    <span>📊 Anket Yönetimi</span> <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="pollAdmin" class="admin-submenu">
+                    <input type="text" id="pollQuestion" class="custom-input" placeholder="Soru: Örn. Kim Kazanır?">
+                    <input type="text" id="pollOpt1" class="custom-input" placeholder="Seçenek 1 (Örn. GS)">
+                    <input type="text" id="pollOpt2" class="custom-input" placeholder="Seçenek 2 (Örn. FB)">
+                    <div style="display:flex; gap:5px;">
+                        <button onclick="savePoll()" class="btn-confirm" style="flex:1;">Başlat</button>
+                        <button onclick="resetPoll()" class="btn-cancel" style="flex:1;">Sıfırla</button>
+                    </div>
+                </div>
+
+                <div class="admin-menu-btn" onclick="toggleSubMenu('countdownAdmin')">
+                    <span>⏳ Geri Sayım Yönetimi</span> <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="countdownAdmin" class="admin-submenu">
+                    <input type="text" id="cdTitle" class="custom-input" placeholder="Başlık: Örn. DERBİ MAÇI">
+                    <input type="datetime-local" id="cdDate" class="custom-input" style="color-scheme: dark;">
+                    <div style="display:flex; gap:5px;">
+                        <button onclick="saveCountdown()" class="btn-confirm" style="flex:1;">Başlat</button>
+                        <button onclick="stopCountdown()" class="btn-cancel" style="flex:1;">Durdur</button>
+                    </div>
+                </div>
+
+                <!-- OTHER ADMIN SECTIONS -->
                 <div class="admin-menu-btn" onclick="toggleSubMenu('settingsContainer')"><span>⚙️ Genel Ayarlar</span> <i class="fas fa-chevron-down"></i></div>
                 <div id="settingsContainer" class="admin-submenu">
                     <div style="margin-bottom:10px;"><input type="checkbox" id="maintenanceToggle" onchange="toggleMaintenance()"> <label style="color:inherit">🚧 Bakım Modu</label></div>
@@ -222,7 +261,7 @@
                     <button onclick="saveStartupMessage()" class="btn-confirm" style="width:100%; margin-top:10px;">Kaydet</button>
                 </div>
 
-                <div class="admin-menu-btn" onclick="toggleBannedList()"><span>🚫 Yasaklı Kullanıcılar</span> <i class="fas fa-chevron-down"></i></div>
+                <div class="admin-menu-btn" onclick="toggleBannedList()"><span>🚫 Yasaklılar</span> <i class="fas fa-chevron-down"></i></div>
                 <div id="bannedContainer" class="admin-submenu"><div id="bannedList"><p style="opacity:0.5">Yükleniyor...</p></div></div>
 
                 <div class="admin-menu-btn" onclick="toggleReports()"><span>⚠️ Bildirimler (<span id="reportCount">0</span>)</span> <i class="fas fa-chevron-down"></i></div>
@@ -243,6 +282,37 @@
             <a href="https://t.me/inadinatv" id="telegramBtn" style="color:white; font-size:1.4rem;"><i class="fab fa-telegram"></i></a>
         </div>
     </div>
+
+    <!-- FEATURE CONTAINER (COUNTDOWN & POLL) -->
+    <div class="feature-container" id="featureContainer">
+        <!-- COUNTDOWN -->
+        <div id="countdownBox" class="countdown-box">
+            <div id="countdownTitle" class="countdown-title">GERİ SAYIM</div>
+            <div id="countdownTimer" class="countdown-timer">
+                <div class="time-unit"><span id="cdDays">00</span><span class="time-label">GÜN</span></div>:
+                <div class="time-unit"><span id="cdHours">00</span><span class="time-label">SAAT</span></div>:
+                <div class="time-unit"><span id="cdMins">00</span><span class="time-label">DAK</span></div>:
+                <div class="time-unit"><span id="cdSecs">00</span><span class="time-label">SAN</span></div>
+            </div>
+            <div id="liveIndicator" class="live-blink">CANLI 🔴</div>
+        </div>
+
+        <!-- POLL -->
+        <div id="pollBox" class="poll-box">
+            <span id="displayPollQuestion" class="poll-question">Anket Yükleniyor...</span>
+            <div class="poll-option" onclick="votePoll('opt1')">
+                <div class="poll-bar-bg"><div id="bar1" class="poll-bar-fill"></div></div>
+                <div class="poll-text" id="displayOpt1">A</div>
+                <div class="poll-percent" id="percent1">0%</div>
+            </div>
+            <div class="poll-option" onclick="votePoll('opt2')">
+                <div class="poll-bar-bg"><div id="bar2" class="poll-bar-fill"></div></div>
+                <div class="poll-text" id="displayOpt2">B</div>
+                <div class="poll-percent" id="percent2">0%</div>
+            </div>
+        </div>
+    </div>
+
     <div class="container"><div id="list"></div></div>
     
     <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">Daha Fazla Göster</button>
@@ -250,7 +320,6 @@
     <div class="chat-btn" onclick="toggleChat()"><i class="fas fa-comment-dots"></i></div>
     <div class="admin-panel-btn" id="adminBtn" onclick="openAdminPanel()"><i class="fas fa-shield-alt"></i></div>
     
-    <!-- CHAT MODAL (FIXED - ADDED HIDDEN CLASS) -->
     <div class="chat-modal" id="chatModal">
         <div class="chat-header">
             <div style="display:flex; align-items:center; gap:10px;">
@@ -259,14 +328,12 @@
             </div>
             <i class="fas fa-times chat-close" onclick="toggleChat()"></i>
         </div>
-        
-        <div class="chat-rules hidden" id="chatRulesBanner">
-            <i class="fas fa-exclamation-triangle"></i>
-            UYARI: Argo ve sohbet dışı mesaj atanlar SÜRESİZ banlanır!
-        </div>
-
+        <div class="chat-rules" id="chatRulesBanner"><i class="fas fa-exclamation-triangle"></i> UYARI: Argo ve sohbet dışı mesaj atanlar SÜRESİZ banlanır!</div>
         <div class="chat-messages" id="chatContainer"></div>
-        <div id="replyPreviewBar" class="reply-preview-bar"><span><i class="fas fa-reply"></i> <b id="replyToUser">Kullanıcı</b>: <i id="replyToText">Mesaj...</i></span><i class="fas fa-times" onclick="cancelReply()" style="cursor:pointer; font-size:1.2rem;"></i></div>
+        <div id="replyPreviewBar" class="reply-preview-bar">
+            <span><i class="fas fa-reply"></i> <b id="replyToUser">Kullanıcı</b>: <i id="replyToText">Mesaj...</i></span>
+            <i class="fas fa-times" onclick="cancelReply()" style="cursor:pointer; font-size:1.2rem;"></i>
+        </div>
         <div class="chat-input-area">
             <div class="input-row">
                 <button class="chat-img-btn" onclick="document.getElementById('imgUpload').click()"><i class="fas fa-image"></i></button>
@@ -316,6 +383,8 @@
         let isAdmin = localStorage.getItem('is_admin') === 'true';
         let currentReply = null; 
         let isChatLocked = false;
+        let countdownInterval;
+
         const ADMIN_PASS = "burhan_baba_72";
 
         if(!myUUID) { myUUID = 'user_' + Date.now() + '_' + Math.floor(Math.random() * 1000); localStorage.setItem('user_uuid', myUUID); }
@@ -326,37 +395,148 @@
         function getUserColor(username) { let hash = 0; for (let i = 0; i < username.length; i++) { hash = username.charCodeAt(i) + ((hash << 5) - hash); } const hue = Math.abs(hash % 360); return `hsl(${hue}, 70%, 45%)`; }
         function initPresence() { const onlineRef = database.ref('online_users'); const myCon = onlineRef.push(); myCon.onDisconnect().remove(); myCon.set(true); onlineRef.on('value', (s) => { document.getElementById('onlineCount').innerText = s.numChildren(); }); }
         function showToast(message, icon="fa-info-circle") { const t = document.getElementById('toast'); t.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`; t.className = "toast show"; setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000); }
-        function handleImageUpload(event) { const file = event.target.files[0]; if (!file) return; if(isChatLocked && !isAdmin) { showToast("Sohbet kilitli!", "fa-lock"); return; } showToast("Resim işleniyor...", "fa-cog fa-spin"); const reader = new FileReader(); reader.onload = (e) => { const img = new Image(); img.onload = () => { const canvas = document.createElement('canvas'); let width = img.width; let height = img.height; const MAX_WIDTH = 600; if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; } canvas.width = width; canvas.height = height; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height); const dataURL = canvas.toDataURL('image/jpeg', 0.6); sendImageMsg(dataURL); }; img.src = e.target.result; }; reader.readAsDataURL(file); event.target.value = ''; }
-        function sendImageMsg(imgData) { const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, image: imgData, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 }; database.ref('global_chat').push(messageData); showToast("Resim gönderildi", "fa-check"); }
-        function showImagePreview(src) { document.getElementById('imgPreview').src = src; document.getElementById('imgPreviewModal').style.display = 'flex'; }
-        function emergencyLogin() { const pass = document.getElementById('emergencyPass').value; if(pass === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; alert("Yönetici girişi başarılı!"); location.reload(); } else { alert("Hatalı şifre!"); } }
         
-        // FIX: TOGGLE LOGIC
-        let rulesTimeout;
-        function toggleChat() {
-            const modal = document.getElementById('chatModal');
-            modal.classList.toggle('active');
-            
-            if(modal.classList.contains('active')) {
-                const rules = document.getElementById('chatRulesBanner');
-                // ÖNCE GÖSTER (Hidden'ı kaldır)
-                rules.classList.remove('hidden');
+        // --- COUNTDOWN LOGIC ---
+        function updateCountdownDisplay(targetTime) {
+            if (countdownInterval) clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = targetTime - now;
                 
-                // ESKİ ZAMANLAYICIYI SİL
-                if(rulesTimeout) clearTimeout(rulesTimeout);
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById("countdownTimer").style.display = "none";
+                    document.getElementById("liveIndicator").style.display = "block";
+                    return;
+                }
                 
-                // YENİ ZAMANLAYICI BAŞLAT (4 Saniye Sonra Gizle)
-                rulesTimeout = setTimeout(() => {
-                    rules.classList.add('hidden');
-                }, 4000);
-            }
+                document.getElementById("countdownTimer").style.display = "flex";
+                document.getElementById("liveIndicator").style.display = "none";
+                
+                document.getElementById("cdDays").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
+                document.getElementById("cdHours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById("cdMins").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById("cdSecs").innerText = Math.floor((distance % (1000 * 60)) / 1000);
+            }, 1000);
         }
+
+        // --- POLL LOGIC ---
+        function votePoll(option) {
+            if(localStorage.getItem('poll_voted') === 'true') {
+                showToast("Zaten oy kullandınız!", "fa-exclamation");
+                return;
+            }
+            database.ref('extras/poll/votes_' + option).transaction(c => (c || 0) + 1);
+            localStorage.setItem('poll_voted', 'true');
+            showToast("Oyunuz kaydedildi", "fa-check");
+        }
+
+        function updatePollDisplay(data) {
+            const total = (data.votes_opt1 || 0) + (data.votes_opt2 || 0);
+            const p1 = total === 0 ? 0 : Math.round((data.votes_opt1 / total) * 100);
+            const p2 = total === 0 ? 0 : Math.round((data.votes_opt2 / total) * 100);
+            
+            document.getElementById('displayPollQuestion').innerText = data.question;
+            document.getElementById('displayOpt1').innerText = data.opt1;
+            document.getElementById('displayOpt2').innerText = data.opt2;
+            
+            document.getElementById('bar1').style.width = p1 + "%";
+            document.getElementById('percent1').innerText = p1 + "%";
+            document.getElementById('bar2').style.width = p2 + "%";
+            document.getElementById('percent2').innerText = p2 + "%";
+        }
+
+        // --- ADMIN FUNCTIONS FOR POLL & COUNTDOWN ---
+        window.savePoll = function() {
+            const q = document.getElementById('pollQuestion').value;
+            const o1 = document.getElementById('pollOpt1').value;
+            const o2 = document.getElementById('pollOpt2').value;
+            if(q && o1 && o2) {
+                database.ref('extras/poll').set({
+                    active: true, question: q, opt1: o1, opt2: o2, votes_opt1: 0, votes_opt2: 0
+                });
+                showToast("Anket Başlatıldı", "fa-check");
+            }
+        };
+        window.resetPoll = function() {
+            database.ref('extras/poll').set({ active: false });
+            showToast("Anket Sıfırlandı", "fa-trash");
+        };
+        window.saveCountdown = function() {
+            const t = document.getElementById('cdTitle').value;
+            const d = document.getElementById('cdDate').value;
+            if(t && d) {
+                const ts = new Date(d).getTime();
+                database.ref('extras/countdown').set({ active: true, title: t, target: ts });
+                showToast("Sayaç Başlatıldı", "fa-clock");
+            }
+        };
+        window.stopCountdown = function() {
+            database.ref('extras/countdown').set({ active: false });
+            showToast("Sayaç Durduruldu", "fa-stop");
+        };
+
+        // --- OTHER LOGIC ---
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if(isChatLocked && !isAdmin) { showToast("Sohbet kilitli!", "fa-lock"); return; }
+            showToast("Resim işleniyor...", "fa-cog fa-spin");
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width; let height = img.height; const MAX_WIDTH = 600;
+                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                    canvas.width = width; canvas.height = height;
+                    const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
+                    const dataURL = canvas.toDataURL('image/jpeg', 0.6);
+                    sendImageMsg(dataURL);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            event.target.value = '';
+        }
+
+        function sendImageMsg(imgData) {
+            const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, image: imgData, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
+            database.ref('global_chat').push(messageData);
+            showToast("Resim gönderildi", "fa-check");
+        }
+
+        function showImagePreview(src) { document.getElementById('imgPreview').src = src; document.getElementById('imgPreviewModal').style.display = 'flex'; }
         
-        // ... (Diğer fonksiyonlar aynı kalacak, sadece JS kısmının üstünü değiştirdim) ...
-        // Kodun geri kalanını yukarıdakiyle aynı tutarak sadece JS içine yapıştırabilirsin.
-        // Ama bütünlük bozulmasın diye tekrar yazıyorum.
+        function emergencyLogin() {
+            const pass = document.getElementById('emergencyPass').value;
+            if(pass === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; alert("Yönetici girişi başarılı!"); location.reload(); } else { alert("Hatalı şifre!"); }
+        }
 
         function listenToData() {
+            // EXTRAS LISTENER (POLL & COUNTDOWN)
+            database.ref('extras').on('value', (s) => {
+                if(s.exists()) {
+                    const extras = s.val();
+                    // Countdown
+                    if(extras.countdown && extras.countdown.active) {
+                        document.getElementById('countdownBox').style.display = 'block';
+                        document.getElementById('countdownTitle').innerText = extras.countdown.title;
+                        updateCountdownDisplay(extras.countdown.target);
+                    } else {
+                        document.getElementById('countdownBox').style.display = 'none';
+                    }
+                    // Poll
+                    if(extras.poll && extras.poll.active) {
+                        document.getElementById('pollBox').style.display = 'block';
+                        updatePollDisplay(extras.poll);
+                    } else {
+                        document.getElementById('pollBox').style.display = 'none';
+                        localStorage.removeItem('poll_voted'); // Reset local vote if poll is reset
+                    }
+                }
+            });
+
             database.ref('settings').on('value', (s) => {
                 if(s.exists()) {
                     const settings = s.val();
@@ -367,6 +547,7 @@
                     if(document.getElementById('chatLockToggle')) document.getElementById('chatLockToggle').checked = settings.chat_locked;
                 }
             });
+
             database.ref('startup_message').on('value', (s) => {
                 if(s.exists()) {
                     const data = s.val();
@@ -374,23 +555,96 @@
                     if(document.getElementById('adminToastInput')) { document.getElementById('adminToastInput').value = data.text; document.getElementById('adminToastActive').checked = data.active; }
                 }
             });
+
             database.ref('banned_users/' + myUUID).on('value', (s) => { if(s.exists()) { document.getElementById('bannedScreen').style.display = 'flex'; document.getElementById('chatModal').style.display = 'none'; document.querySelector('.chat-btn').style.display = 'none'; } });
             database.ref('channel_views').on('value', (s) => { if(s.exists()) { globalViewCounts = s.val(); updateStatsInDOM(); } });
             database.ref('channel_likes').on('value', (s) => { if(s.exists()) { globalLikeCounts = s.val(); updateStatsInDOM(); } });
-            database.ref('global_chat').limitToLast(50).on('child_changed', (snapshot) => { const msg = snapshot.val(); const likeEl = document.getElementById(`like-count-${snapshot.key}`); const dislikeEl = document.getElementById(`dislike-count-${snapshot.key}`); if(likeEl) likeEl.innerText = msg.likes || 0; if(dislikeEl) dislikeEl.innerText = msg.dislikes || 0; });
+            
+            database.ref('global_chat').limitToLast(50).on('child_changed', (snapshot) => {
+                const msg = snapshot.val();
+                const likeEl = document.getElementById(`like-count-${snapshot.key}`);
+                const dislikeEl = document.getElementById(`dislike-count-${snapshot.key}`);
+                if(likeEl) likeEl.innerText = msg.likes || 0;
+                if(dislikeEl) dislikeEl.innerText = msg.dislikes || 0;
+            });
             database.ref('global_chat').limitToLast(50).on('child_added', (snapshot) => { const msg = snapshot.val(); appendMessage(msg.user, msg.text, msg.user === myUserName, snapshot.key, msg.uuid, msg.isAdminMsg, msg.replyTo, msg.image, msg.likes, msg.dislikes); });
             database.ref('global_chat').on('child_removed', (snapshot) => { const el = document.getElementById('msg-' + snapshot.key); if(el) el.remove(); });
         }
 
-        function updateStatsInDOM() { const cards = document.querySelectorAll('.card'); cards.forEach(card => { const titleElement = card.querySelector('.card-name'); if(titleElement){ const title = titleElement.innerText; const safeKey = sanitizeKey(title); const views = globalViewCounts[safeKey] || 0; const likes = globalLikeCounts[safeKey] || 0; const viewSpan = card.querySelector('.count-val-eye'); if(viewSpan) viewSpan.innerText = views; const likeSpan = card.querySelector('.count-val-heart'); if(likeSpan) likeSpan.innerText = likes; } }); }
+        function updateStatsInDOM() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const titleElement = card.querySelector('.card-name');
+                if(titleElement){
+                    const title = titleElement.innerText;
+                    const safeKey = sanitizeKey(title);
+                    const views = globalViewCounts[safeKey] || 0;
+                    const likes = globalLikeCounts[safeKey] || 0;
+                    const viewSpan = card.querySelector('.count-val-eye'); if(viewSpan) viewSpan.innerText = views;
+                    const likeSpan = card.querySelector('.count-val-heart'); if(likeSpan) likeSpan.innerText = likes;
+                }
+            });
+        }
+
         function incrementViewCount(title) { const safeKey = sanitizeKey(title); database.ref('channel_views/' + safeKey).transaction(curr => (curr || 0) + 1); }
         function toggleLike(e, title) { e.stopPropagation(); const safeKey = sanitizeKey(title); if(myLikes.includes(safeKey)) { showToast("Zaten beğendin!", "fa-check-double"); return; } myLikes.push(safeKey); localStorage.setItem('my_likes', JSON.stringify(myLikes)); database.ref('channel_likes/' + safeKey).transaction(curr => (curr || 0) + 1); e.target.classList.add('liked'); showToast("Favorilere Eklendi!", "fa-heart"); }
         function openReportModal(e, title) { e.stopPropagation(); openConfirmModal('report', title); }
+
+        function toggleChat() {
+            const modal = document.getElementById('chatModal');
+            modal.classList.toggle('active');
+            if(modal.classList.contains('active')) {
+                const rules = document.getElementById('chatRulesBanner');
+                rules.classList.remove('hidden');
+                if(rulesTimeout) clearTimeout(rulesTimeout);
+                rulesTimeout = setTimeout(() => { rules.classList.add('hidden'); }, 4000);
+            }
+        }
+        
         function startReply(user, text) { currentReply = { user: user, text: text }; document.getElementById('replyToUser').innerText = user; document.getElementById('replyToText').innerText = text ? (text.substring(0, 30) + (text.length>30 ? '...' : '')) : "Resim"; document.getElementById('replyPreviewBar').style.display = 'flex'; document.getElementById('msgInput').focus(); }
         function cancelReply() { currentReply = null; document.getElementById('replyPreviewBar').style.display = 'none'; }
-        function sendMsg() { const inp = document.getElementById('msgInput'); const txt = inp.value.trim(); if(!txt) return; if(txt === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; showToast("YÖNETİCİ MODU AÇILDI 👮‍♂️", "fa-user-shield"); inp.value = ""; document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; location.reload(); return; } const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, text: txt, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 }; if(currentReply) { messageData.replyTo = currentReply; } database.ref('global_chat').push(messageData); inp.value = ""; cancelReply(); }
-        function toggleChatReaction(key, type) { let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}"); let current = myReactions[key]; if (current === type) { database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) - 1); delete myReactions[key]; const btn = document.getElementById(`btn-${type}-${key}`); if(btn) btn.classList.remove(`active-${type}`); } else { if(current) { database.ref(`global_chat/${key}/${current}s`).transaction(c => (c || 0) - 1); const oldBtn = document.getElementById(`btn-${current}-${key}`); if(oldBtn) oldBtn.classList.remove(`active-${current}`); } database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) + 1); myReactions[key] = type; const newBtn = document.getElementById(`btn-${type}-${key}`); if(newBtn) newBtn.classList.add(`active-${type}`); } localStorage.setItem('chat_reactions', JSON.stringify(myReactions)); }
-        function appendMessage(user, text, isMe, key, senderUUID, isAdminMsg, replyTo, image, likes = 0, dislikes = 0) { const container = document.getElementById('chatContainer'); const div = document.createElement('div'); div.id = 'msg-' + key; let bgColor = isMe ? '' : `background-color: ${getUserColor(user)};`; div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'} ${isAdmin ? 'is-admin' : ''}`; if(!isMe) div.style.cssText = bgColor; let userDisplay = user; if(isAdminMsg) userDisplay = `<span class="msg-admin"><i class="fas fa-shield-alt"></i> YÖNETİCİ</span>`; let quoteHTML = ""; if(replyTo) { quoteHTML = `<div class="quoted-msg"><span class="quote-user">${replyTo.user}</span><span>${replyTo.text || "Resim"}</span></div>`; } let contentHTML = image ? `<img src="${image}" class="chat-img" onclick="showImagePreview('${image}')">` : text; let replyIcon = `<i class="fas fa-reply reply-btn-icon" onclick="startReply('${user}', '${text ? text.replace(/'/g, "\'") : ""}')"></i>`; let adminControls = ""; if(isAdmin && !isMe) { adminControls = `<div class="admin-controls"><button class="btn-ban" onclick="openConfirmModal('ban', '${senderUUID}')">⛔ ENGELLE</button><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; } else if (isAdmin) { adminControls = `<div class="admin-controls"><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; } let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}"); let myReact = myReactions[key]; let likeClass = myReact === 'like' ? 'active-like' : ''; let dislikeClass = myReact === 'dislike' ? 'active-dislike' : ''; let actionsHTML = `<div class="msg-actions"><span id="btn-like-${key}" class="action-btn ${likeClass}" onclick="toggleChatReaction('${key}', 'like')"><i class="fas fa-thumbs-up"></i> <span id="like-count-${key}">${likes || 0}</span></span><span id="btn-dislike-${key}" class="action-btn ${dislikeClass}" onclick="toggleChatReaction('${key}', 'dislike')"><i class="fas fa-thumbs-down"></i> <span id="dislike-count-${key}">${dislikes || 0}</span></span></div>`; div.innerHTML = `${quoteHTML}<span class="msg-user">${userDisplay} ${replyIcon}</span>${contentHTML}${actionsHTML}${adminControls}`; container.appendChild(div); container.scrollTop = container.scrollHeight; }
+
+        function sendMsg() {
+            const inp = document.getElementById('msgInput');
+            const txt = inp.value.trim();
+            if(!txt) return;
+            if(txt === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; showToast("YÖNETİCİ MODU AÇILDI 👮‍♂️", "fa-user-shield"); inp.value = ""; document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; location.reload(); return; }
+            const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, text: txt, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
+            if(currentReply) { messageData.replyTo = currentReply; }
+            database.ref('global_chat').push(messageData);
+            inp.value = ""; cancelReply();
+        }
+        
+        function toggleChatReaction(key, type) {
+            let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}");
+            let current = myReactions[key]; 
+            if (current === type) { database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) - 1); delete myReactions[key]; const btn = document.getElementById(`btn-${type}-${key}`); if(btn) btn.classList.remove(`active-${type}`); } else { if(current) { database.ref(`global_chat/${key}/${current}s`).transaction(c => (c || 0) - 1); const oldBtn = document.getElementById(`btn-${current}-${key}`); if(oldBtn) oldBtn.classList.remove(`active-${current}`); } database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) + 1); myReactions[key] = type; const newBtn = document.getElementById(`btn-${type}-${key}`); if(newBtn) newBtn.classList.add(`active-${type}`); } localStorage.setItem('chat_reactions', JSON.stringify(myReactions));
+        }
+        
+        function appendMessage(user, text, isMe, key, senderUUID, isAdminMsg, replyTo, image, likes = 0, dislikes = 0) {
+            const container = document.getElementById('chatContainer');
+            const div = document.createElement('div');
+            div.id = 'msg-' + key;
+            let bgColor = isMe ? '' : `background-color: ${getUserColor(user)};`;
+            div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'} ${isAdmin ? 'is-admin' : ''}`;
+            if(!isMe) div.style.cssText = bgColor;
+            let userDisplay = user;
+            if(isAdminMsg) userDisplay = `<span class="msg-admin"><i class="fas fa-shield-alt"></i> YÖNETİCİ</span>`;
+            let quoteHTML = "";
+            if(replyTo) { quoteHTML = `<div class="quoted-msg"><span class="quote-user">${replyTo.user}</span><span>${replyTo.text || "Resim"}</span></div>`; }
+            let contentHTML = image ? `<img src="${image}" class="chat-img" onclick="showImagePreview('${image}')">` : text;
+            let replyIcon = `<i class="fas fa-reply reply-btn-icon" onclick="startReply('${user}', '${text ? text.replace(/'/g, "\'") : ""}')"></i>`;
+            let adminControls = "";
+            if(isAdmin && !isMe) { adminControls = `<div class="admin-controls"><button class="btn-ban" onclick="openConfirmModal('ban', '${senderUUID}')">⛔ ENGELLE</button><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; } else if (isAdmin) { adminControls = `<div class="admin-controls"><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; }
+            let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}");
+            let myReact = myReactions[key];
+            let likeClass = myReact === 'like' ? 'active-like' : '';
+            let dislikeClass = myReact === 'dislike' ? 'active-dislike' : '';
+            let actionsHTML = `<div class="msg-actions"><span id="btn-like-${key}" class="action-btn ${likeClass}" onclick="toggleChatReaction('${key}', 'like')"><i class="fas fa-thumbs-up"></i> <span id="like-count-${key}">${likes || 0}</span></span><span id="btn-dislike-${key}" class="action-btn ${dislikeClass}" onclick="toggleChatReaction('${key}', 'dislike')"><i class="fas fa-thumbs-down"></i> <span id="dislike-count-${key}">${dislikes || 0}</span></span></div>`;
+            div.innerHTML = `${quoteHTML}<span class="msg-user">${userDisplay} ${replyIcon}</span>${contentHTML}${actionsHTML}${adminControls}`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
 
         function openAdminPanel() { document.getElementById('adminPanelModal').style.display = 'flex'; database.ref('reports').once('value', (s) => { const count = s.exists() ? s.numChildren() : 0; document.getElementById('reportCount').innerText = count; }); }
         function toggleSubMenu(id) { const el = document.getElementById(id); el.classList.toggle('active'); }
