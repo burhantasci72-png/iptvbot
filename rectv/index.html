@@ -32,8 +32,6 @@
         .light-theme .card { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
         .img-box { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
         .card-img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
-        
-        /* VIP & BADGES */
         .badge { position: absolute; top: -8px; right: -8px; font-size: 0.65rem; padding: 3px 8px; border-radius: 6px; font-weight: 800; z-index: 10; animation: pulse-glow 2s infinite ease-in-out; }
         .badge-yeni { background: linear-gradient(135deg, #ffab00, #ffea00); color: #000; }
         .badge-iptv { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: #fff; }
@@ -158,7 +156,7 @@
         .stat-num { display: block; font-size: 1.2rem; font-weight: bold; color: var(--primary); }
         .stat-label { font-size: 0.7rem; opacity: 0.7; }
         
-        /* VIP MODAL & TELEGRAM BUTTON */
+        /* VIP MODAL */
         #vipModal .modal-box { text-align: center; }
         .vip-icon { font-size: 3rem; color: #ffeb3b; margin-bottom: 15px; animation: pulse-vip 1.5s infinite; }
         .vip-tg-btn { 
@@ -169,10 +167,9 @@
             transition: transform 0.2s;
         }
         .vip-tg-btn:active { transform: scale(0.95); }
-        
         @keyframes pulse-vip { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
         
-        /* FEATURE CONTAINER (COUNTDOWN & POLL) */
+        /* FEATURE CONTAINER */
         .feature-container { margin: 15px; display: flex; flex-direction: column; gap: 15px; }
         .countdown-box { background: linear-gradient(135deg, #1a1825, #000); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; }
         .countdown-title { color: var(--primary); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
@@ -244,7 +241,6 @@
             <h3 style="color:var(--text); margin:0;">VIP KANAL</h3>
             <p style="color:var(--text); opacity:0.7; font-size:0.9rem;">Bu kanalı izlemek için şifre giriniz.</p>
             
-            <!-- TELEGRAM BUTONU -->
             <a href="https://t.me/inadinatv" target="_blank" class="vip-tg-btn">
                 <i class="fab fa-telegram"></i> ✈️ Şifre İçin Telegram'a Gel
             </a>
@@ -400,12 +396,12 @@
 
     <script>
         // =========================================================================
-        // ⚠️ DİKKAT: BURAYA KENDİ FIREBASE AYARLARINI YAPIŞTIRMALISIN! ⚠️
+        // 👇 KENDİ FIREBASE AYARLARINI BURAYA YAPIŞTIRDIM (V30 BİLGİLERİ)
         // =========================================================================
         const firebaseConfig = {
-          apiKey: "AIzaSyCZFwiLcV4K3EnRDWpPPlXPrXSJxAuMfaQ", // ÖRNEK ANAHTAR
+          apiKey: "AIzaSyCZFwiLcV4K3EnRDWpPPlXPrXSJxAuMfaQ",
           authDomain: "iptvbotcoun.firebaseapp.com",
-          databaseURL: "https://iptvbotcoun-default-rtdb.firebaseio.com", // KENDİ URL'Nİ BURAYA YAPIŞTIR
+          databaseURL: "https://iptvbotcoun-default-rtdb.firebaseio.com",
           projectId: "iptvbotcoun",
           storageBucket: "iptvbotcoun.firebasestorage.app",
           messagingSenderId: "229841892818",
@@ -528,15 +524,51 @@
 
         function sanitizeKey(key) { return key.replace(/[.#$\/\[\]]/g, '_').substring(0, 50); }
         function toggleTheme() { document.body.classList.toggle('light-theme'); const isLight = document.body.classList.contains('light-theme'); localStorage.setItem('theme', isLight ? 'light' : 'dark'); document.getElementById('themeBtn').innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; document.getElementById('telegramBtn').style.color = isLight ? '#1a1a1a' : 'white'; document.getElementById('modalCloseBtn').style.background = isLight ? '#e0e0e0' : '#333'; document.getElementById('modalCloseBtn').style.color = isLight ? '#1a1a1a' : 'white'; document.getElementById('modalCloseBtn2').style.background = isLight ? '#e0e0e0' : '#333'; document.getElementById('modalCloseBtn2').style.color = isLight ? '#1a1a1a' : 'white'; }
-        function render() { const container = document.getElementById('list'); const loadMoreBtn = document.getElementById('loadMoreBtn'); if (typeof categoryData === 'undefined') return; const items = categoryData[activeCategoryKey].items; container.innerHTML = ''; currentlyShown = itemsPerPage; items.forEach((item, index) => { const card = document.createElement('div'); card.className = 'card'; if (index >= itemsPerPage) card.classList.add('hidden'); const badgeHTML = item.is_new ? '<span class="badge badge-yeni">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>'; const safeKey = sanitizeKey(item.title); const views = globalViewCounts[safeKey] || 0; const likes = globalLikeCounts[safeKey] || 0; const isLiked = myLikes.includes(safeKey) ? 'liked' : ''; 
-            // VIP CHECK
-            let vipBadge = ""; let clickAction = `onclick="current=item; incrementViewCount(item.title); document.getElementById('mTitle').innerText=item.title; document.getElementById('modal').style.display='flex';"`;
-            if (item.password && item.password.trim() !== "") {
-                vipBadge = `<span class="badge badge-vip"><i class="fas fa-lock"></i> VIP</span>`;
-                clickAction = `onclick="currentVipItem=item; document.getElementById('vipModal').style.display='flex';"`;
-            }
-            
-            card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${vipBadge || badgeHTML}</div><div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta"><span>${item.added_date}</span> <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span><span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span><span class="stat-badge"><i class="fas fa-exclamation-triangle stat-report" onclick="openReportModal(event, '${item.title}')"></i></span></div></div><i class="fas fa-play-circle play-icon"></i>`; card.setAttribute("onclick", clickAction.replace("onclick=", "")); card.onclick = function() { eval(clickAction.replace("onclick=", "")) }; container.appendChild(card); }); if (items.length > itemsPerPage) loadMoreBtn.classList.remove('hidden'); else loadMoreBtn.classList.add('hidden'); }
+        
+        function render() { 
+            const container = document.getElementById('list'); 
+            const loadMoreBtn = document.getElementById('loadMoreBtn'); 
+            if (typeof categoryData === 'undefined') return; 
+            const items = categoryData[activeCategoryKey].items; 
+            container.innerHTML = ''; 
+            currentlyShown = itemsPerPage; 
+            items.forEach((item, index) => { 
+                const card = document.createElement('div'); 
+                card.className = 'card'; 
+                if (index >= itemsPerPage) card.classList.add('hidden'); 
+                const badgeHTML = item.is_new ? '<span class="badge badge-yeni">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>'; 
+                const safeKey = sanitizeKey(item.title); 
+                const views = globalViewCounts[safeKey] || 0; 
+                const likes = globalLikeCounts[safeKey] || 0; 
+                const isLiked = myLikes.includes(safeKey) ? 'liked' : ''; 
+                
+                // VIP CHECK (FIXED)
+                let vipBadge = "";
+                // Use a closure or bind to ensure correct item is passed
+                card.onclick = () => { 
+                    if(item.password && item.password.trim() !== "") {
+                        currentVipItem = item;
+                        document.getElementById('vipModal').style.display='flex';
+                        // Focus on input
+                        setTimeout(() => document.getElementById('vipPasswordInput').focus(), 100);
+                    } else {
+                        current = item; 
+                        incrementViewCount(item.title); 
+                        document.getElementById('mTitle').innerText = item.title; 
+                        document.getElementById('modal').style.display = 'flex'; 
+                    }
+                };
+
+                if (item.password && item.password.trim() !== "") {
+                    vipBadge = `<span class="badge badge-vip"><i class="fas fa-lock"></i> VIP</span>`;
+                }
+
+                card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${vipBadge || badgeHTML}</div><div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta"><span>${item.added_date}</span> <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span><span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span><span class="stat-badge"><i class="fas fa-exclamation-triangle stat-report" onclick="openReportModal(event, '${item.title}')"></i></span></div></div><i class="fas fa-play-circle play-icon"></i>`; 
+                container.appendChild(card); 
+            }); 
+            if (items.length > itemsPerPage) loadMoreBtn.classList.remove('hidden'); else loadMoreBtn.classList.add('hidden'); 
+        }
+
         function loadMore() { const items = categoryData[activeCategoryKey].items; const cards = document.querySelectorAll('.card'); const loadMoreBtn = document.getElementById('loadMoreBtn'); for (let i = currentlyShown; i < Math.min(currentlyShown + itemsPerPage, items.length); i++) { if (cards[i]) cards[i].classList.remove('hidden'); } currentlyShown += itemsPerPage; if (currentlyShown >= items.length) loadMoreBtn.classList.add('hidden'); }
         document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url !== "#") { const url = current.web_link_url; window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=' + (url.startsWith('https') ? 'https' : 'http') + ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;component=com.android.chrome/com.google.android.apps.chrome.Main;end'; document.getElementById('modal').style.display='none'; } };
         document.getElementById('wuffy').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
