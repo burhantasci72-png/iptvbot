@@ -65,9 +65,16 @@
         .chat-header { padding: 15px; background: rgba(0,0,0,0.2); display: flex; justify-content: space-between; align-items: center; border-radius: 20px 20px 0 0; }
         .chat-close { font-size: 1.5rem; cursor: pointer; color: var(--text); }
         
-        /* FIX: Başlangıçta hidden class'ı eklendi */
-        .chat-rules { background: rgba(255, 0, 64, 0.15); border-bottom: 1px solid rgba(255, 0, 64, 0.3); color: #ff4d4d; padding: 10px; font-size: 0.8rem; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.5s ease-in-out; opacity: 1; max-height: 100px; }
-        .chat-rules.hidden { opacity: 0; max-height: 0; padding: 0; margin: 0; overflow: hidden; border: none; }
+        /* FIX: CHAT RULES - DEFAULT HIDDEN */
+        .chat-rules { 
+            background: rgba(255, 0, 64, 0.15); border-bottom: 1px solid rgba(255, 0, 64, 0.3); 
+            color: #ff4d4d; padding: 10px; font-size: 0.8rem; text-align: center; font-weight: bold; 
+            display: flex; align-items: center; justify-content: center; gap: 8px; 
+            transition: all 0.5s ease-in-out; opacity: 1; max-height: 100px;
+        }
+        .chat-rules.hidden { 
+            opacity: 0; max-height: 0; padding: 0; margin: 0; overflow: hidden; border: none; 
+        }
         .light-theme .chat-rules { background: #ffe6e6; color: #cc0000; }
 
         .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
@@ -243,7 +250,7 @@
     <div class="chat-btn" onclick="toggleChat()"><i class="fas fa-comment-dots"></i></div>
     <div class="admin-panel-btn" id="adminBtn" onclick="openAdminPanel()"><i class="fas fa-shield-alt"></i></div>
     
-    <!-- CHAT MODAL (FIXED) -->
+    <!-- CHAT MODAL (FIXED - ADDED HIDDEN CLASS) -->
     <div class="chat-modal" id="chatModal">
         <div class="chat-header">
             <div style="display:flex; align-items:center; gap:10px;">
@@ -253,7 +260,6 @@
             <i class="fas fa-times chat-close" onclick="toggleChat()"></i>
         </div>
         
-        <!-- BAŞLANGIÇTA GİZLİ OLAN UYARI KUTUSU -->
         <div class="chat-rules hidden" id="chatRulesBanner">
             <i class="fas fa-exclamation-triangle"></i>
             UYARI: Argo ve sohbet dışı mesaj atanlar SÜRESİZ banlanır!
