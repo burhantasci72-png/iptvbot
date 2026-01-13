@@ -35,7 +35,6 @@
         .badge { position: absolute; top: -8px; right: -8px; font-size: 0.65rem; padding: 3px 8px; border-radius: 6px; font-weight: 800; z-index: 10; animation: pulse-glow 2s infinite ease-in-out; }
         .badge-yeni { background: linear-gradient(135deg, #ffab00, #ffea00); color: #000; }
         .badge-iptv { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: #fff; }
-        .badge-vip { background: linear-gradient(135deg, #ff0040, #ff0000); color: white; border: 1px solid white; box-shadow: 0 0 5px #ff0000; }
         @keyframes pulse-glow { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .card-info { flex: 1; margin-left: 12px; }
         .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; color: var(--text); }
@@ -57,6 +56,25 @@
         .light-theme .toast { background-color: #fff; color: #333; border-color: #ddd; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         .toast.show { visibility: visible; opacity: 1; bottom: 90px; }
         
+        /* COUNTDOWN & POLL STYLES (YENİ) */
+        .feature-container { margin: 15px; display: flex; flex-direction: column; gap: 15px; }
+        
+        .countdown-box { background: linear-gradient(135deg, #1a1825, #000); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; }
+        .countdown-title { color: var(--primary); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .countdown-timer { display: flex; justify-content: center; gap: 10px; font-size: 1.5rem; font-weight: bold; color: white; font-family: monospace; }
+        .time-unit { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 8px; min-width: 40px; }
+        .time-label { font-size: 0.6rem; opacity: 0.7; font-family: sans-serif; margin-top: 2px; }
+        .live-blink { color: #ff0040; animation: blink 1s infinite; font-size: 2rem; font-weight: 800; display: none; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        
+        .poll-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; display: none; }
+        .poll-question { font-weight: bold; margin-bottom: 10px; color: var(--text); display: block; }
+        .poll-option { margin-bottom: 8px; position: relative; cursor: pointer; }
+        .poll-bar-bg { background: rgba(255,255,255,0.1); height: 35px; border-radius: 8px; overflow: hidden; position: relative; }
+        .poll-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #ff4d00); width: 0%; transition: width 0.5s ease; opacity: 0.7; }
+        .poll-text { position: absolute; top: 0; left: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
+        .poll-percent { position: absolute; top: 0; right: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
+
         @keyframes pulse-beat { 0% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); } 50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(0, 210, 255, 0.6); } 100% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); } }
         .chat-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: linear-gradient(135deg, #00d2ff, #3a7bd5); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 200; animation: pulse-beat 2s infinite ease-in-out; }
         .chat-btn:hover { animation: none; transform: scale(1.1); }
@@ -70,11 +88,10 @@
         .light-theme .chat-rules { background: #ffe6e6; color: #cc0000; }
 
         .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
-        .message-bubble { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; position: relative; word-wrap: break-word; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: flex; flex-direction: column; }
+        .message-bubble { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; position: relative; word-wrap: break-word; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .msg-left { align-self: flex-start; border-bottom-left-radius: 2px; }
         .msg-right { align-self: flex-end; background: var(--primary); border-bottom-right-radius: 2px; }
         .msg-user { font-size: 0.65rem; opacity: 0.8; margin-bottom: 2px; display: block; font-weight: bold; }
-        .msg-time { font-size: 0.55rem; align-self: flex-end; opacity: 0.6; margin-top: 4px; }
         .msg-admin { color: #ffeb3b; }
         
         .quoted-msg { background: rgba(0,0,0,0.2); border-left: 3px solid #ff4d4d; padding: 5px 8px; border-radius: 4px; margin-bottom: 5px; font-size: 0.75rem; display: flex; flex-direction: column; opacity: 0.9; }
@@ -149,43 +166,6 @@
         #maintenanceScreen { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#111; z-index:9000; color:#ffeb3b; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
         .emergency-input { background: rgba(255,255,255,0.1); border: 1px solid #ffeb3b; color: #fff; padding: 10px; margin-top: 20px; border-radius: 5px; width: 200px; text-align: center; }
         .emergency-btn { background: #ffeb3b; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-top: 10px; cursor: pointer; }
-        
-        .stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 15px; }
-        .stat-box { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; text-align: center; }
-        .light-theme .stat-box { background: #eee; }
-        .stat-num { display: block; font-size: 1.2rem; font-weight: bold; color: var(--primary); }
-        .stat-label { font-size: 0.7rem; opacity: 0.7; }
-        
-        /* VIP MODAL */
-        #vipModal .modal-box { text-align: center; }
-        .vip-icon { font-size: 3rem; color: #ffeb3b; margin-bottom: 15px; animation: pulse-vip 1.5s infinite; }
-        .vip-tg-btn { 
-            display: inline-flex; align-items: center; gap: 8px; 
-            background: linear-gradient(135deg, #0088cc, #005f8f); color: white; 
-            text-decoration: none; padding: 10px 15px; border-radius: 8px; 
-            font-weight: bold; margin: 15px 0; box-shadow: 0 4px 10px rgba(0,136,204,0.3);
-            transition: transform 0.2s;
-        }
-        .vip-tg-btn:active { transform: scale(0.95); }
-        @keyframes pulse-vip { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-        
-        /* FEATURE CONTAINER */
-        .feature-container { margin: 15px; display: flex; flex-direction: column; gap: 15px; }
-        .countdown-box { background: linear-gradient(135deg, #1a1825, #000); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; }
-        .countdown-title { color: var(--primary); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
-        .countdown-timer { display: flex; justify-content: center; gap: 10px; font-size: 1.5rem; font-weight: bold; color: white; font-family: monospace; }
-        .time-unit { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 8px; min-width: 40px; }
-        .time-label { font-size: 0.6rem; opacity: 0.7; font-family: sans-serif; margin-top: 2px; }
-        .live-blink { color: #ff0040; animation: blink 1s infinite; font-size: 2rem; font-weight: 800; display: none; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-        
-        .poll-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; display: none; }
-        .poll-question { font-weight: bold; margin-bottom: 10px; color: var(--text); display: block; }
-        .poll-option { margin-bottom: 8px; position: relative; cursor: pointer; }
-        .poll-bar-bg { background: rgba(255,255,255,0.1); height: 35px; border-radius: 8px; overflow: hidden; position: relative; }
-        .poll-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #ff4d00); width: 0%; transition: width 0.5s ease; opacity: 0.7; }
-        .poll-text { position: absolute; top: 0; left: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
-        .poll-percent { position: absolute; top: 0; right: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
     </style>
 </head>
 <body>
@@ -233,38 +213,17 @@
             </div>
         </div>
     </div>
-    
-    <!-- VIP PASSWORD MODAL (WITH TELEGRAM) -->
-    <div id="vipModal" class="modal">
-        <div class="modal-box">
-            <i class="fas fa-lock vip-icon"></i>
-            <h3 style="color:var(--text); margin:0;">VIP KANAL</h3>
-            <p style="color:var(--text); opacity:0.7; font-size:0.9rem;">Bu kanalı izlemek için şifre giriniz.</p>
-            
-            <a href="https://t.me/inadinatv" target="_blank" class="vip-tg-btn">
-                <i class="fab fa-telegram"></i> ✈️ Şifre İçin Telegram'a Gel
-            </a>
-
-            <input type="text" id="vipPasswordInput" class="custom-input" placeholder="Şifre" style="margin-top:10px;">
-            <div style="display:flex; gap:10px; justify-content:center;">
-                <button class="btn-cancel" onclick="document.getElementById('vipModal').style.display='none'">İptal</button>
-                <button class="btn-confirm" onclick="checkVipPassword()">GİRİŞ</button>
-            </div>
-        </div>
-    </div>
 
     <!-- ADMIN PANEL MODAL -->
     <div id="adminPanelModal" class="modal">
         <div class="modal-box">
             <h3 style="text-align:center; color:#ff0040; margin-top:0;">🛡️ Yönetici Paneli</h3>
+            
             <div class="admin-modal-body">
-                <div class="stat-grid">
-                    <div class="stat-box"><span class="stat-num" id="statViews">0</span><span class="stat-label">İzlenme</span></div>
-                    <div class="stat-box"><span class="stat-num" id="statLikes">0</span><span class="stat-label">Beğeni</span></div>
-                    <div class="stat-box"><span class="stat-num" id="statMsgs">0</span><span class="stat-label">Mesaj</span></div>
+                <!-- POLL & COUNTDOWN ADMIN SECTION -->
+                <div class="admin-menu-btn" onclick="toggleSubMenu('pollAdmin')">
+                    <span>📊 Anket Yönetimi</span> <i class="fas fa-chevron-down"></i>
                 </div>
-
-                <div class="admin-menu-btn" onclick="toggleSubMenu('pollAdmin')"><span>📊 Anket Yönetimi</span> <i class="fas fa-chevron-down"></i></div>
                 <div id="pollAdmin" class="admin-submenu">
                     <input type="text" id="pollQuestion" class="custom-input" placeholder="Soru: Örn. Kim Kazanır?">
                     <input type="text" id="pollOpt1" class="custom-input" placeholder="Seçenek 1 (Örn. GS)">
@@ -275,7 +234,9 @@
                     </div>
                 </div>
 
-                <div class="admin-menu-btn" onclick="toggleSubMenu('countdownAdmin')"><span>⏳ Geri Sayım Yönetimi</span> <i class="fas fa-chevron-down"></i></div>
+                <div class="admin-menu-btn" onclick="toggleSubMenu('countdownAdmin')">
+                    <span>⏳ Geri Sayım Yönetimi</span> <i class="fas fa-chevron-down"></i>
+                </div>
                 <div id="countdownAdmin" class="admin-submenu">
                     <input type="text" id="cdTitle" class="custom-input" placeholder="Başlık: Örn. DERBİ MAÇI">
                     <input type="datetime-local" id="cdDate" class="custom-input" style="color-scheme: dark;">
@@ -285,15 +246,12 @@
                     </div>
                 </div>
 
+                <!-- OTHER ADMIN SECTIONS -->
                 <div class="admin-menu-btn" onclick="toggleSubMenu('settingsContainer')"><span>⚙️ Genel Ayarlar</span> <i class="fas fa-chevron-down"></i></div>
                 <div id="settingsContainer" class="admin-submenu">
                     <div style="margin-bottom:10px;"><input type="checkbox" id="maintenanceToggle" onchange="toggleMaintenance()"> <label style="color:inherit">🚧 Bakım Modu</label></div>
                     <div><input type="checkbox" id="chatLockToggle" onchange="toggleChatLock()"> <label style="color:inherit">🔒 Sohbeti Kilitle</label></div>
                     <button class="delete-all-btn" style="background:#555; margin-top:10px;" onclick="clearChat()">🧹 Sohbeti Temizle</button>
-                    <div style="margin-top:10px; display:flex; gap:5px;">
-                        <button onclick="resetStats('views')" style="flex:1; background:#888; border:none; color:white; padding:5px; border-radius:5px;">İzlenme Sıfırla</button>
-                        <button onclick="resetStats('likes')" style="flex:1; background:#888; border:none; color:white; padding:5px; border-radius:5px;">Beğeni Sıfırla</button>
-                    </div>
                 </div>
 
                 <div class="admin-menu-btn" onclick="toggleSubMenu('toastContainer')"><span>📢 Açılış Mesajı</span> <i class="fas fa-chevron-down"></i></div>
@@ -325,7 +283,9 @@
         </div>
     </div>
 
+    <!-- FEATURE CONTAINER (COUNTDOWN & POLL) -->
     <div class="feature-container" id="featureContainer">
+        <!-- COUNTDOWN -->
         <div id="countdownBox" class="countdown-box">
             <div id="countdownTitle" class="countdown-title">GERİ SAYIM</div>
             <div id="countdownTimer" class="countdown-timer">
@@ -337,6 +297,7 @@
             <div id="liveIndicator" class="live-blink">CANLI 🔴</div>
         </div>
 
+        <!-- POLL -->
         <div id="pollBox" class="poll-box">
             <span id="displayPollQuestion" class="poll-question">Anket Yükleniyor...</span>
             <div class="poll-option" onclick="votePoll('opt1')">
@@ -367,9 +328,12 @@
             </div>
             <i class="fas fa-times chat-close" onclick="toggleChat()"></i>
         </div>
-        <div class="chat-rules hidden" id="chatRulesBanner"><i class="fas fa-exclamation-triangle"></i> UYARI: Argo ve sohbet dışı mesaj atanlar SÜRESİZ banlanır!</div>
+        <div class="chat-rules" id="chatRulesBanner"><i class="fas fa-exclamation-triangle"></i> UYARI: Argo ve sohbet dışı mesaj atanlar SÜRESİZ banlanır!</div>
         <div class="chat-messages" id="chatContainer"></div>
-        <div id="replyPreviewBar" class="reply-preview-bar"><span><i class="fas fa-reply"></i> <b id="replyToUser">Kullanıcı</b>: <i id="replyToText">Mesaj...</i></span><i class="fas fa-times" onclick="cancelReply()" style="cursor:pointer; font-size:1.2rem;"></i></div>
+        <div id="replyPreviewBar" class="reply-preview-bar">
+            <span><i class="fas fa-reply"></i> <b id="replyToUser">Kullanıcı</b>: <i id="replyToText">Mesaj...</i></span>
+            <i class="fas fa-times" onclick="cancelReply()" style="cursor:pointer; font-size:1.2rem;"></i>
+        </div>
         <div class="chat-input-area">
             <div class="input-row">
                 <button class="chat-img-btn" onclick="document.getElementById('imgUpload').click()"><i class="fas fa-image"></i></button>
@@ -392,12 +356,9 @@
         </div>
     </div>
 
-    <script>const categoryData = { 'iptv_list': { 'items': [{"title": "hhh", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/kUbi", "is_new": true, "added_date": "14.01.2026", "password": "54321"}, {"title": "10 SİNİRSİZ İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/7LxRP8", "is_new": false, "added_date": "13.01.2026", "password": ""}, {"title": "SMARTZONE İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=gRNhEpGh3m&password=fmaAdfkHXJ&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/q9fMZa", "is_new": false, "added_date": "12.01.2026", "password": ""}, {"title": "MEGA İPTV İNDİR", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/G7TFl", "is_new": false, "added_date": "11.01.2026", "password": ""}, {"title": "1500 MAX SPORTS İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/nadina-1500-Max-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Se6xQ", "is_new": false, "added_date": "09.01.2026", "password": ""}, {"title": "QUANTUM İPTV LİST", "url": "https://file.garden/Z-hq5n4Shk27aY58/Kuantum-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8Xy9", "is_new": false, "added_date": "08.01.2026", "password": ""}, {"title": "FULL BOT İPTV SPORTS", "url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ld7M", "is_new": false, "added_date": "07.01.2026", "password": ""}, {"title": "Ekalite iptv m3u", "url": "http://ekalite.xyz:8080/get.php?username=ibrahimtak&password=qwkRZHAwaK&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/4eoXDj", "is_new": false, "added_date": "06.01.2026", "password": ""}, {"title": "D SPORTS M3U ADRESİ EKLEND", "url": "https://file.garden/Z-hq5n4Shk27aY58/DTH-Sports.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/w2Avb", "is_new": false, "added_date": "05.01.2026", "password": ""}, {"title": "30 ADET İPTV M3U LİSTE", "url": "http://maisonxp.click/get.php?username=thay123&password=thay123&type=m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/zcn3j7", "is_new": false, "added_date": "04.01.2026", "password": ""}, {"title": "ELİTE MAC ADRESLERİ İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/playlist.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DfpE", "is_new": false, "added_date": "04.01.2026", "password": ""}, {"title": "KARMA İPTV 23K", "url": "https://file.garden/Z-hq5n4Shk27aY58/Karma-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6WmReB", "is_new": false, "added_date": "03.01.2026", "password": ""}, {"title": "Yeni iptv liste", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/0cKg", "is_new": false, "added_date": "02.01.2026", "password": ""}, {"title": "Turkiye Connect iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Turkiye-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6Dr", "is_new": false, "added_date": "01.01.2026", "password": ""}, {"title": "9500 İPTV M3U LİNKLER YİLBASİ OZEL", "url": "http://ss.wancolonel.xyz:8080/get.php?username=Denisurlu&password=Muri3091&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/3hJ9te", "is_new": false, "added_date": "31.12.2025", "password": ""}, {"title": "3 Adet İptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/KCwKj", "is_new": false, "added_date": "30.12.2025", "password": ""}, {"title": "XTREAM İPTV LİSTELER EKLENDİ", "url": "http://s1.eldest99.xyz:8080/get.php?username=hdkaptantv3706&password=kptn@8723706&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Clqz", "is_new": false, "added_date": "29.12.2025", "password": ""}, {"title": "FİLM EKSENİ İPTV", "url": "https://raw.githubusercontent.com/sultansmgr/smart/refs/heads/main/FilmEkseni.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESVvVD7PLGjrzbMvNGvIFOhRBoSxzoGBFLm3iG-xX1ZEArpkhkSItDVY&s=10", "web_link_url": "https://ay.live/qCS", "is_new": false, "added_date": "28.12.2025", "password": ""}, {"title": "B. Conneckt İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/b-connect.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/67w", "is_new": false, "added_date": "28.12.2025", "password": ""}, {"title": "Spor Kanallari bot iptv", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/9GlX", "is_new": false, "added_date": "27.12.2025", "password": ""}, {"title": "100 Bin kisilik iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6QE", "is_new": false, "added_date": "27.12.2025", "password": ""}, {"title": "Hibrit İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Toplu-Paket-V.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/eAAA7K", "is_new": false, "added_date": "27.12.2025", "password": ""}, {"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": false, "added_date": "27.12.2025", "password": ""}] } }; const activeCategoryKey = 'iptv_list';</script>
+    <script>const categoryData = { 'iptv_list': { 'items': [{"title": "YENİ SPORT İPTV", "url": "https://file.garden/Z-hq5n4Shk27aY58/sport-connec.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Ry1l", "is_new": true, "added_date": "14.01.2026"}, {"title": "hhh", "url": "https://deathless.short.gy/Hibrit-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/kUbi", "is_new": true, "added_date": "14.01.2026"}, {"title": "10 SİNİRSİZ İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/7LxRP8", "is_new": false, "added_date": "13.01.2026"}, {"title": "SMARTZONE İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=gRNhEpGh3m&password=fmaAdfkHXJ&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/q9fMZa", "is_new": false, "added_date": "12.01.2026"}, {"title": "MEGA İPTV İNDİR", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/G7TFl", "is_new": false, "added_date": "11.01.2026"}, {"title": "1500 MAX SPORTS İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/nadina-1500-Max-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Se6xQ", "is_new": false, "added_date": "09.01.2026"}, {"title": "QUANTUM İPTV LİST", "url": "https://file.garden/Z-hq5n4Shk27aY58/Kuantum-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8Xy9", "is_new": false, "added_date": "08.01.2026"}, {"title": "FULL BOT İPTV SPORTS", "url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ld7M", "is_new": false, "added_date": "07.01.2026"}, {"title": "Ekalite iptv m3u", "url": "http://ekalite.xyz:8080/get.php?username=ibrahimtak&password=qwkRZHAwaK&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/4eoXDj", "is_new": false, "added_date": "06.01.2026"}, {"title": "D SPORTS M3U ADRESİ EKLEND", "url": "https://file.garden/Z-hq5n4Shk27aY58/DTH-Sports.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/w2Avb", "is_new": false, "added_date": "05.01.2026"}, {"title": "30 ADET İPTV M3U LİSTE", "url": "http://maisonxp.click/get.php?username=thay123&password=thay123&type=m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/zcn3j7", "is_new": false, "added_date": "04.01.2026"}, {"title": "ELİTE MAC ADRESLERİ İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/playlist.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DfpE", "is_new": false, "added_date": "04.01.2026"}, {"title": "KARMA İPTV 23K", "url": "https://file.garden/Z-hq5n4Shk27aY58/Karma-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6WmReB", "is_new": false, "added_date": "03.01.2026"}, {"title": "Yeni iptv liste", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/0cKg", "is_new": false, "added_date": "02.01.2026"}, {"title": "Turkiye Connect iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Turkiye-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6Dr", "is_new": false, "added_date": "01.01.2026"}, {"title": "9500 İPTV M3U LİNKLER YİLBASİ OZEL", "url": "http://ss.wancolonel.xyz:8080/get.php?username=Denisurlu&password=Muri3091&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/3hJ9te", "is_new": false, "added_date": "31.12.2025"}, {"title": "3 Adet İptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/KCwKj", "is_new": false, "added_date": "30.12.2025"}, {"title": "XTREAM İPTV LİSTELER EKLENDİ", "url": "http://s1.eldest99.xyz:8080/get.php?username=hdkaptantv3706&password=kptn@8723706&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Clqz", "is_new": false, "added_date": "29.12.2025"}, {"title": "FİLM EKSENİ İPTV", "url": "https://raw.githubusercontent.com/sultansmgr/smart/refs/heads/main/FilmEkseni.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESVvVD7PLGjrzbMvNGvIFOhRBoSxzoGBFLm3iG-xX1ZEArpkhkSItDVY&s=10", "web_link_url": "https://ay.live/qCS", "is_new": false, "added_date": "28.12.2025"}, {"title": "B. Conneckt İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/b-connect.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/67w", "is_new": false, "added_date": "28.12.2025"}, {"title": "Spor Kanallari bot iptv", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/9GlX", "is_new": false, "added_date": "27.12.2025"}, {"title": "100 Bin kisilik iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6QE", "is_new": false, "added_date": "27.12.2025"}, {"title": "Hibrit İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Toplu-Paket-V.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/eAAA7K", "is_new": false, "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": false, "added_date": "27.12.2025"}] } }; const activeCategoryKey = 'iptv_list';</script>
 
     <script>
-        // =========================================================================
-        // 👇 KENDİ FIREBASE AYARLARINI BURAYA YAPIŞTIRDIM (V30 BİLGİLERİ)
-        // =========================================================================
         const firebaseConfig = {
           apiKey: "AIzaSyCZFwiLcV4K3EnRDWpPPlXPrXSJxAuMfaQ",
           authDomain: "iptvbotcoun.firebaseapp.com",
@@ -407,13 +368,11 @@
           messagingSenderId: "229841892818",
           appId: "1:229841892818:web:a91dd3792919140a5d440b"
         };
-        // =========================================================================
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
         let current = {};
-        let currentVipItem = null;
         let itemsPerPage = 10; 
         let currentlyShown = itemsPerPage;
         let globalViewCounts = {};
@@ -425,6 +384,7 @@
         let currentReply = null; 
         let isChatLocked = false;
         let countdownInterval;
+
         const ADMIN_PASS = "burhan_baba_72";
 
         if(!myUUID) { myUUID = 'user_' + Date.now() + '_' + Math.floor(Math.random() * 1000); localStorage.setItem('user_uuid', myUUID); }
@@ -436,73 +396,255 @@
         function initPresence() { const onlineRef = database.ref('online_users'); const myCon = onlineRef.push(); myCon.onDisconnect().remove(); myCon.set(true); onlineRef.on('value', (s) => { document.getElementById('onlineCount').innerText = s.numChildren(); }); }
         function showToast(message, icon="fa-info-circle") { const t = document.getElementById('toast'); t.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`; t.className = "toast show"; setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000); }
         
-        function checkVipPassword() {
-            const input = document.getElementById('vipPasswordInput');
-            if (input.value === currentVipItem.password) {
-                document.getElementById('vipModal').style.display = 'none';
-                input.value = "";
-                current = currentVipItem;
-                incrementViewCount(current.title);
-                document.getElementById('mTitle').innerText = current.title;
-                document.getElementById('modal').style.display = 'flex';
-            } else {
-                showToast("Hatalı Şifre!", "fa-times-circle");
-                input.value = "";
-            }
+        // --- COUNTDOWN LOGIC ---
+        function updateCountdownDisplay(targetTime) {
+            if (countdownInterval) clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = targetTime - now;
+                
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById("countdownTimer").style.display = "none";
+                    document.getElementById("liveIndicator").style.display = "block";
+                    return;
+                }
+                
+                document.getElementById("countdownTimer").style.display = "flex";
+                document.getElementById("liveIndicator").style.display = "none";
+                
+                document.getElementById("cdDays").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
+                document.getElementById("cdHours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById("cdMins").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById("cdSecs").innerText = Math.floor((distance % (1000 * 60)) / 1000);
+            }, 1000);
         }
 
-        let rulesTimeout;
-        function toggleChat() { const modal = document.getElementById('chatModal'); modal.classList.toggle('active'); if(modal.classList.contains('active')) { const rules = document.getElementById('chatRulesBanner'); rules.classList.remove('hidden'); if(rulesTimeout) clearTimeout(rulesTimeout); rulesTimeout = setTimeout(() => { rules.classList.add('hidden'); }, 4000); } }
-        function startReply(user, text) { currentReply = { user: user, text: text }; document.getElementById('replyToUser').innerText = user; document.getElementById('replyToText').innerText = text ? (text.substring(0, 30) + (text.length>30 ? '...' : '')) : "Resim"; document.getElementById('replyPreviewBar').style.display = 'flex'; document.getElementById('msgInput').focus(); }
-        function cancelReply() { currentReply = null; document.getElementById('replyPreviewBar').style.display = 'none'; }
-        function sendMsg() { const inp = document.getElementById('msgInput'); const txt = inp.value.trim(); if(!txt) return; if(txt === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; showToast("YÖNETİCİ MODU AÇILDI 👮‍♂️", "fa-user-shield"); inp.value = ""; document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; location.reload(); return; } const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, text: txt, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 }; if(currentReply) { messageData.replyTo = currentReply; } database.ref('global_chat').push(messageData); inp.value = ""; cancelReply(); }
-        
-        function updateCountdownDisplay(targetTime) { if (countdownInterval) clearInterval(countdownInterval); countdownInterval = setInterval(() => { const now = new Date().getTime(); const distance = targetTime - now; if (distance < 0) { clearInterval(countdownInterval); document.getElementById("countdownTimer").style.display = "none"; document.getElementById("liveIndicator").style.display = "block"; return; } document.getElementById("countdownTimer").style.display = "flex"; document.getElementById("liveIndicator").style.display = "none"; document.getElementById("cdDays").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)); document.getElementById("cdHours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); document.getElementById("cdMins").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)); document.getElementById("cdSecs").innerText = Math.floor((distance % (1000 * 60)) / 1000); }, 1000); }
-        function votePoll(option) { if(localStorage.getItem('poll_voted') === 'true') { showToast("Zaten oy kullandınız!", "fa-exclamation"); return; } database.ref('extras/poll/votes_' + option).transaction(c => (c || 0) + 1); localStorage.setItem('poll_voted', 'true'); showToast("Oyunuz kaydedildi", "fa-check"); }
-        function updatePollDisplay(data) { const total = (data.votes_opt1 || 0) + (data.votes_opt2 || 0); const p1 = total === 0 ? 0 : Math.round((data.votes_opt1 / total) * 100); const p2 = total === 0 ? 0 : Math.round((data.votes_opt2 / total) * 100); document.getElementById('displayPollQuestion').innerText = data.question; document.getElementById('displayOpt1').innerText = data.opt1; document.getElementById('displayOpt2').innerText = data.opt2; document.getElementById('bar1').style.width = p1 + "%"; document.getElementById('percent1').innerText = p1 + "%"; document.getElementById('bar2').style.width = p2 + "%"; document.getElementById('percent2').innerText = p2 + "%"; }
-        window.savePoll = function() { const q = document.getElementById('pollQuestion').value; const o1 = document.getElementById('pollOpt1').value; const o2 = document.getElementById('pollOpt2').value; if(q && o1 && o2) { database.ref('extras/poll').set({ active: true, question: q, opt1: o1, opt2: o2, votes_opt1: 0, votes_opt2: 0 }); showToast("Anket Başlatıldı", "fa-check"); } };
-        window.resetPoll = function() { database.ref('extras/poll').set({ active: false }); showToast("Anket Sıfırlandı", "fa-trash"); };
-        window.saveCountdown = function() { const t = document.getElementById('cdTitle').value; const d = document.getElementById('cdDate').value; if(t && d) { const ts = new Date(d).getTime(); database.ref('extras/countdown').set({ active: true, title: t, target: ts }); showToast("Sayaç Başlatıldı", "fa-clock"); } };
-        window.stopCountdown = function() { database.ref('extras/countdown').set({ active: false }); showToast("Sayaç Durduruldu", "fa-stop"); };
+        // --- POLL LOGIC ---
+        function votePoll(option) {
+            if(localStorage.getItem('poll_voted') === 'true') {
+                showToast("Zaten oy kullandınız!", "fa-exclamation");
+                return;
+            }
+            database.ref('extras/poll/votes_' + option).transaction(c => (c || 0) + 1);
+            localStorage.setItem('poll_voted', 'true');
+            showToast("Oyunuz kaydedildi", "fa-check");
+        }
 
-        function handleImageUpload(event) { const file = event.target.files[0]; if (!file) return; if(isChatLocked && !isAdmin) { showToast("Sohbet kilitli!", "fa-lock"); return; } showToast("Resim işleniyor...", "fa-cog fa-spin"); const reader = new FileReader(); reader.onload = (e) => { const img = new Image(); img.onload = () => { const canvas = document.createElement('canvas'); let width = img.width; let height = img.height; const MAX_WIDTH = 600; if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; } canvas.width = width; canvas.height = height; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height); const dataURL = canvas.toDataURL('image/jpeg', 0.6); sendImageMsg(dataURL); }; img.src = e.target.result; }; reader.readAsDataURL(file); event.target.value = ''; }
-        function sendImageMsg(imgData) { const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, image: imgData, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 }; database.ref('global_chat').push(messageData); showToast("Resim gönderildi", "fa-check"); }
+        function updatePollDisplay(data) {
+            const total = (data.votes_opt1 || 0) + (data.votes_opt2 || 0);
+            const p1 = total === 0 ? 0 : Math.round((data.votes_opt1 / total) * 100);
+            const p2 = total === 0 ? 0 : Math.round((data.votes_opt2 / total) * 100);
+            
+            document.getElementById('displayPollQuestion').innerText = data.question;
+            document.getElementById('displayOpt1').innerText = data.opt1;
+            document.getElementById('displayOpt2').innerText = data.opt2;
+            
+            document.getElementById('bar1').style.width = p1 + "%";
+            document.getElementById('percent1').innerText = p1 + "%";
+            document.getElementById('bar2').style.width = p2 + "%";
+            document.getElementById('percent2').innerText = p2 + "%";
+        }
+
+        // --- ADMIN FUNCTIONS FOR POLL & COUNTDOWN ---
+        window.savePoll = function() {
+            const q = document.getElementById('pollQuestion').value;
+            const o1 = document.getElementById('pollOpt1').value;
+            const o2 = document.getElementById('pollOpt2').value;
+            if(q && o1 && o2) {
+                database.ref('extras/poll').set({
+                    active: true, question: q, opt1: o1, opt2: o2, votes_opt1: 0, votes_opt2: 0
+                });
+                showToast("Anket Başlatıldı", "fa-check");
+            }
+        };
+        window.resetPoll = function() {
+            database.ref('extras/poll').set({ active: false });
+            showToast("Anket Sıfırlandı", "fa-trash");
+        };
+        window.saveCountdown = function() {
+            const t = document.getElementById('cdTitle').value;
+            const d = document.getElementById('cdDate').value;
+            if(t && d) {
+                const ts = new Date(d).getTime();
+                database.ref('extras/countdown').set({ active: true, title: t, target: ts });
+                showToast("Sayaç Başlatıldı", "fa-clock");
+            }
+        };
+        window.stopCountdown = function() {
+            database.ref('extras/countdown').set({ active: false });
+            showToast("Sayaç Durduruldu", "fa-stop");
+        };
+
+        // --- OTHER LOGIC ---
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if(isChatLocked && !isAdmin) { showToast("Sohbet kilitli!", "fa-lock"); return; }
+            showToast("Resim işleniyor...", "fa-cog fa-spin");
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width; let height = img.height; const MAX_WIDTH = 600;
+                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                    canvas.width = width; canvas.height = height;
+                    const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
+                    const dataURL = canvas.toDataURL('image/jpeg', 0.6);
+                    sendImageMsg(dataURL);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            event.target.value = '';
+        }
+
+        function sendImageMsg(imgData) {
+            const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, image: imgData, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
+            database.ref('global_chat').push(messageData);
+            showToast("Resim gönderildi", "fa-check");
+        }
+
         function showImagePreview(src) { document.getElementById('imgPreview').src = src; document.getElementById('imgPreviewModal').style.display = 'flex'; }
-        function emergencyLogin() { const pass = document.getElementById('emergencyPass').value; if(pass === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; alert("Yönetici girişi başarılı!"); location.reload(); } else { alert("Hatalı şifre!"); } }
+        
+        function emergencyLogin() {
+            const pass = document.getElementById('emergencyPass').value;
+            if(pass === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; alert("Yönetici girişi başarılı!"); location.reload(); } else { alert("Hatalı şifre!"); }
+        }
 
         function listenToData() {
-            database.ref('extras').on('value', (s) => { if(s.exists()) { const extras = s.val(); if(extras.countdown && extras.countdown.active) { document.getElementById('countdownBox').style.display = 'block'; document.getElementById('countdownTitle').innerText = extras.countdown.title; updateCountdownDisplay(extras.countdown.target); } else { document.getElementById('countdownBox').style.display = 'none'; } if(extras.poll && extras.poll.active) { document.getElementById('pollBox').style.display = 'block'; updatePollDisplay(extras.poll); } else { document.getElementById('pollBox').style.display = 'none'; localStorage.removeItem('poll_voted'); } } });
-            database.ref('settings').on('value', (s) => { if(s.exists()) { const settings = s.val(); if(settings.maintenance && !isAdmin) document.getElementById('maintenanceScreen').style.display = 'flex'; else document.getElementById('maintenanceScreen').style.display = 'none'; if(document.getElementById('maintenanceToggle')) document.getElementById('maintenanceToggle').checked = settings.maintenance; isChatLocked = settings.chat_locked; if(isChatLocked) { document.getElementById('chatStatus').innerText = "Sohbet Kilitli 🔒"; document.getElementById('msgInput').placeholder = "Sohbet yönetici tarafından kilitlendi."; document.getElementById('msgInput').disabled = !isAdmin; } else { document.getElementById('chatStatus').innerText = isAdmin ? "Canlı Sohbet (YÖNETİCİ) 👮‍♂️" : "Canlı Sohbet 🟢"; document.getElementById('msgInput').placeholder = "Mesaj yaz..."; document.getElementById('msgInput').disabled = false; } if(document.getElementById('chatLockToggle')) document.getElementById('chatLockToggle').checked = settings.chat_locked; } });
-            database.ref('startup_message').on('value', (s) => { if(s.exists()) { const data = s.val(); if(data.active && !sessionStorage.getItem('startup_msg_shown')) { showToast(data.text, "fa-bullhorn"); sessionStorage.setItem('startup_msg_shown', 'true'); } if(document.getElementById('adminToastInput')) { document.getElementById('adminToastInput').value = data.text; document.getElementById('adminToastActive').checked = data.active; } } });
+            // EXTRAS LISTENER (POLL & COUNTDOWN)
+            database.ref('extras').on('value', (s) => {
+                if(s.exists()) {
+                    const extras = s.val();
+                    // Countdown
+                    if(extras.countdown && extras.countdown.active) {
+                        document.getElementById('countdownBox').style.display = 'block';
+                        document.getElementById('countdownTitle').innerText = extras.countdown.title;
+                        updateCountdownDisplay(extras.countdown.target);
+                    } else {
+                        document.getElementById('countdownBox').style.display = 'none';
+                    }
+                    // Poll
+                    if(extras.poll && extras.poll.active) {
+                        document.getElementById('pollBox').style.display = 'block';
+                        updatePollDisplay(extras.poll);
+                    } else {
+                        document.getElementById('pollBox').style.display = 'none';
+                        localStorage.removeItem('poll_voted'); // Reset local vote if poll is reset
+                    }
+                }
+            });
+
+            database.ref('settings').on('value', (s) => {
+                if(s.exists()) {
+                    const settings = s.val();
+                    if(settings.maintenance && !isAdmin) document.getElementById('maintenanceScreen').style.display = 'flex'; else document.getElementById('maintenanceScreen').style.display = 'none';
+                    if(document.getElementById('maintenanceToggle')) document.getElementById('maintenanceToggle').checked = settings.maintenance;
+                    isChatLocked = settings.chat_locked;
+                    if(isChatLocked) { document.getElementById('chatStatus').innerText = "Sohbet Kilitli 🔒"; document.getElementById('msgInput').placeholder = "Sohbet yönetici tarafından kilitlendi."; document.getElementById('msgInput').disabled = !isAdmin; } else { document.getElementById('chatStatus').innerText = isAdmin ? "Canlı Sohbet (YÖNETİCİ) 👮‍♂️" : "Canlı Sohbet 🟢"; document.getElementById('msgInput').placeholder = "Mesaj yaz..."; document.getElementById('msgInput').disabled = false; }
+                    if(document.getElementById('chatLockToggle')) document.getElementById('chatLockToggle').checked = settings.chat_locked;
+                }
+            });
+
+            database.ref('startup_message').on('value', (s) => {
+                if(s.exists()) {
+                    const data = s.val();
+                    if(data.active && !sessionStorage.getItem('startup_msg_shown')) { showToast(data.text, "fa-bullhorn"); sessionStorage.setItem('startup_msg_shown', 'true'); }
+                    if(document.getElementById('adminToastInput')) { document.getElementById('adminToastInput').value = data.text; document.getElementById('adminToastActive').checked = data.active; }
+                }
+            });
+
             database.ref('banned_users/' + myUUID).on('value', (s) => { if(s.exists()) { document.getElementById('bannedScreen').style.display = 'flex'; document.getElementById('chatModal').style.display = 'none'; document.querySelector('.chat-btn').style.display = 'none'; } });
+            database.ref('channel_views').on('value', (s) => { if(s.exists()) { globalViewCounts = s.val(); updateStatsInDOM(); } });
+            database.ref('channel_likes').on('value', (s) => { if(s.exists()) { globalLikeCounts = s.val(); updateStatsInDOM(); } });
             
-            // ISTATISTIKLERIN GUNCEL KALMASI ICIN
-            database.ref('channel_views').on('value', (s) => { 
-                if(s.exists()) { 
-                    globalViewCounts = s.val(); 
-                    updateStatsInDOM(); // DOM'u hemen güncelle
-                    let total = 0; 
-                    Object.values(globalViewCounts).forEach(v => total += v); 
-                    if(document.getElementById('statViews')) document.getElementById('statViews').innerText = total; 
-                } 
+            database.ref('global_chat').limitToLast(50).on('child_changed', (snapshot) => {
+                const msg = snapshot.val();
+                const likeEl = document.getElementById(`like-count-${snapshot.key}`);
+                const dislikeEl = document.getElementById(`dislike-count-${snapshot.key}`);
+                if(likeEl) likeEl.innerText = msg.likes || 0;
+                if(dislikeEl) dislikeEl.innerText = msg.dislikes || 0;
             });
-            database.ref('channel_likes').on('value', (s) => { 
-                if(s.exists()) { 
-                    globalLikeCounts = s.val(); 
-                    updateStatsInDOM(); // DOM'u hemen güncelle
-                    let total = 0; 
-                    Object.values(globalLikeCounts).forEach(v => total += v); 
-                    if(document.getElementById('statLikes')) document.getElementById('statLikes').innerText = total; 
-                } 
-            });
-            database.ref('global_chat').on('value', (s) => { if(s.exists() && document.getElementById('statMsgs')) document.getElementById('statMsgs').innerText = s.numChildren(); });
-            database.ref('global_chat').limitToLast(50).on('child_changed', (snapshot) => { const msg = snapshot.val(); const likeEl = document.getElementById(`like-count-${snapshot.key}`); const dislikeEl = document.getElementById(`dislike-count-${snapshot.key}`); if(likeEl) likeEl.innerText = msg.likes || 0; if(dislikeEl) dislikeEl.innerText = msg.dislikes || 0; });
-            database.ref('global_chat').limitToLast(50).on('child_added', (snapshot) => { const msg = snapshot.val(); appendMessage(msg.user, msg.text, msg.user === myUserName, snapshot.key, msg.uuid, msg.isAdminMsg, msg.replyTo, msg.image, msg.likes, msg.dislikes, msg.time); });
+            database.ref('global_chat').limitToLast(50).on('child_added', (snapshot) => { const msg = snapshot.val(); appendMessage(msg.user, msg.text, msg.user === myUserName, snapshot.key, msg.uuid, msg.isAdminMsg, msg.replyTo, msg.image, msg.likes, msg.dislikes); });
             database.ref('global_chat').on('child_removed', (snapshot) => { const el = document.getElementById('msg-' + snapshot.key); if(el) el.remove(); });
         }
 
-        function toggleChatReaction(key, type) { let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}"); let current = myReactions[key]; if (current === type) { database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) - 1); delete myReactions[key]; const btn = document.getElementById(`btn-${type}-${key}`); if(btn) btn.classList.remove(`active-${type}`); } else { if(current) { database.ref(`global_chat/${key}/${current}s`).transaction(c => (c || 0) - 1); const oldBtn = document.getElementById(`btn-${current}-${key}`); if(oldBtn) oldBtn.classList.remove(`active-${current}`); } database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) + 1); myReactions[key] = type; const newBtn = document.getElementById(`btn-${type}-${key}`); if(newBtn) newBtn.classList.add(`active-${type}`); } localStorage.setItem('chat_reactions', JSON.stringify(myReactions)); }
-        function appendMessage(user, text, isMe, key, senderUUID, isAdminMsg, replyTo, image, likes = 0, dislikes = 0, msgTime) { const container = document.getElementById('chatContainer'); const div = document.createElement('div'); div.id = 'msg-' + key; let bgColor = isMe ? '' : `background-color: ${getUserColor(user)};`; div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'} ${isAdmin ? 'is-admin' : ''}`; if(!isMe) div.style.cssText = bgColor; const date = new Date(msgTime); const timeStr = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0'); let userDisplay = user; if(isAdminMsg) userDisplay = `<span class="msg-admin"><i class="fas fa-shield-alt"></i> YÖNETİCİ</span>`; let quoteHTML = ""; if(replyTo) { quoteHTML = `<div class="quoted-msg"><span class="quote-user">${replyTo.user}</span><span>${replyTo.text || "Resim"}</span></div>`; } let contentHTML = image ? `<img src="${image}" class="chat-img" onclick="showImagePreview('${image}')">` : text; let replyIcon = `<i class="fas fa-reply reply-btn-icon" onclick="startReply('${user}', '${text ? text.replace(/'/g, "\'") : ""}')"></i>`; let adminControls = ""; if(isAdmin && !isMe) { adminControls = `<div class="admin-controls"><button class="btn-ban" onclick="openConfirmModal('ban', '${senderUUID}')">⛔ ENGELLE</button><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; } else if (isAdmin) { adminControls = `<div class="admin-controls"><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; } let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}"); let myReact = myReactions[key]; let likeClass = myReact === 'like' ? 'active-like' : ''; let dislikeClass = myReact === 'dislike' ? 'active-dislike' : ''; let actionsHTML = `<div class="msg-actions"><span id="btn-like-${key}" class="action-btn ${likeClass}" onclick="toggleChatReaction('${key}', 'like')"><i class="fas fa-thumbs-up"></i> <span id="like-count-${key}">${likes || 0}</span></span><span id="btn-dislike-${key}" class="action-btn ${dislikeClass}" onclick="toggleChatReaction('${key}', 'dislike')"><i class="fas fa-thumbs-down"></i> <span id="dislike-count-${key}">${dislikes || 0}</span></span></div>`; div.innerHTML = `${quoteHTML}<span class="msg-user">${userDisplay} ${replyIcon}</span>${contentHTML}<span class="msg-time">${timeStr}</span>${actionsHTML}${adminControls}`; container.appendChild(div); container.scrollTop = container.scrollHeight; }
+        function updateStatsInDOM() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const titleElement = card.querySelector('.card-name');
+                if(titleElement){
+                    const title = titleElement.innerText;
+                    const safeKey = sanitizeKey(title);
+                    const views = globalViewCounts[safeKey] || 0;
+                    const likes = globalLikeCounts[safeKey] || 0;
+                    const viewSpan = card.querySelector('.count-val-eye'); if(viewSpan) viewSpan.innerText = views;
+                    const likeSpan = card.querySelector('.count-val-heart'); if(likeSpan) likeSpan.innerText = likes;
+                }
+            });
+        }
+
+        function incrementViewCount(title) { const safeKey = sanitizeKey(title); database.ref('channel_views/' + safeKey).transaction(curr => (curr || 0) + 1); }
+        function toggleLike(e, title) { e.stopPropagation(); const safeKey = sanitizeKey(title); if(myLikes.includes(safeKey)) { showToast("Zaten beğendin!", "fa-check-double"); return; } myLikes.push(safeKey); localStorage.setItem('my_likes', JSON.stringify(myLikes)); database.ref('channel_likes/' + safeKey).transaction(curr => (curr || 0) + 1); e.target.classList.add('liked'); showToast("Favorilere Eklendi!", "fa-heart"); }
+        function openReportModal(e, title) { e.stopPropagation(); openConfirmModal('report', title); }
+
+        function toggleChat() {
+            const modal = document.getElementById('chatModal');
+            modal.classList.toggle('active');
+            if(modal.classList.contains('active')) {
+                const rules = document.getElementById('chatRulesBanner');
+                rules.classList.remove('hidden');
+                if(rulesTimeout) clearTimeout(rulesTimeout);
+                rulesTimeout = setTimeout(() => { rules.classList.add('hidden'); }, 4000);
+            }
+        }
+        
+        function startReply(user, text) { currentReply = { user: user, text: text }; document.getElementById('replyToUser').innerText = user; document.getElementById('replyToText').innerText = text ? (text.substring(0, 30) + (text.length>30 ? '...' : '')) : "Resim"; document.getElementById('replyPreviewBar').style.display = 'flex'; document.getElementById('msgInput').focus(); }
+        function cancelReply() { currentReply = null; document.getElementById('replyPreviewBar').style.display = 'none'; }
+
+        function sendMsg() {
+            const inp = document.getElementById('msgInput');
+            const txt = inp.value.trim();
+            if(!txt) return;
+            if(txt === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; showToast("YÖNETİCİ MODU AÇILDI 👮‍♂️", "fa-user-shield"); inp.value = ""; document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; location.reload(); return; }
+            const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, text: txt, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
+            if(currentReply) { messageData.replyTo = currentReply; }
+            database.ref('global_chat').push(messageData);
+            inp.value = ""; cancelReply();
+        }
+        
+        function toggleChatReaction(key, type) {
+            let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}");
+            let current = myReactions[key]; 
+            if (current === type) { database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) - 1); delete myReactions[key]; const btn = document.getElementById(`btn-${type}-${key}`); if(btn) btn.classList.remove(`active-${type}`); } else { if(current) { database.ref(`global_chat/${key}/${current}s`).transaction(c => (c || 0) - 1); const oldBtn = document.getElementById(`btn-${current}-${key}`); if(oldBtn) oldBtn.classList.remove(`active-${current}`); } database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) + 1); myReactions[key] = type; const newBtn = document.getElementById(`btn-${type}-${key}`); if(newBtn) newBtn.classList.add(`active-${type}`); } localStorage.setItem('chat_reactions', JSON.stringify(myReactions));
+        }
+        
+        function appendMessage(user, text, isMe, key, senderUUID, isAdminMsg, replyTo, image, likes = 0, dislikes = 0) {
+            const container = document.getElementById('chatContainer');
+            const div = document.createElement('div');
+            div.id = 'msg-' + key;
+            let bgColor = isMe ? '' : `background-color: ${getUserColor(user)};`;
+            div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'} ${isAdmin ? 'is-admin' : ''}`;
+            if(!isMe) div.style.cssText = bgColor;
+            let userDisplay = user;
+            if(isAdminMsg) userDisplay = `<span class="msg-admin"><i class="fas fa-shield-alt"></i> YÖNETİCİ</span>`;
+            let quoteHTML = "";
+            if(replyTo) { quoteHTML = `<div class="quoted-msg"><span class="quote-user">${replyTo.user}</span><span>${replyTo.text || "Resim"}</span></div>`; }
+            let contentHTML = image ? `<img src="${image}" class="chat-img" onclick="showImagePreview('${image}')">` : text;
+            let replyIcon = `<i class="fas fa-reply reply-btn-icon" onclick="startReply('${user}', '${text ? text.replace(/'/g, "\'") : ""}')"></i>`;
+            let adminControls = "";
+            if(isAdmin && !isMe) { adminControls = `<div class="admin-controls"><button class="btn-ban" onclick="openConfirmModal('ban', '${senderUUID}')">⛔ ENGELLE</button><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; } else if (isAdmin) { adminControls = `<div class="admin-controls"><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; }
+            let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}");
+            let myReact = myReactions[key];
+            let likeClass = myReact === 'like' ? 'active-like' : '';
+            let dislikeClass = myReact === 'dislike' ? 'active-dislike' : '';
+            let actionsHTML = `<div class="msg-actions"><span id="btn-like-${key}" class="action-btn ${likeClass}" onclick="toggleChatReaction('${key}', 'like')"><i class="fas fa-thumbs-up"></i> <span id="like-count-${key}">${likes || 0}</span></span><span id="btn-dislike-${key}" class="action-btn ${dislikeClass}" onclick="toggleChatReaction('${key}', 'dislike')"><i class="fas fa-thumbs-down"></i> <span id="dislike-count-${key}">${dislikes || 0}</span></span></div>`;
+            div.innerHTML = `${quoteHTML}<span class="msg-user">${userDisplay} ${replyIcon}</span>${contentHTML}${actionsHTML}${adminControls}`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
 
         function openAdminPanel() { document.getElementById('adminPanelModal').style.display = 'flex'; database.ref('reports').once('value', (s) => { const count = s.exists() ? s.numChildren() : 0; document.getElementById('reportCount').innerText = count; }); }
         function toggleSubMenu(id) { const el = document.getElementById(id); el.classList.toggle('active'); }
@@ -515,7 +657,6 @@
         window.toggleMaintenance = function() { const val = document.getElementById('maintenanceToggle').checked; database.ref('settings/maintenance').set(val); showToast(val ? "Bakım Modu AÇIK" : "Bakım Modu KAPALI", "fa-tools"); };
         window.toggleChatLock = function() { const val = document.getElementById('chatLockToggle').checked; database.ref('settings/chat_locked').set(val); showToast(val ? "Sohbet KİLİTLENDİ" : "Sohbet AÇILDI", "fa-lock"); };
         window.clearChat = function() { if(confirm("DİKKAT: Tüm sohbet geçmişi silinecek!")) { database.ref('global_chat').remove(); showToast("Sohbet Temizlendi", "fa-trash"); } };
-        window.resetStats = function(type) { if(confirm(type === 'views' ? "Tüm izlenmeler sıfırlansın mı?" : "Tüm beğeniler sıfırlansın mı?")) { database.ref(type === 'views' ? 'channel_views' : 'channel_likes').remove(); showToast("İstatistikler Sıfırlandı", "fa-trash"); } };
 
         let pendingAction = null; 
         window.openConfirmModal = function(type, target) { pendingAction = { type: type, target: target }; const modal = document.getElementById('confirmModal'); const title = document.getElementById('confirmTitle'); const text = document.getElementById('confirmText'); const btn = document.getElementById('btnConfirmAction'); if(type === 'ban') { title.innerText = "Kullanıcıyı Engelle?"; text.innerText = "Bu kullanıcı bir daha sohbete erişemeyecek."; btn.innerText = "ENGELLE"; btn.style.background = "#ff0040"; } else if (type === 'del') { title.innerText = "Mesajı Sil?"; text.innerText = "Bu mesaj kalıcı olarak silinecek."; btn.innerText = "SİL"; btn.style.background = "#555"; } else if (type === 'report') { title.innerText = "Bildir?"; text.innerText = "Bu kanalın çalışmadığını yöneticiye bildirmek istiyor musun?"; btn.innerText = "BİLDİR"; btn.style.background = "#ff4d4d"; } modal.style.display = 'flex'; };
@@ -524,56 +665,12 @@
 
         function sanitizeKey(key) { return key.replace(/[.#$\/\[\]]/g, '_').substring(0, 50); }
         function toggleTheme() { document.body.classList.toggle('light-theme'); const isLight = document.body.classList.contains('light-theme'); localStorage.setItem('theme', isLight ? 'light' : 'dark'); document.getElementById('themeBtn').innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; document.getElementById('telegramBtn').style.color = isLight ? '#1a1a1a' : 'white'; document.getElementById('modalCloseBtn').style.background = isLight ? '#e0e0e0' : '#333'; document.getElementById('modalCloseBtn').style.color = isLight ? '#1a1a1a' : 'white'; document.getElementById('modalCloseBtn2').style.background = isLight ? '#e0e0e0' : '#333'; document.getElementById('modalCloseBtn2').style.color = isLight ? '#1a1a1a' : 'white'; }
-        
-        function render() { 
-            const container = document.getElementById('list'); 
-            const loadMoreBtn = document.getElementById('loadMoreBtn'); 
-            if (typeof categoryData === 'undefined') return; 
-            const items = categoryData[activeCategoryKey].items; 
-            container.innerHTML = ''; 
-            currentlyShown = itemsPerPage; 
-            items.forEach((item, index) => { 
-                const card = document.createElement('div'); 
-                card.className = 'card'; 
-                if (index >= itemsPerPage) card.classList.add('hidden'); 
-                const badgeHTML = item.is_new ? '<span class="badge badge-yeni">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>'; 
-                const safeKey = sanitizeKey(item.title); 
-                const views = globalViewCounts[safeKey] || 0; 
-                const likes = globalLikeCounts[safeKey] || 0; 
-                const isLiked = myLikes.includes(safeKey) ? 'liked' : ''; 
-                
-                // VIP CHECK (FIXED)
-                let vipBadge = "";
-                // Use a closure or bind to ensure correct item is passed
-                card.onclick = () => { 
-                    if(item.password && item.password.trim() !== "") {
-                        currentVipItem = item;
-                        document.getElementById('vipModal').style.display='flex';
-                        // Focus on input
-                        setTimeout(() => document.getElementById('vipPasswordInput').focus(), 100);
-                    } else {
-                        current = item; 
-                        incrementViewCount(item.title); 
-                        document.getElementById('mTitle').innerText = item.title; 
-                        document.getElementById('modal').style.display = 'flex'; 
-                    }
-                };
-
-                if (item.password && item.password.trim() !== "") {
-                    vipBadge = `<span class="badge badge-vip"><i class="fas fa-lock"></i> VIP</span>`;
-                }
-
-                card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${vipBadge || badgeHTML}</div><div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta"><span>${item.added_date}</span> <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span><span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span><span class="stat-badge"><i class="fas fa-exclamation-triangle stat-report" onclick="openReportModal(event, '${item.title}')"></i></span></div></div><i class="fas fa-play-circle play-icon"></i>`; 
-                container.appendChild(card); 
-            }); 
-            if (items.length > itemsPerPage) loadMoreBtn.classList.remove('hidden'); else loadMoreBtn.classList.add('hidden'); 
-        }
-
+        function render() { const container = document.getElementById('list'); const loadMoreBtn = document.getElementById('loadMoreBtn'); if (typeof categoryData === 'undefined') return; const items = categoryData[activeCategoryKey].items; container.innerHTML = ''; currentlyShown = itemsPerPage; items.forEach((item, index) => { const card = document.createElement('div'); card.className = 'card'; if (index >= itemsPerPage) card.classList.add('hidden'); const badgeHTML = item.is_new ? '<span class="badge badge-yeni">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>'; const safeKey = sanitizeKey(item.title); const views = globalViewCounts[safeKey] || 0; const likes = globalLikeCounts[safeKey] || 0; const isLiked = myLikes.includes(safeKey) ? 'liked' : ''; card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${badgeHTML}</div><div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta"><span>${item.added_date}</span> <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span><span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span><span class="stat-badge"><i class="fas fa-exclamation-triangle stat-report" onclick="openReportModal(event, '${item.title}')"></i></span></div></div><i class="fas fa-play-circle play-icon"></i>`; card.onclick = () => { current = item; incrementViewCount(item.title); document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; }; container.appendChild(card); }); if (items.length > itemsPerPage) loadMoreBtn.classList.remove('hidden'); else loadMoreBtn.classList.add('hidden'); }
         function loadMore() { const items = categoryData[activeCategoryKey].items; const cards = document.querySelectorAll('.card'); const loadMoreBtn = document.getElementById('loadMoreBtn'); for (let i = currentlyShown; i < Math.min(currentlyShown + itemsPerPage, items.length); i++) { if (cards[i]) cards[i].classList.remove('hidden'); } currentlyShown += itemsPerPage; if (currentlyShown >= items.length) loadMoreBtn.classList.add('hidden'); }
         document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url !== "#") { const url = current.web_link_url; window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=' + (url.startsWith('https') ? 'https' : 'http') + ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;component=com.android.chrome/com.google.android.apps.chrome.Main;end'; document.getElementById('modal').style.display='none'; } };
         document.getElementById('wuffy').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
         document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
-        window.onclick = (e) => { if(e.target == document.getElementById('modal')) document.getElementById('modal').style.display='none'; if(e.target == document.getElementById('confirmModal')) closeConfirm(); if(e.target == document.getElementById('adminPanelModal')) document.getElementById('adminPanelModal').style.display='none'; if(e.target == document.getElementById('nameChangeModal')) document.getElementById('nameChangeModal').style.display='none'; if(e.target == document.getElementById('vipModal')) document.getElementById('vipModal').style.display='none'; }
+        window.onclick = (e) => { if(e.target == document.getElementById('modal')) document.getElementById('modal').style.display='none'; if(e.target == document.getElementById('confirmModal')) closeConfirm(); if(e.target == document.getElementById('adminPanelModal')) document.getElementById('adminPanelModal').style.display='none'; if(e.target == document.getElementById('nameChangeModal')) document.getElementById('nameChangeModal').style.display='none'; }
 
         (function() { const savedTheme = localStorage.getItem('theme'); if (savedTheme === 'light') toggleTheme(); if(isAdmin) { document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; } render(); setTimeout(listenToData, 500); setTimeout(initPresence, 1000); })();
     </script>
