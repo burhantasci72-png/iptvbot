@@ -93,6 +93,7 @@
         .msg-right { align-self: flex-end; background: var(--primary); border-bottom-right-radius: 2px; }
         .msg-user { font-size: 0.65rem; opacity: 0.8; margin-bottom: 2px; display: block; font-weight: bold; }
         .msg-admin { color: #ffeb3b; }
+        .msg-time { display: block; font-size: 0.65rem; text-align: right; opacity: 0.6; margin-top: 4px; }
         
         .quoted-msg { background: rgba(0,0,0,0.2); border-left: 3px solid #ff4d4d; padding: 5px 8px; border-radius: 4px; margin-bottom: 5px; font-size: 0.75rem; display: flex; flex-direction: column; opacity: 0.9; }
         .quote-user { font-weight: bold; color: #ffeb3b; margin-bottom: 2px; }
@@ -384,6 +385,7 @@
         let currentReply = null; 
         let isChatLocked = false;
         let countdownInterval;
+        let rulesTimeout;
 
         const ADMIN_PASS = "burhan_baba_72";
 
@@ -396,6 +398,12 @@
         function initPresence() { const onlineRef = database.ref('online_users'); const myCon = onlineRef.push(); myCon.onDisconnect().remove(); myCon.set(true); onlineRef.on('value', (s) => { document.getElementById('onlineCount').innerText = s.numChildren(); }); }
         function showToast(message, icon="fa-info-circle") { const t = document.getElementById('toast'); t.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`; t.className = "toast show"; setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000); }
         
+        // --- TIME FORMATTING ---
+        function formatTime(ts) {
+            const d = new Date(ts);
+            return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+        }
+
         // --- COUNTDOWN LOGIC ---
         function updateCountdownDisplay(targetTime) {
             if (countdownInterval) clearInterval(countdownInterval);
@@ -567,7 +575,7 @@
                 if(likeEl) likeEl.innerText = msg.likes || 0;
                 if(dislikeEl) dislikeEl.innerText = msg.dislikes || 0;
             });
-            database.ref('global_chat').limitToLast(50).on('child_added', (snapshot) => { const msg = snapshot.val(); appendMessage(msg.user, msg.text, msg.user === myUserName, snapshot.key, msg.uuid, msg.isAdminMsg, msg.replyTo, msg.image, msg.likes, msg.dislikes); });
+            database.ref('global_chat').limitToLast(50).on('child_added', (snapshot) => { const msg = snapshot.val(); appendMessage(msg.user, msg.text, msg.user === myUserName, snapshot.key, msg.uuid, msg.isAdminMsg, msg.replyTo, msg.image, msg.likes, msg.dislikes, msg.time); });
             database.ref('global_chat').on('child_removed', (snapshot) => { const el = document.getElementById('msg-' + snapshot.key); if(el) el.remove(); });
         }
 
@@ -621,7 +629,7 @@
             if (current === type) { database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) - 1); delete myReactions[key]; const btn = document.getElementById(`btn-${type}-${key}`); if(btn) btn.classList.remove(`active-${type}`); } else { if(current) { database.ref(`global_chat/${key}/${current}s`).transaction(c => (c || 0) - 1); const oldBtn = document.getElementById(`btn-${current}-${key}`); if(oldBtn) oldBtn.classList.remove(`active-${current}`); } database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) + 1); myReactions[key] = type; const newBtn = document.getElementById(`btn-${type}-${key}`); if(newBtn) newBtn.classList.add(`active-${type}`); } localStorage.setItem('chat_reactions', JSON.stringify(myReactions));
         }
         
-        function appendMessage(user, text, isMe, key, senderUUID, isAdminMsg, replyTo, image, likes = 0, dislikes = 0) {
+        function appendMessage(user, text, isMe, key, senderUUID, isAdminMsg, replyTo, image, likes = 0, dislikes = 0, time = null) {
             const container = document.getElementById('chatContainer');
             const div = document.createElement('div');
             div.id = 'msg-' + key;
@@ -634,6 +642,7 @@
             if(replyTo) { quoteHTML = `<div class="quoted-msg"><span class="quote-user">${replyTo.user}</span><span>${replyTo.text || "Resim"}</span></div>`; }
             let contentHTML = image ? `<img src="${image}" class="chat-img" onclick="showImagePreview('${image}')">` : text;
             let replyIcon = `<i class="fas fa-reply reply-btn-icon" onclick="startReply('${user}', '${text ? text.replace(/'/g, "\'") : ""}')"></i>`;
+            let timeHTML = `<span class="msg-time">${formatTime(time || Date.now())}</span>`;
             let adminControls = "";
             if(isAdmin && !isMe) { adminControls = `<div class="admin-controls"><button class="btn-ban" onclick="openConfirmModal('ban', '${senderUUID}')">⛔ ENGELLE</button><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; } else if (isAdmin) { adminControls = `<div class="admin-controls"><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; }
             let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}");
@@ -641,7 +650,7 @@
             let likeClass = myReact === 'like' ? 'active-like' : '';
             let dislikeClass = myReact === 'dislike' ? 'active-dislike' : '';
             let actionsHTML = `<div class="msg-actions"><span id="btn-like-${key}" class="action-btn ${likeClass}" onclick="toggleChatReaction('${key}', 'like')"><i class="fas fa-thumbs-up"></i> <span id="like-count-${key}">${likes || 0}</span></span><span id="btn-dislike-${key}" class="action-btn ${dislikeClass}" onclick="toggleChatReaction('${key}', 'dislike')"><i class="fas fa-thumbs-down"></i> <span id="dislike-count-${key}">${dislikes || 0}</span></span></div>`;
-            div.innerHTML = `${quoteHTML}<span class="msg-user">${userDisplay} ${replyIcon}</span>${contentHTML}${actionsHTML}${adminControls}`;
+            div.innerHTML = `${quoteHTML}<span class="msg-user">${userDisplay} ${replyIcon}</span>${contentHTML}${timeHTML}${actionsHTML}${adminControls}`;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
         }
