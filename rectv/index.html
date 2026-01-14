@@ -26,6 +26,11 @@
         @keyframes pulse-green { 0% { opacity: 0.8; } 50% { opacity: 1; text-shadow: 0 0 5px rgba(0,255,127,0.5); } 100% { opacity: 0.8; } }
         .light-theme .online-badge { background: rgba(0, 128, 0, 0.1); color: #008000; border-color: rgba(0, 128, 0, 0.2); }
 
+        /* KAYAN YAZI STİLLERİ */
+        .announcement-bar { background: #ffeb3b; color: #000; overflow: hidden; white-space: nowrap; padding: 6px 0; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: none; border-bottom: 2px solid #ff4d00; }
+        .announcement-content { display: inline-block; padding-left: 100%; animation: scroll-left 15s linear infinite; }
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        
         .container { padding: 15px; }
         .card { background: var(--card-bg); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid var(--border); position: relative; transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         .card.hidden { display: none; }
@@ -247,6 +252,18 @@
                     </div>
                 </div>
 
+                <!-- ANNOUNCEMENT (SCROLLING TEXT) ADMIN -->
+                <div class="admin-menu-btn" onclick="toggleSubMenu('annoAdmin')">
+                    <span>📢 Kayan Yazı Duyuru</span> <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="annoAdmin" class="admin-submenu">
+                    <input type="text" id="annoInput" class="custom-input" placeholder="Duyuru Metni: (Örn: Yayınlar Başladı!)">
+                    <div style="display:flex; gap:5px;">
+                        <button onclick="saveAnnouncement()" class="btn-confirm" style="flex:1;">Yayınla</button>
+                        <button onclick="stopAnnouncement()" class="btn-cancel" style="flex:1;">Kaldır</button>
+                    </div>
+                </div>
+
                 <!-- OTHER ADMIN SECTIONS -->
                 <div class="admin-menu-btn" onclick="toggleSubMenu('settingsContainer')"><span>⚙️ Genel Ayarlar</span> <i class="fas fa-chevron-down"></i></div>
                 <div id="settingsContainer" class="admin-submenu">
@@ -282,6 +299,11 @@
             <button class="theme-btn" onclick="toggleTheme()" id="themeBtn"><i class="fas fa-moon"></i></button>
             <a href="https://t.me/inadinatv" id="telegramBtn" style="color:white; font-size:1.4rem;"><i class="fab fa-telegram"></i></a>
         </div>
+    </div>
+
+    <!-- ANNOUNCEMENT BAR (SCROLLING TEXT) -->
+    <div id="announcementBar" class="announcement-bar">
+        <div class="announcement-content" id="announcementText"></div>
     </div>
 
     <!-- FEATURE CONTAINER (COUNTDOWN & POLL) -->
@@ -454,7 +476,7 @@
             document.getElementById('percent2').innerText = p2 + "%";
         }
 
-        // --- ADMIN FUNCTIONS FOR POLL & COUNTDOWN ---
+        // --- ADMIN FUNCTIONS FOR POLL & COUNTDOWN & ANNOUNCEMENT ---
         window.savePoll = function() {
             const q = document.getElementById('pollQuestion').value;
             const o1 = document.getElementById('pollOpt1').value;
@@ -482,6 +504,17 @@
         window.stopCountdown = function() {
             database.ref('extras/countdown').set({ active: false });
             showToast("Sayaç Durduruldu", "fa-stop");
+        };
+        window.saveAnnouncement = function() {
+            const txt = document.getElementById('annoInput').value;
+            if(txt) {
+                database.ref('extras/announcement').set({ active: true, text: txt });
+                showToast("Duyuru Yayında!", "fa-bullhorn");
+            }
+        };
+        window.stopAnnouncement = function() {
+            database.ref('extras/announcement').set({ active: false });
+            showToast("Duyuru Kaldırıldı", "fa-times");
         };
 
         // --- OTHER LOGIC ---
@@ -522,7 +555,7 @@
         }
 
         function listenToData() {
-            // EXTRAS LISTENER (POLL & COUNTDOWN)
+            // EXTRAS LISTENER (POLL & COUNTDOWN & ANNOUNCEMENT)
             database.ref('extras').on('value', (s) => {
                 if(s.exists()) {
                     const extras = s.val();
@@ -540,7 +573,14 @@
                         updatePollDisplay(extras.poll);
                     } else {
                         document.getElementById('pollBox').style.display = 'none';
-                        localStorage.removeItem('poll_voted'); // Reset local vote if poll is reset
+                        localStorage.removeItem('poll_voted'); 
+                    }
+                    // Announcement (Scrolling Text)
+                    if(extras.announcement && extras.announcement.active) {
+                        document.getElementById('announcementBar').style.display = 'block';
+                        document.getElementById('announcementText').innerText = extras.announcement.text;
+                    } else {
+                        document.getElementById('announcementBar').style.display = 'none';
                     }
                 }
             });
