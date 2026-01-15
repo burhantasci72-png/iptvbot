@@ -61,9 +61,8 @@
         .light-theme .toast { background-color: #fff; color: #333; border-color: #ddd; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         .toast.show { visibility: visible; opacity: 1; bottom: 90px; }
         
-        /* COUNTDOWN & POLL STYLES (YENİ) */
+        /* COUNTDOWN & POLL STYLES */
         .feature-container { margin: 15px; display: flex; flex-direction: column; gap: 15px; }
-        
         .countdown-box { background: linear-gradient(135deg, #1a1825, #000); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; }
         .countdown-title { color: var(--primary); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
         .countdown-timer { display: flex; justify-content: center; gap: 10px; font-size: 1.5rem; font-weight: bold; color: white; font-family: monospace; }
@@ -86,17 +85,27 @@
         
         .chat-modal { position: fixed; bottom: -100%; left: 0; width: 100%; height: 96%; background: var(--surface); border-radius: 20px 20px 0 0; z-index: 201; transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); }
         .chat-modal.active { bottom: 0; }
-        .chat-header { padding: 15px; background: rgba(0,0,0,0.2); display: flex; justify-content: space-between; align-items: center; border-radius: 20px 20px 0 0; }
+        .chat-header { padding: 15px; background: rgba(0,0,0,0.2); display: flex; flex-direction: column; border-radius: 20px 20px 0 0; gap: 10px; }
+        .chat-header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .chat-close { font-size: 1.5rem; cursor: pointer; color: var(--text); }
         .chat-rules { background: rgba(255, 0, 64, 0.15); border-bottom: 1px solid rgba(255, 0, 64, 0.3); color: #ff4d4d; padding: 10px; font-size: 0.8rem; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.5s ease-in-out; opacity: 1; max-height: 100px; }
         .chat-rules.hidden { opacity: 0; max-height: 0; padding: 0; margin: 0; overflow: hidden; border: none; }
         .light-theme .chat-rules { background: #ffe6e6; color: #cc0000; }
 
+        /* TAB STYLES FOR CHAT */
+        .chat-tabs { display: flex; width: 100%; background: rgba(0,0,0,0.2); border-radius: 10px; padding: 2px; }
+        .chat-tab { flex: 1; text-align: center; padding: 8px; font-size: 0.9rem; cursor: pointer; border-radius: 8px; transition: all 0.3s; position: relative; }
+        .chat-tab.active { background: var(--primary); color: white; font-weight: bold; }
+        .chat-tab-badge { position: absolute; top: 2px; right: 10px; background: red; color: white; font-size: 0.6rem; padding: 2px 5px; border-radius: 50%; display: none; }
+
+        .chat-view { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+        .chat-view.hidden { display: none; }
+
         .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
         .message-bubble { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; position: relative; word-wrap: break-word; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .msg-left { align-self: flex-start; border-bottom-left-radius: 2px; }
         .msg-right { align-self: flex-end; background: var(--primary); border-bottom-right-radius: 2px; }
-        .msg-user { font-size: 0.65rem; opacity: 0.8; margin-bottom: 2px; display: block; font-weight: bold; }
+        .msg-user { font-size: 0.65rem; opacity: 0.8; margin-bottom: 2px; display: block; font-weight: bold; cursor: pointer; }
         .msg-admin { color: #ffeb3b; }
         .msg-time { display: block; font-size: 0.65rem; text-align: right; opacity: 0.6; margin-top: 4px; }
         
@@ -127,7 +136,19 @@
         .chat-img-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
         .light-theme .chat-img-btn { background: rgba(0,0,0,0.1); color: #333; }
         .chat-img { max-width: 100%; border-radius: 10px; margin-top: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
+
+        /* PRIVATE CHAT LIST STYLES */
+        .private-chat-list { flex: 1; overflow-y: auto; padding: 10px; }
+        .private-chat-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .private-chat-item:hover { background: rgba(255,255,255,0.1); }
+        .pc-user { font-weight: bold; font-size: 1rem; }
+        .pc-preview { font-size: 0.8rem; opacity: 0.6; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 200px; }
         
+        #userActionModal .modal-box { text-align: center; }
+        .action-menu-btn { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: var(--text); font-size: 1rem; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 10px; }
+        .action-menu-btn:hover { background: rgba(255,255,255,0.2); }
+        .action-menu-btn i { width: 20px; text-align: center; }
+
         #imgPreviewModal { background: rgba(0,0,0,0.95); display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 5000; justify-content: center; align-items: center; }
         #imgPreviewModal img { max-width: 95%; max-height: 90%; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
         #imgPreviewModal i { position: absolute; top: 20px; right: 20px; font-size: 2rem; color: white; cursor: pointer; }
@@ -205,6 +226,19 @@
                 <button class="btn-cancel" onclick="closeConfirm()">Vazgeç</button>
                 <button class="btn-confirm" id="btnConfirmAction">ONAYLA</button>
             </div>
+        </div>
+    </div>
+
+    <div id="userActionModal" class="modal">
+        <div class="modal-box">
+            <h3 id="uaTitle" style="color:var(--primary); margin-top:0;">Kullanıcı İşlemleri</h3>
+            <button class="action-menu-btn" onclick="executeUserAction('reply')"><i class="fas fa-reply"></i> Yanıtla</button>
+            <button class="action-menu-btn" onclick="executeUserAction('private')"><i class="fas fa-lock"></i> Özel Mesaj At</button>
+            <div id="adminUserActions" style="display:none; border-top:1px solid rgba(255,255,255,0.1); margin-top:5px; padding-top:5px;">
+                <button class="action-menu-btn" onclick="executeUserAction('ban')" style="color:#ff4d4d;"><i class="fas fa-ban"></i> Engelle</button>
+                <button class="action-menu-btn" onclick="executeUserAction('delete')" style="color:#aaa;"><i class="fas fa-trash"></i> Mesajı Sil</button>
+            </div>
+            <button class="btn-cancel" onclick="document.getElementById('userActionModal').style.display='none'" style="width:100%; margin-top:10px;">Kapat</button>
         </div>
     </div>
 
@@ -345,14 +379,42 @@
     
     <div class="chat-modal" id="chatModal">
         <div class="chat-header">
-            <div style="display:flex; align-items:center; gap:10px;">
-                <span style="font-weight:bold;" id="chatStatus">Canlı Sohbet 🟢</span>
-                <i class="fas fa-edit" onclick="openNameModal()" style="cursor:pointer; opacity:0.7; font-size:0.9rem;" title="İsim Değiştir"></i>
+            <div class="chat-header-top">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="font-weight:bold;" id="chatStatus">Canlı Sohbet 🟢</span>
+                    <i class="fas fa-edit" onclick="openNameModal()" style="cursor:pointer; opacity:0.7; font-size:0.9rem;" title="İsim Değiştir"></i>
+                </div>
+                <i class="fas fa-times chat-close" onclick="toggleChat()"></i>
             </div>
-            <i class="fas fa-times chat-close" onclick="toggleChat()"></i>
+            <div class="chat-tabs">
+                <div class="chat-tab active" id="tabGlobal" onclick="switchChatTab('global')">Genel</div>
+                <div class="chat-tab" id="tabPrivate" onclick="switchChatTab('private')">Özel Mesajlar <span id="pmBadge" class="chat-tab-badge">0</span></div>
+            </div>
         </div>
+        
         <div class="chat-rules" id="chatRulesBanner"><i class="fas fa-exclamation-triangle"></i> UYARI: Argo ve sohbet dışı mesaj atanlar SÜRESİZ banlanır!</div>
-        <div class="chat-messages" id="chatContainer"></div>
+        
+        <!-- GLOBAL CHAT VIEW -->
+        <div id="viewGlobal" class="chat-view">
+            <div class="chat-messages" id="chatContainer"></div>
+        </div>
+        
+        <!-- PRIVATE CHAT LIST VIEW -->
+        <div id="viewPrivateList" class="chat-view hidden">
+            <div class="private-chat-list" id="privateChatListContainer">
+                <p style="text-align:center; opacity:0.6; margin-top:20px;">Henüz özel mesajın yok.</p>
+            </div>
+        </div>
+        
+        <!-- PRIVATE CHAT CONVERSATION VIEW -->
+        <div id="viewPrivateConv" class="chat-view hidden">
+            <div style="background:rgba(0,0,0,0.3); padding:8px; display:flex; align-items:center;">
+                <button onclick="backToPrivateList()" style="background:none; border:none; color:white; font-size:1.2rem; cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
+                <span id="privateChatUserName" style="margin-left:15px; font-weight:bold;">Kullanıcı</span>
+            </div>
+            <div class="chat-messages" id="privateChatContainer"></div>
+        </div>
+
         <div id="replyPreviewBar" class="reply-preview-bar">
             <span><i class="fas fa-reply"></i> <b id="replyToUser">Kullanıcı</b>: <i id="replyToText">Mesaj...</i></span>
             <i class="fas fa-times" onclick="cancelReply()" style="cursor:pointer; font-size:1.2rem;"></i>
@@ -409,6 +471,13 @@
         let countdownInterval;
         let rulesTimeout;
 
+        // PRIVATE CHAT VARIABLES
+        let currentTab = 'global'; // 'global' or 'private'
+        let currentPrivateRoom = null;
+        let currentTargetUser = null;
+        let privateChatsData = {};
+        let activePrivateListener = null;
+
         const ADMIN_PASS = "burhan_baba_72";
 
         if(!myUUID) { myUUID = 'user_' + Date.now() + '_' + Math.floor(Math.random() * 1000); localStorage.setItem('user_uuid', myUUID); }
@@ -419,109 +488,191 @@
         function getUserColor(username) { let hash = 0; for (let i = 0; i < username.length; i++) { hash = username.charCodeAt(i) + ((hash << 5) - hash); } const hue = Math.abs(hash % 360); return `hsl(${hue}, 70%, 45%)`; }
         function initPresence() { const onlineRef = database.ref('online_users'); const myCon = onlineRef.push(); myCon.onDisconnect().remove(); myCon.set(true); onlineRef.on('value', (s) => { document.getElementById('onlineCount').innerText = s.numChildren(); }); }
         function showToast(message, icon="fa-info-circle") { const t = document.getElementById('toast'); t.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`; t.className = "toast show"; setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000); }
-        
-        // --- TIME FORMATTING ---
-        function formatTime(ts) {
-            const d = new Date(ts);
-            return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+        function formatTime(ts) { const d = new Date(ts); return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0'); }
+
+        // --- USER ACTION MODAL ---
+        let selectedUserForAction = null;
+        function openUserActionModal(targetUUID, targetName, msgId) {
+            if(targetUUID === myUUID) return; 
+            selectedUserForAction = { uuid: targetUUID, name: targetName, msgId: msgId };
+            document.getElementById('uaTitle').innerText = targetName;
+            document.getElementById('userActionModal').style.display = 'flex';
+            if(isAdmin) document.getElementById('adminUserActions').style.display = 'block';
+            else document.getElementById('adminUserActions').style.display = 'none';
         }
 
-        // --- COUNTDOWN LOGIC ---
+        function executeUserAction(action) {
+            document.getElementById('userActionModal').style.display = 'none';
+            if(!selectedUserForAction) return;
+            if(action === 'reply') {
+                startReply(selectedUserForAction.name, "");
+            } else if (action === 'private') {
+                startPrivateChat(selectedUserForAction.uuid, selectedUserForAction.name);
+            } else if (action === 'ban') {
+                openConfirmModal('ban', selectedUserForAction.uuid);
+            } else if (action === 'delete') {
+                openConfirmModal('del', selectedUserForAction.msgId);
+            }
+        }
+
+        // --- PRIVATE CHAT LOGIC ---
+        function switchChatTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.chat-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(tab === 'global' ? 'tabGlobal' : 'tabPrivate').classList.add('active');
+            
+            document.getElementById('viewGlobal').classList.add('hidden');
+            document.getElementById('viewPrivateList').classList.add('hidden');
+            document.getElementById('viewPrivateConv').classList.add('hidden');
+            
+            if(tab === 'global') {
+                document.getElementById('viewGlobal').classList.remove('hidden');
+                document.getElementById('msgInput').placeholder = "Genel sohbete yaz...";
+                currentPrivateRoom = null;
+            } else {
+                if(currentPrivateRoom) {
+                     document.getElementById('viewPrivateConv').classList.remove('hidden');
+                     document.getElementById('msgInput').placeholder = "Özel mesaj yaz...";
+                } else {
+                    document.getElementById('viewPrivateList').classList.remove('hidden');
+                    document.getElementById('msgInput').placeholder = "Bir sohbet seç...";
+                }
+                // Clear badge
+                document.getElementById('pmBadge').style.display = 'none';
+                document.getElementById('pmBadge').innerText = '0';
+            }
+        }
+
+        function getRoomId(uid1, uid2) {
+            const sorted = [uid1, uid2].sort();
+            return sorted[0] + "_" + sorted[1];
+        }
+
+        function startPrivateChat(targetUUID, targetName) {
+            toggleChat(); // Close if open to refresh or ensure open
+            document.getElementById('chatModal').classList.add('active');
+            
+            currentTargetUser = { uuid: targetUUID, name: targetName };
+            currentPrivateRoom = getRoomId(myUUID, targetUUID);
+            
+            // Switch UI
+            switchChatTab('private');
+            document.getElementById('viewPrivateList').classList.add('hidden');
+            document.getElementById('viewPrivateConv').classList.remove('hidden');
+            document.getElementById('privateChatUserName').innerText = targetName;
+            document.getElementById('privateChatContainer').innerHTML = '<p style="text-align:center; opacity:0.5; margin-top:20px;">Sohbet yükleniyor...</p>';
+            
+            // Listen to this room
+            listenToPrivateRoom(currentPrivateRoom);
+        }
+
+        function backToPrivateList() {
+            currentPrivateRoom = null;
+            if(activePrivateListener) activePrivateListener.off(); // Stop listening to specific room
+            switchChatTab('private');
+        }
+
+        function listenToPrivateRoom(roomId) {
+            if(activePrivateListener) activePrivateListener.off();
+            const ref = database.ref('private_chats/' + roomId);
+            activePrivateListener = ref;
+            
+            document.getElementById('privateChatContainer').innerHTML = '';
+            ref.limitToLast(50).on('child_added', (snapshot) => {
+                const msg = snapshot.val();
+                appendPrivateMessage(msg.user, msg.text, msg.user === myUserName, msg.image, msg.time);
+            });
+        }
+
+        function appendPrivateMessage(user, text, isMe, image, time) {
+            const container = document.getElementById('privateChatContainer');
+            const div = document.createElement('div');
+            let bgColor = isMe ? '' : `background-color: ${getUserColor(user)};`;
+            div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'}`;
+            if(!isMe) div.style.cssText = bgColor;
+            
+            let contentHTML = image ? `<img src="${image}" class="chat-img" onclick="showImagePreview('${image}')">` : text;
+            let timeHTML = `<span class="msg-time">${formatTime(time || Date.now())}</span>`;
+            
+            div.innerHTML = `<span class="msg-user">${user}</span>${contentHTML}${timeHTML}`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function listenToAllPrivateChats() {
+            // This is a simplified approach. Ideally we index user's chats. 
+            // Here we listen to all and filter client side (Not secure for high scale, ok for small bot).
+            // Better: 'private_chats' should be structure as /private_chats/ROOM_ID/messages
+            // We just watch if room_id contains myUUID.
+            // Since we can't do complex query, we will rely on a "notify" path or just "last_messages".
+            // Let's implement a listener on "private_chats" but just check added children keys.
+            
+            // OPTIMIZED: We will assume we can't download ALL chats. 
+            // We will make a helper path: 'user_inbox/{myUUID}/{targetUUID}' -> { lastMsg, timestamp, name }
+            database.ref('user_inbox/' + myUUID).on('value', (s) => {
+                const listContainer = document.getElementById('privateChatListContainer');
+                listContainer.innerHTML = '';
+                let count = 0;
+                
+                if(!s.exists()) {
+                    listContainer.innerHTML = '<p style="text-align:center; opacity:0.6; margin-top:20px;">Henüz özel mesajın yok.</p>';
+                    return;
+                }
+                
+                s.forEach(child => {
+                    const data = child.val();
+                    const targetUUID = child.key;
+                    count++;
+                    
+                    const div = document.createElement('div');
+                    div.className = 'private-chat-item';
+                    div.onclick = () => startPrivateChat(targetUUID, data.name);
+                    div.innerHTML = `
+                        <div style="flex:1;">
+                            <div class="pc-user">${data.name}</div>
+                            <div class="pc-preview">${data.lastMsg || "Resim"}</div>
+                        </div>
+                        <div style="font-size:0.7rem; opacity:0.5;">${formatTime(data.timestamp)}</div>
+                    `;
+                    listContainer.appendChild(div);
+                });
+
+                // Update badge if we are not on private tab or list view
+                if(currentTab === 'global') {
+                    const badge = document.getElementById('pmBadge');
+                    badge.innerText = count > 0 ? "!" : "0";
+                    badge.style.display = count > 0 ? 'inline-block' : 'none';
+                }
+            });
+        }
+
+        // --- GLOBAL CHAT & GENERAL LOGIC ---
         function updateCountdownDisplay(targetTime) {
             if (countdownInterval) clearInterval(countdownInterval);
             countdownInterval = setInterval(() => {
                 const now = new Date().getTime();
                 const distance = targetTime - now;
-                
-                if (distance < 0) {
-                    clearInterval(countdownInterval);
-                    document.getElementById("countdownTimer").style.display = "none";
-                    document.getElementById("liveIndicator").style.display = "block";
-                    return;
-                }
-                
-                document.getElementById("countdownTimer").style.display = "flex";
-                document.getElementById("liveIndicator").style.display = "none";
-                
+                if (distance < 0) { clearInterval(countdownInterval); document.getElementById("countdownTimer").style.display = "none"; document.getElementById("liveIndicator").style.display = "block"; return; }
+                document.getElementById("countdownTimer").style.display = "flex"; document.getElementById("liveIndicator").style.display = "none";
                 document.getElementById("cdDays").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
                 document.getElementById("cdHours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 document.getElementById("cdMins").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 document.getElementById("cdSecs").innerText = Math.floor((distance % (1000 * 60)) / 1000);
             }, 1000);
         }
+        function votePoll(option) { if(localStorage.getItem('poll_voted') === 'true') { showToast("Zaten oy kullandınız!", "fa-exclamation"); return; } database.ref('extras/poll/votes_' + option).transaction(c => (c || 0) + 1); localStorage.setItem('poll_voted', 'true'); showToast("Oyunuz kaydedildi", "fa-check"); }
+        function updatePollDisplay(data) { const total = (data.votes_opt1 || 0) + (data.votes_opt2 || 0); const p1 = total === 0 ? 0 : Math.round((data.votes_opt1 / total) * 100); const p2 = total === 0 ? 0 : Math.round((data.votes_opt2 / total) * 100); document.getElementById('displayPollQuestion').innerText = data.question; document.getElementById('displayOpt1').innerText = data.opt1; document.getElementById('displayOpt2').innerText = data.opt2; document.getElementById('bar1').style.width = p1 + "%"; document.getElementById('percent1').innerText = p1 + "%"; document.getElementById('bar2').style.width = p2 + "%"; document.getElementById('percent2').innerText = p2 + "%"; }
+        window.savePoll = function() { const q = document.getElementById('pollQuestion').value; const o1 = document.getElementById('pollOpt1').value; const o2 = document.getElementById('pollOpt2').value; if(q && o1 && o2) { database.ref('extras/poll').set({ active: true, question: q, opt1: o1, opt2: o2, votes_opt1: 0, votes_opt2: 0 }); showToast("Anket Başlatıldı", "fa-check"); } };
+        window.resetPoll = function() { database.ref('extras/poll').set({ active: false }); showToast("Anket Sıfırlandı", "fa-trash"); };
+        window.saveCountdown = function() { const t = document.getElementById('cdTitle').value; const d = document.getElementById('cdDate').value; if(t && d) { const ts = new Date(d).getTime(); database.ref('extras/countdown').set({ active: true, title: t, target: ts }); showToast("Sayaç Başlatıldı", "fa-clock"); } };
+        window.stopCountdown = function() { database.ref('extras/countdown').set({ active: false }); showToast("Sayaç Durduruldu", "fa-stop"); };
+        window.saveAnnouncement = function() { const txt = document.getElementById('annoInput').value; if(txt) { database.ref('extras/announcement').set({ active: true, text: txt }); showToast("Duyuru Yayında!", "fa-bullhorn"); } };
+        window.stopAnnouncement = function() { database.ref('extras/announcement').set({ active: false }); showToast("Duyuru Kaldırıldı", "fa-times"); };
 
-        // --- POLL LOGIC ---
-        function votePoll(option) {
-            if(localStorage.getItem('poll_voted') === 'true') {
-                showToast("Zaten oy kullandınız!", "fa-exclamation");
-                return;
-            }
-            database.ref('extras/poll/votes_' + option).transaction(c => (c || 0) + 1);
-            localStorage.setItem('poll_voted', 'true');
-            showToast("Oyunuz kaydedildi", "fa-check");
-        }
-
-        function updatePollDisplay(data) {
-            const total = (data.votes_opt1 || 0) + (data.votes_opt2 || 0);
-            const p1 = total === 0 ? 0 : Math.round((data.votes_opt1 / total) * 100);
-            const p2 = total === 0 ? 0 : Math.round((data.votes_opt2 / total) * 100);
-            
-            document.getElementById('displayPollQuestion').innerText = data.question;
-            document.getElementById('displayOpt1').innerText = data.opt1;
-            document.getElementById('displayOpt2').innerText = data.opt2;
-            
-            document.getElementById('bar1').style.width = p1 + "%";
-            document.getElementById('percent1').innerText = p1 + "%";
-            document.getElementById('bar2').style.width = p2 + "%";
-            document.getElementById('percent2').innerText = p2 + "%";
-        }
-
-        // --- ADMIN FUNCTIONS FOR POLL & COUNTDOWN & ANNOUNCEMENT ---
-        window.savePoll = function() {
-            const q = document.getElementById('pollQuestion').value;
-            const o1 = document.getElementById('pollOpt1').value;
-            const o2 = document.getElementById('pollOpt2').value;
-            if(q && o1 && o2) {
-                database.ref('extras/poll').set({
-                    active: true, question: q, opt1: o1, opt2: o2, votes_opt1: 0, votes_opt2: 0
-                });
-                showToast("Anket Başlatıldı", "fa-check");
-            }
-        };
-        window.resetPoll = function() {
-            database.ref('extras/poll').set({ active: false });
-            showToast("Anket Sıfırlandı", "fa-trash");
-        };
-        window.saveCountdown = function() {
-            const t = document.getElementById('cdTitle').value;
-            const d = document.getElementById('cdDate').value;
-            if(t && d) {
-                const ts = new Date(d).getTime();
-                database.ref('extras/countdown').set({ active: true, title: t, target: ts });
-                showToast("Sayaç Başlatıldı", "fa-clock");
-            }
-        };
-        window.stopCountdown = function() {
-            database.ref('extras/countdown').set({ active: false });
-            showToast("Sayaç Durduruldu", "fa-stop");
-        };
-        window.saveAnnouncement = function() {
-            const txt = document.getElementById('annoInput').value;
-            if(txt) {
-                database.ref('extras/announcement').set({ active: true, text: txt });
-                showToast("Duyuru Yayında!", "fa-bullhorn");
-            }
-        };
-        window.stopAnnouncement = function() {
-            database.ref('extras/announcement').set({ active: false });
-            showToast("Duyuru Kaldırıldı", "fa-times");
-        };
-
-        // --- OTHER LOGIC ---
         function handleImageUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
-            if(isChatLocked && !isAdmin) { showToast("Sohbet kilitli!", "fa-lock"); return; }
+            if(isChatLocked && !isAdmin && currentTab === 'global') { showToast("Sohbet kilitli!", "fa-lock"); return; }
             showToast("Resim işleniyor...", "fa-cog fa-spin");
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -542,98 +693,37 @@
         }
 
         function sendImageMsg(imgData) {
-            const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, image: imgData, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
-            database.ref('global_chat').push(messageData);
+            if (currentTab === 'global') {
+                const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, image: imgData, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
+                database.ref('global_chat').push(messageData);
+            } else if (currentTab === 'private' && currentPrivateRoom) {
+                const messageData = { user: myUserName, image: imgData, uuid: myUUID, time: Date.now() };
+                database.ref('private_chats/' + currentPrivateRoom).push(messageData);
+                // Update inbox for both
+                database.ref('user_inbox/' + currentTargetUser.uuid + '/' + myUUID).set({ lastMsg: "📷 Resim", timestamp: Date.now(), name: myUserName });
+                database.ref('user_inbox/' + myUUID + '/' + currentTargetUser.uuid).set({ lastMsg: "📷 Resim (Sen)", timestamp: Date.now(), name: currentTargetUser.name });
+            }
             showToast("Resim gönderildi", "fa-check");
         }
 
         function showImagePreview(src) { document.getElementById('imgPreview').src = src; document.getElementById('imgPreviewModal').style.display = 'flex'; }
         
-        function emergencyLogin() {
-            const pass = document.getElementById('emergencyPass').value;
-            if(pass === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; alert("Yönetici girişi başarılı!"); location.reload(); } else { alert("Hatalı şifre!"); }
-        }
+        function emergencyLogin() { const pass = document.getElementById('emergencyPass').value; if(pass === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; alert("Yönetici girişi başarılı!"); location.reload(); } else { alert("Hatalı şifre!"); } }
 
         function listenToData() {
-            // EXTRAS LISTENER (POLL & COUNTDOWN & ANNOUNCEMENT)
-            database.ref('extras').on('value', (s) => {
-                if(s.exists()) {
-                    const extras = s.val();
-                    // Countdown
-                    if(extras.countdown && extras.countdown.active) {
-                        document.getElementById('countdownBox').style.display = 'block';
-                        document.getElementById('countdownTitle').innerText = extras.countdown.title;
-                        updateCountdownDisplay(extras.countdown.target);
-                    } else {
-                        document.getElementById('countdownBox').style.display = 'none';
-                    }
-                    // Poll
-                    if(extras.poll && extras.poll.active) {
-                        document.getElementById('pollBox').style.display = 'block';
-                        updatePollDisplay(extras.poll);
-                    } else {
-                        document.getElementById('pollBox').style.display = 'none';
-                        localStorage.removeItem('poll_voted'); 
-                    }
-                    // Announcement (Scrolling Text)
-                    if(extras.announcement && extras.announcement.active) {
-                        document.getElementById('announcementBar').style.display = 'block';
-                        document.getElementById('announcementText').innerText = extras.announcement.text;
-                    } else {
-                        document.getElementById('announcementBar').style.display = 'none';
-                    }
-                }
-            });
-
-            database.ref('settings').on('value', (s) => {
-                if(s.exists()) {
-                    const settings = s.val();
-                    if(settings.maintenance && !isAdmin) document.getElementById('maintenanceScreen').style.display = 'flex'; else document.getElementById('maintenanceScreen').style.display = 'none';
-                    if(document.getElementById('maintenanceToggle')) document.getElementById('maintenanceToggle').checked = settings.maintenance;
-                    isChatLocked = settings.chat_locked;
-                    if(isChatLocked) { document.getElementById('chatStatus').innerText = "Sohbet Kilitli 🔒"; document.getElementById('msgInput').placeholder = "Sohbet yönetici tarafından kilitlendi."; document.getElementById('msgInput').disabled = !isAdmin; } else { document.getElementById('chatStatus').innerText = isAdmin ? "Canlı Sohbet (YÖNETİCİ) 👮‍♂️" : "Canlı Sohbet 🟢"; document.getElementById('msgInput').placeholder = "Mesaj yaz..."; document.getElementById('msgInput').disabled = false; }
-                    if(document.getElementById('chatLockToggle')) document.getElementById('chatLockToggle').checked = settings.chat_locked;
-                }
-            });
-
-            database.ref('startup_message').on('value', (s) => {
-                if(s.exists()) {
-                    const data = s.val();
-                    if(data.active && !sessionStorage.getItem('startup_msg_shown')) { showToast(data.text, "fa-bullhorn"); sessionStorage.setItem('startup_msg_shown', 'true'); }
-                    if(document.getElementById('adminToastInput')) { document.getElementById('adminToastInput').value = data.text; document.getElementById('adminToastActive').checked = data.active; }
-                }
-            });
-
+            database.ref('extras').on('value', (s) => { if(s.exists()) { const extras = s.val(); if(extras.countdown && extras.countdown.active) { document.getElementById('countdownBox').style.display = 'block'; document.getElementById('countdownTitle').innerText = extras.countdown.title; updateCountdownDisplay(extras.countdown.target); } else { document.getElementById('countdownBox').style.display = 'none'; } if(extras.poll && extras.poll.active) { document.getElementById('pollBox').style.display = 'block'; updatePollDisplay(extras.poll); } else { document.getElementById('pollBox').style.display = 'none'; localStorage.removeItem('poll_voted'); } if(extras.announcement && extras.announcement.active) { document.getElementById('announcementBar').style.display = 'block'; document.getElementById('announcementText').innerText = extras.announcement.text; } else { document.getElementById('announcementBar').style.display = 'none'; } } });
+            database.ref('settings').on('value', (s) => { if(s.exists()) { const settings = s.val(); if(settings.maintenance && !isAdmin) document.getElementById('maintenanceScreen').style.display = 'flex'; else document.getElementById('maintenanceScreen').style.display = 'none'; if(document.getElementById('maintenanceToggle')) document.getElementById('maintenanceToggle').checked = settings.maintenance; isChatLocked = settings.chat_locked; if(isChatLocked) { document.getElementById('chatStatus').innerText = "Sohbet Kilitli 🔒"; if(currentTab==='global') document.getElementById('msgInput').placeholder = "Sohbet yönetici tarafından kilitlendi."; document.getElementById('msgInput').disabled = !isAdmin && currentTab==='global'; } else { document.getElementById('chatStatus').innerText = isAdmin ? "Canlı Sohbet (YÖNETİCİ) 👮‍♂️" : "Canlı Sohbet 🟢"; if(currentTab==='global') document.getElementById('msgInput').placeholder = "Mesaj yaz..."; document.getElementById('msgInput').disabled = false; } if(document.getElementById('chatLockToggle')) document.getElementById('chatLockToggle').checked = settings.chat_locked; } });
+            database.ref('startup_message').on('value', (s) => { if(s.exists()) { const data = s.val(); if(data.active && !sessionStorage.getItem('startup_msg_shown')) { showToast(data.text, "fa-bullhorn"); sessionStorage.setItem('startup_msg_shown', 'true'); } if(document.getElementById('adminToastInput')) { document.getElementById('adminToastInput').value = data.text; document.getElementById('adminToastActive').checked = data.active; } } });
             database.ref('banned_users/' + myUUID).on('value', (s) => { if(s.exists()) { document.getElementById('bannedScreen').style.display = 'flex'; document.getElementById('chatModal').style.display = 'none'; document.querySelector('.chat-btn').style.display = 'none'; } });
             database.ref('channel_views').on('value', (s) => { if(s.exists()) { globalViewCounts = s.val(); updateStatsInDOM(); } });
             database.ref('channel_likes').on('value', (s) => { if(s.exists()) { globalLikeCounts = s.val(); updateStatsInDOM(); } });
             
-            database.ref('global_chat').limitToLast(50).on('child_changed', (snapshot) => {
-                const msg = snapshot.val();
-                const likeEl = document.getElementById(`like-count-${snapshot.key}`);
-                const dislikeEl = document.getElementById(`dislike-count-${snapshot.key}`);
-                if(likeEl) likeEl.innerText = msg.likes || 0;
-                if(dislikeEl) dislikeEl.innerText = msg.dislikes || 0;
-            });
+            database.ref('global_chat').limitToLast(50).on('child_changed', (snapshot) => { const msg = snapshot.val(); const likeEl = document.getElementById(`like-count-${snapshot.key}`); const dislikeEl = document.getElementById(`dislike-count-${snapshot.key}`); if(likeEl) likeEl.innerText = msg.likes || 0; if(dislikeEl) dislikeEl.innerText = msg.dislikes || 0; });
             database.ref('global_chat').limitToLast(50).on('child_added', (snapshot) => { const msg = snapshot.val(); appendMessage(msg.user, msg.text, msg.user === myUserName, snapshot.key, msg.uuid, msg.isAdminMsg, msg.replyTo, msg.image, msg.likes, msg.dislikes, msg.time); });
             database.ref('global_chat').on('child_removed', (snapshot) => { const el = document.getElementById('msg-' + snapshot.key); if(el) el.remove(); });
         }
 
-        function updateStatsInDOM() {
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                const titleElement = card.querySelector('.card-name');
-                if(titleElement){
-                    const title = titleElement.innerText;
-                    const safeKey = sanitizeKey(title);
-                    const views = globalViewCounts[safeKey] || 0;
-                    const likes = globalLikeCounts[safeKey] || 0;
-                    const viewSpan = card.querySelector('.count-val-eye'); if(viewSpan) viewSpan.innerText = views;
-                    const likeSpan = card.querySelector('.count-val-heart'); if(likeSpan) likeSpan.innerText = likes;
-                }
-            });
-        }
-
+        function updateStatsInDOM() { const cards = document.querySelectorAll('.card'); cards.forEach(card => { const titleElement = card.querySelector('.card-name'); if(titleElement){ const title = titleElement.innerText; const safeKey = sanitizeKey(title); const views = globalViewCounts[safeKey] || 0; const likes = globalLikeCounts[safeKey] || 0; const viewSpan = card.querySelector('.count-val-eye'); if(viewSpan) viewSpan.innerText = views; const likeSpan = card.querySelector('.count-val-heart'); if(likeSpan) likeSpan.innerText = likes; } }); }
         function incrementViewCount(title) { const safeKey = sanitizeKey(title); database.ref('channel_views/' + safeKey).transaction(curr => (curr || 0) + 1); }
         function toggleLike(e, title) { e.stopPropagation(); const safeKey = sanitizeKey(title); if(myLikes.includes(safeKey)) { showToast("Zaten beğendin!", "fa-check-double"); return; } myLikes.push(safeKey); localStorage.setItem('my_likes', JSON.stringify(myLikes)); database.ref('channel_likes/' + safeKey).transaction(curr => (curr || 0) + 1); e.target.classList.add('liked'); showToast("Favorilere Eklendi!", "fa-heart"); }
         function openReportModal(e, title) { e.stopPropagation(); openConfirmModal('report', title); }
@@ -649,17 +739,36 @@
             }
         }
         
-        function startReply(user, text) { currentReply = { user: user, text: text }; document.getElementById('replyToUser').innerText = user; document.getElementById('replyToText').innerText = text ? (text.substring(0, 30) + (text.length>30 ? '...' : '')) : "Resim"; document.getElementById('replyPreviewBar').style.display = 'flex'; document.getElementById('msgInput').focus(); }
+        function startReply(user, text) { 
+            // Only works for Global chat replying
+            switchChatTab('global');
+            currentReply = { user: user, text: text }; 
+            document.getElementById('replyToUser').innerText = user; 
+            document.getElementById('replyToText').innerText = text ? (text.substring(0, 30) + (text.length>30 ? '...' : '')) : "Resim"; 
+            document.getElementById('replyPreviewBar').style.display = 'flex'; 
+            document.getElementById('msgInput').focus(); 
+        }
         function cancelReply() { currentReply = null; document.getElementById('replyPreviewBar').style.display = 'none'; }
 
         function sendMsg() {
             const inp = document.getElementById('msgInput');
             const txt = inp.value.trim();
             if(!txt) return;
-            if(txt === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; showToast("YÖNETİCİ MODU AÇILDI 👮‍♂️", "fa-user-shield"); inp.value = ""; document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; location.reload(); return; }
-            const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, text: txt, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
-            if(currentReply) { messageData.replyTo = currentReply; }
-            database.ref('global_chat').push(messageData);
+            
+            if (currentTab === 'global') {
+                if(txt === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; showToast("YÖNETİCİ MODU AÇILDI 👮‍♂️", "fa-user-shield"); inp.value = ""; document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; location.reload(); return; }
+                const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, text: txt, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
+                if(currentReply) { messageData.replyTo = currentReply; }
+                database.ref('global_chat').push(messageData);
+            } else if (currentTab === 'private' && currentPrivateRoom) {
+                const messageData = { user: myUserName, text: txt, uuid: myUUID, time: Date.now() };
+                database.ref('private_chats/' + currentPrivateRoom).push(messageData);
+                // Update inbox for both users
+                // My Inbox
+                database.ref('user_inbox/' + currentTargetUser.uuid + '/' + myUUID).set({ lastMsg: txt, timestamp: Date.now(), name: myUserName });
+                // Target Inbox
+                database.ref('user_inbox/' + myUUID + '/' + currentTargetUser.uuid).set({ lastMsg: "Sen: " + txt, timestamp: Date.now(), name: currentTargetUser.name });
+            }
             inp.value = ""; cancelReply();
         }
         
@@ -678,19 +787,25 @@
             if(!isMe) div.style.cssText = bgColor;
             let userDisplay = user;
             if(isAdminMsg) userDisplay = `<span class="msg-admin"><i class="fas fa-shield-alt"></i> YÖNETİCİ</span>`;
+            
+            // Add click event for user actions
+            let userClickAction = `onclick="openUserActionModal('${senderUUID}', '${user}', '${key}')"`;
+            
             let quoteHTML = "";
             if(replyTo) { quoteHTML = `<div class="quoted-msg"><span class="quote-user">${replyTo.user}</span><span>${replyTo.text || "Resim"}</span></div>`; }
             let contentHTML = image ? `<img src="${image}" class="chat-img" onclick="showImagePreview('${image}')">` : text;
-            let replyIcon = `<i class="fas fa-reply reply-btn-icon" onclick="startReply('${user}', '${text ? text.replace(/'/g, "\'") : ""}')"></i>`;
+            let replyIcon = `<i class="fas fa-reply reply-btn-icon" ${userClickAction}></i>`;
             let timeHTML = `<span class="msg-time">${formatTime(time || Date.now())}</span>`;
             let adminControls = "";
-            if(isAdmin && !isMe) { adminControls = `<div class="admin-controls"><button class="btn-ban" onclick="openConfirmModal('ban', '${senderUUID}')">⛔ ENGELLE</button><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; } else if (isAdmin) { adminControls = `<div class="admin-controls"><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; }
+            // We use userClickAction mainly, but keep del button for quick admin access
+            if (isAdmin) { adminControls = `<div class="admin-controls"><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; }
+            
             let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}");
             let myReact = myReactions[key];
             let likeClass = myReact === 'like' ? 'active-like' : '';
             let dislikeClass = myReact === 'dislike' ? 'active-dislike' : '';
             let actionsHTML = `<div class="msg-actions"><span id="btn-like-${key}" class="action-btn ${likeClass}" onclick="toggleChatReaction('${key}', 'like')"><i class="fas fa-thumbs-up"></i> <span id="like-count-${key}">${likes || 0}</span></span><span id="btn-dislike-${key}" class="action-btn ${dislikeClass}" onclick="toggleChatReaction('${key}', 'dislike')"><i class="fas fa-thumbs-down"></i> <span id="dislike-count-${key}">${dislikes || 0}</span></span></div>`;
-            div.innerHTML = `${quoteHTML}<span class="msg-user">${userDisplay} ${replyIcon}</span>${contentHTML}${timeHTML}${actionsHTML}${adminControls}`;
+            div.innerHTML = `${quoteHTML}<span class="msg-user" ${userClickAction}>${userDisplay}</span>${contentHTML}${timeHTML}${actionsHTML}${adminControls}`;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
         }
@@ -719,9 +834,9 @@
         document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url !== "#") { const url = current.web_link_url; window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=' + (url.startsWith('https') ? 'https' : 'http') + ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;component=com.android.chrome/com.google.android.apps.chrome.Main;end'; document.getElementById('modal').style.display='none'; } };
         document.getElementById('wuffy').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
         document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
-        window.onclick = (e) => { if(e.target == document.getElementById('modal')) document.getElementById('modal').style.display='none'; if(e.target == document.getElementById('confirmModal')) closeConfirm(); if(e.target == document.getElementById('adminPanelModal')) document.getElementById('adminPanelModal').style.display='none'; if(e.target == document.getElementById('nameChangeModal')) document.getElementById('nameChangeModal').style.display='none'; }
+        window.onclick = (e) => { if(e.target == document.getElementById('modal')) document.getElementById('modal').style.display='none'; if(e.target == document.getElementById('confirmModal')) closeConfirm(); if(e.target == document.getElementById('adminPanelModal')) document.getElementById('adminPanelModal').style.display='none'; if(e.target == document.getElementById('nameChangeModal')) document.getElementById('nameChangeModal').style.display='none'; if(e.target == document.getElementById('userActionModal')) document.getElementById('userActionModal').style.display='none'; }
 
-        (function() { const savedTheme = localStorage.getItem('theme'); if (savedTheme === 'light') toggleTheme(); if(isAdmin) { document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; } render(); setTimeout(listenToData, 500); setTimeout(initPresence, 1000); })();
+        (function() { const savedTheme = localStorage.getItem('theme'); if (savedTheme === 'light') toggleTheme(); if(isAdmin) { document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; } render(); setTimeout(listenToData, 500); setTimeout(initPresence, 1000); setTimeout(listenToAllPrivateChats, 1500); })();
     </script>
 </body>
 </html>
