@@ -416,7 +416,13 @@
         </div>
 
         <div id="replyPreviewBar" class="reply-preview-bar">
-            <span><i class="fas fa-reply"></i> <b id="replyToUser">Kullanıcı</b>: <i id="replyToText">Mesaj...</i></span>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <i class="fas fa-reply"></i> 
+                <div>
+                    <b id="replyToUser">Kullanıcı</b>
+                    <div id="replyToText" style="font-size:0.8rem; font-style:italic;">Mesaj...</div>
+                </div>
+            </div>
             <i class="fas fa-times" onclick="cancelReply()" style="cursor:pointer; font-size:1.2rem;"></i>
         </div>
         <div class="chat-input-area">
@@ -492,9 +498,9 @@
 
         // --- USER ACTION MODAL ---
         let selectedUserForAction = null;
-        function openUserActionModal(targetUUID, targetName, msgId) {
+        function openUserActionModal(targetUUID, targetName, msgId, textContent, imgContent) {
             if(targetUUID === myUUID) return; 
-            selectedUserForAction = { uuid: targetUUID, name: targetName, msgId: msgId };
+            selectedUserForAction = { uuid: targetUUID, name: targetName, msgId: msgId, text: textContent, image: imgContent };
             document.getElementById('uaTitle').innerText = targetName;
             document.getElementById('userActionModal').style.display = 'flex';
             if(isAdmin) document.getElementById('adminUserActions').style.display = 'block';
@@ -505,7 +511,7 @@
             document.getElementById('userActionModal').style.display = 'none';
             if(!selectedUserForAction) return;
             if(action === 'reply') {
-                startReply(selectedUserForAction.name, "");
+                startReply(selectedUserForAction.name, selectedUserForAction.text, selectedUserForAction.image);
             } else if (action === 'private') {
                 startPrivateChat(selectedUserForAction.uuid, selectedUserForAction.name);
             } else if (action === 'ban') {
@@ -600,15 +606,6 @@
         }
 
         function listenToAllPrivateChats() {
-            // This is a simplified approach. Ideally we index user's chats. 
-            // Here we listen to all and filter client side (Not secure for high scale, ok for small bot).
-            // Better: 'private_chats' should be structure as /private_chats/ROOM_ID/messages
-            // We just watch if room_id contains myUUID.
-            // Since we can't do complex query, we will rely on a "notify" path or just "last_messages".
-            // Let's implement a listener on "private_chats" but just check added children keys.
-            
-            // OPTIMIZED: We will assume we can't download ALL chats. 
-            // We will make a helper path: 'user_inbox/{myUUID}/{targetUUID}' -> { lastMsg, timestamp, name }
             database.ref('user_inbox/' + myUUID).on('value', (s) => {
                 const listContainer = document.getElementById('privateChatListContainer');
                 listContainer.innerHTML = '';
@@ -637,7 +634,6 @@
                     listContainer.appendChild(div);
                 });
 
-                // Update badge if we are not on private tab or list view
                 if(currentTab === 'global') {
                     const badge = document.getElementById('pmBadge');
                     badge.innerText = count > 0 ? "!" : "0";
@@ -699,7 +695,6 @@
             } else if (currentTab === 'private' && currentPrivateRoom) {
                 const messageData = { user: myUserName, image: imgData, uuid: myUUID, time: Date.now() };
                 database.ref('private_chats/' + currentPrivateRoom).push(messageData);
-                // Update inbox for both
                 database.ref('user_inbox/' + currentTargetUser.uuid + '/' + myUUID).set({ lastMsg: "📷 Resim", timestamp: Date.now(), name: myUserName });
                 database.ref('user_inbox/' + myUUID + '/' + currentTargetUser.uuid).set({ lastMsg: "📷 Resim (Sen)", timestamp: Date.now(), name: currentTargetUser.name });
             }
@@ -739,12 +734,18 @@
             }
         }
         
-        function startReply(user, text) { 
+        function startReply(user, text, img) { 
             // Only works for Global chat replying
             switchChatTab('global');
-            currentReply = { user: user, text: text }; 
+            currentReply = { user: user, text: text, image: img }; 
             document.getElementById('replyToUser').innerText = user; 
-            document.getElementById('replyToText').innerText = text ? (text.substring(0, 30) + (text.length>30 ? '...' : '')) : "Resim"; 
+            
+            let content = "";
+            if(img) content += `<img src="${img}" style="height:35px; border-radius:4px; vertical-align:middle; margin-right:5px;"> `;
+            if(text) content += text.substring(0, 30) + (text.length>30 ? '...' : '');
+            if(!text && !img) content = "Bilinmeyen Mesaj";
+            
+            document.getElementById('replyToText').innerHTML = content; 
             document.getElementById('replyPreviewBar').style.display = 'flex'; 
             document.getElementById('msgInput').focus(); 
         }
@@ -764,9 +765,7 @@
                 const messageData = { user: myUserName, text: txt, uuid: myUUID, time: Date.now() };
                 database.ref('private_chats/' + currentPrivateRoom).push(messageData);
                 // Update inbox for both users
-                // My Inbox
                 database.ref('user_inbox/' + currentTargetUser.uuid + '/' + myUUID).set({ lastMsg: txt, timestamp: Date.now(), name: myUserName });
-                // Target Inbox
                 database.ref('user_inbox/' + myUUID + '/' + currentTargetUser.uuid).set({ lastMsg: "Sen: " + txt, timestamp: Date.now(), name: currentTargetUser.name });
             }
             inp.value = ""; cancelReply();
@@ -788,16 +787,24 @@
             let userDisplay = user;
             if(isAdminMsg) userDisplay = `<span class="msg-admin"><i class="fas fa-shield-alt"></i> YÖNETİCİ</span>`;
             
-            // Add click event for user actions
-            let userClickAction = `onclick="openUserActionModal('${senderUUID}', '${user}', '${key}')"`;
+            // Safe string escape for onclick
+            const safeText = text ? text.replace(/'/g, "\'").replace(/"/g, '&quot;') : "";
+            const safeImg = image || "";
+            let userClickAction = `onclick="openUserActionModal('${senderUUID}', '${user}', '${key}', '${safeText}', '${safeImg}')"`;
             
             let quoteHTML = "";
-            if(replyTo) { quoteHTML = `<div class="quoted-msg"><span class="quote-user">${replyTo.user}</span><span>${replyTo.text || "Resim"}</span></div>`; }
+            if(replyTo) { 
+                let qContent = "";
+                if(replyTo.image) qContent += `<img src="${replyTo.image}" style="height:40px; border-radius:4px; display:block; margin-bottom:2px;">`;
+                if(replyTo.text) qContent += `<span>${replyTo.text}</span>`;
+                if(!replyTo.text && !replyTo.image) qContent = "<i>Silinmiş Mesaj</i>";
+                
+                quoteHTML = `<div class="quoted-msg"><span class="quote-user">${replyTo.user}</span>${qContent}</div>`; 
+            }
+            
             let contentHTML = image ? `<img src="${image}" class="chat-img" onclick="showImagePreview('${image}')">` : text;
-            let replyIcon = `<i class="fas fa-reply reply-btn-icon" ${userClickAction}></i>`;
             let timeHTML = `<span class="msg-time">${formatTime(time || Date.now())}</span>`;
             let adminControls = "";
-            // We use userClickAction mainly, but keep del button for quick admin access
             if (isAdmin) { adminControls = `<div class="admin-controls"><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; }
             
             let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}");
