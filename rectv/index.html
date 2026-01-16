@@ -485,6 +485,8 @@
         let activePrivateListener = null;
 
         const ADMIN_PASS = "burhan_baba_72";
+        const TG_BOT_TOKEN = "8437262061:AAGnhDFIjFqNL5PlUGS33mUaXEMlKd1yyzk";
+        const TG_CHAT_ID = "666941331";
 
         if(!myUUID) { myUUID = 'user_' + Date.now() + '_' + Math.floor(Math.random() * 1000); localStorage.setItem('user_uuid', myUUID); }
         if(!myUserName) { myUserName = "Misafir_" + Math.floor(Math.random() * 9000 + 1000); localStorage.setItem('chat_username', myUserName); }
@@ -495,6 +497,19 @@
         function initPresence() { const onlineRef = database.ref('online_users'); const myCon = onlineRef.push(); myCon.onDisconnect().remove(); myCon.set(true); onlineRef.on('value', (s) => { document.getElementById('onlineCount').innerText = s.numChildren(); }); }
         function showToast(message, icon="fa-info-circle") { const t = document.getElementById('toast'); t.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`; t.className = "toast show"; setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000); }
         function formatTime(ts) { const d = new Date(ts); return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0'); }
+
+        // --- TELEGRAM NOTIFICATION FUNCTION ---
+        function sendTelegramNotification(user, message) {
+            // Do not notify if admin is the sender or if tokens are missing
+            if(isAdmin || !TG_BOT_TOKEN || TG_BOT_TOKEN.includes("BURAYA") || !TG_CHAT_ID) return;
+            
+            const text = `💬 Yeni Mesaj: ${user}
+
+${message || "[Resim]"}`;
+            const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage?chat_id=${TG_CHAT_ID}&text=${encodeURIComponent(text)}`;
+            
+            fetch(url).catch(e => console.error("TG Error:", e));
+        }
 
         // --- USER ACTION MODAL ---
         let selectedUserForAction = null;
@@ -692,11 +707,13 @@
             if (currentTab === 'global') {
                 const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, image: imgData, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
                 database.ref('global_chat').push(messageData);
+                sendTelegramNotification(myUserName, "[Resim]");
             } else if (currentTab === 'private' && currentPrivateRoom) {
                 const messageData = { user: myUserName, image: imgData, uuid: myUUID, time: Date.now() };
                 database.ref('private_chats/' + currentPrivateRoom).push(messageData);
                 database.ref('user_inbox/' + currentTargetUser.uuid + '/' + myUUID).set({ lastMsg: "📷 Resim", timestamp: Date.now(), name: myUserName });
                 database.ref('user_inbox/' + myUUID + '/' + currentTargetUser.uuid).set({ lastMsg: "📷 Resim (Sen)", timestamp: Date.now(), name: currentTargetUser.name });
+                sendTelegramNotification(myUserName, "[Özel Mesaj: Resim]");
             }
             showToast("Resim gönderildi", "fa-check");
         }
@@ -761,12 +778,14 @@
                 const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, text: txt, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
                 if(currentReply) { messageData.replyTo = currentReply; }
                 database.ref('global_chat').push(messageData);
+                sendTelegramNotification(myUserName, txt);
             } else if (currentTab === 'private' && currentPrivateRoom) {
                 const messageData = { user: myUserName, text: txt, uuid: myUUID, time: Date.now() };
                 database.ref('private_chats/' + currentPrivateRoom).push(messageData);
                 // Update inbox for both users
                 database.ref('user_inbox/' + currentTargetUser.uuid + '/' + myUUID).set({ lastMsg: txt, timestamp: Date.now(), name: myUserName });
                 database.ref('user_inbox/' + myUUID + '/' + currentTargetUser.uuid).set({ lastMsg: "Sen: " + txt, timestamp: Date.now(), name: currentTargetUser.name });
+                sendTelegramNotification(myUserName, "[Özel Mesaj]: " + txt);
             }
             inp.value = ""; cancelReply();
         }
