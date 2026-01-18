@@ -15,7 +15,6 @@
         :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; --text: #e8e6e3; --card-bg: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.03); }
         body { background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 20px; transition: background 0.3s, color 0.3s; }
         body.light-theme { --bg: #f5f5f5; --surface: #ffffff; --text: #1a1a1a; --card-bg: #ffffff; --border: #e0e0e0; }
-        
         .top-bar { padding: 15px 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: background 0.3s; }
         .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #ff0040, #ff4d00); -webkit-background-clip: text; color: transparent; }
         
@@ -25,27 +24,12 @@
         
         .online-badge { display: flex; align-items: center; gap: 6px; padding: 6px 10px; background: rgba(0, 255, 127, 0.1); border: 1px solid rgba(0, 255, 127, 0.2); border-radius: 8px; font-size: 0.8rem; font-weight: bold; color: #00ff7f; animation: pulse-green 2s infinite; }
         @keyframes pulse-green { 0% { opacity: 0.8; } 50% { opacity: 1; text-shadow: 0 0 5px rgba(0,255,127,0.5); } 100% { opacity: 0.8; } }
+        .light-theme .online-badge { background: rgba(0, 128, 0, 0.1); color: #008000; border-color: rgba(0, 128, 0, 0.2); }
 
+        /* KAYAN YAZI STİLLERİ */
         .announcement-bar { background: #ffeb3b; color: #000; overflow: hidden; white-space: nowrap; padding: 6px 0; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: none; border-bottom: 2px solid #ff4d00; }
         .announcement-content { display: inline-block; padding-left: 100%; animation: scroll-left 15s linear infinite; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-        
-        /* ÖZELLİK KUTULARI (ANKET & SAYAÇ) */
-        .feature-container { margin: 15px; display: flex; flex-direction: column; gap: 15px; }
-        
-        .countdown-box { background: linear-gradient(135deg, #1a1825, #000); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; margin-bottom: 10px; box-shadow: 0 5px 15px rgba(255,0,64,0.2); }
-        .countdown-title { color: var(--primary); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
-        .countdown-timer { display: flex; justify-content: center; gap: 10px; font-size: 1.5rem; font-weight: bold; color: white; font-family: monospace; }
-        .time-unit { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 8px; min-width: 40px; }
-        .time-label { font-size: 0.6rem; opacity: 0.7; font-family: sans-serif; margin-top: 2px; }
-        
-        .poll-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; display: none; margin-bottom: 10px; }
-        .poll-question { font-weight: bold; margin-bottom: 10px; color: var(--text); display: block; font-size: 1.1rem; }
-        .poll-option { margin-bottom: 8px; position: relative; cursor: pointer; }
-        .poll-bar-bg { background: rgba(255,255,255,0.1); height: 35px; border-radius: 8px; overflow: hidden; position: relative; }
-        .poll-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #ff4d00); width: 0%; transition: width 0.5s ease; opacity: 0.7; }
-        .poll-text { position: absolute; top: 0; left: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
-        .poll-percent { position: absolute; top: 0; right: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
         
         .container { padding: 15px; }
         .card { background: var(--card-bg); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid var(--border); position: relative; transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
@@ -54,9 +38,9 @@
         .img-box { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
         .card-img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
         .badge { position: absolute; top: -8px; right: -8px; font-size: 0.65rem; padding: 3px 8px; border-radius: 6px; font-weight: 800; z-index: 10; animation: pulse-glow 2s infinite ease-in-out; }
+        .badge-yeni { background: linear-gradient(135deg, #ffab00, #ffea00); color: #000; }
         .badge-iptv { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: #fff; }
         @keyframes pulse-glow { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        
         .card-info { flex: 1; margin-left: 12px; }
         .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; color: var(--text); }
         .card-meta { font-size: 0.75rem; opacity: 0.5; color: var(--text); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -65,164 +49,190 @@
         .light-theme .stat-badge { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); }
         .stat-eye { color: var(--primary); }
         .stat-heart { color: #ff3d3d; cursor: pointer; transition: transform 0.2s; }
-        .stat-heart.liked { color: #ff0000; text-shadow: 0 0 10px rgba(255,0,0,0.5); transform: scale(1.2); }
+        .stat-heart:active { transform: scale(1.3); }
+        .stat-heart.liked { color: #ff0000; text-shadow: 0 0 10px rgba(255,0,0,0.5); }
+        .stat-report { color: #ff4d4d; cursor: pointer; transition: transform 0.2s; }
+        .stat-report:hover { transform: scale(1.2); }
         .play-icon { color: var(--primary); font-size: 1.4rem; margin-left: 10px; }
-
         .load-more-btn { width: calc(100% - 30px); margin: 20px 15px; padding: 15px; border: none; border-radius: 15px; background: linear-gradient(135deg, var(--primary), #ff4d00); color: white; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255, 0, 64, 0.3); }
         .load-more-btn.hidden { display: none; }
         
         .toast { visibility: hidden; min-width: 250px; background-color: #1a1825; border: 1px solid rgba(255,255,255,0.1); color: #fff; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 2000; left: 50%; bottom: 80px; transform: translateX(-50%); font-size: 0.9rem; box-shadow: 0 5px 20px rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s, bottom 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .light-theme .toast { background-color: #fff; color: #333; border-color: #ddd; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         .toast.show { visibility: visible; opacity: 1; bottom: 90px; }
+        
+        /* COUNTDOWN & POLL STYLES */
+        .feature-container { margin: 15px; display: flex; flex-direction: column; gap: 15px; }
+        .countdown-box { background: linear-gradient(135deg, #1a1825, #000); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; }
+        .countdown-title { color: var(--primary); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .countdown-timer { display: flex; justify-content: center; gap: 10px; font-size: 1.5rem; font-weight: bold; color: white; font-family: monospace; }
+        .time-unit { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 8px; min-width: 40px; }
+        .time-label { font-size: 0.6rem; opacity: 0.7; font-family: sans-serif; margin-top: 2px; }
+        .live-blink { color: #ff0040; animation: blink 1s infinite; font-size: 2rem; font-weight: 800; display: none; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        
+        .poll-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; display: none; }
+        .poll-question { font-weight: bold; margin-bottom: 10px; color: var(--text); display: block; }
+        .poll-option { margin-bottom: 8px; position: relative; cursor: pointer; }
+        .poll-bar-bg { background: rgba(255,255,255,0.1); height: 35px; border-radius: 8px; overflow: hidden; position: relative; }
+        .poll-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #ff4d00); width: 0%; transition: width 0.5s ease; opacity: 0.7; }
+        .poll-text { position: absolute; top: 0; left: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
+        .poll-percent { position: absolute; top: 0; right: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
 
-        .chat-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: linear-gradient(135deg, #00d2ff, #3a7bd5); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 200; }
+        @keyframes pulse-beat { 0% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); } 50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(0, 210, 255, 0.6); } 100% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); } }
+        .chat-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: linear-gradient(135deg, #00d2ff, #3a7bd5); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 200; animation: pulse-beat 2s infinite ease-in-out; }
+        .chat-btn:hover { animation: none; transform: scale(1.1); }
         
-        .chat-modal { position: fixed; bottom: -100%; left: 0; width: 100%; height: 96%; background: var(--surface); border-radius: 20px 20px 0 0; z-index: 201; transition: bottom 0.4s; display: flex; flex-direction: column; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); }
+        .chat-modal { position: fixed; bottom: -100%; left: 0; width: 100%; height: 96%; background: var(--surface); border-radius: 20px 20px 0 0; z-index: 201; transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); }
         .chat-modal.active { bottom: 0; }
+        .chat-header { padding: 15px; background: rgba(0,0,0,0.2); display: flex; flex-direction: column; border-radius: 20px 20px 0 0; gap: 10px; }
+        .chat-header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .chat-close { font-size: 1.5rem; cursor: pointer; color: var(--text); }
+        .chat-rules { background: rgba(255, 0, 64, 0.15); border-bottom: 1px solid rgba(255, 0, 64, 0.3); color: #ff4d4d; padding: 10px; font-size: 0.8rem; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.5s ease-in-out; opacity: 1; max-height: 100px; }
+        .chat-rules.hidden { opacity: 0; max-height: 0; padding: 0; margin: 0; overflow: hidden; border: none; }
+        .light-theme .chat-rules { background: #ffe6e6; color: #cc0000; }
+
+        /* TAB STYLES FOR CHAT */
         .chat-tabs { display: flex; width: 100%; background: rgba(0,0,0,0.2); border-radius: 10px; padding: 2px; }
-        .chat-tab { flex: 1; text-align: center; padding: 8px; font-size: 0.9rem; cursor: pointer; border-radius: 8px; transition: all 0.3s; }
+        .chat-tab { flex: 1; text-align: center; padding: 8px; font-size: 0.9rem; cursor: pointer; border-radius: 8px; transition: all 0.3s; position: relative; }
         .chat-tab.active { background: var(--primary); color: white; font-weight: bold; }
-        
+        .chat-tab-badge { position: absolute; top: 2px; right: 10px; background: red; color: white; font-size: 0.6rem; padding: 2px 5px; border-radius: 50%; display: none; }
+
         .chat-view { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
         .chat-view.hidden { display: none; }
-        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        
-        /* MESAJ STİLLERİ (GÜNCELLENDİ) */
-        .message-bubble { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 0.9rem; position: relative; word-wrap: break-word; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .msg-left { align-self: flex-start; background: rgba(255,255,255,0.1); border-bottom-left-radius: 2px; }
+
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
+        .message-bubble { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; position: relative; word-wrap: break-word; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .msg-left { align-self: flex-start; border-bottom-left-radius: 2px; }
         .msg-right { align-self: flex-end; background: var(--primary); border-bottom-right-radius: 2px; }
-        .msg-user { font-size: 0.7rem; opacity: 0.7; margin-bottom: 2px; display: block; font-weight: bold; cursor:pointer; }
+        .msg-user { font-size: 0.65rem; opacity: 0.8; margin-bottom: 2px; display: block; font-weight: bold; cursor: pointer; }
         .msg-admin { color: #ffeb3b; }
+        .msg-time { display: block; font-size: 0.65rem; text-align: right; opacity: 0.6; margin-top: 4px; }
         
-        /* ALINTI (REPLY) STİLİ */
         .quoted-msg { background: rgba(0,0,0,0.2); border-left: 3px solid #ff4d4d; padding: 5px 8px; border-radius: 4px; margin-bottom: 5px; font-size: 0.75rem; display: flex; flex-direction: column; opacity: 0.9; }
         .quote-user { font-weight: bold; color: #ffeb3b; margin-bottom: 2px; }
+        .reply-btn-icon { margin-left: 8px; opacity: 0.6; cursor: pointer; transition: opacity 0.2s; font-size: 0.8rem; }
+        .reply-btn-icon:hover { opacity: 1; color: white; }
         .reply-preview-bar { background: #2a2a2a; border-top: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; display: none; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #ddd; border-left: 4px solid var(--primary); }
         .light-theme .reply-preview-bar { background: #f0f0f0; color: #333; }
+        
+        .msg-actions { display: flex; gap: 10px; margin-top: 5px; justify-content: flex-end; font-size: 0.75rem; opacity: 0.9; }
+        .action-btn { cursor: pointer; display: flex; align-items: center; gap: 3px; transition: all 0.2s; color: rgba(255,255,255,0.7); }
+        .action-btn:hover { opacity: 1; color: white; }
+        .action-btn.active-like { color: #ffeb3b; font-weight: bold; text-shadow: 0 0 5px rgba(0,0,0,0.5); transform: scale(1.1); }
+        .action-btn.active-dislike { color: #f44336; font-weight: bold; text-shadow: 0 0 5px rgba(0,0,0,0.5); transform: scale(1.1); }
+        .light-theme .action-btn { color: rgba(0,0,0,0.6); }
+        
+        .admin-controls { display: none; margin-top: 5px; gap: 5px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; }
+        .is-admin .admin-controls { display: flex; }
+        .btn-ban { background: #ff0040; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
+        .btn-del { background: #555; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
 
-        .chat-input-area { padding: 10px; display: flex; gap: 10px; background: rgba(0,0,0,0.2); }
+        .chat-input-area { padding: 10px; display: flex; gap: 10px; background: rgba(0,0,0,0.2); flex-direction: column; }
+        .input-row { display: flex; gap: 10px; width: 100%; align-items: center; }
         .chat-input { flex: 1; padding: 10px; border-radius: 20px; border: none; outline: none; background: rgba(255,255,255,0.1); color: var(--text); }
         .light-theme .chat-input { background: white; color: black; }
+        .chat-send { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
+        .chat-img-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
+        .light-theme .chat-img-btn { background: rgba(0,0,0,0.1); color: #333; }
+        .chat-img { max-width: 100%; border-radius: 10px; margin-top: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
+
+        /* PRIVATE CHAT LIST STYLES */
+        .private-chat-list { flex: 1; overflow-y: auto; padding: 10px; }
+        .private-chat-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .private-chat-item:hover { background: rgba(255,255,255,0.1); }
+        .pc-user { font-weight: bold; font-size: 1rem; }
+        .pc-preview { font-size: 0.8rem; opacity: 0.6; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 200px; }
         
-        .private-chat-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        #userActionModal .modal-box { text-align: center; }
         .action-menu-btn { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: var(--text); font-size: 1rem; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 10px; }
+        .action-menu-btn:hover { background: rgba(255,255,255,0.2); }
+        .action-menu-btn i { width: 20px; text-align: center; }
+
+        #imgPreviewModal { background: rgba(0,0,0,0.95); display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 5000; justify-content: center; align-items: center; }
+        #imgPreviewModal img { max-width: 95%; max-height: 90%; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        #imgPreviewModal i { position: absolute; top: 20px; right: 20px; font-size: 2rem; color: white; cursor: pointer; }
 
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; justify-content:center; align-items:center; }
-        .modal-box { background: var(--surface); width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid var(--border); position: relative; }
+        .modal-box { background: var(--surface); width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid var(--border); }
+        .opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; color: white; }
+        .light-theme .opt { background: rgba(0,0,0,0.05); color: #1a1a1a; }
         
+        .banned-screen { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:black; z-index:5000; color:red; flex-direction:column; justify-content:center; align-items:center; text-align:center; font-size:1.5rem; font-weight:bold; }
+        .btn-confirm { background: #ff0040; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .btn-cancel { background: #444; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         .admin-panel-btn { position: fixed; bottom: 20px; left: 20px; width: 50px; height: 50px; background: #ff0040; border-radius: 50%; display: none; justify-content: center; align-items: center; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.5); cursor: pointer; z-index: 200; }
-        #adminPanelModal .modal-box { display: flex; flex-direction: column; max-height: 90vh; padding-bottom: 60px; }
+        
+        #adminPanelModal .modal-box { display: flex; flex-direction: column; max-height: 90vh; position: relative; padding-bottom: 70px; }
         .admin-modal-body { overflow-y: auto; text-align: left; padding-right: 5px; flex: 1; }
+        #modalCloseBtn2 { position: absolute; bottom: 20px; left: 5%; width: 90%; background: #333; box-shadow: 0 -2px 10px rgba(0,0,0,0.5); }
+        
         .admin-menu-btn { background: rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; margin-top: 15px; color: #ffeb3b; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255, 235, 59, 0.3); }
-        .light-theme .admin-menu-btn { background: #fff; border-color: #ccc; color: #333; }
+        .admin-menu-btn:hover { background: rgba(255, 235, 59, 0.1); }
+        
+        .light-theme .admin-menu-btn { color: #b35900; background: #fff; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .light-theme .admin-menu-btn:hover { background: #fff8e1; }
+        .light-theme .admin-submenu { border-left: 2px solid #b35900; }
+        
         .admin-submenu { display: none; margin-top: 10px; padding-left: 5px; border-left: 2px solid #ffeb3b; }
         .admin-submenu.active { display: block; animation: slideDown 0.3s; }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .custom-input { width: 90%; padding: 12px; margin: 5px 0; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; outline: none; }
-        .light-theme .custom-input { background: white; color: black; border-color: #ccc; }
-        .btn-confirm { background: #ff0040; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
-        .btn-cancel { background: #444; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 5px; }
-        .btn-shorten { background: #00d2ff; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 5px; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; width: 100%; justify-content: center; }
 
-        .channel-item-admin { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .light-theme .channel-item-admin { background: #eee; }
-        .channel-actions { display: flex; gap: 5px; }
-        .btn-sm { padding: 5px 10px; border-radius: 5px; border: none; color: white; cursor: pointer; font-size: 0.8rem; }
-        .btn-edit { background: #2196F3; }
-        .btn-del { background: #f44336; }
+        .report-item { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid rgba(255,0,64,0.3); }
+        .report-header { display: flex; justify-content: space-between; font-size: 0.8rem; color: #aaa; margin-bottom: 5px; }
+        .report-msg { font-weight: bold; color: white; }
+        .light-theme .report-msg { color: #333; }
+        .light-theme .report-item { background: #fff; border: 1px solid #ffcdd2; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         
-        .player-opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; color: white; }
-        .light-theme .player-opt { background: rgba(0,0,0,0.05); color: #1a1a1a; }
+        .delete-all-btn { background: #ff0040; color: white; border: none; padding: 8px; width: 100%; border-radius: 8px; margin-bottom: 10px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+        #nameChangeModal .modal-box { text-align: center; }
+        .custom-input { width: 90%; padding: 12px; margin: 15px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; outline: none; font-size: 1rem; text-align: center; }
+        .light-theme .custom-input { background: white; color: #333; border: 1px solid #ccc; }
         
-        .banned-screen { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:black; z-index:5000; color:red; flex-direction:column; justify-content:center; align-items:center; text-align:center; font-size:1.5rem; font-weight:bold; }
+        #maintenanceScreen { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#111; z-index:9000; color:#ffeb3b; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
+        .emergency-input { background: rgba(255,255,255,0.1); border: 1px solid #ffeb3b; color: #fff; padding: 10px; margin-top: 20px; border-radius: 5px; width: 200px; text-align: center; }
+        .emergency-btn { background: #ffeb3b; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-top: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
     <div id="toast" class="toast"></div>
-
-    <!-- BAKIM MODU -->
-    <div id="maintenanceScreen" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#111; z-index:9000; color:#ffeb3b; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+    
+    <div id="maintenanceScreen">
         <i class="fas fa-tools" style="font-size:4rem; margin-bottom:20px;"></i>
         <h1>BAKIM MODU</h1>
-        <p>Sistem güncelleniyor...</p>
-        <input type="password" id="emergencyPass" class="custom-input" placeholder="Yönetici Şifresi" style="width:200px; text-align:center;">
-        <button onclick="emergencyLogin()" class="btn-confirm" style="width:auto;">Giriş Yap</button>
+        <p style="color:#fff; opacity:0.7;">Şu an sistem güncelleniyor.<br>Lütfen daha sonra tekrar deneyin.</p>
+        <input type="password" id="emergencyPass" class="emergency-input" placeholder="Yönetici Şifresi">
+        <button onclick="emergencyLogin()" class="emergency-btn">Giriş Yap</button>
     </div>
 
-    <!-- ENGEL EKRANI -->
     <div id="bannedScreen" class="banned-screen">
         <i class="fas fa-ban" style="font-size:4rem; margin-bottom:20px;"></i>
         <div>ENGELLENDİNİZ</div>
         <div style="font-size:1rem; color:white; margin-top:10px;">Sohbet kurallarına uymadığınız için erişiminiz kapatıldı.</div>
     </div>
 
-    <!-- ADMIN PANEL -->
-    <div id="adminPanelModal" class="modal">
-        <div class="modal-box">
-            <h3 style="text-align:center; color:#ff0040; margin-top:0;">🛡️ Yönetici Paneli</h3>
-            <div class="admin-modal-body">
-                
-                <!-- KANAL YÖNETİMİ -->
-                <div class="admin-menu-btn" onclick="toggleSubMenu('channelAdmin')"><span>📺 Kanal Yönetimi</span> <i class="fas fa-chevron-down"></i></div>
-                <div id="channelAdmin" class="admin-submenu">
-                    <h4 style="color:#aaa; margin:10px 0 5px;">Yeni Kanal Ekle</h4>
-                    <input type="text" id="addTitle" class="custom-input" placeholder="Kanal Adı">
-                    <input type="text" id="addM3u" class="custom-input" placeholder="M3U / Yayın Linki">
-                    
-                    <input type="text" id="addWeb" class="custom-input" placeholder="Web / İndirme Linki (Otomatik Kısaltılır)">
-                    <button class="btn-shorten" onclick="shortenUrl('addWeb')"><i class="fas fa-link"></i> Manuel Link Kısalt</button>
-                    
-                    <input type="text" id="addImg" class="custom-input" placeholder="İkon URL">
-                    <input type="number" id="addOrder" class="custom-input" placeholder="Sıra No (Örn: 10)">
-                    <button onclick="addNewChannel()" class="btn-confirm"><i class="fas fa-plus"></i> Ekle</button>
-                    
-                    <h4 style="color:#aaa; margin:15px 0 5px;">Mevcut Kanallar</h4>
-                    <div id="adminChannelList" style="max-height:200px; overflow-y:auto;"><p style="text-align:center; opacity:0.5;">Yükleniyor...</p></div>
-                </div>
+    <div id="imgPreviewModal" onclick="this.style.display='none'">
+        <i class="fas fa-times"></i>
+        <img id="imgPreview" src="">
+    </div>
 
-                <!-- ANKET YÖNETİMİ -->
-                <div class="admin-menu-btn" onclick="toggleSubMenu('pollAdmin')"><span>📊 Anket Yönetimi</span> <i class="fas fa-chevron-down"></i></div>
-                <div id="pollAdmin" class="admin-submenu">
-                    <input type="text" id="pollQuestion" class="custom-input" placeholder="Soru: Örn. Kim Kazanır?">
-                    <input type="text" id="pollOpt1" class="custom-input" placeholder="Seçenek 1 (Örn. GS)">
-                    <input type="text" id="pollOpt2" class="custom-input" placeholder="Seçenek 2 (Örn. FB)">
-                    <button onclick="savePoll()" class="btn-confirm">Anketi Başlat</button>
-                    <button onclick="resetPoll()" class="btn-cancel">Anketi Bitir</button>
-                </div>
-
-                <!-- GERİ SAYIM YÖNETİMİ -->
-                <div class="admin-menu-btn" onclick="toggleSubMenu('countdownAdmin')"><span>⏳ Geri Sayım</span> <i class="fas fa-chevron-down"></i></div>
-                <div id="countdownAdmin" class="admin-submenu">
-                    <input type="text" id="cdTitle" class="custom-input" placeholder="Başlık (Örn. DERBİ)">
-                    <input type="datetime-local" id="cdDate" class="custom-input" style="color-scheme:dark;">
-                    <button onclick="saveCountdown()" class="btn-confirm">Sayacı Başlat</button>
-                    <button onclick="stopCountdown()" class="btn-cancel">Sayacı Durdur</button>
-                </div>
-
-                <!-- DİĞER AYARLAR -->
-                <div class="admin-menu-btn" onclick="toggleSubMenu('annoAdmin')"><span>📢 Duyuru Paneli</span> <i class="fas fa-chevron-down"></i></div>
-                <div id="annoAdmin" class="admin-submenu">
-                    <input type="text" id="annoInput" class="custom-input" placeholder="Kayan Yazı Metni">
-                    <button onclick="saveAnnouncement()" class="btn-confirm">Yayınla</button>
-                    <button onclick="stopAnnouncement()" class="btn-cancel">Kaldır</button>
-                </div>
-                
-                <div class="admin-menu-btn" onclick="toggleSubMenu('settingsContainer')"><span>⚙️ Genel Ayarlar</span> <i class="fas fa-chevron-down"></i></div>
-                <div id="settingsContainer" class="admin-submenu">
-                    <button class="btn-cancel" onclick="toggleMaintenance()">🚧 Bakım Modu Aç/Kapa</button>
-                    <button class="btn-cancel" onclick="clearChat()" style="background:#d32f2f;">🗑️ Sohbeti Temizle</button>
-                    <button class="btn-confirm" onclick="restoreBackup()" style="background:#2196F3; margin-top:15px;">📂 Eski Listeyi Yükle (JSON)</button>
-                </div>
+    <div id="confirmModal" class="modal">
+        <div class="modal-box" style="text-align:center;">
+            <i class="fas fa-exclamation-circle" style="font-size:3rem; color:#ff4d4d; margin-bottom:15px;"></i>
+            <h3 id="confirmTitle" style="color:var(--text); margin-bottom:10px;">Emin misin?</h3>
+            <p id="confirmText" style="color:var(--text); opacity:0.8; margin-bottom:20px;">Bu işlem geri alınamaz.</p>
+            <div style="display:flex; gap:10px; justify-content:center;">
+                <button class="btn-cancel" onclick="closeConfirm()">Vazgeç</button>
+                <button class="btn-confirm" id="btnConfirmAction">ONAYLA</button>
             </div>
-            <button onclick="document.getElementById('adminPanelModal').style.display='none'" class="btn-cancel">Kapat</button>
         </div>
     </div>
 
-    <!-- KULLANICI İŞLEM MODALI -->
     <div id="userActionModal" class="modal">
         <div class="modal-box">
             <h3 id="uaTitle" style="color:var(--primary); margin-top:0;">Kullanıcı İşlemleri</h3>
-            <button class="action-menu-btn" onclick="executeUserAction('reply')"><i class="fas fa-reply"></i> Yanıtla (Alıntı)</button>
+            <button class="action-menu-btn" onclick="executeUserAction('reply')"><i class="fas fa-reply"></i> Yanıtla</button>
             <button class="action-menu-btn" onclick="executeUserAction('private')"><i class="fas fa-lock"></i> Özel Mesaj At</button>
             <div id="adminUserActions" style="display:none; border-top:1px solid rgba(255,255,255,0.1); margin-top:5px; padding-top:5px;">
                 <button class="action-menu-btn" onclick="executeUserAction('ban')" style="color:#ff4d4d;"><i class="fas fa-ban"></i> Engelle</button>
@@ -232,19 +242,87 @@
         </div>
     </div>
 
-    <!-- DÜZENLEME MODALI -->
-    <div id="editChannelModal" class="modal">
+    <div id="nameChangeModal" class="modal">
         <div class="modal-box">
-            <h3>Kanal Düzenle</h3>
-            <input type="hidden" id="editKey">
-            <input type="text" id="editTitle" class="custom-input" placeholder="Başlık">
-            <input type="text" id="editM3u" class="custom-input" placeholder="M3U URL">
-            <input type="text" id="editWeb" class="custom-input" placeholder="Web URL">
-            <button class="btn-shorten" onclick="shortenUrl('editWeb')"><i class="fas fa-link"></i> Linki Kısalt</button>
-            <input type="text" id="editImg" class="custom-input" placeholder="Resim URL">
-            <input type="number" id="editOrder" class="custom-input" placeholder="Sıra No">
-            <button onclick="saveChannelEdit()" class="btn-confirm">Kaydet</button>
-            <button onclick="document.getElementById('editChannelModal').style.display='none'" class="btn-cancel">İptal</button>
+            <h3 style="color:var(--primary); margin-top:0;">İsim Değiştir</h3>
+            <p style="opacity:0.7; font-size:0.9rem;">Sohbette görünecek adınızı yazın:</p>
+            <input type="text" id="newNameInput" class="custom-input" placeholder="Örn: Ahmet_Bey" maxlength="15">
+            <div style="display:flex; gap:10px; justify-content:center;">
+                <button class="btn-cancel" onclick="document.getElementById('nameChangeModal').style.display='none'">İptal</button>
+                <button class="btn-confirm" onclick="saveName()">Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL MODAL -->
+    <div id="adminPanelModal" class="modal">
+        <div class="modal-box">
+            <h3 style="text-align:center; color:#ff0040; margin-top:0;">🛡️ Yönetici Paneli</h3>
+            
+            <div class="admin-modal-body">
+                <!-- POLL & COUNTDOWN ADMIN SECTION -->
+                <div class="admin-menu-btn" onclick="toggleSubMenu('pollAdmin')">
+                    <span>📊 Anket Yönetimi</span> <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="pollAdmin" class="admin-submenu">
+                    <input type="text" id="pollQuestion" class="custom-input" placeholder="Soru: Örn. Kim Kazanır?">
+                    <input type="text" id="pollOpt1" class="custom-input" placeholder="Seçenek 1 (Örn. GS)">
+                    <input type="text" id="pollOpt2" class="custom-input" placeholder="Seçenek 2 (Örn. FB)">
+                    <div style="display:flex; gap:5px;">
+                        <button onclick="savePoll()" class="btn-confirm" style="flex:1;">Başlat</button>
+                        <button onclick="resetPoll()" class="btn-cancel" style="flex:1;">Sıfırla</button>
+                    </div>
+                </div>
+
+                <div class="admin-menu-btn" onclick="toggleSubMenu('countdownAdmin')">
+                    <span>⏳ Geri Sayım Yönetimi</span> <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="countdownAdmin" class="admin-submenu">
+                    <input type="text" id="cdTitle" class="custom-input" placeholder="Başlık: Örn. DERBİ MAÇI">
+                    <input type="datetime-local" id="cdDate" class="custom-input" style="color-scheme: dark;">
+                    <div style="display:flex; gap:5px;">
+                        <button onclick="saveCountdown()" class="btn-confirm" style="flex:1;">Başlat</button>
+                        <button onclick="stopCountdown()" class="btn-cancel" style="flex:1;">Durdur</button>
+                    </div>
+                </div>
+
+                <!-- ANNOUNCEMENT (SCROLLING TEXT) ADMIN -->
+                <div class="admin-menu-btn" onclick="toggleSubMenu('annoAdmin')">
+                    <span>📢 Kayan Yazı Duyuru</span> <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="annoAdmin" class="admin-submenu">
+                    <input type="text" id="annoInput" class="custom-input" placeholder="Duyuru Metni: (Örn: Yayınlar Başladı!)">
+                    <div style="display:flex; gap:5px;">
+                        <button onclick="saveAnnouncement()" class="btn-confirm" style="flex:1;">Yayınla</button>
+                        <button onclick="stopAnnouncement()" class="btn-cancel" style="flex:1;">Kaldır</button>
+                    </div>
+                </div>
+
+                <!-- OTHER ADMIN SECTIONS -->
+                <div class="admin-menu-btn" onclick="toggleSubMenu('settingsContainer')"><span>⚙️ Genel Ayarlar</span> <i class="fas fa-chevron-down"></i></div>
+                <div id="settingsContainer" class="admin-submenu">
+                    <div style="margin-bottom:10px;"><input type="checkbox" id="maintenanceToggle" onchange="toggleMaintenance()"> <label style="color:inherit">🚧 Bakım Modu</label></div>
+                    <div><input type="checkbox" id="chatLockToggle" onchange="toggleChatLock()"> <label style="color:inherit">🔒 Sohbeti Kilitle</label></div>
+                    <button class="delete-all-btn" style="background:#555; margin-top:10px;" onclick="clearChat()">🧹 Sohbeti Temizle</button>
+                </div>
+
+                <div class="admin-menu-btn" onclick="toggleSubMenu('toastContainer')"><span>📢 Açılış Mesajı</span> <i class="fas fa-chevron-down"></i></div>
+                <div id="toastContainer" class="admin-submenu">
+                    <input type="text" id="adminToastInput" class="custom-input" placeholder="Mesajınız...">
+                    <div style="display:flex; align-items:center; gap:10px; margin-top:5px;"><input type="checkbox" id="adminToastActive" style="width:20px; height:20px;"> <label for="adminToastActive" style="color:inherit">Aktif Et</label></div>
+                    <button onclick="saveStartupMessage()" class="btn-confirm" style="width:100%; margin-top:10px;">Kaydet</button>
+                </div>
+
+                <div class="admin-menu-btn" onclick="toggleBannedList()"><span>🚫 Yasaklılar</span> <i class="fas fa-chevron-down"></i></div>
+                <div id="bannedContainer" class="admin-submenu"><div id="bannedList"><p style="opacity:0.5">Yükleniyor...</p></div></div>
+
+                <div class="admin-menu-btn" onclick="toggleReports()"><span>⚠️ Bildirimler (<span id="reportCount">0</span>)</span> <i class="fas fa-chevron-down"></i></div>
+                <div id="reportsContainer" class="admin-submenu">
+                    <button class="delete-all-btn" onclick="deleteAllReports()"><i class="fas fa-trash-alt"></i> TÜMÜNÜ SİL</button>
+                    <div id="adminReportsList"><p style="opacity:0.5">Yükleniyor...</p></div>
+                </div>
+            </div>
+            <button onclick="document.getElementById('adminPanelModal').style.display='none'" id="modalCloseBtn2">Kapat</button>
         </div>
     </div>
 
@@ -257,65 +335,78 @@
         </div>
     </div>
 
-    <div id="announcementBar" class="announcement-bar"><div class="announcement-content" id="announcementText"></div></div>
+    <!-- ANNOUNCEMENT BAR (SCROLLING TEXT) -->
+    <div id="announcementBar" class="announcement-bar">
+        <div class="announcement-content" id="announcementText"></div>
+    </div>
 
-    <!-- SAYAÇ VE ANKET ALANI -->
+    <!-- FEATURE CONTAINER (COUNTDOWN & POLL) -->
     <div class="feature-container" id="featureContainer">
         <!-- COUNTDOWN -->
         <div id="countdownBox" class="countdown-box">
-            <div id="countdownTitle" class="countdown-title"></div>
+            <div id="countdownTitle" class="countdown-title">GERİ SAYIM</div>
             <div id="countdownTimer" class="countdown-timer">
                 <div class="time-unit"><span id="cdDays">00</span><span class="time-label">GÜN</span></div>:
                 <div class="time-unit"><span id="cdHours">00</span><span class="time-label">SAAT</span></div>:
                 <div class="time-unit"><span id="cdMins">00</span><span class="time-label">DAK</span></div>:
                 <div class="time-unit"><span id="cdSecs">00</span><span class="time-label">SAN</span></div>
             </div>
+            <div id="liveIndicator" class="live-blink">CANLI 🔴</div>
         </div>
 
         <!-- POLL -->
         <div id="pollBox" class="poll-box">
-            <span id="displayPollQuestion" class="poll-question"></span>
+            <span id="displayPollQuestion" class="poll-question">Anket Yükleniyor...</span>
             <div class="poll-option" onclick="votePoll('opt1')">
                 <div class="poll-bar-bg"><div id="bar1" class="poll-bar-fill"></div></div>
-                <div class="poll-text" id="displayOpt1"></div>
+                <div class="poll-text" id="displayOpt1">A</div>
                 <div class="poll-percent" id="percent1">0%</div>
             </div>
             <div class="poll-option" onclick="votePoll('opt2')">
                 <div class="poll-bar-bg"><div id="bar2" class="poll-bar-fill"></div></div>
-                <div class="poll-text" id="displayOpt2"></div>
+                <div class="poll-text" id="displayOpt2">B</div>
                 <div class="poll-percent" id="percent2">0%</div>
             </div>
         </div>
     </div>
 
     <div class="container"><div id="list"></div></div>
+    
     <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">Daha Fazla Göster</button>
 
     <div class="chat-btn" onclick="toggleChat()"><i class="fas fa-comment-dots"></i></div>
     <div class="admin-panel-btn" id="adminBtn" onclick="openAdminPanel()"><i class="fas fa-shield-alt"></i></div>
-
-    <!-- SOHBET MODAL -->
+    
     <div class="chat-modal" id="chatModal">
-        <div style="padding:15px; display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2);">
-            <div style="display:flex; align-items:center; gap:10px;">
-                <span id="chatStatus" style="font-weight:bold;">Canlı Sohbet 🟢</span>
-                <i class="fas fa-edit" onclick="openNameModal()" style="cursor:pointer; opacity:0.7; font-size:0.9rem;"></i>
+        <div class="chat-header">
+            <div class="chat-header-top">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="font-weight:bold;" id="chatStatus">Canlı Sohbet 🟢</span>
+                    <i class="fas fa-edit" onclick="openNameModal()" style="cursor:pointer; opacity:0.7; font-size:0.9rem;" title="İsim Değiştir"></i>
+                </div>
+                <i class="fas fa-times chat-close" onclick="toggleChat()"></i>
             </div>
-            <i class="fas fa-times" onclick="toggleChat()" style="cursor:pointer; font-size:1.5rem;"></i>
+            <div class="chat-tabs">
+                <div class="chat-tab active" id="tabGlobal" onclick="switchChatTab('global')">Genel</div>
+                <div class="chat-tab" id="tabPrivate" onclick="switchChatTab('private')">Özel Mesajlar <span id="pmBadge" class="chat-tab-badge">0</span></div>
+            </div>
         </div>
         
-        <div class="chat-tabs">
-            <div class="chat-tab active" id="tabGlobal" onclick="switchChatTab('global')">Genel</div>
-            <div class="chat-tab" id="tabPrivate" onclick="switchChatTab('private')">Özel Mesaj <span id="pmBadge" style="background:red; border-radius:50%; font-size:0.6rem; padding:2px 5px; display:none;">!</span></div>
-        </div>
-
-        <!-- GLOBAL SOHBET -->
+        <div class="chat-rules" id="chatRulesBanner"><i class="fas fa-exclamation-triangle"></i> UYARI: Argo ve sohbet dışı mesaj atanlar SÜRESİZ banlanır!</div>
+        
+        <!-- GLOBAL CHAT VIEW -->
         <div id="viewGlobal" class="chat-view">
             <div class="chat-messages" id="chatContainer"></div>
         </div>
-
-        <!-- ÖZEL SOHBET -->
-        <div id="viewPrivateList" class="chat-view hidden"><div class="chat-messages" id="privateChatListContainer"></div></div>
+        
+        <!-- PRIVATE CHAT LIST VIEW -->
+        <div id="viewPrivateList" class="chat-view hidden">
+            <div class="private-chat-list" id="privateChatListContainer">
+                <p style="text-align:center; opacity:0.6; margin-top:20px;">Henüz özel mesajın yok.</p>
+            </div>
+        </div>
+        
+        <!-- PRIVATE CHAT CONVERSATION VIEW -->
         <div id="viewPrivateConv" class="chat-view hidden">
             <div style="background:rgba(0,0,0,0.3); padding:8px; display:flex; align-items:center;">
                 <button onclick="backToPrivateList()" style="background:none; border:none; color:white; font-size:1.2rem; cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
@@ -324,7 +415,6 @@
             <div class="chat-messages" id="privateChatContainer"></div>
         </div>
 
-        <!-- YANIT ÖNİZLEME -->
         <div id="replyPreviewBar" class="reply-preview-bar">
             <div style="display:flex; align-items:center; gap:10px;">
                 <i class="fas fa-reply"></i> 
@@ -335,38 +425,31 @@
             </div>
             <i class="fas fa-times" onclick="cancelReply()" style="cursor:pointer; font-size:1.2rem;"></i>
         </div>
-
         <div class="chat-input-area">
-            <input type="text" class="chat-input" id="msgInput" placeholder="Mesaj yaz...">
-            <button onclick="sendMsg()" style="width:40px; height:40px; border-radius:50%; background:var(--primary); color:white; border:none; cursor:pointer;"><i class="fas fa-paper-plane"></i></button>
+            <div class="input-row">
+                <button class="chat-img-btn" onclick="document.getElementById('imgUpload').click()"><i class="fas fa-image"></i></button>
+                <input type="file" id="imgUpload" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
+                <input type="text" class="chat-input" id="msgInput" placeholder="Mesaj yaz...">
+                <button class="chat-send" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
+            </div>
         </div>
     </div>
     
-    <!-- İSİM DEĞİŞTİRME -->
-    <div id="nameChangeModal" class="modal">
-        <div class="modal-box">
-            <h3>İsim Değiştir</h3>
-            <input type="text" id="newNameInput" class="custom-input" placeholder="Yeni İsminiz">
-            <button onclick="saveName()" class="btn-confirm">Kaydet</button>
-            <button onclick="document.getElementById('nameChangeModal').style.display='none'" class="btn-cancel">İptal</button>
-        </div>
-    </div>
-
-    <!-- OYNATICI SEÇİM MODAL -->
     <div class="modal" id="modal">
         <div class="modal-box">
-            <h3 id="mTitle" style="text-align:center; color:var(--primary);"></h3>
-            <div class="player-opt" id="wuffy"><i class="fas fa-play"></i> Wuffy Player</div>
-            <div class="player-opt" id="xpola"><i class="fas fa-rocket"></i> Xpola Player</div>
-            <div class="player-opt" id="externalWeb" style="border:1px solid #ffab00; color:#ffab00;"><i class="fas fa-external-link-alt"></i> Tarayıcıda Aç / İndir</div>
-            <button onclick="document.getElementById('modal').style.display='none'" class="btn-cancel">Vazgeç</button>
+            <h3 id="mTitle" style="text-align:center; margin-top:0; color:var(--primary);"></h3>
+            <div class="opt" id="wuffy"><i class="fas fa-play" style="color:var(--primary)"></i> <b>Wuffy Player</b></div>
+            <div class="opt" id="xpola"><i class="fas fa-rocket" style="color:var(--primary)"></i> <b>Xpola Player</b></div>
+            <div class="opt" id="externalWeb" style="background: rgba(255,171,0,0.1); border: 1px solid #ffab00;">
+                <i class="fas fa-external-link-alt" style="color:#ffab00"></i> <b style="color:#ffab00">Tarayıcıda Aç / İndir</b>
+            </div>
+            <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:12px; border-radius:10px; border:none; background:#333; color:white; margin-top:10px; cursor:pointer; font-weight:bold;" id="modalCloseBtn">Vazgeç</button>
         </div>
     </div>
 
-    <script>
-        const backupJsonData = [{"title": "SUPMOT İPTV İNDİR", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/supmot-iptv.m3u", "web_link_url": "https://ay.live/sBLi", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "19.01.2026"}, {"title": "10 ADET MAC ADRESİ İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/inadinamackod.m3u", "web_link_url": "https://ay.live/ZZ5c", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "18.01.2026"}, {"title": "KRİSTAL İPTV EKLENDİ", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Kristal-iptv-W.m3u", "web_link_url": "https://ay.live/8Gxpf", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "18.01.2026"}, {"title": "SMARTES2 İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=zrdQ5UHD&password=q82fkQT&type=m3u_plus", "web_link_url": "https://ay.live/xAdwL", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "17.01.2026"}, {"title": "10 BİN KİSİLİK İPTV", "m3u_url": "https://broken-night-dffb.deathlesstelenyu.workers.dev/dth-iptv.m3u", "web_link_url": "https://ay.live/QfCR", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "16.01.2026"}, {"title": "SMART İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=utSzxq7SY6&password=dj1yyFAQJy&type=m3u_plus", "web_link_url": "https://ay.live/5kQj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "15.01.2026"}, {"title": "YENİ SPORT İPTV", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/sport-connec.m3u", "web_link_url": "https://ay.live/Ry1l", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "14.01.2026"}, {"title": "10 SİNİRSİZ İPTV M3U", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "web_link_url": "https://ay.live/7LxRP8", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "13.01.2026"}, {"title": "SMARTZONE İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=gRNhEpGh3m&password=fmaAdfkHXJ&type=m3u_plus", "web_link_url": "https://ay.live/q9fMZa", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "12.01.2026"}, {"title": "MEGA İPTV İNDİR", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "web_link_url": "https://ay.live/G7TFl", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "11.01.2026"}, {"title": "1500 MAX SPORTS İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/nadina-1500-Max-iptv.m3u", "web_link_url": "https://ay.live/Se6xQ", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "09.01.2026"}, {"title": "QUANTUM İPTV LİST", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Kuantum-iptv.m3u", "web_link_url": "https://ay.live/8Xy9", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "08.01.2026"}, {"title": "FULL BOT İPTV SPORTS", "m3u_url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "web_link_url": "https://ay.live/ld7M", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "07.01.2026"}, {"title": "Ekalite iptv m3u", "m3u_url": "http://ekalite.xyz:8080/get.php?username=ibrahimtak&password=qwkRZHAwaK&type=m3u_plus", "web_link_url": "https://ay.live/4eoXDj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "06.01.2026"}, {"title": "D SPORTS M3U ADRESİ EKLEND", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DTH-Sports.m3u", "web_link_url": "https://ay.live/w2Avb", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "05.01.2026"}, {"title": "30 ADET İPTV M3U LİSTE", "m3u_url": "http://maisonxp.click/get.php?username=thay123&password=thay123&type=m3u", "web_link_url": "https://ay.live/zcn3j7", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "04.01.2026"}, {"title": "ELİTE MAC ADRESLERİ İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/playlist.m3u", "web_link_url": "https://ay.live/DfpE", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "04.01.2026"}, {"title": "KARMA İPTV 23K", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Karma-iptv.m3u", "web_link_url": "https://ay.live/6WmReB", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "03.01.2026"}, {"title": "Yeni iptv liste", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "web_link_url": "https://ay.live/0cKg", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "02.01.2026"}, {"title": "Turkiye Connect iptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Turkiye-iptv.m3u", "web_link_url": "https://ay.live/6Dr", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "01.01.2026"}, {"title": "9500 İPTV M3U LİNKLER YİLBASİ OZEL", "m3u_url": "http://ss.wancolonel.xyz:8080/get.php?username=Denisurlu&password=Muri3091&type=m3u_plus", "web_link_url": "https://ay.live/3hJ9te", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "31.12.2025"}, {"title": "3 Adet İptv link", "m3u_url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "web_link_url": "https://ay.live/KCwKj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "30.12.2025"}, {"title": "XTREAM İPTV LİSTELER EKLENDİ", "m3u_url": "http://s1.eldest99.xyz:8080/get.php?username=hdkaptantv3706&password=kptn@8723706&type=m3u_plus", "web_link_url": "https://ay.live/Clqz", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "29.12.2025"}, {"title": "FİLM EKSENİ İPTV", "m3u_url": "https://raw.githubusercontent.com/sultansmgr/smart/refs/heads/main/FilmEkseni.m3u", "web_link_url": "https://ay.live/qCS", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESVvVD7PLGjrzbMvNGvIFOhRBoSxzoGBFLm3iG-xX1ZEArpkhkSItDVY&s=10", "added_date": "28.12.2025"}, {"title": "B. Conneckt İptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/b-connect.m3u", "web_link_url": "https://ay.live/67w", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "28.12.2025"}, {"title": "Spor Kanallari bot iptv", "m3u_url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "web_link_url": "https://ay.live/9GlX", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "100 Bin kisilik iptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "web_link_url": "https://ay.live/6QE", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "Hibrit İptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Toplu-Paket-V.m3u", "web_link_url": "https://ay.live/eAAA7K", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "m3u_url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "web_link_url": "https://ay.live/DGKU", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}];
-        const LINK_API_KEY = "cce8efcdd2693c8adde90f05832332f7f30fbf41";
+    <script>const categoryData = { 'iptv_list': { 'items': [{"title": "SUPMOT İPTV İNDİR", "url": "https://file.garden/Z-hq5n4Shk27aY58/supmot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/sBLi", "is_new": true, "added_date": "19.01.2026"}, {"title": "10 ADET MAC ADRESİ İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/inadinamackod.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ZZ5c", "is_new": false, "added_date": "18.01.2026"}, {"title": "KRİSTAL İPTV EKLENDİ", "url": "https://file.garden/Z-hq5n4Shk27aY58/Kristal-iptv-W.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8Gxpf", "is_new": false, "added_date": "18.01.2026"}, {"title": "SMARTES2 İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=zrdQ5UHD&password=q82fkQT&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/xAdwL", "is_new": false, "added_date": "17.01.2026"}, {"title": "10 BİN KİSİLİK İPTV", "url": "https://broken-night-dffb.deathlesstelenyu.workers.dev/dth-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/QfCR", "is_new": false, "added_date": "16.01.2026"}, {"title": "SMART İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=utSzxq7SY6&password=dj1yyFAQJy&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/5kQj", "is_new": false, "added_date": "15.01.2026"}, {"title": "YENİ SPORT İPTV", "url": "https://file.garden/Z-hq5n4Shk27aY58/sport-connec.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Ry1l", "is_new": false, "added_date": "14.01.2026"}, {"title": "10 SİNİRSİZ İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/7LxRP8", "is_new": false, "added_date": "13.01.2026"}, {"title": "SMARTZONE İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=gRNhEpGh3m&password=fmaAdfkHXJ&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/q9fMZa", "is_new": false, "added_date": "12.01.2026"}, {"title": "MEGA İPTV İNDİR", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/G7TFl", "is_new": false, "added_date": "11.01.2026"}, {"title": "1500 MAX SPORTS İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/nadina-1500-Max-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Se6xQ", "is_new": false, "added_date": "09.01.2026"}, {"title": "QUANTUM İPTV LİST", "url": "https://file.garden/Z-hq5n4Shk27aY58/Kuantum-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8Xy9", "is_new": false, "added_date": "08.01.2026"}, {"title": "FULL BOT İPTV SPORTS", "url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ld7M", "is_new": false, "added_date": "07.01.2026"}, {"title": "Ekalite iptv m3u", "url": "http://ekalite.xyz:8080/get.php?username=ibrahimtak&password=qwkRZHAwaK&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/4eoXDj", "is_new": false, "added_date": "06.01.2026"}, {"title": "D SPORTS M3U ADRESİ EKLEND", "url": "https://file.garden/Z-hq5n4Shk27aY58/DTH-Sports.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/w2Avb", "is_new": false, "added_date": "05.01.2026"}, {"title": "30 ADET İPTV M3U LİSTE", "url": "http://maisonxp.click/get.php?username=thay123&password=thay123&type=m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/zcn3j7", "is_new": false, "added_date": "04.01.2026"}, {"title": "ELİTE MAC ADRESLERİ İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/playlist.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DfpE", "is_new": false, "added_date": "04.01.2026"}, {"title": "KARMA İPTV 23K", "url": "https://file.garden/Z-hq5n4Shk27aY58/Karma-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6WmReB", "is_new": false, "added_date": "03.01.2026"}, {"title": "Yeni iptv liste", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/0cKg", "is_new": false, "added_date": "02.01.2026"}, {"title": "Turkiye Connect iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Turkiye-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6Dr", "is_new": false, "added_date": "01.01.2026"}, {"title": "9500 İPTV M3U LİNKLER YİLBASİ OZEL", "url": "http://ss.wancolonel.xyz:8080/get.php?username=Denisurlu&password=Muri3091&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/3hJ9te", "is_new": false, "added_date": "31.12.2025"}, {"title": "3 Adet İptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/KCwKj", "is_new": false, "added_date": "30.12.2025"}, {"title": "XTREAM İPTV LİSTELER EKLENDİ", "url": "http://s1.eldest99.xyz:8080/get.php?username=hdkaptantv3706&password=kptn@8723706&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Clqz", "is_new": false, "added_date": "29.12.2025"}, {"title": "FİLM EKSENİ İPTV", "url": "https://raw.githubusercontent.com/sultansmgr/smart/refs/heads/main/FilmEkseni.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESVvVD7PLGjrzbMvNGvIFOhRBoSxzoGBFLm3iG-xX1ZEArpkhkSItDVY&s=10", "web_link_url": "https://ay.live/qCS", "is_new": false, "added_date": "28.12.2025"}, {"title": "B. Conneckt İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/b-connect.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/67w", "is_new": false, "added_date": "28.12.2025"}, {"title": "Spor Kanallari bot iptv", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/9GlX", "is_new": false, "added_date": "27.12.2025"}, {"title": "100 Bin kisilik iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6QE", "is_new": false, "added_date": "27.12.2025"}, {"title": "Hibrit İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Toplu-Paket-V.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/eAAA7K", "is_new": false, "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": false, "added_date": "27.12.2025"}] } }; const activeCategoryKey = 'iptv_list';</script>
 
+    <script>
         const firebaseConfig = {
           apiKey: "AIzaSyCZFwiLcV4K3EnRDWpPPlXPrXSJxAuMfaQ",
           authDomain: "iptvbotcoun.firebaseapp.com",
@@ -376,308 +459,410 @@
           messagingSenderId: "229841892818",
           appId: "1:229841892818:web:a91dd3792919140a5d440b"
         };
+
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        let categoryData = { iptv_list: { items: [] } };
-        let activeCategoryKey = 'iptv_list';
+        let current = {};
         let itemsPerPage = 10; 
         let currentlyShown = itemsPerPage;
-        let isAdmin = localStorage.getItem('is_admin') === 'true';
-        let myUserName = localStorage.getItem('chat_username') || "Misafir_" + Math.floor(Math.random() * 9000 + 1000);
-        let myUUID = localStorage.getItem('user_uuid') || 'user_' + Date.now();
-        localStorage.setItem('user_uuid', myUUID);
-        localStorage.setItem('chat_username', myUserName);
-        
         let globalViewCounts = {};
         let globalLikeCounts = {};
         let myLikes = JSON.parse(localStorage.getItem('my_likes') || "[]");
-        
-        let currentTab = 'global';
+        let myUserName = localStorage.getItem('chat_username');
+        let myUUID = localStorage.getItem('user_uuid');
+        let isAdmin = localStorage.getItem('is_admin') === 'true';
+        let currentReply = null; 
+        let isChatLocked = false;
+        let countdownInterval;
+        let rulesTimeout;
+
+        // PRIVATE CHAT VARIABLES
+        let currentTab = 'global'; // 'global' or 'private'
         let currentPrivateRoom = null;
         let currentTargetUser = null;
-        let selectedUserForAction = null;
-        let currentReply = null;
-        let countdownInterval;
+        let privateChatsData = {};
+        let activePrivateListener = null;
 
         const ADMIN_PASS = "burhan_baba_72";
         const TG_BOT_TOKEN = "8437262061:AAGnhDFIjFqNL5PlUGS33mUaXEMlKd1yyzk";
         const TG_CHAT_ID = "666941331";
 
-        function init() {
-            listenToChannels();
-            listenToStats();
-            listenToExtras();
-            listenToChat();
-            listenToAllPrivateChats();
-            initPresence();
+        if(!myUUID) { myUUID = 'user_' + Date.now() + '_' + Math.floor(Math.random() * 1000); localStorage.setItem('user_uuid', myUUID); }
+        if(!myUserName) { myUserName = "Misafir_" + Math.floor(Math.random() * 9000 + 1000); localStorage.setItem('chat_username', myUserName); }
+
+        function openNameModal() { document.getElementById('nameChangeModal').style.display = 'flex'; document.getElementById('newNameInput').value = myUserName; document.getElementById('newNameInput').focus(); }
+        function saveName() { const inputVal = document.getElementById('newNameInput').value.trim(); if(inputVal && inputVal !== "") { myUserName = inputVal.substring(0, 15); localStorage.setItem('chat_username', myUserName); showToast("İsim Değiştirildi: " + myUserName, "fa-check"); document.getElementById('nameChangeModal').style.display = 'none'; } else { showToast("Lütfen geçerli bir isim yazın.", "fa-exclamation"); } }
+        function getUserColor(username) { let hash = 0; for (let i = 0; i < username.length; i++) { hash = username.charCodeAt(i) + ((hash << 5) - hash); } const hue = Math.abs(hash % 360); return `hsl(${hue}, 70%, 45%)`; }
+        function initPresence() { const onlineRef = database.ref('online_users'); const myCon = onlineRef.push(); myCon.onDisconnect().remove(); myCon.set(true); onlineRef.on('value', (s) => { document.getElementById('onlineCount').innerText = s.numChildren(); }); }
+        function showToast(message, icon="fa-info-circle") { const t = document.getElementById('toast'); t.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`; t.className = "toast show"; setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000); }
+        function formatTime(ts) { const d = new Date(ts); return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0'); }
+
+        // --- TELEGRAM NOTIFICATION FUNCTION ---
+        function sendTelegramNotification(user, message) {
+            // Do not notify if admin is the sender or if tokens are missing
+            if(isAdmin || !TG_BOT_TOKEN || TG_BOT_TOKEN.includes("BURAYA") || !TG_CHAT_ID) return;
             
-            if(localStorage.getItem('theme') === 'light') toggleTheme();
-            if(isAdmin) {
-                document.getElementById('adminBtn').style.display = "flex";
-                document.getElementById('chatStatus').innerText = "Yönetici 👮‍♂️";
-            }
-            render();
-            checkBanStatus();
+            const text = `💬 Yeni Mesaj: ${user}
+
+${message || "[Resim]"}`;
+            const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage?chat_id=${TG_CHAT_ID}&text=${encodeURIComponent(text)}`;
+            
+            fetch(url).catch(e => console.error("TG Error:", e));
         }
 
-        window.restoreBackup = function() {
-            if(confirm("Eski JSON listenizi Firebase'e yüklemek istiyor musunuz?")) {
-                if (!backupJsonData || backupJsonData.length === 0) { showToast("Yedek veri yok!", "fa-exclamation"); return; }
-                showToast("Yükleniyor...", "fa-sync fa-spin");
-                let counter = 0;
-                backupJsonData.forEach((item, index) => {
-                    database.ref('channels').push({
-                        title: item.title,
-                        m3u_url: item.m3u_url || "#",
-                        web_link_url: item.web_link_url || "#",
-                        image: item.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-                        added_date: item.added_date || new Date().toLocaleDateString('tr-TR'),
-                        order: index + 1
-                    });
-                    counter++;
-                });
-                showToast(counter + " Kanal Yüklendi!", "fa-check");
-            }
-        };
+        // --- USER ACTION MODAL ---
+        let selectedUserForAction = null;
+        function openUserActionModal(targetUUID, targetName, msgId, textContent, imgContent) {
+            if(targetUUID === myUUID) return; 
+            selectedUserForAction = { uuid: targetUUID, name: targetName, msgId: msgId, text: textContent, image: imgContent };
+            document.getElementById('uaTitle').innerText = targetName;
+            document.getElementById('userActionModal').style.display = 'flex';
+            if(isAdmin) document.getElementById('adminUserActions').style.display = 'block';
+            else document.getElementById('adminUserActions').style.display = 'none';
+        }
 
-        function listenToChannels() {
-            database.ref('channels').on('value', (snapshot) => {
-                const data = snapshot.val();
-                let items = [];
-                if(data) {
-                    items = Object.keys(data).map(key => { return { ...data[key], firebaseKey: key }; });
-                    items.sort((a, b) => (a.order || 9999) - (b.order || 9999));
+        function executeUserAction(action) {
+            document.getElementById('userActionModal').style.display = 'none';
+            if(!selectedUserForAction) return;
+            if(action === 'reply') {
+                startReply(selectedUserForAction.name, selectedUserForAction.text, selectedUserForAction.image);
+            } else if (action === 'private') {
+                startPrivateChat(selectedUserForAction.uuid, selectedUserForAction.name);
+            } else if (action === 'ban') {
+                openConfirmModal('ban', selectedUserForAction.uuid);
+            } else if (action === 'delete') {
+                openConfirmModal('del', selectedUserForAction.msgId);
+            }
+        }
+
+        // --- PRIVATE CHAT LOGIC ---
+        function switchChatTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.chat-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(tab === 'global' ? 'tabGlobal' : 'tabPrivate').classList.add('active');
+            
+            document.getElementById('viewGlobal').classList.add('hidden');
+            document.getElementById('viewPrivateList').classList.add('hidden');
+            document.getElementById('viewPrivateConv').classList.add('hidden');
+            
+            if(tab === 'global') {
+                document.getElementById('viewGlobal').classList.remove('hidden');
+                document.getElementById('msgInput').placeholder = "Genel sohbete yaz...";
+                currentPrivateRoom = null;
+            } else {
+                if(currentPrivateRoom) {
+                     document.getElementById('viewPrivateConv').classList.remove('hidden');
+                     document.getElementById('msgInput').placeholder = "Özel mesaj yaz...";
+                } else {
+                    document.getElementById('viewPrivateList').classList.remove('hidden');
+                    document.getElementById('msgInput').placeholder = "Bir sohbet seç...";
                 }
-                categoryData.iptv_list.items = items;
-                render();
-                if(isAdmin) renderAdminChannelList(items);
-            });
-        }
-
-        async function addNewChannel() {
-            const title = document.getElementById('addTitle').value;
-            const m3u = document.getElementById('addM3u').value;
-            let web = document.getElementById('addWeb').value;
-            const img = document.getElementById('addImg').value;
-            const order = document.getElementById('addOrder').value;
-
-            if(!title) { showToast("Başlık zorunlu!", "fa-exclamation"); return; }
-            if(web && web.startsWith('http')) {
-                showToast("Link Kazançlı Hale Getiriliyor...", "fa-cog fa-spin");
-                try {
-                    const r = await fetch(`https://ay.live/api/?api=${LINK_API_KEY}&url=${encodeURIComponent(web)}&format=text`);
-                    const t = await r.text();
-                    if(t.startsWith('http')) web = t;
-                } catch(e) {}
+                // Clear badge
+                document.getElementById('pmBadge').style.display = 'none';
+                document.getElementById('pmBadge').innerText = '0';
             }
-            database.ref('channels').push({ title, m3u_url: m3u||"#", web_link_url: web||"#", image: img||"", added_date: new Date().toLocaleDateString('tr-TR'), order: parseInt(order)||9999 });
-            showToast("Kanal Eklendi!", "fa-check");
-            document.getElementById('addTitle').value=""; document.getElementById('addM3u').value=""; document.getElementById('addWeb').value=""; document.getElementById('addImg').value="";
         }
 
-        window.deleteChannel = function(key) { if(confirm("Silmek istediğine emin misin?")) { database.ref('channels/'+key).remove(); showToast("Silindi", "fa-trash"); } };
-        window.openEditModal = function(key) { const i = categoryData.iptv_list.items.find(x => x.firebaseKey === key); if(!i) return; document.getElementById('editKey').value = key; document.getElementById('editTitle').value = i.title; document.getElementById('editM3u').value = i.m3u_url; document.getElementById('editWeb').value = i.web_link_url; document.getElementById('editImg').value = i.image; document.getElementById('editOrder').value = i.order||9999; document.getElementById('editChannelModal').style.display = 'flex'; };
-        window.saveChannelEdit = function() { const k = document.getElementById('editKey').value; database.ref('channels/'+k).update({ title: document.getElementById('editTitle').value, m3u_url: document.getElementById('editM3u').value, web_link_url: document.getElementById('editWeb').value, image: document.getElementById('editImg').value, order: parseInt(document.getElementById('editOrder').value) }); document.getElementById('editChannelModal').style.display = 'none'; showToast("Güncellendi", "fa-save"); };
-        window.shortenUrl = function(id) { const u=document.getElementById(id).value; if(!u)return; fetch(`https://ay.live/api/?api=${LINK_API_KEY}&url=${encodeURIComponent(u)}&format=text`).then(r=>r.text()).then(t=>{ if(t.startsWith("http")) document.getElementById(id).value=t; }); };
+        function getRoomId(uid1, uid2) {
+            const sorted = [uid1, uid2].sort();
+            return sorted[0] + "_" + sorted[1];
+        }
 
-        function render() {
-            const container = document.getElementById('list'); const items = categoryData[activeCategoryKey].items; container.innerHTML = '';
-            if(items.length===0){container.innerHTML='<p style="text-align:center;opacity:0.5;">Liste boş.</p>'; return;}
-            items.forEach((item, index) => {
-                const card = document.createElement('div'); card.className = 'card'; card.setAttribute('data-title', item.title);
-                if(index>=currentlyShown) card.classList.add('hidden');
-                const safeKey = sanitizeKey(item.title);
-                const views = globalViewCounts[safeKey] || 0; const likes = globalLikeCounts[safeKey] || 0; const isLiked = myLikes.includes(safeKey) ? 'liked' : '';
-                card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"><span class="badge badge-iptv">IPTV</span></div><div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta"><span>${item.added_date||""}</span><span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span><span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span></div></div><i class="fas fa-play-circle play-icon"></i>`;
-                card.onclick = (e) => { if(e.target.classList.contains('stat-heart')) return; let current = item; incrementViewCount(item.title); document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; document.getElementById('wuffy').onclick = () => { if(current.m3u_url!="#") window.location.href=`intent://${btoa(current.m3u_url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; }; document.getElementById('xpola').onclick = () => { if(current.m3u_url!="#") window.location.href=`intent://${btoa(current.m3u_url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; }; document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url !== "#") window.open(current.web_link_url, '_blank'); }; };
-                container.appendChild(card);
+        function startPrivateChat(targetUUID, targetName) {
+            toggleChat(); // Close if open to refresh or ensure open
+            document.getElementById('chatModal').classList.add('active');
+            
+            currentTargetUser = { uuid: targetUUID, name: targetName };
+            currentPrivateRoom = getRoomId(myUUID, targetUUID);
+            
+            // Switch UI
+            switchChatTab('private');
+            document.getElementById('viewPrivateList').classList.add('hidden');
+            document.getElementById('viewPrivateConv').classList.remove('hidden');
+            document.getElementById('privateChatUserName').innerText = targetName;
+            document.getElementById('privateChatContainer').innerHTML = '<p style="text-align:center; opacity:0.5; margin-top:20px;">Sohbet yükleniyor...</p>';
+            
+            // Listen to this room
+            listenToPrivateRoom(currentPrivateRoom);
+        }
+
+        function backToPrivateList() {
+            currentPrivateRoom = null;
+            if(activePrivateListener) activePrivateListener.off(); // Stop listening to specific room
+            switchChatTab('private');
+        }
+
+        function listenToPrivateRoom(roomId) {
+            if(activePrivateListener) activePrivateListener.off();
+            const ref = database.ref('private_chats/' + roomId);
+            activePrivateListener = ref;
+            
+            document.getElementById('privateChatContainer').innerHTML = '';
+            ref.limitToLast(50).on('child_added', (snapshot) => {
+                const msg = snapshot.val();
+                appendPrivateMessage(msg.user, msg.text, msg.user === myUserName, msg.image, msg.time);
             });
-            if(items.length > currentlyShown) document.getElementById('loadMoreBtn').classList.remove('hidden'); else document.getElementById('loadMoreBtn').classList.add('hidden');
         }
-        function loadMore() { currentlyShown += itemsPerPage; render(); }
-        function renderAdminChannelList(items) { const l = document.getElementById('adminChannelList'); l.innerHTML = ""; items.forEach(i => { l.innerHTML += `<div class="channel-item-admin"><div style="flex:1;"><b>${i.order||0}.</b> ${i.title}</div><div class="channel-actions"><button class="btn-sm btn-edit" onclick="openEditModal('${i.firebaseKey}')"><i class="fas fa-edit"></i></button><button class="btn-sm btn-del" onclick="deleteChannel('${i.firebaseKey}')"><i class="fas fa-trash"></i></button></div></div>`; }); }
 
-        function sanitizeKey(k) { return (k||"").replace(/[.#$\/\[\]]/g, '_'); }
-        function incrementViewCount(t) { database.ref('channel_views/' + sanitizeKey(t)).transaction(c => (c||0)+1); }
-        window.toggleLike = function(e, t) { e.stopPropagation(); const k = sanitizeKey(t); if(myLikes.includes(k)) return; myLikes.push(k); localStorage.setItem('my_likes', JSON.stringify(myLikes)); database.ref('channel_likes/'+k).transaction(c=>(c||0)+1); e.target.classList.add('liked'); };
-        function listenToStats() { database.ref('channel_views').on('value', s=>{globalViewCounts=s.val()||{};updateStatsDOM()}); database.ref('channel_likes').on('value', s=>{globalLikeCounts=s.val()||{};updateStatsDOM()}); }
-        function updateStatsDOM() { document.querySelectorAll('.card').forEach(c=>{ const t=c.getAttribute('data-title'); if(t){ const k=sanitizeKey(t); const v=c.querySelector('.count-val-eye'); const l=c.querySelector('.count-val-heart'); if(v)v.innerText=globalViewCounts[k]||0; if(l)l.innerText=globalLikeCounts[k]||0; } }); }
+        function appendPrivateMessage(user, text, isMe, image, time) {
+            const container = document.getElementById('privateChatContainer');
+            const div = document.createElement('div');
+            let bgColor = isMe ? '' : `background-color: ${getUserColor(user)};`;
+            div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'}`;
+            if(!isMe) div.style.cssText = bgColor;
+            
+            let contentHTML = image ? `<img src="${image}" class="chat-img" onclick="showImagePreview('${image}')">` : text;
+            let timeHTML = `<span class="msg-time">${formatTime(time || Date.now())}</span>`;
+            
+            div.innerHTML = `<span class="msg-user">${user}</span>${contentHTML}${timeHTML}`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
 
-        // --- SOHBET ---
-        function listenToChat() {
-            database.ref('global_chat').limitToLast(50).on('child_added', (s) => {
-                const msg = s.val(); const div = document.createElement('div'); const isMe = msg.user === myUserName;
-                div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'}`;
-                if(msg.isAdminMsg) div.style.border = "1px solid #ffeb3b";
+        function listenToAllPrivateChats() {
+            database.ref('user_inbox/' + myUUID).on('value', (s) => {
+                const listContainer = document.getElementById('privateChatListContainer');
+                listContainer.innerHTML = '';
+                let count = 0;
                 
-                let replyHTML = "";
-                if(msg.replyTo) {
-                    replyHTML = `<div class="quoted-msg"><span class="quote-user">${msg.replyTo.user}</span><span>${msg.replyTo.text}</span></div>`;
+                if(!s.exists()) {
+                    listContainer.innerHTML = '<p style="text-align:center; opacity:0.6; margin-top:20px;">Henüz özel mesajın yok.</p>';
+                    return;
                 }
+                
+                s.forEach(child => {
+                    const data = child.val();
+                    const targetUUID = child.key;
+                    count++;
+                    
+                    const div = document.createElement('div');
+                    div.className = 'private-chat-item';
+                    div.onclick = () => startPrivateChat(targetUUID, data.name);
+                    div.innerHTML = `
+                        <div style="flex:1;">
+                            <div class="pc-user">${data.name}</div>
+                            <div class="pc-preview">${data.lastMsg || "Resim"}</div>
+                        </div>
+                        <div style="font-size:0.7rem; opacity:0.5;">${formatTime(data.timestamp)}</div>
+                    `;
+                    listContainer.appendChild(div);
+                });
 
-                div.innerHTML = `${replyHTML}<span class="msg-user" onclick="openUserActionModal('${msg.uuid}', '${msg.user}', '${s.key}', '${msg.text ? msg.text.replace(/'/g, "\'") : ""}')">${msg.isAdminMsg ? '<span class="msg-admin">🛡️ YÖNETİCİ</span>' : msg.user}</span><div>${msg.text}</div>`;
-                document.getElementById('chatContainer').appendChild(div);
-                document.getElementById('chatContainer').scrollTop = 99999;
+                if(currentTab === 'global') {
+                    const badge = document.getElementById('pmBadge');
+                    badge.innerText = count > 0 ? "!" : "0";
+                    badge.style.display = count > 0 ? 'inline-block' : 'none';
+                }
             });
-            database.ref('global_chat').on('child_removed', () => { document.getElementById('chatContainer').innerHTML = ""; });
         }
 
-        // --- YANITLAMA (REPLY) ---
-        function startReply(user, text) {
-            switchChatTab('global');
-            currentReply = { user: user, text: text };
-            document.getElementById('replyToUser').innerText = user;
-            document.getElementById('replyToText').innerText = text.substring(0, 30) + "...";
-            document.getElementById('replyPreviewBar').style.display = 'flex';
-            document.getElementById('msgInput').focus();
-        }
-        window.cancelReply = function() { currentReply = null; document.getElementById('replyPreviewBar').style.display = 'none'; };
-
-        // --- SAYAÇ & ANKET ---
-        function updateCountdown(targetTime) {
+        // --- GLOBAL CHAT & GENERAL LOGIC ---
+        function updateCountdownDisplay(targetTime) {
             if (countdownInterval) clearInterval(countdownInterval);
             countdownInterval = setInterval(() => {
-                const now = new Date().getTime(); const distance = targetTime - now;
-                if (distance < 0) { clearInterval(countdownInterval); document.getElementById("countdownBox").style.display = "none"; return; }
+                const now = new Date().getTime();
+                const distance = targetTime - now;
+                if (distance < 0) { clearInterval(countdownInterval); document.getElementById("countdownTimer").style.display = "none"; document.getElementById("liveIndicator").style.display = "block"; return; }
+                document.getElementById("countdownTimer").style.display = "flex"; document.getElementById("liveIndicator").style.display = "none";
                 document.getElementById("cdDays").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
                 document.getElementById("cdHours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 document.getElementById("cdMins").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 document.getElementById("cdSecs").innerText = Math.floor((distance % (1000 * 60)) / 1000);
             }, 1000);
         }
-        function listenToExtras() {
-            database.ref('extras').on('value', s => {
-                const val = s.val() || {};
-                // Duyuru
-                if(val.announcement && val.announcement.active) { document.getElementById('announcementBar').style.display = 'block'; document.getElementById('announcementText').innerText = val.announcement.text; } 
-                else { document.getElementById('announcementBar').style.display = 'none'; }
-                // Bakım
-                if(val.maintenance && !isAdmin) document.getElementById('maintenanceScreen').style.display = 'flex';
-                else document.getElementById('maintenanceScreen').style.display = 'none';
-                // Sayaç
-                if(val.countdown && val.countdown.active) { document.getElementById('countdownBox').style.display = 'block'; document.getElementById('countdownTitle').innerText = val.countdown.title; updateCountdown(val.countdown.target); }
-                else { document.getElementById('countdownBox').style.display = 'none'; }
-                // Anket
-                if(val.poll && val.poll.active) {
-                    document.getElementById('pollBox').style.display = 'block';
-                    document.getElementById('displayPollQuestion').innerText = val.poll.question;
-                    document.getElementById('displayOpt1').innerText = val.poll.opt1; document.getElementById('displayOpt2').innerText = val.poll.opt2;
-                    const total = (val.poll.votes1||0) + (val.poll.votes2||0);
-                    const p1 = total ? Math.round((val.poll.votes1/total)*100) : 0; const p2 = total ? Math.round((val.poll.votes2/total)*100) : 0;
-                    document.getElementById('bar1').style.width = p1+"%"; document.getElementById('percent1').innerText = p1+"%";
-                    document.getElementById('bar2').style.width = p2+"%"; document.getElementById('percent2').innerText = p2+"%";
-                } else { document.getElementById('pollBox').style.display = 'none'; }
-            });
+        function votePoll(option) { if(localStorage.getItem('poll_voted') === 'true') { showToast("Zaten oy kullandınız!", "fa-exclamation"); return; } database.ref('extras/poll/votes_' + option).transaction(c => (c || 0) + 1); localStorage.setItem('poll_voted', 'true'); showToast("Oyunuz kaydedildi", "fa-check"); }
+        function updatePollDisplay(data) { const total = (data.votes_opt1 || 0) + (data.votes_opt2 || 0); const p1 = total === 0 ? 0 : Math.round((data.votes_opt1 / total) * 100); const p2 = total === 0 ? 0 : Math.round((data.votes_opt2 / total) * 100); document.getElementById('displayPollQuestion').innerText = data.question; document.getElementById('displayOpt1').innerText = data.opt1; document.getElementById('displayOpt2').innerText = data.opt2; document.getElementById('bar1').style.width = p1 + "%"; document.getElementById('percent1').innerText = p1 + "%"; document.getElementById('bar2').style.width = p2 + "%"; document.getElementById('percent2').innerText = p2 + "%"; }
+        window.savePoll = function() { const q = document.getElementById('pollQuestion').value; const o1 = document.getElementById('pollOpt1').value; const o2 = document.getElementById('pollOpt2').value; if(q && o1 && o2) { database.ref('extras/poll').set({ active: true, question: q, opt1: o1, opt2: o2, votes_opt1: 0, votes_opt2: 0 }); showToast("Anket Başlatıldı", "fa-check"); } };
+        window.resetPoll = function() { database.ref('extras/poll').set({ active: false }); showToast("Anket Sıfırlandı", "fa-trash"); };
+        window.saveCountdown = function() { const t = document.getElementById('cdTitle').value; const d = document.getElementById('cdDate').value; if(t && d) { const ts = new Date(d).getTime(); database.ref('extras/countdown').set({ active: true, title: t, target: ts }); showToast("Sayaç Başlatıldı", "fa-clock"); } };
+        window.stopCountdown = function() { database.ref('extras/countdown').set({ active: false }); showToast("Sayaç Durduruldu", "fa-stop"); };
+        window.saveAnnouncement = function() { const txt = document.getElementById('annoInput').value; if(txt) { database.ref('extras/announcement').set({ active: true, text: txt }); showToast("Duyuru Yayında!", "fa-bullhorn"); } };
+        window.stopAnnouncement = function() { database.ref('extras/announcement').set({ active: false }); showToast("Duyuru Kaldırıldı", "fa-times"); };
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if(isChatLocked && !isAdmin && currentTab === 'global') { showToast("Sohbet kilitli!", "fa-lock"); return; }
+            showToast("Resim işleniyor...", "fa-cog fa-spin");
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width; let height = img.height; const MAX_WIDTH = 600;
+                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                    canvas.width = width; canvas.height = height;
+                    const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
+                    const dataURL = canvas.toDataURL('image/jpeg', 0.6);
+                    sendImageMsg(dataURL);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            event.target.value = '';
         }
 
-        window.savePoll = function() {
-            database.ref('extras/poll').set({ active: true, question: document.getElementById('pollQuestion').value, opt1: document.getElementById('pollOpt1').value, opt2: document.getElementById('pollOpt2').value, votes1: 0, votes2: 0 });
-            showToast("Anket Başladı", "fa-check");
-        };
-        window.resetPoll = function() { database.ref('extras/poll').set({active: false}); localStorage.removeItem('poll_voted'); showToast("Anket Bitti", "fa-trash"); };
-        window.votePoll = function(opt) {
-            if(localStorage.getItem('poll_voted')) { showToast("Zaten oy verdin!", "fa-exclamation"); return; }
-            database.ref('extras/poll/' + (opt==='opt1'?'votes1':'votes2')).transaction(c => (c||0)+1);
-            localStorage.setItem('poll_voted', 'true'); showToast("Oy Verildi", "fa-check");
-        };
-        window.saveCountdown = function() {
-            const t = document.getElementById('cdTitle').value; const d = document.getElementById('cdDate').value;
-            if(t && d) { database.ref('extras/countdown').set({ active: true, title: t, target: new Date(d).getTime() }); showToast("Sayaç Başladı", "fa-clock"); }
-        };
-        window.stopCountdown = function() { database.ref('extras/countdown').set({active: false}); };
-
-        // --- SOHBET GENEL ---
-        window.switchChatTab = function(tab) {
-            currentTab = tab;
-            document.querySelectorAll('.chat-tab').forEach(t => t.classList.remove('active'));
-            document.getElementById(tab === 'global' ? 'tabGlobal' : 'tabPrivate').classList.add('active');
-            document.getElementById('viewGlobal').classList.add('hidden'); document.getElementById('viewPrivateList').classList.add('hidden'); document.getElementById('viewPrivateConv').classList.add('hidden');
-            if(tab === 'global') { document.getElementById('viewGlobal').classList.remove('hidden'); document.getElementById('msgInput').placeholder = "Genel sohbete yaz..."; currentPrivateRoom = null; } 
-            else { if(currentPrivateRoom) document.getElementById('viewPrivateConv').classList.remove('hidden'); else document.getElementById('viewPrivateList').classList.remove('hidden'); document.getElementById('msgInput').placeholder = "Özel mesaj yaz..."; document.getElementById('pmBadge').style.display = 'none'; }
-        };
-        function getRoomId(uid1, uid2) { const sorted = [uid1, uid2].sort(); return sorted[0] + "_" + sorted[1]; }
-        function startPrivateChat(targetUUID, targetName) {
-            if(targetUUID === myUUID) return;
-            toggleChat(); document.getElementById('chatModal').classList.add('active');
-            currentTargetUser = { uuid: targetUUID, name: targetName };
-            currentPrivateRoom = getRoomId(myUUID, targetUUID);
-            switchChatTab('private');
-            document.getElementById('viewPrivateList').classList.add('hidden');
-            document.getElementById('viewPrivateConv').classList.remove('hidden');
-            document.getElementById('privateChatUserName').innerText = targetName;
-            document.getElementById('privateChatContainer').innerHTML = '';
-            database.ref('private_chats/' + currentPrivateRoom).limitToLast(50).on('child_added', (s) => {
-                const msg = s.val(); const div = document.createElement('div');
-                div.className = `message-bubble ${msg.user === myUserName ? 'msg-right' : 'msg-left'}`;
-                div.innerHTML = `<span class="msg-user">${msg.user}</span>${msg.text}`;
-                document.getElementById('privateChatContainer').appendChild(div);
-                document.getElementById('privateChatContainer').scrollTop = 99999;
-            });
-        }
-        window.backToPrivateList = function() { currentPrivateRoom = null; switchChatTab('private'); };
-        function listenToAllPrivateChats() {
-            database.ref('user_inbox/' + myUUID).on('value', (s) => {
-                const c = document.getElementById('privateChatListContainer'); c.innerHTML = '';
-                if(!s.exists()) { c.innerHTML = '<p style="text-align:center;opacity:0.6;">Mesaj yok.</p>'; return; }
-                s.forEach(ch => {
-                   const d = ch.val(); const uid = ch.key;
-                   const div = document.createElement('div'); div.className = 'private-chat-item';
-                   div.innerHTML = `<b>${d.name}</b><span>${d.lastMsg}</span>`;
-                   div.onclick = () => startPrivateChat(uid, d.name);
-                   c.appendChild(div);
-                });
-                if(currentTab === 'global' && s.numChildren() > 0) document.getElementById('pmBadge').style.display = 'inline-block';
-            });
-        }
-        window.openUserActionModal = function(uuid, name, msgKey, textContent) {
-            if(uuid === myUUID) return;
-            selectedUserForAction = { uuid, name, msgKey, text: textContent };
-            document.getElementById('uaTitle').innerText = name;
-            document.getElementById('userActionModal').style.display = 'flex';
-            if(isAdmin) document.getElementById('adminUserActions').style.display = 'block'; else document.getElementById('adminUserActions').style.display = 'none';
-        };
-        window.executeUserAction = function(action) {
-            document.getElementById('userActionModal').style.display = 'none';
-            if(!selectedUserForAction) return;
-            if(action === 'reply') startReply(selectedUserForAction.name, selectedUserForAction.text);
-            if(action === 'private') startPrivateChat(selectedUserForAction.uuid, selectedUserForAction.name);
-            if(action === 'ban' && isAdmin) { database.ref('banned_users/' + selectedUserForAction.uuid).set(true); showToast("Engellendi", "fa-ban"); }
-            if(action === 'delete' && isAdmin) { database.ref('global_chat/' + selectedUserForAction.msgKey).remove(); showToast("Silindi", "fa-trash"); }
-        };
-        window.sendMsg = function() {
-            const txt = document.getElementById('msgInput').value.trim();
-            if(!txt) return;
-            if(txt === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); location.reload(); return; }
+        function sendImageMsg(imgData) {
             if (currentTab === 'global') {
-                const msgData = { user: isAdmin ? "YÖNETİCİ" : myUserName, text: txt, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now() };
-                if(currentReply) { msgData.replyTo = currentReply; }
-                database.ref('global_chat').push(msgData);
-                if(!isAdmin && "8437262061:AAGnhDFIjFqNL5PlUGS33mUaXEMlKd1yyzk" !== "BURAYA") fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage?chat_id=${TG_CHAT_ID}&text=${encodeURIComponent(myUserName + ": " + txt)}`).catch(e=>{});
+                const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, image: imgData, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
+                database.ref('global_chat').push(messageData);
+                sendTelegramNotification(myUserName, "[Resim]");
             } else if (currentTab === 'private' && currentPrivateRoom) {
-                database.ref('private_chats/' + currentPrivateRoom).push({ user: myUserName, text: txt, time: Date.now() });
+                const messageData = { user: myUserName, image: imgData, uuid: myUUID, time: Date.now() };
+                database.ref('private_chats/' + currentPrivateRoom).push(messageData);
+                database.ref('user_inbox/' + currentTargetUser.uuid + '/' + myUUID).set({ lastMsg: "📷 Resim", timestamp: Date.now(), name: myUserName });
+                database.ref('user_inbox/' + myUUID + '/' + currentTargetUser.uuid).set({ lastMsg: "📷 Resim (Sen)", timestamp: Date.now(), name: currentTargetUser.name });
+                sendTelegramNotification(myUserName, "[Özel Mesaj: Resim]");
+            }
+            showToast("Resim gönderildi", "fa-check");
+        }
+
+        function showImagePreview(src) { document.getElementById('imgPreview').src = src; document.getElementById('imgPreviewModal').style.display = 'flex'; }
+        
+        function emergencyLogin() { const pass = document.getElementById('emergencyPass').value; if(pass === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; alert("Yönetici girişi başarılı!"); location.reload(); } else { alert("Hatalı şifre!"); } }
+
+        function listenToData() {
+            database.ref('extras').on('value', (s) => { if(s.exists()) { const extras = s.val(); if(extras.countdown && extras.countdown.active) { document.getElementById('countdownBox').style.display = 'block'; document.getElementById('countdownTitle').innerText = extras.countdown.title; updateCountdownDisplay(extras.countdown.target); } else { document.getElementById('countdownBox').style.display = 'none'; } if(extras.poll && extras.poll.active) { document.getElementById('pollBox').style.display = 'block'; updatePollDisplay(extras.poll); } else { document.getElementById('pollBox').style.display = 'none'; localStorage.removeItem('poll_voted'); } if(extras.announcement && extras.announcement.active) { document.getElementById('announcementBar').style.display = 'block'; document.getElementById('announcementText').innerText = extras.announcement.text; } else { document.getElementById('announcementBar').style.display = 'none'; } } });
+            database.ref('settings').on('value', (s) => { if(s.exists()) { const settings = s.val(); if(settings.maintenance && !isAdmin) document.getElementById('maintenanceScreen').style.display = 'flex'; else document.getElementById('maintenanceScreen').style.display = 'none'; if(document.getElementById('maintenanceToggle')) document.getElementById('maintenanceToggle').checked = settings.maintenance; isChatLocked = settings.chat_locked; if(isChatLocked) { document.getElementById('chatStatus').innerText = "Sohbet Kilitli 🔒"; if(currentTab==='global') document.getElementById('msgInput').placeholder = "Sohbet yönetici tarafından kilitlendi."; document.getElementById('msgInput').disabled = !isAdmin && currentTab==='global'; } else { document.getElementById('chatStatus').innerText = isAdmin ? "Canlı Sohbet (YÖNETİCİ) 👮‍♂️" : "Canlı Sohbet 🟢"; if(currentTab==='global') document.getElementById('msgInput').placeholder = "Mesaj yaz..."; document.getElementById('msgInput').disabled = false; } if(document.getElementById('chatLockToggle')) document.getElementById('chatLockToggle').checked = settings.chat_locked; } });
+            database.ref('startup_message').on('value', (s) => { if(s.exists()) { const data = s.val(); if(data.active && !sessionStorage.getItem('startup_msg_shown')) { showToast(data.text, "fa-bullhorn"); sessionStorage.setItem('startup_msg_shown', 'true'); } if(document.getElementById('adminToastInput')) { document.getElementById('adminToastInput').value = data.text; document.getElementById('adminToastActive').checked = data.active; } } });
+            database.ref('banned_users/' + myUUID).on('value', (s) => { if(s.exists()) { document.getElementById('bannedScreen').style.display = 'flex'; document.getElementById('chatModal').style.display = 'none'; document.querySelector('.chat-btn').style.display = 'none'; } });
+            database.ref('channel_views').on('value', (s) => { if(s.exists()) { globalViewCounts = s.val(); updateStatsInDOM(); } });
+            database.ref('channel_likes').on('value', (s) => { if(s.exists()) { globalLikeCounts = s.val(); updateStatsInDOM(); } });
+            
+            database.ref('global_chat').limitToLast(50).on('child_changed', (snapshot) => { const msg = snapshot.val(); const likeEl = document.getElementById(`like-count-${snapshot.key}`); const dislikeEl = document.getElementById(`dislike-count-${snapshot.key}`); if(likeEl) likeEl.innerText = msg.likes || 0; if(dislikeEl) dislikeEl.innerText = msg.dislikes || 0; });
+            database.ref('global_chat').limitToLast(50).on('child_added', (snapshot) => { const msg = snapshot.val(); appendMessage(msg.user, msg.text, msg.user === myUserName, snapshot.key, msg.uuid, msg.isAdminMsg, msg.replyTo, msg.image, msg.likes, msg.dislikes, msg.time); });
+            database.ref('global_chat').on('child_removed', (snapshot) => { const el = document.getElementById('msg-' + snapshot.key); if(el) el.remove(); });
+        }
+
+        function updateStatsInDOM() { const cards = document.querySelectorAll('.card'); cards.forEach(card => { const titleElement = card.querySelector('.card-name'); if(titleElement){ const title = titleElement.innerText; const safeKey = sanitizeKey(title); const views = globalViewCounts[safeKey] || 0; const likes = globalLikeCounts[safeKey] || 0; const viewSpan = card.querySelector('.count-val-eye'); if(viewSpan) viewSpan.innerText = views; const likeSpan = card.querySelector('.count-val-heart'); if(likeSpan) likeSpan.innerText = likes; } }); }
+        function incrementViewCount(title) { const safeKey = sanitizeKey(title); database.ref('channel_views/' + safeKey).transaction(curr => (curr || 0) + 1); }
+        function toggleLike(e, title) { e.stopPropagation(); const safeKey = sanitizeKey(title); if(myLikes.includes(safeKey)) { showToast("Zaten beğendin!", "fa-check-double"); return; } myLikes.push(safeKey); localStorage.setItem('my_likes', JSON.stringify(myLikes)); database.ref('channel_likes/' + safeKey).transaction(curr => (curr || 0) + 1); e.target.classList.add('liked'); showToast("Favorilere Eklendi!", "fa-heart"); }
+        function openReportModal(e, title) { e.stopPropagation(); openConfirmModal('report', title); }
+
+        function toggleChat() {
+            const modal = document.getElementById('chatModal');
+            modal.classList.toggle('active');
+            if(modal.classList.contains('active')) {
+                const rules = document.getElementById('chatRulesBanner');
+                rules.classList.remove('hidden');
+                if(rulesTimeout) clearTimeout(rulesTimeout);
+                rulesTimeout = setTimeout(() => { rules.classList.add('hidden'); }, 4000);
+            }
+        }
+        
+        function startReply(user, text, img) { 
+            // Only works for Global chat replying
+            switchChatTab('global');
+            currentReply = { user: user, text: text, image: img }; 
+            document.getElementById('replyToUser').innerText = user; 
+            
+            let content = "";
+            if(img) content += `<img src="${img}" style="height:35px; border-radius:4px; vertical-align:middle; margin-right:5px;"> `;
+            if(text) content += text.substring(0, 30) + (text.length>30 ? '...' : '');
+            if(!text && !img) content = "Bilinmeyen Mesaj";
+            
+            document.getElementById('replyToText').innerHTML = content; 
+            document.getElementById('replyPreviewBar').style.display = 'flex'; 
+            document.getElementById('msgInput').focus(); 
+        }
+        function cancelReply() { currentReply = null; document.getElementById('replyPreviewBar').style.display = 'none'; }
+
+        function sendMsg() {
+            const inp = document.getElementById('msgInput');
+            const txt = inp.value.trim();
+            if(!txt) return;
+            
+            if (currentTab === 'global') {
+                if(txt === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; showToast("YÖNETİCİ MODU AÇILDI 👮‍♂️", "fa-user-shield"); inp.value = ""; document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; location.reload(); return; }
+                const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, text: txt, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
+                if(currentReply) { messageData.replyTo = currentReply; }
+                database.ref('global_chat').push(messageData);
+                sendTelegramNotification(myUserName, txt);
+            } else if (currentTab === 'private' && currentPrivateRoom) {
+                const messageData = { user: myUserName, text: txt, uuid: myUUID, time: Date.now() };
+                database.ref('private_chats/' + currentPrivateRoom).push(messageData);
+                // Update inbox for both users
                 database.ref('user_inbox/' + currentTargetUser.uuid + '/' + myUUID).set({ lastMsg: txt, timestamp: Date.now(), name: myUserName });
                 database.ref('user_inbox/' + myUUID + '/' + currentTargetUser.uuid).set({ lastMsg: "Sen: " + txt, timestamp: Date.now(), name: currentTargetUser.name });
+                sendTelegramNotification(myUserName, "[Özel Mesaj]: " + txt);
             }
-            document.getElementById('msgInput').value = ""; cancelReply();
-        };
+            inp.value = ""; cancelReply();
+        }
+        
+        function toggleChatReaction(key, type) {
+            let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}");
+            let current = myReactions[key]; 
+            if (current === type) { database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) - 1); delete myReactions[key]; const btn = document.getElementById(`btn-${type}-${key}`); if(btn) btn.classList.remove(`active-${type}`); } else { if(current) { database.ref(`global_chat/${key}/${current}s`).transaction(c => (c || 0) - 1); const oldBtn = document.getElementById(`btn-${current}-${key}`); if(oldBtn) oldBtn.classList.remove(`active-${current}`); } database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) + 1); myReactions[key] = type; const newBtn = document.getElementById(`btn-${type}-${key}`); if(newBtn) newBtn.classList.add(`active-${type}`); } localStorage.setItem('chat_reactions', JSON.stringify(myReactions));
+        }
+        
+        function appendMessage(user, text, isMe, key, senderUUID, isAdminMsg, replyTo, image, likes = 0, dislikes = 0, time = null) {
+            const container = document.getElementById('chatContainer');
+            const div = document.createElement('div');
+            div.id = 'msg-' + key;
+            let bgColor = isMe ? '' : `background-color: ${getUserColor(user)};`;
+            div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'} ${isAdmin ? 'is-admin' : ''}`;
+            if(!isMe) div.style.cssText = bgColor;
+            let userDisplay = user;
+            if(isAdminMsg) userDisplay = `<span class="msg-admin"><i class="fas fa-shield-alt"></i> YÖNETİCİ</span>`;
+            
+            // Safe string escape for onclick
+            const safeText = text ? text.replace(/'/g, "\'").replace(/"/g, '&quot;') : "";
+            const safeImg = image || "";
+            let userClickAction = `onclick="openUserActionModal('${senderUUID}', '${user}', '${key}', '${safeText}', '${safeImg}')"`;
+            
+            let quoteHTML = "";
+            if(replyTo) { 
+                let qContent = "";
+                if(replyTo.image) qContent += `<img src="${replyTo.image}" style="height:40px; border-radius:4px; display:block; margin-bottom:2px;">`;
+                if(replyTo.text) qContent += `<span>${replyTo.text}</span>`;
+                if(!replyTo.text && !replyTo.image) qContent = "<i>Silinmiş Mesaj</i>";
+                
+                quoteHTML = `<div class="quoted-msg"><span class="quote-user">${replyTo.user}</span>${qContent}</div>`; 
+            }
+            
+            let contentHTML = image ? `<img src="${image}" class="chat-img" onclick="showImagePreview('${image}')">` : text;
+            let timeHTML = `<span class="msg-time">${formatTime(time || Date.now())}</span>`;
+            let adminControls = "";
+            if (isAdmin) { adminControls = `<div class="admin-controls"><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; }
+            
+            let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}");
+            let myReact = myReactions[key];
+            let likeClass = myReact === 'like' ? 'active-like' : '';
+            let dislikeClass = myReact === 'dislike' ? 'active-dislike' : '';
+            let actionsHTML = `<div class="msg-actions"><span id="btn-like-${key}" class="action-btn ${likeClass}" onclick="toggleChatReaction('${key}', 'like')"><i class="fas fa-thumbs-up"></i> <span id="like-count-${key}">${likes || 0}</span></span><span id="btn-dislike-${key}" class="action-btn ${dislikeClass}" onclick="toggleChatReaction('${key}', 'dislike')"><i class="fas fa-thumbs-down"></i> <span id="dislike-count-${key}">${dislikes || 0}</span></span></div>`;
+            div.innerHTML = `${quoteHTML}<span class="msg-user" ${userClickAction}>${userDisplay}</span>${contentHTML}${timeHTML}${actionsHTML}${adminControls}`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
 
-        window.saveAnnouncement = function() { database.ref('extras/announcement').set({ active: true, text: document.getElementById('annoInput').value }); showToast("Duyuru Yayında", "fa-bullhorn"); };
-        window.stopAnnouncement = function() { database.ref('extras/announcement').set({active: false}); };
-        window.toggleMaintenance = function() { database.ref('extras/maintenance').transaction(val => !val); showToast("Bakım Modu Değiştirildi", "fa-tools"); };
-        window.clearChat = function() { if(confirm("Sohbeti silmek istediğine emin misin?")) database.ref('global_chat').remove(); };
-        window.openNameModal = function() { document.getElementById('nameChangeModal').style.display='flex'; };
-        window.saveName = function() { const n=document.getElementById('newNameInput').value; if(n){ myUserName=n; localStorage.setItem('chat_username',n); document.getElementById('nameChangeModal').style.display='none'; } };
-        window.emergencyLogin = function() { if(document.getElementById('emergencyPass').value === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); location.reload(); } else alert("Yanlış Şifre"); };
-        function checkBanStatus() { database.ref('banned_users/' + myUUID).on('value', s => { if(s.exists()) document.getElementById('bannedScreen').style.display = 'flex'; }); }
-        function showToast(msg, icon) { const t = document.getElementById('toast'); t.innerHTML = `<i class="fas ${icon}"></i> <span>${msg}</span>`; t.className = "toast show"; setTimeout(() => t.className = t.className.replace("show", ""), 3000); }
-        function openAdminPanel() { document.getElementById('adminPanelModal').style.display = 'flex'; }
-        function toggleSubMenu(id) { document.getElementById(id).classList.toggle('active'); }
-        function toggleChat() { document.getElementById('chatModal').classList.toggle('active'); }
-        function initPresence() { const ref = database.ref('online'); ref.push().onDisconnect().remove(); ref.on('value', s => document.getElementById('onlineCount').innerText = s.numChildren()); }
-        function toggleTheme() { document.body.classList.toggle('light-theme'); const isLight = document.body.classList.contains('light-theme'); localStorage.setItem('theme', isLight ? 'light' : 'dark'); document.getElementById('themeBtn').innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; document.getElementById('telegramBtn').style.color = isLight ? '#1a1a1a' : 'white'; }
+        function openAdminPanel() { document.getElementById('adminPanelModal').style.display = 'flex'; database.ref('reports').once('value', (s) => { const count = s.exists() ? s.numChildren() : 0; document.getElementById('reportCount').innerText = count; }); }
+        function toggleSubMenu(id) { const el = document.getElementById(id); el.classList.toggle('active'); }
+        function toggleBannedList() { const container = document.getElementById('bannedContainer'); container.classList.toggle('active'); if(container.classList.contains('active')) { const list = document.getElementById('bannedList'); list.innerHTML = '<p style="opacity:0.5;">Yükleniyor...</p>'; database.ref('banned_users').once('value', (s) => { list.innerHTML = ''; if(!s.exists()) { list.innerHTML = '<p style="opacity:0.5;">Yasaklı kullanıcı yok.</p>'; return; } s.forEach(child => { const div = document.createElement('div'); div.style = "display:flex; justify-content:space-between; margin-bottom:5px; background:rgba(255,255,255,0.1); padding:5px; border-radius:5px; color:inherit;"; div.innerHTML = `<span>User ID: ${child.key.substring(0,8)}...</span> <button onclick="unbanUser('${child.key}')" style="background:#4caf50; border:none; color:white; border-radius:3px;">Aç</button>`; list.appendChild(div); }); }); } }
+        window.unbanUser = function(key) { database.ref('banned_users/' + key).remove().then(() => { toggleBannedList(); toggleBannedList(); showToast("Yasak Kaldırıldı", "fa-check"); }); };
+        function toggleReports() { const container = document.getElementById('reportsContainer'); container.classList.toggle('active'); if(container.classList.contains('active')) { const list = document.getElementById('adminReportsList'); list.innerHTML = '<p style="text-align:center;">Yükleniyor...</p>'; database.ref('reports').once('value', (s) => { list.innerHTML = ''; if(!s.exists()) { list.innerHTML = '<p style="text-align:center;">Henüz bildirim yok. 🧼</p>'; return; } s.forEach((child) => { const r = child.val(); const item = document.createElement('div'); item.className = 'report-item'; item.innerHTML = `<div class="report-header"><span><i class="fas fa-user"></i> ${r.user}</span><span>${r.time}</span></div><div class="report-msg"><i class="fas fa-tv"></i> ${r.channel}</div><div style="text-align:right; margin-top:5px;"><button onclick="deleteReport('${child.key}')" style="background:#555; border:none; color:white; padding:3px 8px; border-radius:4px;">Sil</button></div>`; list.appendChild(item); }); }); } }
+        window.deleteReport = function(key) { database.ref('reports/' + key).remove().then(() => { toggleReports(); toggleReports(); openAdminPanel(); }); };
+        window.deleteAllReports = function() { if(confirm("Tüm bildirimleri silmek istediğine emin misin?")) { database.ref('reports').remove(); document.getElementById('adminReportsList').innerHTML = '<p style="text-align:center;">Temizlendi! ✨</p>'; document.getElementById('reportCount').innerText = 0; } };
+        window.saveStartupMessage = function() { const msg = document.getElementById('adminToastInput').value; const active = document.getElementById('adminToastActive').checked; database.ref('startup_message').set({ text: msg, active: active }); showToast("Mesaj Güncellendi!", "fa-save"); };
+        window.toggleMaintenance = function() { const val = document.getElementById('maintenanceToggle').checked; database.ref('settings/maintenance').set(val); showToast(val ? "Bakım Modu AÇIK" : "Bakım Modu KAPALI", "fa-tools"); };
+        window.toggleChatLock = function() { const val = document.getElementById('chatLockToggle').checked; database.ref('settings/chat_locked').set(val); showToast(val ? "Sohbet KİLİTLENDİ" : "Sohbet AÇILDI", "fa-lock"); };
+        window.clearChat = function() { if(confirm("DİKKAT: Tüm sohbet geçmişi silinecek!")) { database.ref('global_chat').remove(); showToast("Sohbet Temizlendi", "fa-trash"); } };
 
-        init();
+        let pendingAction = null; 
+        window.openConfirmModal = function(type, target) { pendingAction = { type: type, target: target }; const modal = document.getElementById('confirmModal'); const title = document.getElementById('confirmTitle'); const text = document.getElementById('confirmText'); const btn = document.getElementById('btnConfirmAction'); if(type === 'ban') { title.innerText = "Kullanıcıyı Engelle?"; text.innerText = "Bu kullanıcı bir daha sohbete erişemeyecek."; btn.innerText = "ENGELLE"; btn.style.background = "#ff0040"; } else if (type === 'del') { title.innerText = "Mesajı Sil?"; text.innerText = "Bu mesaj kalıcı olarak silinecek."; btn.innerText = "SİL"; btn.style.background = "#555"; } else if (type === 'report') { title.innerText = "Bildir?"; text.innerText = "Bu kanalın çalışmadığını yöneticiye bildirmek istiyor musun?"; btn.innerText = "BİLDİR"; btn.style.background = "#ff4d4d"; } modal.style.display = 'flex'; };
+        window.closeConfirm = function() { document.getElementById('confirmModal').style.display = 'none'; pendingAction = null; };
+        document.getElementById('btnConfirmAction').onclick = function() { if(!pendingAction) return; if(pendingAction.type === 'ban') { database.ref('banned_users/' + pendingAction.target).set(true); showToast("Kullanıcı Engellendi!", "fa-ban"); } else if (pendingAction.type === 'del') { database.ref('global_chat/' + pendingAction.target).remove(); showToast("Mesaj Silindi", "fa-trash"); } else if (pendingAction.type === 'report') { database.ref('reports').push({ channel: pendingAction.target, user: myUserName, uuid: myUUID, time: new Date().toLocaleString() }); showToast("Yöneticiye Bildirildi!", "fa-paper-plane"); } closeConfirm(); };
+
+        function sanitizeKey(key) { return key.replace(/[.#$\/\[\]]/g, '_').substring(0, 50); }
+        function toggleTheme() { document.body.classList.toggle('light-theme'); const isLight = document.body.classList.contains('light-theme'); localStorage.setItem('theme', isLight ? 'light' : 'dark'); document.getElementById('themeBtn').innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; document.getElementById('telegramBtn').style.color = isLight ? '#1a1a1a' : 'white'; document.getElementById('modalCloseBtn').style.background = isLight ? '#e0e0e0' : '#333'; document.getElementById('modalCloseBtn').style.color = isLight ? '#1a1a1a' : 'white'; document.getElementById('modalCloseBtn2').style.background = isLight ? '#e0e0e0' : '#333'; document.getElementById('modalCloseBtn2').style.color = isLight ? '#1a1a1a' : 'white'; }
+        function render() { const container = document.getElementById('list'); const loadMoreBtn = document.getElementById('loadMoreBtn'); if (typeof categoryData === 'undefined') return; const items = categoryData[activeCategoryKey].items; container.innerHTML = ''; currentlyShown = itemsPerPage; items.forEach((item, index) => { const card = document.createElement('div'); card.className = 'card'; if (index >= itemsPerPage) card.classList.add('hidden'); const badgeHTML = item.is_new ? '<span class="badge badge-yeni">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>'; const safeKey = sanitizeKey(item.title); const views = globalViewCounts[safeKey] || 0; const likes = globalLikeCounts[safeKey] || 0; const isLiked = myLikes.includes(safeKey) ? 'liked' : ''; card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${badgeHTML}</div><div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta"><span>${item.added_date}</span> <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span><span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span><span class="stat-badge"><i class="fas fa-exclamation-triangle stat-report" onclick="openReportModal(event, '${item.title}')"></i></span></div></div><i class="fas fa-play-circle play-icon"></i>`; card.onclick = () => { current = item; incrementViewCount(item.title); document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; }; container.appendChild(card); }); if (items.length > itemsPerPage) loadMoreBtn.classList.remove('hidden'); else loadMoreBtn.classList.add('hidden'); }
+        function loadMore() { const items = categoryData[activeCategoryKey].items; const cards = document.querySelectorAll('.card'); const loadMoreBtn = document.getElementById('loadMoreBtn'); for (let i = currentlyShown; i < Math.min(currentlyShown + itemsPerPage, items.length); i++) { if (cards[i]) cards[i].classList.remove('hidden'); } currentlyShown += itemsPerPage; if (currentlyShown >= items.length) loadMoreBtn.classList.add('hidden'); }
+        document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url !== "#") { const url = current.web_link_url; window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=' + (url.startsWith('https') ? 'https' : 'http') + ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;component=com.android.chrome/com.google.android.apps.chrome.Main;end'; document.getElementById('modal').style.display='none'; } };
+        document.getElementById('wuffy').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
+        document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
+        window.onclick = (e) => { if(e.target == document.getElementById('modal')) document.getElementById('modal').style.display='none'; if(e.target == document.getElementById('confirmModal')) closeConfirm(); if(e.target == document.getElementById('adminPanelModal')) document.getElementById('adminPanelModal').style.display='none'; if(e.target == document.getElementById('nameChangeModal')) document.getElementById('nameChangeModal').style.display='none'; if(e.target == document.getElementById('userActionModal')) document.getElementById('userActionModal').style.display='none'; }
+
+        (function() { const savedTheme = localStorage.getItem('theme'); if (savedTheme === 'light') toggleTheme(); if(isAdmin) { document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; } render(); setTimeout(listenToData, 500); setTimeout(initPresence, 1000); setTimeout(listenToAllPrivateChats, 1500); })();
     </script>
 </body>
 </html>
