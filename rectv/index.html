@@ -30,6 +30,23 @@
         .announcement-content { display: inline-block; padding-left: 100%; animation: scroll-left 15s linear infinite; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
         
+        /* ÖZELLİK KUTULARI (ANKET & SAYAÇ) */
+        .feature-container { margin: 15px; display: flex; flex-direction: column; gap: 15px; }
+        
+        .countdown-box { background: linear-gradient(135deg, #1a1825, #000); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; margin-bottom: 10px; box-shadow: 0 5px 15px rgba(255,0,64,0.2); }
+        .countdown-title { color: var(--primary); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .countdown-timer { display: flex; justify-content: center; gap: 10px; font-size: 1.5rem; font-weight: bold; color: white; font-family: monospace; }
+        .time-unit { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 8px; min-width: 40px; }
+        .time-label { font-size: 0.6rem; opacity: 0.7; font-family: sans-serif; margin-top: 2px; }
+        
+        .poll-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; display: none; margin-bottom: 10px; }
+        .poll-question { font-weight: bold; margin-bottom: 10px; color: var(--text); display: block; font-size: 1.1rem; }
+        .poll-option { margin-bottom: 8px; position: relative; cursor: pointer; }
+        .poll-bar-bg { background: rgba(255,255,255,0.1); height: 35px; border-radius: 8px; overflow: hidden; position: relative; }
+        .poll-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #ff4d00); width: 0%; transition: width 0.5s ease; opacity: 0.7; }
+        .poll-text { position: absolute; top: 0; left: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
+        .poll-percent { position: absolute; top: 0; right: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
+        
         .container { padding: 15px; }
         .card { background: var(--card-bg); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid var(--border); position: relative; transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         .card.hidden { display: none; }
@@ -57,7 +74,6 @@
         .toast { visibility: hidden; min-width: 250px; background-color: #1a1825; border: 1px solid rgba(255,255,255,0.1); color: #fff; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 2000; left: 50%; bottom: 80px; transform: translateX(-50%); font-size: 0.9rem; box-shadow: 0 5px 20px rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s, bottom 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .toast.show { visibility: visible; opacity: 1; bottom: 90px; }
 
-        /* CHAT FULL STYLES */
         .chat-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: linear-gradient(135deg, #00d2ff, #3a7bd5); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 200; }
         
         .chat-modal { position: fixed; bottom: -100%; left: 0; width: 100%; height: 96%; background: var(--surface); border-radius: 20px 20px 0 0; z-index: 201; transition: bottom 0.4s; display: flex; flex-direction: column; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); }
@@ -69,21 +85,27 @@
         .chat-view { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
         .chat-view.hidden { display: none; }
         .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        
+        /* MESAJ STİLLERİ (GÜNCELLENDİ) */
         .message-bubble { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 0.9rem; position: relative; word-wrap: break-word; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .msg-left { align-self: flex-start; background: rgba(255,255,255,0.1); border-bottom-left-radius: 2px; }
         .msg-right { align-self: flex-end; background: var(--primary); border-bottom-right-radius: 2px; }
         .msg-user { font-size: 0.7rem; opacity: 0.7; margin-bottom: 2px; display: block; font-weight: bold; cursor:pointer; }
         .msg-admin { color: #ffeb3b; }
         
+        /* ALINTI (REPLY) STİLİ */
+        .quoted-msg { background: rgba(0,0,0,0.2); border-left: 3px solid #ff4d4d; padding: 5px 8px; border-radius: 4px; margin-bottom: 5px; font-size: 0.75rem; display: flex; flex-direction: column; opacity: 0.9; }
+        .quote-user { font-weight: bold; color: #ffeb3b; margin-bottom: 2px; }
+        .reply-preview-bar { background: #2a2a2a; border-top: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; display: none; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #ddd; border-left: 4px solid var(--primary); }
+        .light-theme .reply-preview-bar { background: #f0f0f0; color: #333; }
+
         .chat-input-area { padding: 10px; display: flex; gap: 10px; background: rgba(0,0,0,0.2); }
         .chat-input { flex: 1; padding: 10px; border-radius: 20px; border: none; outline: none; background: rgba(255,255,255,0.1); color: var(--text); }
         .light-theme .chat-input { background: white; color: black; }
         
         .private-chat-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-        
         .action-menu-btn { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: var(--text); font-size: 1rem; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 10px; }
 
-        /* ADMIN & MODAL STYLES */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; justify-content:center; align-items:center; }
         .modal-box { background: var(--surface); width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid var(--border); position: relative; }
         
@@ -112,7 +134,6 @@
         .player-opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; color: white; }
         .light-theme .player-opt { background: rgba(0,0,0,0.05); color: #1a1a1a; }
         
-        /* BANNED SCREEN */
         .banned-screen { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:black; z-index:5000; color:red; flex-direction:column; justify-content:center; align-items:center; text-align:center; font-size:1.5rem; font-weight:bold; }
     </style>
 </head>
@@ -142,9 +163,7 @@
             <div class="admin-modal-body">
                 
                 <!-- KANAL YÖNETİMİ -->
-                <div class="admin-menu-btn" onclick="toggleSubMenu('channelAdmin')">
-                    <span>📺 Kanal Yönetimi</span> <i class="fas fa-chevron-down"></i>
-                </div>
+                <div class="admin-menu-btn" onclick="toggleSubMenu('channelAdmin')"><span>📺 Kanal Yönetimi</span> <i class="fas fa-chevron-down"></i></div>
                 <div id="channelAdmin" class="admin-submenu">
                     <h4 style="color:#aaa; margin:10px 0 5px;">Yeni Kanal Ekle</h4>
                     <input type="text" id="addTitle" class="custom-input" placeholder="Kanal Adı">
@@ -158,9 +177,26 @@
                     <button onclick="addNewChannel()" class="btn-confirm"><i class="fas fa-plus"></i> Ekle</button>
                     
                     <h4 style="color:#aaa; margin:15px 0 5px;">Mevcut Kanallar</h4>
-                    <div id="adminChannelList" style="max-height:200px; overflow-y:auto;">
-                        <p style="text-align:center; opacity:0.5;">Yükleniyor...</p>
-                    </div>
+                    <div id="adminChannelList" style="max-height:200px; overflow-y:auto;"><p style="text-align:center; opacity:0.5;">Yükleniyor...</p></div>
+                </div>
+
+                <!-- ANKET YÖNETİMİ -->
+                <div class="admin-menu-btn" onclick="toggleSubMenu('pollAdmin')"><span>📊 Anket Yönetimi</span> <i class="fas fa-chevron-down"></i></div>
+                <div id="pollAdmin" class="admin-submenu">
+                    <input type="text" id="pollQuestion" class="custom-input" placeholder="Soru: Örn. Kim Kazanır?">
+                    <input type="text" id="pollOpt1" class="custom-input" placeholder="Seçenek 1 (Örn. GS)">
+                    <input type="text" id="pollOpt2" class="custom-input" placeholder="Seçenek 2 (Örn. FB)">
+                    <button onclick="savePoll()" class="btn-confirm">Anketi Başlat</button>
+                    <button onclick="resetPoll()" class="btn-cancel">Anketi Bitir</button>
+                </div>
+
+                <!-- GERİ SAYIM YÖNETİMİ -->
+                <div class="admin-menu-btn" onclick="toggleSubMenu('countdownAdmin')"><span>⏳ Geri Sayım</span> <i class="fas fa-chevron-down"></i></div>
+                <div id="countdownAdmin" class="admin-submenu">
+                    <input type="text" id="cdTitle" class="custom-input" placeholder="Başlık (Örn. DERBİ)">
+                    <input type="datetime-local" id="cdDate" class="custom-input" style="color-scheme:dark;">
+                    <button onclick="saveCountdown()" class="btn-confirm">Sayacı Başlat</button>
+                    <button onclick="stopCountdown()" class="btn-cancel">Sayacı Durdur</button>
                 </div>
 
                 <!-- DİĞER AYARLAR -->
@@ -176,7 +212,6 @@
                     <button class="btn-cancel" onclick="toggleMaintenance()">🚧 Bakım Modu Aç/Kapa</button>
                     <button class="btn-cancel" onclick="clearChat()" style="background:#d32f2f;">🗑️ Sohbeti Temizle</button>
                     <button class="btn-confirm" onclick="restoreBackup()" style="background:#2196F3; margin-top:15px;">📂 Eski Listeyi Yükle (JSON)</button>
-                    <p style="font-size:0.7rem; color:#aaa; margin-top:5px;">*Listeleriniz boş görünüyorsa buna basın.</p>
                 </div>
             </div>
             <button onclick="document.getElementById('adminPanelModal').style.display='none'" class="btn-cancel">Kapat</button>
@@ -187,6 +222,7 @@
     <div id="userActionModal" class="modal">
         <div class="modal-box">
             <h3 id="uaTitle" style="color:var(--primary); margin-top:0;">Kullanıcı İşlemleri</h3>
+            <button class="action-menu-btn" onclick="executeUserAction('reply')"><i class="fas fa-reply"></i> Yanıtla (Alıntı)</button>
             <button class="action-menu-btn" onclick="executeUserAction('private')"><i class="fas fa-lock"></i> Özel Mesaj At</button>
             <div id="adminUserActions" style="display:none; border-top:1px solid rgba(255,255,255,0.1); margin-top:5px; padding-top:5px;">
                 <button class="action-menu-btn" onclick="executeUserAction('ban')" style="color:#ff4d4d;"><i class="fas fa-ban"></i> Engelle</button>
@@ -203,10 +239,8 @@
             <input type="hidden" id="editKey">
             <input type="text" id="editTitle" class="custom-input" placeholder="Başlık">
             <input type="text" id="editM3u" class="custom-input" placeholder="M3U URL">
-            
             <input type="text" id="editWeb" class="custom-input" placeholder="Web URL">
             <button class="btn-shorten" onclick="shortenUrl('editWeb')"><i class="fas fa-link"></i> Linki Kısalt</button>
-
             <input type="text" id="editImg" class="custom-input" placeholder="Resim URL">
             <input type="number" id="editOrder" class="custom-input" placeholder="Sıra No">
             <button onclick="saveChannelEdit()" class="btn-confirm">Kaydet</button>
@@ -224,6 +258,35 @@
     </div>
 
     <div id="announcementBar" class="announcement-bar"><div class="announcement-content" id="announcementText"></div></div>
+
+    <!-- SAYAÇ VE ANKET ALANI -->
+    <div class="feature-container" id="featureContainer">
+        <!-- COUNTDOWN -->
+        <div id="countdownBox" class="countdown-box">
+            <div id="countdownTitle" class="countdown-title"></div>
+            <div id="countdownTimer" class="countdown-timer">
+                <div class="time-unit"><span id="cdDays">00</span><span class="time-label">GÜN</span></div>:
+                <div class="time-unit"><span id="cdHours">00</span><span class="time-label">SAAT</span></div>:
+                <div class="time-unit"><span id="cdMins">00</span><span class="time-label">DAK</span></div>:
+                <div class="time-unit"><span id="cdSecs">00</span><span class="time-label">SAN</span></div>
+            </div>
+        </div>
+
+        <!-- POLL -->
+        <div id="pollBox" class="poll-box">
+            <span id="displayPollQuestion" class="poll-question"></span>
+            <div class="poll-option" onclick="votePoll('opt1')">
+                <div class="poll-bar-bg"><div id="bar1" class="poll-bar-fill"></div></div>
+                <div class="poll-text" id="displayOpt1"></div>
+                <div class="poll-percent" id="percent1">0%</div>
+            </div>
+            <div class="poll-option" onclick="votePoll('opt2')">
+                <div class="poll-bar-bg"><div id="bar2" class="poll-bar-fill"></div></div>
+                <div class="poll-text" id="displayOpt2"></div>
+                <div class="poll-percent" id="percent2">0%</div>
+            </div>
+        </div>
+    </div>
 
     <div class="container"><div id="list"></div></div>
     <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">Daha Fazla Göster</button>
@@ -251,18 +314,26 @@
             <div class="chat-messages" id="chatContainer"></div>
         </div>
 
-        <!-- ÖZEL SOHBET LİSTESİ -->
-        <div id="viewPrivateList" class="chat-view hidden">
-            <div class="chat-messages" id="privateChatListContainer"></div>
-        </div>
-        
-        <!-- ÖZEL SOHBET KONUŞMA -->
+        <!-- ÖZEL SOHBET -->
+        <div id="viewPrivateList" class="chat-view hidden"><div class="chat-messages" id="privateChatListContainer"></div></div>
         <div id="viewPrivateConv" class="chat-view hidden">
             <div style="background:rgba(0,0,0,0.3); padding:8px; display:flex; align-items:center;">
                 <button onclick="backToPrivateList()" style="background:none; border:none; color:white; font-size:1.2rem; cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
                 <span id="privateChatUserName" style="margin-left:15px; font-weight:bold;">Kullanıcı</span>
             </div>
             <div class="chat-messages" id="privateChatContainer"></div>
+        </div>
+
+        <!-- YANIT ÖNİZLEME -->
+        <div id="replyPreviewBar" class="reply-preview-bar">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <i class="fas fa-reply"></i> 
+                <div>
+                    <b id="replyToUser">Kullanıcı</b>
+                    <div id="replyToText" style="font-size:0.8rem; font-style:italic;">Mesaj...</div>
+                </div>
+            </div>
+            <i class="fas fa-times" onclick="cancelReply()" style="cursor:pointer; font-size:1.2rem;"></i>
         </div>
 
         <div class="chat-input-area">
@@ -293,7 +364,6 @@
     </div>
 
     <script>
-        // PYTHON TARAFINDAN GÖNDERİLEN BAŞLANGIÇ VERİSİ
         const backupJsonData = [{"title": "SUPMOT İPTV İNDİR", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/supmot-iptv.m3u", "web_link_url": "https://ay.live/sBLi", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "19.01.2026"}, {"title": "10 ADET MAC ADRESİ İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/inadinamackod.m3u", "web_link_url": "https://ay.live/ZZ5c", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "18.01.2026"}, {"title": "KRİSTAL İPTV EKLENDİ", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Kristal-iptv-W.m3u", "web_link_url": "https://ay.live/8Gxpf", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "18.01.2026"}, {"title": "SMARTES2 İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=zrdQ5UHD&password=q82fkQT&type=m3u_plus", "web_link_url": "https://ay.live/xAdwL", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "17.01.2026"}, {"title": "10 BİN KİSİLİK İPTV", "m3u_url": "https://broken-night-dffb.deathlesstelenyu.workers.dev/dth-iptv.m3u", "web_link_url": "https://ay.live/QfCR", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "16.01.2026"}, {"title": "SMART İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=utSzxq7SY6&password=dj1yyFAQJy&type=m3u_plus", "web_link_url": "https://ay.live/5kQj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "15.01.2026"}, {"title": "YENİ SPORT İPTV", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/sport-connec.m3u", "web_link_url": "https://ay.live/Ry1l", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "14.01.2026"}, {"title": "10 SİNİRSİZ İPTV M3U", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "web_link_url": "https://ay.live/7LxRP8", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "13.01.2026"}, {"title": "SMARTZONE İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=gRNhEpGh3m&password=fmaAdfkHXJ&type=m3u_plus", "web_link_url": "https://ay.live/q9fMZa", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "12.01.2026"}, {"title": "MEGA İPTV İNDİR", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "web_link_url": "https://ay.live/G7TFl", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "11.01.2026"}, {"title": "1500 MAX SPORTS İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/nadina-1500-Max-iptv.m3u", "web_link_url": "https://ay.live/Se6xQ", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "09.01.2026"}, {"title": "QUANTUM İPTV LİST", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Kuantum-iptv.m3u", "web_link_url": "https://ay.live/8Xy9", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "08.01.2026"}, {"title": "FULL BOT İPTV SPORTS", "m3u_url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "web_link_url": "https://ay.live/ld7M", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "07.01.2026"}, {"title": "Ekalite iptv m3u", "m3u_url": "http://ekalite.xyz:8080/get.php?username=ibrahimtak&password=qwkRZHAwaK&type=m3u_plus", "web_link_url": "https://ay.live/4eoXDj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "06.01.2026"}, {"title": "D SPORTS M3U ADRESİ EKLEND", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DTH-Sports.m3u", "web_link_url": "https://ay.live/w2Avb", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "05.01.2026"}, {"title": "30 ADET İPTV M3U LİSTE", "m3u_url": "http://maisonxp.click/get.php?username=thay123&password=thay123&type=m3u", "web_link_url": "https://ay.live/zcn3j7", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "04.01.2026"}, {"title": "ELİTE MAC ADRESLERİ İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/playlist.m3u", "web_link_url": "https://ay.live/DfpE", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "04.01.2026"}, {"title": "KARMA İPTV 23K", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Karma-iptv.m3u", "web_link_url": "https://ay.live/6WmReB", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "03.01.2026"}, {"title": "Yeni iptv liste", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "web_link_url": "https://ay.live/0cKg", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "02.01.2026"}, {"title": "Turkiye Connect iptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Turkiye-iptv.m3u", "web_link_url": "https://ay.live/6Dr", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "01.01.2026"}, {"title": "9500 İPTV M3U LİNKLER YİLBASİ OZEL", "m3u_url": "http://ss.wancolonel.xyz:8080/get.php?username=Denisurlu&password=Muri3091&type=m3u_plus", "web_link_url": "https://ay.live/3hJ9te", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "31.12.2025"}, {"title": "3 Adet İptv link", "m3u_url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "web_link_url": "https://ay.live/KCwKj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "30.12.2025"}, {"title": "XTREAM İPTV LİSTELER EKLENDİ", "m3u_url": "http://s1.eldest99.xyz:8080/get.php?username=hdkaptantv3706&password=kptn@8723706&type=m3u_plus", "web_link_url": "https://ay.live/Clqz", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "29.12.2025"}, {"title": "FİLM EKSENİ İPTV", "m3u_url": "https://raw.githubusercontent.com/sultansmgr/smart/refs/heads/main/FilmEkseni.m3u", "web_link_url": "https://ay.live/qCS", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESVvVD7PLGjrzbMvNGvIFOhRBoSxzoGBFLm3iG-xX1ZEArpkhkSItDVY&s=10", "added_date": "28.12.2025"}, {"title": "B. Conneckt İptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/b-connect.m3u", "web_link_url": "https://ay.live/67w", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "28.12.2025"}, {"title": "Spor Kanallari bot iptv", "m3u_url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "web_link_url": "https://ay.live/9GlX", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "100 Bin kisilik iptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "web_link_url": "https://ay.live/6QE", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "Hibrit İptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Toplu-Paket-V.m3u", "web_link_url": "https://ay.live/eAAA7K", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "m3u_url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "web_link_url": "https://ay.live/DGKU", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}];
         const LINK_API_KEY = "cce8efcdd2693c8adde90f05832332f7f30fbf41";
 
@@ -309,7 +379,6 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // DEĞİŞKENLER
         let categoryData = { iptv_list: { items: [] } };
         let activeCategoryKey = 'iptv_list';
         let itemsPerPage = 10; 
@@ -328,6 +397,8 @@
         let currentPrivateRoom = null;
         let currentTargetUser = null;
         let selectedUserForAction = null;
+        let currentReply = null;
+        let countdownInterval;
 
         const ADMIN_PASS = "burhan_baba_72";
         const TG_BOT_TOKEN = "8437262061:AAGnhDFIjFqNL5PlUGS33mUaXEMlKd1yyzk";
@@ -350,13 +421,9 @@
             checkBanStatus();
         }
 
-        // --- MANUEL YEDEK YÜKLEME ---
         window.restoreBackup = function() {
-            if(confirm("Eski JSON listenizi Firebase'e yüklemek istiyor musunuz? Mevcut Firebase verileri silinmez, üzerine eklenir.")) {
-                if (!backupJsonData || backupJsonData.length === 0) {
-                    showToast("Yedek veri bulunamadı!", "fa-exclamation");
-                    return;
-                }
+            if(confirm("Eski JSON listenizi Firebase'e yüklemek istiyor musunuz?")) {
+                if (!backupJsonData || backupJsonData.length === 0) { showToast("Yedek veri yok!", "fa-exclamation"); return; }
                 showToast("Yükleniyor...", "fa-sync fa-spin");
                 let counter = 0;
                 backupJsonData.forEach((item, index) => {
@@ -370,11 +437,10 @@
                     });
                     counter++;
                 });
-                showToast(counter + " Kanal Başarıyla Yüklendi!", "fa-check");
+                showToast(counter + " Kanal Yüklendi!", "fa-check");
             }
         };
 
-        // --- KANAL YÖNETİMİ ---
         function listenToChannels() {
             database.ref('channels').on('value', (snapshot) => {
                 const data = snapshot.val();
@@ -398,114 +464,139 @@
 
             if(!title) { showToast("Başlık zorunlu!", "fa-exclamation"); return; }
             if(web && web.startsWith('http')) {
-                showToast("Link Kazançlı Hale Getiriliyor... 🤑", "fa-cog fa-spin");
+                showToast("Link Kazançlı Hale Getiriliyor...", "fa-cog fa-spin");
                 try {
-                    const apiUrl = `https://ay.live/api/?api=${LINK_API_KEY}&url=${encodeURIComponent(web)}&format=text`;
-                    const response = await fetch(apiUrl);
-                    const shortLink = await response.text();
-                    if(shortLink.startsWith('http')) { web = shortLink; showToast("Link Kısaltıldı!", "fa-check"); }
+                    const r = await fetch(`https://ay.live/api/?api=${LINK_API_KEY}&url=${encodeURIComponent(web)}&format=text`);
+                    const t = await r.text();
+                    if(t.startsWith('http')) web = t;
                 } catch(e) {}
             }
-
-            const newChannel = {
-                title: title,
-                m3u_url: m3u || "#",
-                web_link_url: web || "#",
-                image: img || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-                added_date: new Date().toLocaleDateString('tr-TR'),
-                order: parseInt(order) || 9999
-            };
-            database.ref('channels').push(newChannel);
+            database.ref('channels').push({ title, m3u_url: m3u||"#", web_link_url: web||"#", image: img||"", added_date: new Date().toLocaleDateString('tr-TR'), order: parseInt(order)||9999 });
             showToast("Kanal Eklendi!", "fa-check");
-            document.getElementById('addTitle').value = ""; document.getElementById('addM3u').value = ""; document.getElementById('addWeb').value = ""; document.getElementById('addImg').value = "";
+            document.getElementById('addTitle').value=""; document.getElementById('addM3u').value=""; document.getElementById('addWeb').value=""; document.getElementById('addImg').value="";
         }
 
-        window.deleteChannel = function(key) { if(confirm("Silmek istediğine emin misin?")) { database.ref('channels/' + key).remove(); showToast("Silindi", "fa-trash"); } };
-        window.openEditModal = function(key) { const item = categoryData.iptv_list.items.find(i => i.firebaseKey === key); if(!item) return; document.getElementById('editKey').value = key; document.getElementById('editTitle').value = item.title; document.getElementById('editM3u').value = item.m3u_url; document.getElementById('editWeb').value = item.web_link_url; document.getElementById('editImg').value = item.image; document.getElementById('editOrder').value = item.order || 9999; document.getElementById('editChannelModal').style.display = 'flex'; };
-        window.saveChannelEdit = function() { const key = document.getElementById('editKey').value; database.ref('channels/' + key).update({ title: document.getElementById('editTitle').value, m3u_url: document.getElementById('editM3u').value, web_link_url: document.getElementById('editWeb').value, image: document.getElementById('editImg').value, order: parseInt(document.getElementById('editOrder').value) }); document.getElementById('editChannelModal').style.display = 'none'; showToast("Güncellendi", "fa-save"); };
+        window.deleteChannel = function(key) { if(confirm("Silmek istediğine emin misin?")) { database.ref('channels/'+key).remove(); showToast("Silindi", "fa-trash"); } };
+        window.openEditModal = function(key) { const i = categoryData.iptv_list.items.find(x => x.firebaseKey === key); if(!i) return; document.getElementById('editKey').value = key; document.getElementById('editTitle').value = i.title; document.getElementById('editM3u').value = i.m3u_url; document.getElementById('editWeb').value = i.web_link_url; document.getElementById('editImg').value = i.image; document.getElementById('editOrder').value = i.order||9999; document.getElementById('editChannelModal').style.display = 'flex'; };
+        window.saveChannelEdit = function() { const k = document.getElementById('editKey').value; database.ref('channels/'+k).update({ title: document.getElementById('editTitle').value, m3u_url: document.getElementById('editM3u').value, web_link_url: document.getElementById('editWeb').value, image: document.getElementById('editImg').value, order: parseInt(document.getElementById('editOrder').value) }); document.getElementById('editChannelModal').style.display = 'none'; showToast("Güncellendi", "fa-save"); };
+        window.shortenUrl = function(id) { const u=document.getElementById(id).value; if(!u)return; fetch(`https://ay.live/api/?api=${LINK_API_KEY}&url=${encodeURIComponent(u)}&format=text`).then(r=>r.text()).then(t=>{ if(t.startsWith("http")) document.getElementById(id).value=t; }); };
 
-        window.shortenUrl = function(inputId) {
-            const url = document.getElementById(inputId).value;
-            if(!url || !url.startsWith("http")) { showToast("Geçersiz Link", "fa-exclamation"); return; }
-            showToast("Kısaltılıyor...", "fa-cog fa-spin");
-            fetch(`https://ay.live/api/?api=${LINK_API_KEY}&url=${encodeURIComponent(url)}&format=text`).then(r=>r.text()).then(t=>{ if(t.startsWith("http")) { document.getElementById(inputId).value = t; showToast("Kısaltıldı!", "fa-check"); }});
-        };
-
-        // --- RENDER ---
         function render() {
-            const container = document.getElementById('list');
-            const items = categoryData[activeCategoryKey].items;
-            container.innerHTML = '';
-            if(items.length === 0) { container.innerHTML = '<p style="text-align:center; opacity:0.5; margin-top:20px;">Kanal yok. Admin Panelinden "Eski Listeyi Yükle" yapın.</p>'; return; }
+            const container = document.getElementById('list'); const items = categoryData[activeCategoryKey].items; container.innerHTML = '';
+            if(items.length===0){container.innerHTML='<p style="text-align:center;opacity:0.5;">Liste boş.</p>'; return;}
             items.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.setAttribute('data-title', item.title);
-                if (index >= currentlyShown) card.classList.add('hidden');
-                
+                const card = document.createElement('div'); card.className = 'card'; card.setAttribute('data-title', item.title);
+                if(index>=currentlyShown) card.classList.add('hidden');
                 const safeKey = sanitizeKey(item.title);
-                const views = globalViewCounts[safeKey] || 0;
-                const likes = globalLikeCounts[safeKey] || 0;
-                const isLiked = myLikes.includes(safeKey) ? 'liked' : '';
-                
+                const views = globalViewCounts[safeKey] || 0; const likes = globalLikeCounts[safeKey] || 0; const isLiked = myLikes.includes(safeKey) ? 'liked' : '';
                 card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"><span class="badge badge-iptv">IPTV</span></div><div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta"><span>${item.added_date||""}</span><span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span><span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span></div></div><i class="fas fa-play-circle play-icon"></i>`;
-                card.onclick = (e) => { if(e.target.classList.contains('stat-heart')) return; let current = item; incrementViewCount(item.title); document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; document.getElementById('wuffy').onclick = () => { if(current.m3u_url!="#") window.location.href=`intent://${btoa(current.m3u_url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; }; document.getElementById('xpola').onclick = () => { if(current.m3u_url!="#") window.location.href=`intent://${btoa(current.m3u_url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; }; document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url !== "#") { window.open(current.web_link_url, '_blank'); } }; };
+                card.onclick = (e) => { if(e.target.classList.contains('stat-heart')) return; let current = item; incrementViewCount(item.title); document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; document.getElementById('wuffy').onclick = () => { if(current.m3u_url!="#") window.location.href=`intent://${btoa(current.m3u_url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; }; document.getElementById('xpola').onclick = () => { if(current.m3u_url!="#") window.location.href=`intent://${btoa(current.m3u_url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; }; document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url !== "#") window.open(current.web_link_url, '_blank'); }; };
                 container.appendChild(card);
             });
             if(items.length > currentlyShown) document.getElementById('loadMoreBtn').classList.remove('hidden'); else document.getElementById('loadMoreBtn').classList.add('hidden');
         }
         function loadMore() { currentlyShown += itemsPerPage; render(); }
-        function renderAdminChannelList(items) { const l = document.getElementById('adminChannelList'); l.innerHTML = ""; items.forEach(i => { l.innerHTML += `<div class="channel-item-admin"><div style="flex:1;font-size:0.9rem;"><b>${i.order||0}.</b> ${i.title}</div><div class="channel-actions"><button class="btn-sm btn-edit" onclick="openEditModal('${i.firebaseKey}')"><i class="fas fa-edit"></i></button><button class="btn-sm btn-del" onclick="deleteChannel('${i.firebaseKey}')"><i class="fas fa-trash"></i></button></div></div>`; }); }
+        function renderAdminChannelList(items) { const l = document.getElementById('adminChannelList'); l.innerHTML = ""; items.forEach(i => { l.innerHTML += `<div class="channel-item-admin"><div style="flex:1;"><b>${i.order||0}.</b> ${i.title}</div><div class="channel-actions"><button class="btn-sm btn-edit" onclick="openEditModal('${i.firebaseKey}')"><i class="fas fa-edit"></i></button><button class="btn-sm btn-del" onclick="deleteChannel('${i.firebaseKey}')"><i class="fas fa-trash"></i></button></div></div>`; }); }
 
-        // --- STATS & HELPERS ---
         function sanitizeKey(k) { return (k||"").replace(/[.#$\/\[\]]/g, '_'); }
         function incrementViewCount(t) { database.ref('channel_views/' + sanitizeKey(t)).transaction(c => (c||0)+1); }
         window.toggleLike = function(e, t) { e.stopPropagation(); const k = sanitizeKey(t); if(myLikes.includes(k)) return; myLikes.push(k); localStorage.setItem('my_likes', JSON.stringify(myLikes)); database.ref('channel_likes/'+k).transaction(c=>(c||0)+1); e.target.classList.add('liked'); };
         function listenToStats() { database.ref('channel_views').on('value', s=>{globalViewCounts=s.val()||{};updateStatsDOM()}); database.ref('channel_likes').on('value', s=>{globalLikeCounts=s.val()||{};updateStatsDOM()}); }
         function updateStatsDOM() { document.querySelectorAll('.card').forEach(c=>{ const t=c.getAttribute('data-title'); if(t){ const k=sanitizeKey(t); const v=c.querySelector('.count-val-eye'); const l=c.querySelector('.count-val-heart'); if(v)v.innerText=globalViewCounts[k]||0; if(l)l.innerText=globalLikeCounts[k]||0; } }); }
 
-        // --- SOHBET SİSTEMİ (TAMİR EDİLDİ) ---
+        // --- SOHBET ---
         function listenToChat() {
             database.ref('global_chat').limitToLast(50).on('child_added', (s) => {
                 const msg = s.val(); const div = document.createElement('div'); const isMe = msg.user === myUserName;
                 div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'}`;
                 if(msg.isAdminMsg) div.style.border = "1px solid #ffeb3b";
-                div.innerHTML = `<span class="msg-user" onclick="openUserActionModal('${msg.uuid}', '${msg.user}', '${s.key}')">${msg.isAdminMsg ? '<span class="msg-admin">🛡️ YÖNETİCİ</span>' : msg.user}</span><div>${msg.text}</div>`;
+                
+                let replyHTML = "";
+                if(msg.replyTo) {
+                    replyHTML = `<div class="quoted-msg"><span class="quote-user">${msg.replyTo.user}</span><span>${msg.replyTo.text}</span></div>`;
+                }
+
+                div.innerHTML = `${replyHTML}<span class="msg-user" onclick="openUserActionModal('${msg.uuid}', '${msg.user}', '${s.key}', '${msg.text ? msg.text.replace(/'/g, "\'") : ""}')">${msg.isAdminMsg ? '<span class="msg-admin">🛡️ YÖNETİCİ</span>' : msg.user}</span><div>${msg.text}</div>`;
                 document.getElementById('chatContainer').appendChild(div);
                 document.getElementById('chatContainer').scrollTop = 99999;
             });
-            database.ref('global_chat').on('child_removed', (s) => { 
-                // Mesaj silinirse ekrandan kaldır (Basit yenileme)
-                document.getElementById('chatContainer').innerHTML = ""; 
-                // child_added tekrar tetikleneceği için history dolar
+            database.ref('global_chat').on('child_removed', () => { document.getElementById('chatContainer').innerHTML = ""; });
+        }
+
+        // --- YANITLAMA (REPLY) ---
+        function startReply(user, text) {
+            switchChatTab('global');
+            currentReply = { user: user, text: text };
+            document.getElementById('replyToUser').innerText = user;
+            document.getElementById('replyToText').innerText = text.substring(0, 30) + "...";
+            document.getElementById('replyPreviewBar').style.display = 'flex';
+            document.getElementById('msgInput').focus();
+        }
+        window.cancelReply = function() { currentReply = null; document.getElementById('replyPreviewBar').style.display = 'none'; };
+
+        // --- SAYAÇ & ANKET ---
+        function updateCountdown(targetTime) {
+            if (countdownInterval) clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                const now = new Date().getTime(); const distance = targetTime - now;
+                if (distance < 0) { clearInterval(countdownInterval); document.getElementById("countdownBox").style.display = "none"; return; }
+                document.getElementById("cdDays").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
+                document.getElementById("cdHours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById("cdMins").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById("cdSecs").innerText = Math.floor((distance % (1000 * 60)) / 1000);
+            }, 1000);
+        }
+        function listenToExtras() {
+            database.ref('extras').on('value', s => {
+                const val = s.val() || {};
+                // Duyuru
+                if(val.announcement && val.announcement.active) { document.getElementById('announcementBar').style.display = 'block'; document.getElementById('announcementText').innerText = val.announcement.text; } 
+                else { document.getElementById('announcementBar').style.display = 'none'; }
+                // Bakım
+                if(val.maintenance && !isAdmin) document.getElementById('maintenanceScreen').style.display = 'flex';
+                else document.getElementById('maintenanceScreen').style.display = 'none';
+                // Sayaç
+                if(val.countdown && val.countdown.active) { document.getElementById('countdownBox').style.display = 'block'; document.getElementById('countdownTitle').innerText = val.countdown.title; updateCountdown(val.countdown.target); }
+                else { document.getElementById('countdownBox').style.display = 'none'; }
+                // Anket
+                if(val.poll && val.poll.active) {
+                    document.getElementById('pollBox').style.display = 'block';
+                    document.getElementById('displayPollQuestion').innerText = val.poll.question;
+                    document.getElementById('displayOpt1').innerText = val.poll.opt1; document.getElementById('displayOpt2').innerText = val.poll.opt2;
+                    const total = (val.poll.votes1||0) + (val.poll.votes2||0);
+                    const p1 = total ? Math.round((val.poll.votes1/total)*100) : 0; const p2 = total ? Math.round((val.poll.votes2/total)*100) : 0;
+                    document.getElementById('bar1').style.width = p1+"%"; document.getElementById('percent1').innerText = p1+"%";
+                    document.getElementById('bar2').style.width = p2+"%"; document.getElementById('percent2').innerText = p2+"%";
+                } else { document.getElementById('pollBox').style.display = 'none'; }
             });
         }
 
-        function switchChatTab(tab) {
+        window.savePoll = function() {
+            database.ref('extras/poll').set({ active: true, question: document.getElementById('pollQuestion').value, opt1: document.getElementById('pollOpt1').value, opt2: document.getElementById('pollOpt2').value, votes1: 0, votes2: 0 });
+            showToast("Anket Başladı", "fa-check");
+        };
+        window.resetPoll = function() { database.ref('extras/poll').set({active: false}); localStorage.removeItem('poll_voted'); showToast("Anket Bitti", "fa-trash"); };
+        window.votePoll = function(opt) {
+            if(localStorage.getItem('poll_voted')) { showToast("Zaten oy verdin!", "fa-exclamation"); return; }
+            database.ref('extras/poll/' + (opt==='opt1'?'votes1':'votes2')).transaction(c => (c||0)+1);
+            localStorage.setItem('poll_voted', 'true'); showToast("Oy Verildi", "fa-check");
+        };
+        window.saveCountdown = function() {
+            const t = document.getElementById('cdTitle').value; const d = document.getElementById('cdDate').value;
+            if(t && d) { database.ref('extras/countdown').set({ active: true, title: t, target: new Date(d).getTime() }); showToast("Sayaç Başladı", "fa-clock"); }
+        };
+        window.stopCountdown = function() { database.ref('extras/countdown').set({active: false}); };
+
+        // --- SOHBET GENEL ---
+        window.switchChatTab = function(tab) {
             currentTab = tab;
             document.querySelectorAll('.chat-tab').forEach(t => t.classList.remove('active'));
             document.getElementById(tab === 'global' ? 'tabGlobal' : 'tabPrivate').classList.add('active');
-            document.getElementById('viewGlobal').classList.add('hidden');
-            document.getElementById('viewPrivateList').classList.add('hidden');
-            document.getElementById('viewPrivateConv').classList.add('hidden');
-
-            if(tab === 'global') {
-                document.getElementById('viewGlobal').classList.remove('hidden');
-                document.getElementById('msgInput').placeholder = "Genel sohbete yaz...";
-                currentPrivateRoom = null;
-            } else {
-                if(currentPrivateRoom) {
-                     document.getElementById('viewPrivateConv').classList.remove('hidden');
-                } else {
-                    document.getElementById('viewPrivateList').classList.remove('hidden');
-                }
-                document.getElementById('msgInput').placeholder = "Özel mesaj yaz...";
-                document.getElementById('pmBadge').style.display = 'none';
-            }
-        }
-
+            document.getElementById('viewGlobal').classList.add('hidden'); document.getElementById('viewPrivateList').classList.add('hidden'); document.getElementById('viewPrivateConv').classList.add('hidden');
+            if(tab === 'global') { document.getElementById('viewGlobal').classList.remove('hidden'); document.getElementById('msgInput').placeholder = "Genel sohbete yaz..."; currentPrivateRoom = null; } 
+            else { if(currentPrivateRoom) document.getElementById('viewPrivateConv').classList.remove('hidden'); else document.getElementById('viewPrivateList').classList.remove('hidden'); document.getElementById('msgInput').placeholder = "Özel mesaj yaz..."; document.getElementById('pmBadge').style.display = 'none'; }
+        };
         function getRoomId(uid1, uid2) { const sorted = [uid1, uid2].sort(); return sorted[0] + "_" + sorted[1]; }
-
         function startPrivateChat(targetUUID, targetName) {
             if(targetUUID === myUUID) return;
             toggleChat(); document.getElementById('chatModal').classList.add('active');
@@ -516,19 +607,15 @@
             document.getElementById('viewPrivateConv').classList.remove('hidden');
             document.getElementById('privateChatUserName').innerText = targetName;
             document.getElementById('privateChatContainer').innerHTML = '';
-            
             database.ref('private_chats/' + currentPrivateRoom).limitToLast(50).on('child_added', (s) => {
-                const msg = s.val();
-                const div = document.createElement('div');
+                const msg = s.val(); const div = document.createElement('div');
                 div.className = `message-bubble ${msg.user === myUserName ? 'msg-right' : 'msg-left'}`;
                 div.innerHTML = `<span class="msg-user">${msg.user}</span>${msg.text}`;
                 document.getElementById('privateChatContainer').appendChild(div);
                 document.getElementById('privateChatContainer').scrollTop = 99999;
             });
         }
-
-        function backToPrivateList() { currentPrivateRoom = null; switchChatTab('private'); }
-
+        window.backToPrivateList = function() { currentPrivateRoom = null; switchChatTab('private'); };
         function listenToAllPrivateChats() {
             database.ref('user_inbox/' + myUUID).on('value', (s) => {
                 const c = document.getElementById('privateChatListContainer'); c.innerHTML = '';
@@ -543,31 +630,28 @@
                 if(currentTab === 'global' && s.numChildren() > 0) document.getElementById('pmBadge').style.display = 'inline-block';
             });
         }
-
-        window.openUserActionModal = function(uuid, name, msgKey) {
+        window.openUserActionModal = function(uuid, name, msgKey, textContent) {
             if(uuid === myUUID) return;
-            selectedUserForAction = { uuid, name, msgKey };
+            selectedUserForAction = { uuid, name, msgKey, text: textContent };
             document.getElementById('uaTitle').innerText = name;
             document.getElementById('userActionModal').style.display = 'flex';
-            if(isAdmin) document.getElementById('adminUserActions').style.display = 'block';
-            else document.getElementById('adminUserActions').style.display = 'none';
+            if(isAdmin) document.getElementById('adminUserActions').style.display = 'block'; else document.getElementById('adminUserActions').style.display = 'none';
         };
-
         window.executeUserAction = function(action) {
             document.getElementById('userActionModal').style.display = 'none';
             if(!selectedUserForAction) return;
+            if(action === 'reply') startReply(selectedUserForAction.name, selectedUserForAction.text);
             if(action === 'private') startPrivateChat(selectedUserForAction.uuid, selectedUserForAction.name);
             if(action === 'ban' && isAdmin) { database.ref('banned_users/' + selectedUserForAction.uuid).set(true); showToast("Engellendi", "fa-ban"); }
             if(action === 'delete' && isAdmin) { database.ref('global_chat/' + selectedUserForAction.msgKey).remove(); showToast("Silindi", "fa-trash"); }
         };
-
         window.sendMsg = function() {
             const txt = document.getElementById('msgInput').value.trim();
             if(!txt) return;
             if(txt === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); location.reload(); return; }
-            
             if (currentTab === 'global') {
                 const msgData = { user: isAdmin ? "YÖNETİCİ" : myUserName, text: txt, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now() };
+                if(currentReply) { msgData.replyTo = currentReply; }
                 database.ref('global_chat').push(msgData);
                 if(!isAdmin && "8437262061:AAGnhDFIjFqNL5PlUGS33mUaXEMlKd1yyzk" !== "BURAYA") fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage?chat_id=${TG_CHAT_ID}&text=${encodeURIComponent(myUserName + ": " + txt)}`).catch(e=>{});
             } else if (currentTab === 'private' && currentPrivateRoom) {
@@ -575,34 +659,9 @@
                 database.ref('user_inbox/' + currentTargetUser.uuid + '/' + myUUID).set({ lastMsg: txt, timestamp: Date.now(), name: myUserName });
                 database.ref('user_inbox/' + myUUID + '/' + currentTargetUser.uuid).set({ lastMsg: "Sen: " + txt, timestamp: Date.now(), name: currentTargetUser.name });
             }
-            document.getElementById('msgInput').value = "";
+            document.getElementById('msgInput').value = ""; cancelReply();
         };
 
-        // --- EXTRAS ---
-        function listenToExtras() {
-            database.ref('extras').on('value', s => {
-                const val = s.val() || {};
-                if(val.announcement && val.announcement.active) { document.getElementById('announcementBar').style.display = 'block'; document.getElementById('announcementText').innerText = val.announcement.text; } 
-                else { document.getElementById('announcementBar').style.display = 'none'; }
-                if(val.maintenance && !isAdmin) document.getElementById('maintenanceScreen').style.display = 'flex';
-                else document.getElementById('maintenanceScreen').style.display = 'none';
-            });
-        }
-        function checkBanStatus() { database.ref('banned_users/' + myUUID).on('value', s => { if(s.exists()) document.getElementById('bannedScreen').style.display = 'flex'; }); }
-        function initPresence() { 
-            const connectedRef = database.ref('.info/connected');
-            const onlineRef = database.ref('online_users');
-            connectedRef.on('value', (snap) => {
-                if (snap.val() === true) {
-                    const con = onlineRef.push();
-                    con.onDisconnect().remove();
-                    con.set(true);
-                }
-            });
-            onlineRef.on('value', (snap) => { document.getElementById('onlineCount').innerText = snap.numChildren() || 0; });
-        }
-
-        // --- HELPER FUNC ---
         window.saveAnnouncement = function() { database.ref('extras/announcement').set({ active: true, text: document.getElementById('annoInput').value }); showToast("Duyuru Yayında", "fa-bullhorn"); };
         window.stopAnnouncement = function() { database.ref('extras/announcement').set({active: false}); };
         window.toggleMaintenance = function() { database.ref('extras/maintenance').transaction(val => !val); showToast("Bakım Modu Değiştirildi", "fa-tools"); };
@@ -610,10 +669,12 @@
         window.openNameModal = function() { document.getElementById('nameChangeModal').style.display='flex'; };
         window.saveName = function() { const n=document.getElementById('newNameInput').value; if(n){ myUserName=n; localStorage.setItem('chat_username',n); document.getElementById('nameChangeModal').style.display='none'; } };
         window.emergencyLogin = function() { if(document.getElementById('emergencyPass').value === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); location.reload(); } else alert("Yanlış Şifre"); };
+        function checkBanStatus() { database.ref('banned_users/' + myUUID).on('value', s => { if(s.exists()) document.getElementById('bannedScreen').style.display = 'flex'; }); }
         function showToast(msg, icon) { const t = document.getElementById('toast'); t.innerHTML = `<i class="fas ${icon}"></i> <span>${msg}</span>`; t.className = "toast show"; setTimeout(() => t.className = t.className.replace("show", ""), 3000); }
         function openAdminPanel() { document.getElementById('adminPanelModal').style.display = 'flex'; }
         function toggleSubMenu(id) { document.getElementById(id).classList.toggle('active'); }
         function toggleChat() { document.getElementById('chatModal').classList.toggle('active'); }
+        function initPresence() { const ref = database.ref('online'); ref.push().onDisconnect().remove(); ref.on('value', s => document.getElementById('onlineCount').innerText = s.numChildren()); }
         function toggleTheme() { document.body.classList.toggle('light-theme'); const isLight = document.body.classList.contains('light-theme'); localStorage.setItem('theme', isLight ? 'light' : 'dark'); document.getElementById('themeBtn').innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; document.getElementById('telegramBtn').style.color = isLight ? '#1a1a1a' : 'white'; }
 
         init();
