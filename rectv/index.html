@@ -15,15 +15,18 @@ body.light-theme{--bg:#f5f5f5;--surface:#ffffff;--text:#1a1a1a;--card-bg:#ffffff
 .header-actions{display:flex;align-items:center;gap:8px;}
 .theme-btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:8px;border-radius:8px;cursor:pointer;}
 .light-theme .theme-btn{background:rgba(0,0,0,0.05);color:#333;border-color:rgba(0,0,0,0.1);}
-.online-badge{display:flex;align-items:center;gap:6px;padding:6px 10px;background:rgba(0,255,127,0.1);border:1px solid rgba(0,255,127,0.2);border-radius:8px;font-size:0.8rem;color:#00ff7f;}
+/* SEARCH EXPAND */
 .search-wrapper{position:relative;display:flex;align-items:center;}
 .search-input-header{width:0;padding:0;border:none;outline:none;background:rgba(255,255,255,0.1);color:white;border-radius:20px;transition:0.4s;visibility:hidden;opacity:0;}
 .search-input-header.active{width:140px;padding:6px 12px;visibility:visible;opacity:1;margin-right:5px;border:1px solid rgba(255,255,255,0.2);}
-.light-theme .search-input-header{background:#eee;color:#333;border:1px solid:#ccc;}
+.light-theme .search-input-header{background:#eee;color:#333;border:1px solid #ccc;}
 .search-icon-btn{background:none;border:none;color:inherit;font-size:1.2rem;cursor:pointer;padding:5px;}
+/* ONLINE & ANNOUNCE */
+.online-badge{display:flex;align-items:center;gap:6px;padding:6px 10px;background:rgba(0,255,127,0.1);border:1px solid rgba(0,255,127,0.2);border-radius:8px;font-size:0.8rem;color:#00ff7f;}
 .announcement-bar{background:#ffeb3b;color:#000;white-space:nowrap;overflow:hidden;padding:8px 0;font-weight:bold;font-size:0.95rem;display:none;border-bottom:3px solid #ff4d00;}
 .announcement-content{display:inline-block;padding-left:100%;animation:scroll 20s linear infinite;}
 @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
+/* FEATURES */
 .feature-container{margin:15px;display:flex;flex-direction:column;gap:15px;}
 .countdown-box{background:linear-gradient(135deg,#1a1825,#000);border:1px solid var(--primary);border-radius:15px;padding:15px;text-align:center;display:none;}
 .countdown-timer{display:flex;justify-content:center;gap:10px;font-size:1.5rem;font-weight:bold;color:white;}
@@ -31,9 +34,11 @@ body.light-theme{--bg:#f5f5f5;--surface:#ffffff;--text:#1a1a1a;--card-bg:#ffffff
 .poll-bar-bg{background:rgba(255,255,255,0.1);height:30px;border-radius:8px;position:relative;margin-bottom:5px;overflow:hidden;}
 .poll-bar-fill{height:100%;background:linear-gradient(90deg,var(--primary),#ff4d00);width:0%;transition:width 0.5s;}
 .poll-text{position:absolute;top:0;left:10px;height:100%;display:flex;align-items:center;font-size:0.8rem;font-weight:bold;color:white;text-shadow:0 0 3px black;}
+/* CARD & BADGES */
 .container{padding:15px;}
 .card{background:var(--card-bg);border-radius:15px;padding:10px;margin-bottom:12px;display:flex;align-items:center;cursor:pointer;border:1px solid var(--border);position:relative;}
 .card.hidden{display:none;}
+.light-theme .card{box-shadow:0 2px 8px rgba(0,0,0,0.08);}
 .img-box{position:relative;width:55px;height:55px;flex-shrink:0;}
 .card-img{width:100%;height:100%;border-radius:10px;object-fit:cover;}
 .badge{position:absolute;top:-8px;right:-8px;font-size:0.6rem;padding:2px 6px;border-radius:6px;font-weight:800;z-index:10;}
@@ -43,10 +48,14 @@ body.light-theme{--bg:#f5f5f5;--surface:#ffffff;--text:#1a1a1a;--card-bg:#ffffff
 .card-info{flex:1;margin-left:12px;}
 .card-name{font-weight:700;margin-bottom:3px;}
 .card-meta{font-size:0.75rem;opacity:0.6;display:flex;align-items:center;gap:8px;}
-.stat-badge{display:inline-flex;align-items:center;gap:3px;background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:6px;}
-.stat-heart.liked{color:red;transform:scale(1.2);}
+.stat-badge{display:inline-flex;align-items:center;gap:3px;background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:6px;z-index:5;position:relative;}
+.stat-heart{cursor:pointer;transition:transform 0.2s;color:#ff3d3d;}
+.stat-heart.liked{color:red;transform:scale(1.3);text-shadow:0 0 10px red;}
+.stat-report{color:#ff4d4d;cursor:pointer;}
+.play-icon{color:var(--primary);font-size:1.4rem;margin-left:10px;}
 .load-more-btn{width:100%;padding:15px;background:var(--primary);color:white;border:none;border-radius:15px;font-weight:bold;cursor:pointer;margin-top:10px;}
 .load-more-btn.hidden{display:none;}
+/* CHAT */
 .chat-btn{position:fixed;bottom:20px;right:20px;width:60px;height:60px;background:var(--primary);border-radius:50%;display:flex;justify-content:center;align-items:center;color:white;font-size:1.5rem;box-shadow:0 5px 15px rgba(0,0,0,0.3);z-index:200;cursor:pointer;}
 .chat-modal{position:fixed;bottom:-100%;left:0;width:100%;height:96%;background:var(--surface);border-radius:20px 20px 0 0;z-index:201;transition:0.4s;display:flex;flex-direction:column;box-shadow:0 -5px 30px rgba(0,0,0,0.5);}
 .chat-modal.active{bottom:0;}
@@ -55,9 +64,6 @@ body.light-theme{--bg:#f5f5f5;--surface:#ffffff;--text:#1a1a1a;--card-bg:#ffffff
 .msg-right{align-self:flex-end;background:var(--primary);}
 .msg-left{align-self:flex-start;}
 .msg-user{font-size:0.7rem;opacity:0.7;margin-bottom:2px;display:block;font-weight:bold;cursor:pointer;}
-.msg-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:4px;}
-.action-btn{font-size:0.8rem;opacity:0.7;cursor:pointer;}
-.action-btn:hover{opacity:1;color:#ffeb3b;}
 .quoted-msg{background:rgba(0,0,0,0.3);border-left:3px solid #ff4d00;padding:5px;font-size:0.75rem;margin-bottom:5px;border-radius:4px;}
 .reply-preview-bar{background:#222;padding:10px;display:none;justify-content:space-between;align-items:center;border-left:4px solid var(--primary);}
 .chat-input-area{padding:10px;display:flex;gap:10px;background:rgba(0,0,0,0.2);}
@@ -66,6 +72,7 @@ body.light-theme{--bg:#f5f5f5;--surface:#ffffff;--text:#1a1a1a;--card-bg:#ffffff
 .chat-img-btn{background:none;border:none;color:white;font-size:1.2rem;cursor:pointer;}
 .light-theme .chat-img-btn{color:#333;}
 .chat-img{max-width:100%;border-radius:8px;margin-top:5px;border:1px solid rgba(255,255,255,0.2);}
+/* ADMIN & MODAL */
 .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:1000;display:none;justify-content:center;align-items:center;}
 .modal-box{background:var(--surface);width:85%;max-width:380px;border-radius:20px;padding:20px;border:1px solid var(--border);}
 .admin-panel-btn{position:fixed;bottom:20px;left:20px;width:50px;height:50px;background:#ff0040;border-radius:50%;display:none;justify-content:center;align-items:center;color:white;box-shadow:0 5px 15px rgba(0,0,0,0.5);cursor:pointer;z-index:200;}
@@ -78,6 +85,9 @@ body.light-theme{--bg:#f5f5f5;--surface:#ffffff;--text:#1a1a1a;--card-bg:#ffffff
 .light-theme .custom-input{background:white;color:black;border-color:#ccc;}
 .btn-confirm{width:100%;padding:10px;background:#ff0040;color:white;border:none;border-radius:8px;font-weight:bold;margin-top:5px;cursor:pointer;}
 .btn-cancel{width:100%;padding:10px;background:#444;color:white;border:none;border-radius:8px;margin-top:5px;cursor:pointer;}
+.btn-shorten{background:#00d2ff;color:white;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;cursor:pointer;margin-top:5px;width:100%;}
+.player-opt{display:flex;align-items:center;padding:15px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.05);gap:15px;cursor:pointer;color:white;}
+.light-theme .player-opt{background:rgba(0,0,0,0.05);color:#333;}
 .toast{visibility:hidden;min-width:250px;background:#333;color:#fff;text-align:center;border-radius:50px;padding:16px;position:fixed;z-index:2000;left:50%;bottom:80px;transform:translateX(-50%);opacity:0;transition:0.3s;}
 .toast.show{visibility:visible;opacity:1;bottom:90px;}
 </style>
@@ -91,7 +101,7 @@ body.light-theme{--bg:#f5f5f5;--surface:#ffffff;--text:#1a1a1a;--card-bg:#ffffff
 
 <!-- ADMIN PANEL -->
 <div id="adminPanelModal" class="modal"><div class="modal-box"><h3 style="text-align:center;color:#ff0040;">🛡️ Yönetici Paneli</h3><div class="admin-modal-body">
-<div class="admin-menu-btn" onclick="toggleSubMenu('channelAdmin')"><span>📺 Kanal Yönetimi</span> ▼</div><div id="channelAdmin" class="admin-submenu"><input type="text" id="addTitle" class="custom-input" placeholder="Kanal Adı"><input type="text" id="addM3u" class="custom-input" placeholder="M3U URL"><input type="text" id="addWeb" class="custom-input" placeholder="Web URL (Link Kısaltılır)"><input type="text" id="addImg" class="custom-input" placeholder="Resim URL"><input type="number" id="addOrder" class="custom-input" placeholder="Sıra"><button onclick="addNewChannel()" class="btn-confirm">Ekle</button><div id="adminChannelList" style="margin-top:10px;"></div></div>
+<div class="admin-menu-btn" onclick="toggleSubMenu('channelAdmin')"><span>📺 Kanal Yönetimi</span> ▼</div><div id="channelAdmin" class="admin-submenu"><input type="text" id="addTitle" class="custom-input" placeholder="Kanal Adı"><input type="text" id="addM3u" class="custom-input" placeholder="M3U URL"><input type="text" id="addWeb" class="custom-input" placeholder="Web URL"><button class="btn-shorten" onclick="shortenUrl('addWeb')">Link Kısalt</button><input type="text" id="addImg" class="custom-input" placeholder="Resim URL"><input type="number" id="addOrder" class="custom-input" placeholder="Sıra"><button onclick="addNewChannel()" class="btn-confirm">Ekle</button><div id="adminChannelList" style="margin-top:10px;"></div></div>
 <div class="admin-menu-btn" onclick="toggleSubMenu('pollAdmin')"><span>📊 Anket & Sayaç</span> ▼</div><div id="pollAdmin" class="admin-submenu"><h5>Anket</h5><input type="text" id="pollQ" class="custom-input" placeholder="Soru"><input type="text" id="pollO1" class="custom-input" placeholder="Seçenek 1"><input type="text" id="pollO2" class="custom-input" placeholder="Seçenek 2"><button onclick="savePoll()" class="btn-confirm">Başlat</button><button onclick="resetPoll()" class="btn-cancel">Bitir</button><h5>Sayaç</h5><input type="text" id="cdT" class="custom-input" placeholder="Başlık"><input type="datetime-local" id="cdD" class="custom-input" style="color-scheme:dark;"><button onclick="saveCountdown()" class="btn-confirm">Başlat</button><button onclick="stopCountdown()" class="btn-cancel">Durdur</button></div>
 <div class="admin-menu-btn" onclick="toggleSubMenu('extraAdmin')"><span>📢 Duyuru & Ayarlar</span> ▼</div><div id="extraAdmin" class="admin-submenu"><input type="text" id="annoInp" class="custom-input" placeholder="Kayan Yazı"><button onclick="saveAnno()" class="btn-confirm">Yayınla</button><button onclick="stopAnno()" class="btn-cancel">Kaldır</button><button class="btn-cancel" onclick="toggleMaint()" style="background:#f39c12;">🚧 Bakım Modu</button><button class="btn-cancel" onclick="clearChat()" style="background:#c0392b;">🗑️ Sohbeti Sil</button><button class="btn-confirm" onclick="restoreBackup()" style="background:#3498db;">📂 Eski Listeyi Yükle</button></div>
 </div><button onclick="document.getElementById('adminPanelModal').style.display='none'" class="btn-cancel">Kapat</button></div></div>
@@ -133,16 +143,17 @@ body.light-theme{--bg:#f5f5f5;--surface:#ffffff;--text:#1a1a1a;--card-bg:#ffffff
 
 <!-- MODALS -->
 <div id="nameModal" class="modal"><div class="modal-box"><h3>İsim Değiştir</h3><input type="text" id="newName" class="custom-input"><button onclick="saveName()" class="btn-confirm">Kaydet</button><button onclick="document.getElementById('nameModal').style.display='none'" class="btn-cancel">İptal</button></div></div>
-<div id="playerModal" class="modal"><div class="modal-box"><h3 id="mTitle"></h3><button id="btnWuffy" class="btn-confirm">Wuffy</button><button id="btnXpola" class="btn-confirm">Xpola</button><button id="btnWeb" class="btn-cancel">Web</button><button onclick="document.getElementById('playerModal').style.display='none'" class="btn-cancel">Kapat</button></div></div>
-<div id="actionModal" class="modal"><div class="modal-box"><h3 id="actTitle"></h3><button onclick="actReply()" class="btn-confirm">Yanıtla</button><div id="admActs" style="display:none;"><button onclick="actBan()" class="btn-cancel" style="background:red;">Engelle</button><button onclick="actDel()" class="btn-cancel">Sil</button></div><button onclick="document.getElementById('actionModal').style.display='none'" class="btn-cancel">Kapat</button></div></div>
+<div id="playerModal" class="modal"><div class="modal-box"><h3 id="mTitle" style="text-align:center;"></h3><div class="player-opt" id="btnWuffy"><i class="fas fa-play"></i> Wuffy</div><div class="player-opt" id="btnXpola"><i class="fas fa-rocket"></i> Xpola</div><div class="player-opt" id="btnWeb" style="border:1px solid #f39c12;color:#f39c12;"><i class="fas fa-link"></i> Web</div><button onclick="document.getElementById('playerModal').style.display='none'" class="btn-cancel">Kapat</button></div></div>
+<div id="actionModal" class="modal"><div class="modal-box"><h3 id="actTitle" style="text-align:center;"></h3><button onclick="actReply()" class="btn-confirm">Yanıtla</button><div id="admActs" style="display:none;"><button onclick="actBan()" class="btn-cancel" style="background:red;">Engelle</button><button onclick="actDel()" class="btn-cancel">Sil</button></div><button onclick="document.getElementById('actionModal').style.display='none'" class="btn-cancel">Kapat</button></div></div>
 
 <script>
 const backup=[{"title": "SUPMOT İPTV İNDİR", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/supmot-iptv.m3u", "web_link_url": "https://ay.live/sBLi", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "19.01.2026"}, {"title": "10 ADET MAC ADRESİ İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/inadinamackod.m3u", "web_link_url": "https://ay.live/ZZ5c", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "18.01.2026"}, {"title": "KRİSTAL İPTV EKLENDİ", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Kristal-iptv-W.m3u", "web_link_url": "https://ay.live/8Gxpf", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "18.01.2026"}, {"title": "SMARTES2 İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=zrdQ5UHD&password=q82fkQT&type=m3u_plus", "web_link_url": "https://ay.live/xAdwL", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "17.01.2026"}, {"title": "10 BİN KİSİLİK İPTV", "m3u_url": "https://broken-night-dffb.deathlesstelenyu.workers.dev/dth-iptv.m3u", "web_link_url": "https://ay.live/QfCR", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "16.01.2026"}, {"title": "SMART İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=utSzxq7SY6&password=dj1yyFAQJy&type=m3u_plus", "web_link_url": "https://ay.live/5kQj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "15.01.2026"}, {"title": "YENİ SPORT İPTV", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/sport-connec.m3u", "web_link_url": "https://ay.live/Ry1l", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "14.01.2026"}, {"title": "10 SİNİRSİZ İPTV M3U", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "web_link_url": "https://ay.live/7LxRP8", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "13.01.2026"}, {"title": "SMARTZONE İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=gRNhEpGh3m&password=fmaAdfkHXJ&type=m3u_plus", "web_link_url": "https://ay.live/q9fMZa", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "12.01.2026"}, {"title": "MEGA İPTV İNDİR", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "web_link_url": "https://ay.live/G7TFl", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "11.01.2026"}, {"title": "1500 MAX SPORTS İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/nadina-1500-Max-iptv.m3u", "web_link_url": "https://ay.live/Se6xQ", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "09.01.2026"}, {"title": "QUANTUM İPTV LİST", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Kuantum-iptv.m3u", "web_link_url": "https://ay.live/8Xy9", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "08.01.2026"}, {"title": "FULL BOT İPTV SPORTS", "m3u_url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "web_link_url": "https://ay.live/ld7M", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "07.01.2026"}, {"title": "Ekalite iptv m3u", "m3u_url": "http://ekalite.xyz:8080/get.php?username=ibrahimtak&password=qwkRZHAwaK&type=m3u_plus", "web_link_url": "https://ay.live/4eoXDj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "06.01.2026"}, {"title": "D SPORTS M3U ADRESİ EKLEND", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DTH-Sports.m3u", "web_link_url": "https://ay.live/w2Avb", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "05.01.2026"}, {"title": "30 ADET İPTV M3U LİSTE", "m3u_url": "http://maisonxp.click/get.php?username=thay123&password=thay123&type=m3u", "web_link_url": "https://ay.live/zcn3j7", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "04.01.2026"}, {"title": "ELİTE MAC ADRESLERİ İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/playlist.m3u", "web_link_url": "https://ay.live/DfpE", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "04.01.2026"}, {"title": "KARMA İPTV 23K", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Karma-iptv.m3u", "web_link_url": "https://ay.live/6WmReB", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "03.01.2026"}, {"title": "Yeni iptv liste", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "web_link_url": "https://ay.live/0cKg", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "02.01.2026"}, {"title": "Turkiye Connect iptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Turkiye-iptv.m3u", "web_link_url": "https://ay.live/6Dr", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "01.01.2026"}, {"title": "9500 İPTV M3U LİNKLER YİLBASİ OZEL", "m3u_url": "http://ss.wancolonel.xyz:8080/get.php?username=Denisurlu&password=Muri3091&type=m3u_plus", "web_link_url": "https://ay.live/3hJ9te", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "31.12.2025"}, {"title": "3 Adet İptv link", "m3u_url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "web_link_url": "https://ay.live/KCwKj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "30.12.2025"}, {"title": "XTREAM İPTV LİSTELER EKLENDİ", "m3u_url": "http://s1.eldest99.xyz:8080/get.php?username=hdkaptantv3706&password=kptn@8723706&type=m3u_plus", "web_link_url": "https://ay.live/Clqz", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "29.12.2025"}, {"title": "FİLM EKSENİ İPTV", "m3u_url": "https://raw.githubusercontent.com/sultansmgr/smart/refs/heads/main/FilmEkseni.m3u", "web_link_url": "https://ay.live/qCS", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESVvVD7PLGjrzbMvNGvIFOhRBoSxzoGBFLm3iG-xX1ZEArpkhkSItDVY&s=10", "added_date": "28.12.2025"}, {"title": "B. Conneckt İptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/b-connect.m3u", "web_link_url": "https://ay.live/67w", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "28.12.2025"}, {"title": "Spor Kanallari bot iptv", "m3u_url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "web_link_url": "https://ay.live/9GlX", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "100 Bin kisilik iptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "web_link_url": "https://ay.live/6QE", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "Hibrit İptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Toplu-Paket-V.m3u", "web_link_url": "https://ay.live/eAAA7K", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "m3u_url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "web_link_url": "https://ay.live/DGKU", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}]; const API_KEY="cce8efcdd2693c8adde90f05832332f7f30fbf41"; const ADMIN_PASS="burhan_baba_72";
 const firebaseConfig={apiKey:"AIzaSyCZFwiLcV4K3EnRDWpPPlXPrXSJxAuMfaQ",authDomain:"iptvbotcoun.firebaseapp.com",databaseURL:"https://iptvbotcoun-default-rtdb.firebaseio.com",projectId:"iptvbotcoun",storageBucket:"iptvbotcoun.firebasestorage.app",messagingSenderId:"229841892818",appId:"1:229841892818:web:a91dd3792919140a5d440b"};
 firebase.initializeApp(firebaseConfig); const db=firebase.database();
 
-let catData={items:[]}, filtered=[], perPage=10, shown=10, isAdmin=localStorage.getItem('isAdmin')==='true', myUser=localStorage.getItem('user')||'Misafir', myId=localStorage.getItem('uid')||'u_'+Date.now(), likes=JSON.parse(localStorage.getItem('likes')||"[]"), repData=null;
+let catData={items:[]}, filtered=[], perPage=10, shown=10, isAdmin=localStorage.getItem('isAdmin')==='true', myUser=localStorage.getItem('user')||'Misafir', myId=localStorage.getItem('uid')||'u_'+Date.now(), likes=[], globalLikes={}, globalViews={}, repData=null;
 localStorage.setItem('uid',myId); localStorage.setItem('user',myUser);
+try { likes = JSON.parse(localStorage.getItem('likes') || "[]"); } catch(e){ likes=[]; }
 
 function init(){
  if(isAdmin){document.getElementById('adminBtn').style.display='flex'; document.getElementById('chatStatus').innerText="Yönetici 👮";}
@@ -154,7 +165,27 @@ function init(){
   if(v.countdown&&v.countdown.active){document.getElementById('countdownBox').style.display='block'; startTimer(v.countdown.target, v.countdown.title);}else{document.getElementById('countdownBox').style.display='none';}
   if(v.maint&&!isAdmin) document.getElementById('maintenanceScreen').style.display='flex'; else document.getElementById('maintenanceScreen').style.display='none';
  });
+ db.ref('stats').on('value', s=>{ 
+    const v = s.val() || {};
+    globalLikes = v.likes || {};
+    globalViews = v.views || {};
+    updateStatsUI();
+ });
  initChat(); initPresence();
+}
+
+function updateStatsUI(){
+ document.querySelectorAll('.card').forEach(c=>{
+    const k = c.getAttribute('data-key');
+    if(k){
+        const l = globalLikes[k] || 0;
+        const v = globalViews[k] || 0;
+        const lEl = c.querySelector('.like-cnt');
+        const vEl = c.querySelector('.view-cnt');
+        if(lEl) lEl.innerText = l;
+        if(vEl) vEl.innerText = v;
+    }
+ });
 }
 
 function render(){
@@ -162,12 +193,32 @@ function render(){
  filtered.forEach((i,x)=>{ if(x>=shown)return;
   const isNew = checkNew(i.added_date);
   const badge = isNew ? '<span class="badge badge-new">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>';
-  const div=document.createElement('div'); div.className='card';
-  div.innerHTML=`<div class="img-box"><img src="${i.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'">${badge}</div><div class="card-info"><div class="card-name">${i.title}</div><div class="card-meta"><span>${i.added_date||""}</span></div></div><i class="fas fa-play-circle play-icon"></i>`;
-  div.onclick=()=>{ document.getElementById('mTitle').innerText=i.title; document.getElementById('playerModal').style.display='flex'; setupPlayer(i); };
+  const isLiked = likes.includes(i.key) ? 'liked' : '';
+  const div=document.createElement('div'); div.className='card'; div.setAttribute('data-key', i.key);
+  
+  div.innerHTML=`<div class="img-box"><img src="${i.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'">${badge}</div>
+  <div class="card-info"><div class="card-name">${i.title}</div>
+  <div class="card-meta">
+    <span>${i.added_date||""}</span>
+    <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="view-cnt">${globalViews[i.key]||0}</span></span>
+    <span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${i.key}')"></i> <span class="like-cnt">${globalLikes[i.key]||0}</span></span>
+  </div></div><i class="fas fa-play-circle play-icon"></i>`;
+  div.onclick=(e)=>{ 
+      if(e.target.classList.contains('stat-heart')) return;
+      db.ref('stats/views/'+i.key).transaction(c=>(c||0)+1);
+      document.getElementById('mTitle').innerText=i.title; document.getElementById('playerModal').style.display='flex'; setupPlayer(i); 
+  };
   c.appendChild(div);
  });
  if(filtered.length>shown) document.getElementById('loadMoreBtn').classList.remove('hidden'); else document.getElementById('loadMoreBtn').classList.add('hidden');
+}
+
+function toggleLike(e, key){
+    e.stopPropagation();
+    if(likes.includes(key)){ showToast('Zaten beğendin!'); return; }
+    likes.push(key); localStorage.setItem('likes', JSON.stringify(likes));
+    db.ref('stats/likes/'+key).transaction(c=>(c||0)+1);
+    e.target.classList.add('liked');
 }
 
 function checkNew(dateStr){ if(!dateStr)return false; const p=dateStr.split('.'); if(p.length!=3)return false; const d=new Date(p[2],p[1]-1,p[0]); const diff=(new Date()-d)/(1000*3600*24); return diff<=3; }
@@ -184,15 +235,15 @@ function initChat(){
   if(m.isAdmin) d.style.border='1px solid #ffeb3b';
   let content = m.type==='img' ? `<img src="${m.text}" class="chat-img" onclick="window.open('${m.text}')">` : `<div>${m.text}</div>`;
   let reply = m.reply ? `<div class="quoted-msg"><b>${m.reply.user}</b>: ${m.reply.text}</div>` : '';
-  let actions = `<div class="msg-actions"><i class="fas fa-reply action-btn" onclick="prepReply('${m.user}','${m.text}')"></i> <i class="fas fa-heart action-btn" onclick="likeMsg('${s.key}')"></i> <span style="font-size:0.7rem">${m.likes||0}</span></div>`;
-  d.innerHTML=`<span class="msg-user" onclick="openAct('${m.uid}','${m.user}','${s.key}')">${m.user} ${m.isAdmin?'🛡️':''}</span>${reply}${content}${actions}`;
+  d.innerHTML=`<span class="msg-user" onclick="openAct('${m.uid}','${m.user}','${s.key}')">${m.user} ${m.isAdmin?'🛡️':''}</span>${reply}${content}`;
   document.getElementById('chatMessages').appendChild(d); document.getElementById('chatMessages').scrollTop=99999;
  });
 }
 
 function sendMsg(){
- const t=document.getElementById('msgInput').value; if(!t)return;
+ const t=document.getElementById('msgInput').value.trim(); 
  if(t===ADMIN_PASS){ localStorage.setItem('isAdmin','true'); location.reload(); return; }
+ if(!t) return;
  db.ref('chat').push({user:isAdmin?'YÖNETİCİ':myUser, text:t, uid:myId, isAdmin:isAdmin, reply:repData, type:'text', time:Date.now()});
  document.getElementById('msgInput').value=''; cancelReply();
 }
@@ -209,10 +260,8 @@ function uploadImg(e){
  }; r.readAsDataURL(f);
 }
 
-// INTERACTIONS
 window.prepReply=function(u,t){ repData={user:u,text:t.substring(0,20)+'...'}, document.getElementById('replyPreview').style.display='flex'; document.getElementById('replyUser').innerText=u; document.getElementById('replyText').innerText=repData.text; };
 window.cancelReply=function(){ repData=null; document.getElementById('replyPreview').style.display='none'; };
-window.likeMsg=function(k){ db.ref('chat/'+k+'/likes').transaction(c=>(c||0)+1); };
 window.openAct=function(uid,u,k){ if(uid===myId)return; document.getElementById('actTitle').innerText=u; document.getElementById('actionModal').style.display='flex'; if(isAdmin){document.getElementById('admActs').style.display='block';} window.selMsg={uid,k,u}; };
 window.actReply=function(){ document.getElementById('actionModal').style.display='none'; prepReply(selMsg.u, "Mesaj..."); };
 window.actDel=function(){ db.ref('chat/'+selMsg.k).remove(); document.getElementById('actionModal').style.display='none'; location.reload(); };
@@ -221,12 +270,12 @@ window.actBan=function(){ db.ref('banned/'+selMsg.uid).set(true); document.getEl
 // ADMIN
 async function addNewChannel(){
  const t=document.getElementById('addTitle').value, m=document.getElementById('addM3u').value, i=document.getElementById('addImg').value, o=document.getElementById('addOrder').value; let w=document.getElementById('addWeb').value;
- if(!t)return alert('Başlık şart!');
+ if(!t)return showToast('Başlık şart!');
  if(w && w.startsWith('http')){ try{ const r=await fetch(`https://ay.live/api/?api=${API_KEY}&url=${encodeURIComponent(w)}&format=text`); const txt=await r.text(); if(txt.startsWith('http')) w=txt; }catch(e){} }
  db.ref('channels').push({title:t,m3u_url:m||'#',web_link_url:w||'#',image:i||'',added_date:new Date().toLocaleDateString('tr-TR'),order:parseInt(o)||99});
- alert('Eklendi');
+ showToast('Eklendi');
 }
-function renderAdminList(arr){ const d=document.getElementById('adminChannelList'); d.innerHTML=''; arr.forEach(i=>{ d.innerHTML+=`<div style="display:flex;justify-content:space-between;background:#333;padding:5px;margin:2px;"><span>${i.title}</span><button onclick="db.ref('channels/${i.key}').remove()">Sil</button></div>`; }); }
+function renderAdminList(arr){ const d=document.getElementById('adminChannelList'); d.innerHTML=''; arr.forEach(i=>{ d.innerHTML+=`<div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.1);padding:5px;margin:2px;border-radius:5px;"><span>${i.title}</span><button onclick="db.ref('channels/${i.key}').remove()" style="background:red;color:white;border:none;">Sil</button></div>`; }); }
 window.saveAnno=()=>{ db.ref('extras/announcement').set({active:true,text:document.getElementById('annoInp').value}); };
 window.stopAnno=()=>{ db.ref('extras/announcement').set({active:false}); };
 window.savePoll=()=>{ db.ref('extras/poll').set({active:true,q:document.getElementById('pollQ').value,o1:document.getElementById('pollO1').value,o2:document.getElementById('pollO2').value,v1:0,v2:0}); };
@@ -235,7 +284,8 @@ window.saveCountdown=()=>{ db.ref('extras/countdown').set({active:true,title:doc
 window.stopCountdown=()=>{ db.ref('extras/countdown').set({active:false}); };
 window.toggleMaint=()=>{ db.ref('extras/maint').transaction(v=>!v); };
 window.clearChat=()=>{ if(confirm('Sil?')) db.ref('chat').remove(); };
-window.restoreBackup=()=>{ if(backup.length) backup.forEach(i=>db.ref('channels').push(i)); alert('Yüklendi'); };
+window.restoreBackup=()=>{ if(backup.length) backup.forEach(i=>db.ref('channels').push(i)); showToast('Yüklendi'); };
+window.shortenUrl=function(id){ const u=document.getElementById(id).value; if(u) fetch(`https://ay.live/api/?api=${API_KEY}&url=${encodeURIComponent(u)}&format=text`).then(r=>r.text()).then(t=>{ if(t.startsWith("http")) document.getElementById(id).value=t; }); };
 
 // HELPERS
 function toggleSearch(){ const i=document.getElementById('searchInput'); i.classList.toggle('active'); if(i.classList.contains('active'))i.focus(); }
@@ -247,7 +297,7 @@ function startTimer(target, title){
   document.getElementById('countdownTimer').innerText = Math.floor(d/(1000*60*60*24))+"G "+Math.floor((d%(1000*60*60*24))/(1000*60*60))+"S "+Math.floor((d%(1000*60*60))/(1000*60))+"D";
  },1000);
 }
-function vote(o){ if(localStorage.getItem('voted'))return alert('Zaten oy verdin'); db.ref('extras/poll/'+(o=='opt1'?'v1':'v2')).transaction(c=>(c||0)+1); localStorage.setItem('voted','1'); }
+function vote(o){ if(localStorage.getItem('voted'))return showToast('Zaten oy verdin'); db.ref('extras/poll/'+(o=='opt1'?'v1':'v2')).transaction(c=>(c||0)+1); localStorage.setItem('voted','1'); }
 function toggleTheme(){ document.body.classList.toggle('light-theme'); localStorage.setItem('theme', document.body.classList.contains('light-theme')?'light':'dark'); }
 function loadMore(){ shown+=perPage; render(); }
 function toggleChat(){ document.getElementById('chatModal').classList.toggle('active'); }
@@ -255,7 +305,13 @@ function openAdminPanel(){ document.getElementById('adminPanelModal').style.disp
 function toggleSubMenu(id){ document.getElementById(id).style.display = document.getElementById(id).style.display==='block'?'none':'block'; }
 function openNameModal(){ document.getElementById('nameModal').style.display='flex'; document.getElementById('newName').value=myUser; }
 function saveName(){ myUser=document.getElementById('newName').value; localStorage.setItem('user',myUser); document.getElementById('nameModal').style.display='none'; }
-function initPresence(){ const r=db.ref('online'); r.push().onDisconnect().remove(); r.on('value',s=>document.getElementById('onlineCount').innerText=s.numChildren()); }
+function showToast(msg){ const t=document.getElementById('toast'); t.innerText=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
+function initPresence(){ 
+    db.ref('.info/connected').on('value', s=>{
+        if(s.val()===true){ const con=db.ref('online').push(); con.onDisconnect().remove(); con.set(true); }
+    });
+    db.ref('online').on('value',s=>document.getElementById('onlineCount').innerText=s.numChildren()); 
+}
 if(localStorage.getItem('theme')==='light') toggleTheme();
 
 init();
