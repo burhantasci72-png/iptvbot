@@ -15,18 +15,15 @@ body.light-theme{--bg:#f5f5f5;--surface:#ffffff;--text:#1a1a1a;--card-bg:#ffffff
 .header-actions{display:flex;align-items:center;gap:8px;}
 .theme-btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:8px;border-radius:8px;cursor:pointer;}
 .light-theme .theme-btn{background:rgba(0,0,0,0.05);color:#333;border-color:rgba(0,0,0,0.1);}
-/* SEARCH EXPAND */
 .search-wrapper{position:relative;display:flex;align-items:center;}
 .search-input-header{width:0;padding:0;border:none;outline:none;background:rgba(255,255,255,0.1);color:white;border-radius:20px;transition:0.4s;visibility:hidden;opacity:0;}
 .search-input-header.active{width:140px;padding:6px 12px;visibility:visible;opacity:1;margin-right:5px;border:1px solid rgba(255,255,255,0.2);}
 .light-theme .search-input-header{background:#eee;color:#333;border:1px solid #ccc;}
 .search-icon-btn{background:none;border:none;color:inherit;font-size:1.2rem;cursor:pointer;padding:5px;}
-/* ONLINE & ANNOUNCE */
 .online-badge{display:flex;align-items:center;gap:6px;padding:6px 10px;background:rgba(0,255,127,0.1);border:1px solid rgba(0,255,127,0.2);border-radius:8px;font-size:0.8rem;color:#00ff7f;}
 .announcement-bar{background:#ffeb3b;color:#000;white-space:nowrap;overflow:hidden;padding:8px 0;font-weight:bold;font-size:0.95rem;display:none;border-bottom:3px solid #ff4d00;}
 .announcement-content{display:inline-block;padding-left:100%;animation:scroll 20s linear infinite;}
 @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
-/* FEATURES */
 .feature-container{margin:15px;display:flex;flex-direction:column;gap:15px;}
 .countdown-box{background:linear-gradient(135deg,#1a1825,#000);border:1px solid var(--primary);border-radius:15px;padding:15px;text-align:center;display:none;}
 .countdown-timer{display:flex;justify-content:center;gap:10px;font-size:1.5rem;font-weight:bold;color:white;}
@@ -34,7 +31,6 @@ body.light-theme{--bg:#f5f5f5;--surface:#ffffff;--text:#1a1a1a;--card-bg:#ffffff
 .poll-bar-bg{background:rgba(255,255,255,0.1);height:30px;border-radius:8px;position:relative;margin-bottom:5px;overflow:hidden;}
 .poll-bar-fill{height:100%;background:linear-gradient(90deg,var(--primary),#ff4d00);width:0%;transition:width 0.5s;}
 .poll-text{position:absolute;top:0;left:10px;height:100%;display:flex;align-items:center;font-size:0.8rem;font-weight:bold;color:white;text-shadow:0 0 3px black;}
-/* CARD & BADGES */
 .container{padding:15px;}
 .card{background:var(--card-bg);border-radius:15px;padding:10px;margin-bottom:12px;display:flex;align-items:center;cursor:pointer;border:1px solid var(--border);position:relative;}
 .card.hidden{display:none;}
@@ -55,7 +51,6 @@ body.light-theme{--bg:#f5f5f5;--surface:#ffffff;--text:#1a1a1a;--card-bg:#ffffff
 .play-icon{color:var(--primary);font-size:1.4rem;margin-left:10px;}
 .load-more-btn{width:100%;padding:15px;background:var(--primary);color:white;border:none;border-radius:15px;font-weight:bold;cursor:pointer;margin-top:10px;}
 .load-more-btn.hidden{display:none;}
-/* CHAT */
 .chat-btn{position:fixed;bottom:20px;right:20px;width:60px;height:60px;background:var(--primary);border-radius:50%;display:flex;justify-content:center;align-items:center;color:white;font-size:1.5rem;box-shadow:0 5px 15px rgba(0,0,0,0.3);z-index:200;cursor:pointer;}
 .chat-modal{position:fixed;bottom:-100%;left:0;width:100%;height:96%;background:var(--surface);border-radius:20px 20px 0 0;z-index:201;transition:0.4s;display:flex;flex-direction:column;box-shadow:0 -5px 30px rgba(0,0,0,0.5);}
 .chat-modal.active{bottom:0;}
@@ -72,7 +67,6 @@ body.light-theme{--bg:#f5f5f5;--surface:#ffffff;--text:#1a1a1a;--card-bg:#ffffff
 .chat-img-btn{background:none;border:none;color:white;font-size:1.2rem;cursor:pointer;}
 .light-theme .chat-img-btn{color:#333;}
 .chat-img{max-width:100%;border-radius:8px;margin-top:5px;border:1px solid rgba(255,255,255,0.2);}
-/* ADMIN & MODAL */
 .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:1000;display:none;justify-content:center;align-items:center;}
 .modal-box{background:var(--surface);width:85%;max-width:380px;border-radius:20px;padding:20px;border:1px solid var(--border);}
 .admin-panel-btn{position:fixed;bottom:20px;left:20px;width:50px;height:50px;background:#ff0040;border-radius:50%;display:none;justify-content:center;align-items:center;color:white;box-shadow:0 5px 15px rgba(0,0,0,0.5);cursor:pointer;z-index:200;}
@@ -165,18 +159,17 @@ function init(){
   if(v.countdown&&v.countdown.active){document.getElementById('countdownBox').style.display='block'; startTimer(v.countdown.target, v.countdown.title);}else{document.getElementById('countdownBox').style.display='none';}
   if(v.maint&&!isAdmin) document.getElementById('maintenanceScreen').style.display='flex'; else document.getElementById('maintenanceScreen').style.display='none';
  });
- db.ref('stats').on('value', s=>{ 
-    const v = s.val() || {};
-    globalLikes = v.likes || {};
-    globalViews = v.views || {};
-    updateStatsUI();
- });
+ 
+ // OLD DATA RESTORATION
+ db.ref('channel_views').on('value', s=>{ globalViews = s.val() || {}; updateStatsUI(); });
+ db.ref('channel_likes').on('value', s=>{ globalLikes = s.val() || {}; updateStatsUI(); });
+ 
  initChat(); initPresence();
 }
 
 function updateStatsUI(){
  document.querySelectorAll('.card').forEach(c=>{
-    const k = c.getAttribute('data-key');
+    const k = sanitizeKey(c.getAttribute('data-title'));
     if(k){
         const l = globalLikes[k] || 0;
         const v = globalViews[k] || 0;
@@ -188,24 +181,27 @@ function updateStatsUI(){
  });
 }
 
+function sanitizeKey(k) { return (k||"").replace(/[.#$\/\[\]]/g, '_'); }
+
 function render(){
  const c=document.getElementById('list'); c.innerHTML='';
  filtered.forEach((i,x)=>{ if(x>=shown)return;
   const isNew = checkNew(i.added_date);
   const badge = isNew ? '<span class="badge badge-new">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>';
-  const isLiked = likes.includes(i.key) ? 'liked' : '';
-  const div=document.createElement('div'); div.className='card'; div.setAttribute('data-key', i.key);
+  const safeKey = sanitizeKey(i.title);
+  const isLiked = likes.includes(safeKey) ? 'liked' : '';
+  const div=document.createElement('div'); div.className='card'; div.setAttribute('data-title', i.title);
   
   div.innerHTML=`<div class="img-box"><img src="${i.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'">${badge}</div>
   <div class="card-info"><div class="card-name">${i.title}</div>
   <div class="card-meta">
     <span>${i.added_date||""}</span>
-    <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="view-cnt">${globalViews[i.key]||0}</span></span>
-    <span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${i.key}')"></i> <span class="like-cnt">${globalLikes[i.key]||0}</span></span>
+    <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="view-cnt">${globalViews[safeKey]||0}</span></span>
+    <span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${i.title}')"></i> <span class="like-cnt">${globalLikes[safeKey]||0}</span></span>
   </div></div><i class="fas fa-play-circle play-icon"></i>`;
   div.onclick=(e)=>{ 
       if(e.target.classList.contains('stat-heart')) return;
-      db.ref('stats/views/'+i.key).transaction(c=>(c||0)+1);
+      db.ref('channel_views/'+safeKey).transaction(c=>(c||0)+1);
       document.getElementById('mTitle').innerText=i.title; document.getElementById('playerModal').style.display='flex'; setupPlayer(i); 
   };
   c.appendChild(div);
@@ -213,11 +209,12 @@ function render(){
  if(filtered.length>shown) document.getElementById('loadMoreBtn').classList.remove('hidden'); else document.getElementById('loadMoreBtn').classList.add('hidden');
 }
 
-function toggleLike(e, key){
+function toggleLike(e, title){
     e.stopPropagation();
+    const key = sanitizeKey(title);
     if(likes.includes(key)){ showToast('Zaten beğendin!'); return; }
     likes.push(key); localStorage.setItem('likes', JSON.stringify(likes));
-    db.ref('stats/likes/'+key).transaction(c=>(c||0)+1);
+    db.ref('channel_likes/'+key).transaction(c=>(c||0)+1);
     e.target.classList.add('liked');
 }
 
@@ -230,7 +227,7 @@ function setupPlayer(i){
 
 // CHAT SYSTEM
 function initChat(){
- db.ref('chat').limitToLast(50).on('child_added',s=>{
+ db.ref('global_chat').limitToLast(50).on('child_added',s=>{
   const m=s.val(); const d=document.createElement('div'); d.className=`message-bubble ${m.uid===myId?'msg-right':'msg-left'}`;
   if(m.isAdmin) d.style.border='1px solid #ffeb3b';
   let content = m.type==='img' ? `<img src="${m.text}" class="chat-img" onclick="window.open('${m.text}')">` : `<div>${m.text}</div>`;
@@ -244,7 +241,7 @@ function sendMsg(){
  const t=document.getElementById('msgInput').value.trim(); 
  if(t===ADMIN_PASS){ localStorage.setItem('isAdmin','true'); location.reload(); return; }
  if(!t) return;
- db.ref('chat').push({user:isAdmin?'YÖNETİCİ':myUser, text:t, uid:myId, isAdmin:isAdmin, reply:repData, type:'text', time:Date.now()});
+ db.ref('global_chat').push({user:isAdmin?'YÖNETİCİ':myUser, text:t, uid:myId, isAdmin:isAdmin, reply:repData, type:'text', time:Date.now()});
  document.getElementById('msgInput').value=''; cancelReply();
 }
 
@@ -255,7 +252,7 @@ function uploadImg(e){
    const c=document.createElement('canvas'); const ctx=c.getContext('2d');
    const scale=500/img.width; c.width=500; c.height=img.height*scale;
    ctx.drawImage(img,0,0,c.width,c.height);
-   db.ref('chat').push({user:myUser, text:c.toDataURL('image/jpeg',0.7), uid:myId, isAdmin:isAdmin, type:'img', time:Date.now()});
+   db.ref('global_chat').push({user:myUser, text:c.toDataURL('image/jpeg',0.7), uid:myId, isAdmin:isAdmin, type:'img', time:Date.now()});
   }; img.src=ev.target.result;
  }; r.readAsDataURL(f);
 }
@@ -264,7 +261,7 @@ window.prepReply=function(u,t){ repData={user:u,text:t.substring(0,20)+'...'}, d
 window.cancelReply=function(){ repData=null; document.getElementById('replyPreview').style.display='none'; };
 window.openAct=function(uid,u,k){ if(uid===myId)return; document.getElementById('actTitle').innerText=u; document.getElementById('actionModal').style.display='flex'; if(isAdmin){document.getElementById('admActs').style.display='block';} window.selMsg={uid,k,u}; };
 window.actReply=function(){ document.getElementById('actionModal').style.display='none'; prepReply(selMsg.u, "Mesaj..."); };
-window.actDel=function(){ db.ref('chat/'+selMsg.k).remove(); document.getElementById('actionModal').style.display='none'; location.reload(); };
+window.actDel=function(){ db.ref('global_chat/'+selMsg.k).remove(); document.getElementById('actionModal').style.display='none'; location.reload(); };
 window.actBan=function(){ db.ref('banned/'+selMsg.uid).set(true); document.getElementById('actionModal').style.display='none'; };
 
 // ADMIN
@@ -283,7 +280,7 @@ window.resetPoll=()=>{ db.ref('extras/poll').set({active:false}); };
 window.saveCountdown=()=>{ db.ref('extras/countdown').set({active:true,title:document.getElementById('cdT').value,target:new Date(document.getElementById('cdD').value).getTime()}); };
 window.stopCountdown=()=>{ db.ref('extras/countdown').set({active:false}); };
 window.toggleMaint=()=>{ db.ref('extras/maint').transaction(v=>!v); };
-window.clearChat=()=>{ if(confirm('Sil?')) db.ref('chat').remove(); };
+window.clearChat=()=>{ if(confirm('Sil?')) db.ref('global_chat').remove(); };
 window.restoreBackup=()=>{ if(backup.length) backup.forEach(i=>db.ref('channels').push(i)); showToast('Yüklendi'); };
 window.shortenUrl=function(id){ const u=document.getElementById(id).value; if(u) fetch(`https://ay.live/api/?api=${API_KEY}&url=${encodeURIComponent(u)}&format=text`).then(r=>r.text()).then(t=>{ if(t.startsWith("http")) document.getElementById(id).value=t; }); };
 
