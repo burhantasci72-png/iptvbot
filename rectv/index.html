@@ -1,405 +1,262 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INADINA TV</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- FIREBASE (Compat) -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
-    <style>
-        :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; --text: #e8e6e3; --card-bg: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.03); }
-        body { background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 20px; transition: background 0.3s, color 0.3s; }
-        body.light-theme { --bg: #f5f5f5; --surface: #ffffff; --text: #1a1a1a; --card-bg: #ffffff; --border: #e0e0e0; }
-        
-        .top-bar { padding: 15px 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: background 0.3s; }
-        .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #ff0040, #ff4d00); -webkit-background-clip: text; color: transparent; }
-        
-        .header-actions { display: flex; align-items: center; gap: 8px; }
-        .theme-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; transition: all 0.3s; }
-        .light-theme .theme-btn { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #1a1a1a; }
-        
-        /* SEARCH BAR STYLES */
-        .search-wrapper { position: relative; display: flex; align-items: center; }
-        .search-input-header { width: 0; padding: 0; border: none; outline: none; background: rgba(255,255,255,0.1); color: white; border-radius: 20px; transition: all 0.4s ease; visibility: hidden; opacity: 0; font-size: 0.9rem; }
-        .search-input-header.active { width: 140px; padding: 6px 12px; visibility: visible; opacity: 1; margin-right: 5px; border: 1px solid rgba(255,255,255,0.2); }
-        .light-theme .search-input-header { background: #eee; color: #333; border: 1px solid #ccc; }
-        .search-icon-btn { background: none; border: none; color: inherit; font-size: 1.2rem; cursor: pointer; padding: 5px; }
-
-        .online-badge { display: flex; align-items: center; gap: 6px; padding: 6px 10px; background: rgba(0, 255, 127, 0.1); border: 1px solid rgba(0, 255, 127, 0.2); border-radius: 8px; font-size: 0.8rem; font-weight: bold; color: #00ff7f; animation: pulse-green 2s infinite; }
-        @keyframes pulse-green { 0% { opacity: 0.8; } 50% { opacity: 1; text-shadow: 0 0 5px rgba(0,255,127,0.5); } 100% { opacity: 0.8; } }
-
-        .announcement-bar { background: #ffeb3b; color: #000; overflow: hidden; white-space: nowrap; padding: 8px 0; font-weight: bold; font-size: 0.95rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: none; border-bottom: 3px solid #ff4d00; position:relative; z-index:90; }
-        .announcement-content { display: inline-block; padding-left: 100%; animation: scroll-left 20s linear infinite; }
-        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-        .container { padding: 15px; }
-        .card { background: var(--card-bg); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid var(--border); position: relative; transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .card.hidden { display: none; }
-        .light-theme .card { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .img-box { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
-        .card-img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
-        
-        .badge { position: absolute; top: -8px; right: -8px; font-size: 0.65rem; padding: 3px 8px; border-radius: 6px; font-weight: 800; z-index: 10; animation: pulse-glow 2s infinite ease-in-out; }
-        .badge-iptv { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: #fff; }
-        .badge-new { background: linear-gradient(135deg, #ffcc00, #ff9900); color: #000; }
-        @keyframes pulse-glow { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        
-        .card-info { flex: 1; margin-left: 12px; }
-        .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; color: var(--text); }
-        .card-meta { font-size: 0.75rem; opacity: 0.5; color: var(--text); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        
-        .stat-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255, 255, 255, 0.05); padding: 2px 8px; border-radius: 8px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .stat-eye { color: var(--primary); }
-        .stat-heart { color: #ff3d3d; cursor: pointer; transition: transform 0.2s; }
-        .stat-heart.liked { color: #ff0000; text-shadow: 0 0 10px rgba(255,0,0,0.5); transform: scale(1.2); }
-        .stat-report { color: #ff4d4d; cursor: pointer; transition: transform 0.2s; }
-        .play-icon { color: var(--primary); font-size: 1.4rem; margin-left: 10px; }
-
-        .load-more-btn { width: calc(100% - 30px); margin: 20px 15px; padding: 15px; border: none; border-radius: 15px; background: linear-gradient(135deg, var(--primary), #ff4d00); color: white; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255, 0, 64, 0.3); }
-        .load-more-btn.hidden { display: none; }
-        
-        .toast { visibility: hidden; min-width: 250px; background-color: #1a1825; border: 1px solid rgba(255,255,255,0.1); color: #fff; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 2000; left: 50%; bottom: 80px; transform: translateX(-50%); font-size: 0.9rem; box-shadow: 0 5px 20px rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s, bottom 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .toast.show { visibility: visible; opacity: 1; bottom: 90px; }
-
-        .chat-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: linear-gradient(135deg, #00d2ff, #3a7bd5); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 200; }
-        .chat-modal { position: fixed; bottom: -100%; left: 0; width: 100%; height: 96%; background: var(--surface); border-radius: 20px 20px 0 0; z-index: 201; transition: bottom 0.4s; display: flex; flex-direction: column; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); }
-        .chat-modal.active { bottom: 0; }
-        .chat-tabs { display: flex; width: 100%; background: rgba(0,0,0,0.2); border-radius: 10px; padding: 2px; }
-        .chat-tab { flex: 1; text-align: center; padding: 8px; font-size: 0.9rem; cursor: pointer; border-radius: 8px; transition: all 0.3s; }
-        .chat-tab.active { background: var(--primary); color: white; font-weight: bold; }
-        .chat-view { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
-        .chat-view.hidden { display: none; }
-        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .message-bubble { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 0.9rem; position: relative; word-wrap: break-word; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .msg-left { align-self: flex-start; background: rgba(255,255,255,0.1); border-bottom-left-radius: 2px; }
-        .msg-right { align-self: flex-end; background: var(--primary); border-bottom-right-radius: 2px; }
-        .msg-user { font-size: 0.7rem; opacity: 0.7; margin-bottom: 2px; display: block; font-weight: bold; cursor:pointer; }
-        .msg-admin { color: #ffeb3b; }
-        .chat-img { max-width: 100%; border-radius: 8px; margin-top: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.2); }
-        
-        .chat-input-area { padding: 10px; display: flex; gap: 10px; background: rgba(0,0,0,0.2); }
-        .chat-input { flex: 1; padding: 10px; border-radius: 20px; border: none; outline: none; background: rgba(255,255,255,0.1); color: var(--text); }
-        .light-theme .chat-input { background: white; color: black; }
-        .chat-img-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
-        .light-theme .chat-img-btn { background: rgba(0,0,0,0.1); color: #333; }
-
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; justify-content:center; align-items:center; }
-        .modal-box { background: var(--surface); width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid var(--border); position: relative; }
-        .admin-panel-btn { position: fixed; bottom: 20px; left: 20px; width: 50px; height: 50px; background: #ff0040; border-radius: 50%; display: none; justify-content: center; align-items: center; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.5); cursor: pointer; z-index: 200; }
-        #adminPanelModal .modal-box { display: flex; flex-direction: column; max-height: 90vh; padding-bottom: 60px; }
-        .admin-modal-body { overflow-y: auto; text-align: left; padding-right: 5px; flex: 1; }
-        .admin-menu-btn { background: rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; margin-top: 15px; color: #ffeb3b; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255, 235, 59, 0.3); }
-        .admin-submenu { display: none; margin-top: 10px; padding-left: 5px; border-left: 2px solid #ffeb3b; }
-        .admin-submenu.active { display: block; animation: slideDown 0.3s; }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .custom-input { width: 90%; padding: 12px; margin: 5px 0; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; outline: none; }
-        .btn-confirm { background: #ff0040; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
-        .btn-cancel { background: #444; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 5px; }
-        .btn-shorten { background: #00d2ff; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 5px; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; width: 100%; justify-content: center; }
-        .channel-item-admin { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .action-menu-btn { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: var(--text); font-size: 1rem; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 10px; }
-        .player-opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; color: white; }
-        .report-item { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid rgba(255,0,64,0.3); }
-        .btn-sm { padding: 5px 10px; border-radius: 5px; border: none; color: white; cursor: pointer; font-size: 0.8rem; }
-    </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>INADINA TV</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<style>
+:root{--hue:345;--primary:hsl(var(--hue),100%,50%);--bg:#0f0a1a;--surface:#1a1825;--text:#e8e6e3;--card-bg:rgba(255,255,255,0.06);--border:rgba(255,255,255,0.03);}
+body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding-bottom:20px;transition:0.3s;}
+body.light-theme{--bg:#f5f5f5;--surface:#ffffff;--text:#1a1a1a;--card-bg:#ffffff;--border:#e0e0e0;}
+.top-bar{padding:15px 20px;background:var(--surface);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 4px 10px rgba(0,0,0,0.3);}
+.logo{font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,#ff0040,#ff4d00);-webkit-background-clip:text;color:transparent;}
+.header-actions{display:flex;align-items:center;gap:8px;}
+.theme-btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:8px;border-radius:8px;cursor:pointer;}
+.light-theme .theme-btn{background:rgba(0,0,0,0.05);color:#333;border-color:rgba(0,0,0,0.1);}
+.online-badge{display:flex;align-items:center;gap:6px;padding:6px 10px;background:rgba(0,255,127,0.1);border:1px solid rgba(0,255,127,0.2);border-radius:8px;font-size:0.8rem;color:#00ff7f;}
+.search-wrapper{position:relative;display:flex;align-items:center;}
+.search-input-header{width:0;padding:0;border:none;outline:none;background:rgba(255,255,255,0.1);color:white;border-radius:20px;transition:0.4s;visibility:hidden;opacity:0;}
+.search-input-header.active{width:140px;padding:6px 12px;visibility:visible;opacity:1;margin-right:5px;border:1px solid rgba(255,255,255,0.2);}
+.light-theme .search-input-header{background:#eee;color:#333;border:1px solid:#ccc;}
+.search-icon-btn{background:none;border:none;color:inherit;font-size:1.2rem;cursor:pointer;padding:5px;}
+.announcement-bar{background:#ffeb3b;color:#000;white-space:nowrap;overflow:hidden;padding:8px 0;font-weight:bold;font-size:0.95rem;display:none;border-bottom:3px solid #ff4d00;}
+.announcement-content{display:inline-block;padding-left:100%;animation:scroll 20s linear infinite;}
+@keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
+.feature-container{margin:15px;display:flex;flex-direction:column;gap:15px;}
+.countdown-box{background:linear-gradient(135deg,#1a1825,#000);border:1px solid var(--primary);border-radius:15px;padding:15px;text-align:center;display:none;}
+.countdown-timer{display:flex;justify-content:center;gap:10px;font-size:1.5rem;font-weight:bold;color:white;}
+.poll-box{background:var(--card-bg);border:1px solid var(--border);border-radius:15px;padding:15px;display:none;}
+.poll-bar-bg{background:rgba(255,255,255,0.1);height:30px;border-radius:8px;position:relative;margin-bottom:5px;overflow:hidden;}
+.poll-bar-fill{height:100%;background:linear-gradient(90deg,var(--primary),#ff4d00);width:0%;transition:width 0.5s;}
+.poll-text{position:absolute;top:0;left:10px;height:100%;display:flex;align-items:center;font-size:0.8rem;font-weight:bold;color:white;text-shadow:0 0 3px black;}
+.container{padding:15px;}
+.card{background:var(--card-bg);border-radius:15px;padding:10px;margin-bottom:12px;display:flex;align-items:center;cursor:pointer;border:1px solid var(--border);position:relative;}
+.card.hidden{display:none;}
+.img-box{position:relative;width:55px;height:55px;flex-shrink:0;}
+.card-img{width:100%;height:100%;border-radius:10px;object-fit:cover;}
+.badge{position:absolute;top:-8px;right:-8px;font-size:0.6rem;padding:2px 6px;border-radius:6px;font-weight:800;z-index:10;}
+.badge-iptv{background:linear-gradient(135deg,#00d2ff,#3a7bd5);color:#fff;}
+.badge-new{background:linear-gradient(135deg,#ffcc00,#ff9900);color:#000;animation:pulse 2s infinite;}
+@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
+.card-info{flex:1;margin-left:12px;}
+.card-name{font-weight:700;margin-bottom:3px;}
+.card-meta{font-size:0.75rem;opacity:0.6;display:flex;align-items:center;gap:8px;}
+.stat-badge{display:inline-flex;align-items:center;gap:3px;background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:6px;}
+.stat-heart.liked{color:red;transform:scale(1.2);}
+.load-more-btn{width:100%;padding:15px;background:var(--primary);color:white;border:none;border-radius:15px;font-weight:bold;cursor:pointer;margin-top:10px;}
+.load-more-btn.hidden{display:none;}
+.chat-btn{position:fixed;bottom:20px;right:20px;width:60px;height:60px;background:var(--primary);border-radius:50%;display:flex;justify-content:center;align-items:center;color:white;font-size:1.5rem;box-shadow:0 5px 15px rgba(0,0,0,0.3);z-index:200;cursor:pointer;}
+.chat-modal{position:fixed;bottom:-100%;left:0;width:100%;height:96%;background:var(--surface);border-radius:20px 20px 0 0;z-index:201;transition:0.4s;display:flex;flex-direction:column;box-shadow:0 -5px 30px rgba(0,0,0,0.5);}
+.chat-modal.active{bottom:0;}
+.chat-messages{flex:1;padding:15px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
+.message-bubble{max-width:80%;padding:8px 12px;border-radius:12px;font-size:0.9rem;position:relative;word-wrap:break-word;color:white;background:rgba(255,255,255,0.1);}
+.msg-right{align-self:flex-end;background:var(--primary);}
+.msg-left{align-self:flex-start;}
+.msg-user{font-size:0.7rem;opacity:0.7;margin-bottom:2px;display:block;font-weight:bold;cursor:pointer;}
+.msg-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:4px;}
+.action-btn{font-size:0.8rem;opacity:0.7;cursor:pointer;}
+.action-btn:hover{opacity:1;color:#ffeb3b;}
+.quoted-msg{background:rgba(0,0,0,0.3);border-left:3px solid #ff4d00;padding:5px;font-size:0.75rem;margin-bottom:5px;border-radius:4px;}
+.reply-preview-bar{background:#222;padding:10px;display:none;justify-content:space-between;align-items:center;border-left:4px solid var(--primary);}
+.chat-input-area{padding:10px;display:flex;gap:10px;background:rgba(0,0,0,0.2);}
+.chat-input{flex:1;padding:10px;border-radius:20px;border:none;outline:none;background:rgba(255,255,255,0.1);color:var(--text);}
+.light-theme .chat-input{background:white;color:black;}
+.chat-img-btn{background:none;border:none;color:white;font-size:1.2rem;cursor:pointer;}
+.light-theme .chat-img-btn{color:#333;}
+.chat-img{max-width:100%;border-radius:8px;margin-top:5px;border:1px solid rgba(255,255,255,0.2);}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:1000;display:none;justify-content:center;align-items:center;}
+.modal-box{background:var(--surface);width:85%;max-width:380px;border-radius:20px;padding:20px;border:1px solid var(--border);}
+.admin-panel-btn{position:fixed;bottom:20px;left:20px;width:50px;height:50px;background:#ff0040;border-radius:50%;display:none;justify-content:center;align-items:center;color:white;box-shadow:0 5px 15px rgba(0,0,0,0.5);cursor:pointer;z-index:200;}
+#adminPanelModal .modal-box{display:flex;flex-direction:column;max-height:90vh;padding-bottom:60px;}
+.admin-modal-body{overflow-y:auto;text-align:left;padding-right:5px;flex:1;}
+.admin-menu-btn{background:rgba(255,255,255,0.08);padding:12px;border-radius:10px;margin-top:10px;color:#ffeb3b;cursor:pointer;display:flex;justify-content:space-between;}
+.admin-submenu{display:none;margin-top:5px;padding-left:10px;border-left:2px solid #ffeb3b;}
+.admin-submenu.active{display:block;}
+.custom-input{width:90%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #555;background:#222;color:white;}
+.light-theme .custom-input{background:white;color:black;border-color:#ccc;}
+.btn-confirm{width:100%;padding:10px;background:#ff0040;color:white;border:none;border-radius:8px;font-weight:bold;margin-top:5px;cursor:pointer;}
+.btn-cancel{width:100%;padding:10px;background:#444;color:white;border:none;border-radius:8px;margin-top:5px;cursor:pointer;}
+.toast{visibility:hidden;min-width:250px;background:#333;color:#fff;text-align:center;border-radius:50px;padding:16px;position:fixed;z-index:2000;left:50%;bottom:80px;transform:translateX(-50%);opacity:0;transition:0.3s;}
+.toast.show{visibility:visible;opacity:1;bottom:90px;}
+</style>
 </head>
 <body>
-    <div id="toast" class="toast"></div>
+<div id="toast" class="toast"></div>
+<div id="maintenanceScreen" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#111;z-index:9000;color:#ffeb3b;flex-direction:column;justify-content:center;align-items:center;">
+<i class="fas fa-tools" style="font-size:4rem;margin-bottom:20px;"></i><h1>BAKIM MODU</h1>
+<input type="password" id="emergencyPass" class="custom-input" placeholder="Şifre" style="width:200px;text-align:center;"><button onclick="emergencyLogin()" class="btn-confirm" style="width:auto;">Giriş</button>
+</div>
 
-    <!-- BAKIM MODU -->
-    <div id="maintenanceScreen" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#111; z-index:9000; color:#ffeb3b; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
-        <i class="fas fa-tools" style="font-size:4rem; margin-bottom:20px;"></i><h1>BAKIM MODU</h1><p>Sistem güncelleniyor...</p>
-        <input type="password" id="emergencyPass" class="custom-input" placeholder="Yönetici Şifresi" style="width:200px; text-align:center;">
-        <button onclick="emergencyLogin()" class="btn-confirm" style="width:auto;">Giriş Yap</button>
-    </div>
+<!-- ADMIN PANEL -->
+<div id="adminPanelModal" class="modal"><div class="modal-box"><h3 style="text-align:center;color:#ff0040;">🛡️ Yönetici Paneli</h3><div class="admin-modal-body">
+<div class="admin-menu-btn" onclick="toggleSubMenu('channelAdmin')"><span>📺 Kanal Yönetimi</span> ▼</div><div id="channelAdmin" class="admin-submenu"><input type="text" id="addTitle" class="custom-input" placeholder="Kanal Adı"><input type="text" id="addM3u" class="custom-input" placeholder="M3U URL"><input type="text" id="addWeb" class="custom-input" placeholder="Web URL (Link Kısaltılır)"><input type="text" id="addImg" class="custom-input" placeholder="Resim URL"><input type="number" id="addOrder" class="custom-input" placeholder="Sıra"><button onclick="addNewChannel()" class="btn-confirm">Ekle</button><div id="adminChannelList" style="margin-top:10px;"></div></div>
+<div class="admin-menu-btn" onclick="toggleSubMenu('pollAdmin')"><span>📊 Anket & Sayaç</span> ▼</div><div id="pollAdmin" class="admin-submenu"><h5>Anket</h5><input type="text" id="pollQ" class="custom-input" placeholder="Soru"><input type="text" id="pollO1" class="custom-input" placeholder="Seçenek 1"><input type="text" id="pollO2" class="custom-input" placeholder="Seçenek 2"><button onclick="savePoll()" class="btn-confirm">Başlat</button><button onclick="resetPoll()" class="btn-cancel">Bitir</button><h5>Sayaç</h5><input type="text" id="cdT" class="custom-input" placeholder="Başlık"><input type="datetime-local" id="cdD" class="custom-input" style="color-scheme:dark;"><button onclick="saveCountdown()" class="btn-confirm">Başlat</button><button onclick="stopCountdown()" class="btn-cancel">Durdur</button></div>
+<div class="admin-menu-btn" onclick="toggleSubMenu('extraAdmin')"><span>📢 Duyuru & Ayarlar</span> ▼</div><div id="extraAdmin" class="admin-submenu"><input type="text" id="annoInp" class="custom-input" placeholder="Kayan Yazı"><button onclick="saveAnno()" class="btn-confirm">Yayınla</button><button onclick="stopAnno()" class="btn-cancel">Kaldır</button><button class="btn-cancel" onclick="toggleMaint()" style="background:#f39c12;">🚧 Bakım Modu</button><button class="btn-cancel" onclick="clearChat()" style="background:#c0392b;">🗑️ Sohbeti Sil</button><button class="btn-confirm" onclick="restoreBackup()" style="background:#3498db;">📂 Eski Listeyi Yükle</button></div>
+</div><button onclick="document.getElementById('adminPanelModal').style.display='none'" class="btn-cancel">Kapat</button></div></div>
 
-    <!-- ADMIN PANEL -->
-    <div id="adminPanelModal" class="modal">
-        <div class="modal-box">
-            <h3 style="text-align:center; color:#ff0040; margin-top:0;">🛡️ Yönetici Paneli</h3>
-            <div class="admin-modal-body">
-                <div class="admin-menu-btn" onclick="toggleSubMenu('reportAdmin')"><span>⚠️ Bildirimler (<span id="reportCount">0</span>)</span> <i class="fas fa-chevron-down"></i></div>
-                <div id="reportAdmin" class="admin-submenu"><button class="btn-cancel" onclick="deleteAllReports()" style="background:#555;"><i class="fas fa-trash"></i> Tümünü Sil</button><div id="adminReportsList" style="margin-top:10px;"></div></div>
+<!-- MAIN UI -->
+<div class="top-bar">
+<div class="logo">INADINA TV</div>
+<div class="header-actions">
+<div class="search-wrapper"><input type="text" id="searchInput" class="search-input-header" placeholder="Ara..." onkeyup="filterList()"><button class="search-icon-btn" onclick="toggleSearch()"><i class="fas fa-search"></i></button></div>
+<div class="online-badge"><i class="fas fa-users"></i> <span id="onlineCount">0</span></div>
+<button class="theme-btn" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+<a href="https://t.me/inadinatv" style="color:white;font-size:1.4rem;"><i class="fab fa-telegram"></i></a>
+</div>
+</div>
+<div id="announcementBar" class="announcement-bar"><div class="announcement-content" id="announcementText"></div></div>
 
-                <div class="admin-menu-btn" onclick="toggleSubMenu('channelAdmin')"><span>📺 Kanal Yönetimi</span> <i class="fas fa-chevron-down"></i></div>
-                <div id="channelAdmin" class="admin-submenu">
-                    <h4 style="color:#aaa;">Yeni Kanal</h4>
-                    <input type="text" id="addTitle" class="custom-input" placeholder="Kanal Adı">
-                    <input type="text" id="addM3u" class="custom-input" placeholder="M3U / Yayın Linki">
-                    <input type="text" id="addWeb" class="custom-input" placeholder="Web / İndirme Linki">
-                    <button class="btn-shorten" onclick="shortenUrl('addWeb')">Link Kısalt</button>
-                    <input type="text" id="addImg" class="custom-input" placeholder="İkon URL">
-                    <input type="number" id="addOrder" class="custom-input" placeholder="Sıra No">
-                    <button onclick="addNewChannel()" class="btn-confirm">Ekle</button>
-                    <h4 style="color:#aaa;margin-top:15px;">Kanallar</h4>
-                    <div id="adminChannelList" style="max-height:200px; overflow-y:auto;"></div>
-                </div>
+<div class="feature-container" id="featureContainer">
+<div id="countdownBox" class="countdown-box"><div id="countdownTitle" style="color:var(--primary);font-weight:bold;"></div><div id="countdownTimer" class="countdown-timer"></div></div>
+<div id="pollBox" class="poll-box"><span id="pollQuestion" style="font-weight:bold;"></span><div onclick="vote('opt1')" style="margin-top:5px;cursor:pointer;"><div class="poll-bar-bg"><div id="bar1" class="poll-bar-fill"></div></div><div style="display:flex;justify-content:space-between;margin-top:-25px;position:relative;z-index:2;color:white;padding:0 5px;"><span id="pollOpt1"></span><span id="pollPct1">0%</span></div></div><div onclick="vote('opt2')" style="margin-top:5px;cursor:pointer;"><div class="poll-bar-bg"><div id="bar2" class="poll-bar-fill"></div></div><div style="display:flex;justify-content:space-between;margin-top:-25px;position:relative;z-index:2;color:white;padding:0 5px;"><span id="pollOpt2"></span><span id="pollPct2">0%</span></div></div></div>
+</div>
 
-                <div class="admin-menu-btn" onclick="toggleSubMenu('extrasAdmin')"><span>🎉 Ekstralar</span> <i class="fas fa-chevron-down"></i></div>
-                <div id="extrasAdmin" class="admin-submenu">
-                    <input type="text" id="annoInput" class="custom-input" placeholder="Kayan Yazı Metni">
-                    <button onclick="saveAnnouncement()" class="btn-confirm">Yayınla</button>
-                    <button onclick="stopAnnouncement()" class="btn-cancel">Kaldır</button>
-                </div>
-                
-                <div class="admin-menu-btn" onclick="toggleSubMenu('settingsContainer')"><span>⚙️ Ayarlar</span> <i class="fas fa-chevron-down"></i></div>
-                <div id="settingsContainer" class="admin-submenu">
-                    <button class="btn-cancel" onclick="toggleMaintenance()">🚧 Bakım Modu</button>
-                    <button class="btn-cancel" onclick="clearChat()" style="background:#d32f2f;">🗑️ Sohbeti Sil</button>
-                    <button class="btn-confirm" onclick="restoreBackup()" style="background:#2196F3; margin-top:15px;">📂 Eski Listeyi Yükle</button>
-                </div>
-            </div>
-            <button onclick="document.getElementById('adminPanelModal').style.display='none'" class="btn-cancel">Kapat</button>
-        </div>
-    </div>
+<div class="container"><div id="list"></div></div>
+<button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">Daha Fazla</button>
+<div class="chat-btn" onclick="toggleChat()"><i class="fas fa-comment-dots"></i></div>
+<div class="admin-panel-btn" id="adminBtn" onclick="openAdminPanel()"><i class="fas fa-shield-alt"></i></div>
 
-    <!-- UI -->
-    <div class="top-bar">
-        <div class="logo">INADINA TV</div>
-        
-        <!-- HEADER ACTIONS: ARAMA + ONLINE + TEMA -->
-        <div class="header-actions">
-            <!-- GENİŞLEYEN ARAMA ÇUBUĞU -->
-            <div class="search-wrapper">
-                <input type="text" id="searchInput" class="search-input-header" placeholder="Kanal ara..." onkeyup="filterList()">
-                <button class="search-icon-btn" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
-            </div>
+<!-- CHAT -->
+<div class="chat-modal" id="chatModal">
+<div style="padding:15px;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.2);">
+<div><span id="chatStatus" style="font-weight:bold;">Sohbet 🟢</span> <i class="fas fa-edit" onclick="document.getElementById('nameModal').style.display='flex'"></i></div><i class="fas fa-times" onclick="toggleChat()"></i>
+</div>
+<div id="chatMessages" class="chat-messages"></div>
+<div id="replyPreview" class="reply-preview-bar"><div><b id="replyUser"></b>: <span id="replyText"></span></div><i class="fas fa-times" onclick="cancelReply()"></i></div>
+<div class="chat-input-area">
+<button class="chat-img-btn" onclick="document.getElementById('imgUpload').click()"><i class="fas fa-camera"></i></button><input type="file" id="imgUpload" style="display:none" accept="image/*" onchange="uploadImg(event)">
+<input type="text" class="chat-input" id="msgInput" placeholder="Mesaj..."><button onclick="sendMsg()" class="chat-img-btn" style="background:var(--primary);"><i class="fas fa-paper-plane"></i></button>
+</div>
+</div>
 
-            <div class="online-badge" title="Online Sayısı"><i class="fas fa-users"></i> <span id="onlineCount">0</span></div>
-            <button class="theme-btn" onclick="toggleTheme()" id="themeBtn"><i class="fas fa-moon"></i></button>
-            <a href="https://t.me/inadinatv" id="telegramBtn" style="color:white; font-size:1.4rem;"><i class="fab fa-telegram"></i></a>
-        </div>
-    </div>
+<!-- MODALS -->
+<div id="nameModal" class="modal"><div class="modal-box"><h3>İsim Değiştir</h3><input type="text" id="newName" class="custom-input"><button onclick="saveName()" class="btn-confirm">Kaydet</button><button onclick="document.getElementById('nameModal').style.display='none'" class="btn-cancel">İptal</button></div></div>
+<div id="playerModal" class="modal"><div class="modal-box"><h3 id="mTitle"></h3><button id="btnWuffy" class="btn-confirm">Wuffy</button><button id="btnXpola" class="btn-confirm">Xpola</button><button id="btnWeb" class="btn-cancel">Web</button><button onclick="document.getElementById('playerModal').style.display='none'" class="btn-cancel">Kapat</button></div></div>
+<div id="actionModal" class="modal"><div class="modal-box"><h3 id="actTitle"></h3><button onclick="actReply()" class="btn-confirm">Yanıtla</button><div id="admActs" style="display:none;"><button onclick="actBan()" class="btn-cancel" style="background:red;">Engelle</button><button onclick="actDel()" class="btn-cancel">Sil</button></div><button onclick="document.getElementById('actionModal').style.display='none'" class="btn-cancel">Kapat</button></div></div>
 
-    <div id="announcementBar" class="announcement-bar"><div class="announcement-content" id="announcementText"></div></div>
-    <div class="container"><div id="list"></div></div>
-    <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">Daha Fazla Göster</button>
+<script>
+const backup=[{"title": "SUPMOT İPTV İNDİR", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/supmot-iptv.m3u", "web_link_url": "https://ay.live/sBLi", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "19.01.2026"}, {"title": "10 ADET MAC ADRESİ İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/inadinamackod.m3u", "web_link_url": "https://ay.live/ZZ5c", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "18.01.2026"}, {"title": "KRİSTAL İPTV EKLENDİ", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Kristal-iptv-W.m3u", "web_link_url": "https://ay.live/8Gxpf", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "18.01.2026"}, {"title": "SMARTES2 İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=zrdQ5UHD&password=q82fkQT&type=m3u_plus", "web_link_url": "https://ay.live/xAdwL", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "17.01.2026"}, {"title": "10 BİN KİSİLİK İPTV", "m3u_url": "https://broken-night-dffb.deathlesstelenyu.workers.dev/dth-iptv.m3u", "web_link_url": "https://ay.live/QfCR", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "16.01.2026"}, {"title": "SMART İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=utSzxq7SY6&password=dj1yyFAQJy&type=m3u_plus", "web_link_url": "https://ay.live/5kQj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "15.01.2026"}, {"title": "YENİ SPORT İPTV", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/sport-connec.m3u", "web_link_url": "https://ay.live/Ry1l", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "14.01.2026"}, {"title": "10 SİNİRSİZ İPTV M3U", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "web_link_url": "https://ay.live/7LxRP8", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "13.01.2026"}, {"title": "SMARTZONE İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=gRNhEpGh3m&password=fmaAdfkHXJ&type=m3u_plus", "web_link_url": "https://ay.live/q9fMZa", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "12.01.2026"}, {"title": "MEGA İPTV İNDİR", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "web_link_url": "https://ay.live/G7TFl", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "11.01.2026"}, {"title": "1500 MAX SPORTS İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/nadina-1500-Max-iptv.m3u", "web_link_url": "https://ay.live/Se6xQ", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "09.01.2026"}, {"title": "QUANTUM İPTV LİST", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Kuantum-iptv.m3u", "web_link_url": "https://ay.live/8Xy9", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "08.01.2026"}, {"title": "FULL BOT İPTV SPORTS", "m3u_url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "web_link_url": "https://ay.live/ld7M", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "07.01.2026"}, {"title": "Ekalite iptv m3u", "m3u_url": "http://ekalite.xyz:8080/get.php?username=ibrahimtak&password=qwkRZHAwaK&type=m3u_plus", "web_link_url": "https://ay.live/4eoXDj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "06.01.2026"}, {"title": "D SPORTS M3U ADRESİ EKLEND", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DTH-Sports.m3u", "web_link_url": "https://ay.live/w2Avb", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "05.01.2026"}, {"title": "30 ADET İPTV M3U LİSTE", "m3u_url": "http://maisonxp.click/get.php?username=thay123&password=thay123&type=m3u", "web_link_url": "https://ay.live/zcn3j7", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "04.01.2026"}, {"title": "ELİTE MAC ADRESLERİ İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/playlist.m3u", "web_link_url": "https://ay.live/DfpE", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "04.01.2026"}, {"title": "KARMA İPTV 23K", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Karma-iptv.m3u", "web_link_url": "https://ay.live/6WmReB", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "03.01.2026"}, {"title": "Yeni iptv liste", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "web_link_url": "https://ay.live/0cKg", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "02.01.2026"}, {"title": "Turkiye Connect iptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Turkiye-iptv.m3u", "web_link_url": "https://ay.live/6Dr", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "01.01.2026"}, {"title": "9500 İPTV M3U LİNKLER YİLBASİ OZEL", "m3u_url": "http://ss.wancolonel.xyz:8080/get.php?username=Denisurlu&password=Muri3091&type=m3u_plus", "web_link_url": "https://ay.live/3hJ9te", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "31.12.2025"}, {"title": "3 Adet İptv link", "m3u_url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "web_link_url": "https://ay.live/KCwKj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "30.12.2025"}, {"title": "XTREAM İPTV LİSTELER EKLENDİ", "m3u_url": "http://s1.eldest99.xyz:8080/get.php?username=hdkaptantv3706&password=kptn@8723706&type=m3u_plus", "web_link_url": "https://ay.live/Clqz", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "29.12.2025"}, {"title": "FİLM EKSENİ İPTV", "m3u_url": "https://raw.githubusercontent.com/sultansmgr/smart/refs/heads/main/FilmEkseni.m3u", "web_link_url": "https://ay.live/qCS", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESVvVD7PLGjrzbMvNGvIFOhRBoSxzoGBFLm3iG-xX1ZEArpkhkSItDVY&s=10", "added_date": "28.12.2025"}, {"title": "B. Conneckt İptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/b-connect.m3u", "web_link_url": "https://ay.live/67w", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "28.12.2025"}, {"title": "Spor Kanallari bot iptv", "m3u_url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "web_link_url": "https://ay.live/9GlX", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "100 Bin kisilik iptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "web_link_url": "https://ay.live/6QE", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "Hibrit İptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Toplu-Paket-V.m3u", "web_link_url": "https://ay.live/eAAA7K", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "m3u_url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "web_link_url": "https://ay.live/DGKU", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}]; const API_KEY="cce8efcdd2693c8adde90f05832332f7f30fbf41"; const ADMIN_PASS="burhan_baba_72";
+const firebaseConfig={apiKey:"AIzaSyCZFwiLcV4K3EnRDWpPPlXPrXSJxAuMfaQ",authDomain:"iptvbotcoun.firebaseapp.com",databaseURL:"https://iptvbotcoun-default-rtdb.firebaseio.com",projectId:"iptvbotcoun",storageBucket:"iptvbotcoun.firebasestorage.app",messagingSenderId:"229841892818",appId:"1:229841892818:web:a91dd3792919140a5d440b"};
+firebase.initializeApp(firebaseConfig); const db=firebase.database();
 
-    <div class="chat-btn" onclick="toggleChat()"><i class="fas fa-comment-dots"></i></div>
-    <div class="admin-panel-btn" id="adminBtn" onclick="openAdminPanel()"><i class="fas fa-shield-alt"></i></div>
+let catData={items:[]}, filtered=[], perPage=10, shown=10, isAdmin=localStorage.getItem('isAdmin')==='true', myUser=localStorage.getItem('user')||'Misafir', myId=localStorage.getItem('uid')||'u_'+Date.now(), likes=JSON.parse(localStorage.getItem('likes')||"[]"), repData=null;
+localStorage.setItem('uid',myId); localStorage.setItem('user',myUser);
 
-    <!-- SOHBET MODAL -->
-    <div class="chat-modal" id="chatModal">
-        <div style="padding:15px; display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2);">
-            <div style="display:flex; align-items:center; gap:10px;"><span id="chatStatus" style="font-weight:bold;">Canlı Sohbet 🟢</span><i class="fas fa-edit" onclick="openNameModal()" style="cursor:pointer; opacity:0.7;"></i></div>
-            <i class="fas fa-times" onclick="toggleChat()" style="cursor:pointer; font-size:1.5rem;"></i>
-        </div>
-        <div class="chat-messages" id="chatContainer"></div>
-        <div class="chat-input-area">
-            <button class="chat-img-btn" onclick="document.getElementById('imgUpload').click()"><i class="fas fa-camera"></i></button>
-            <input type="file" id="imgUpload" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
-            <input type="text" class="chat-input" id="msgInput" placeholder="Mesaj yaz...">
-            <button onclick="sendMsg()" style="width:40px; height:40px; border-radius:50%; background:var(--primary); color:white; border:none; cursor:pointer;"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-    
-    <div id="nameChangeModal" class="modal"><div class="modal-box"><h3>İsim Değiştir</h3><input type="text" id="newNameInput" class="custom-input" placeholder="Yeni İsminiz"><button onclick="saveName()" class="btn-confirm">Kaydet</button><button onclick="document.getElementById('nameChangeModal').style.display='none'" class="btn-cancel">İptal</button></div></div>
-    <div class="modal" id="modal"><div class="modal-box"><h3 id="mTitle" style="text-align:center; color:var(--primary);"></h3><div class="player-opt" id="wuffy"><i class="fas fa-play"></i> Wuffy Player</div><div class="player-opt" id="xpola"><i class="fas fa-rocket"></i> Xpola Player</div><div class="player-opt" id="externalWeb" style="border:1px solid #ffab00; color:#ffab00;"><i class="fas fa-external-link-alt"></i> Tarayıcıda Aç / İndir</div><button onclick="document.getElementById('modal').style.display='none'" class="btn-cancel">Vazgeç</button></div></div>
-    <div id="confirmReportModal" class="modal"><div class="modal-box" style="text-align:center;"><i class="fas fa-exclamation-triangle" style="font-size:3rem; color:#ff4d00; margin-bottom:15px;"></i><h3>Kanalı Bildir?</h3><p>Bu kanalın çalışmadığını yöneticiye bildirmek istiyor musun?</p><button id="btnConfirmReport" class="btn-confirm">BİLDİR</button><button onclick="document.getElementById('confirmReportModal').style.display='none'" class="btn-cancel">Vazgeç</button></div></div>
+function init(){
+ if(isAdmin){document.getElementById('adminBtn').style.display='flex'; document.getElementById('chatStatus').innerText="Yönetici 👮";}
+ db.ref('channels').on('value',s=>{ const d=s.val(); let arr=[]; if(d) arr=Object.keys(d).map(k=>({...d[k],key:k})).sort((a,b)=>(a.order||99)-(b.order||99)); catData.items=arr; filtered=arr; render(); if(isAdmin)renderAdminList(arr); });
+ db.ref('extras').on('value',s=>{ 
+  const v=s.val()||{}; 
+  if(v.announcement&&v.announcement.active){document.getElementById('announcementBar').style.display='block';document.getElementById('announcementText').innerText=v.announcement.text;}else{document.getElementById('announcementBar').style.display='none';}
+  if(v.poll&&v.poll.active){document.getElementById('pollBox').style.display='block'; document.getElementById('pollQuestion').innerText=v.poll.q; document.getElementById('pollOpt1').innerText=v.poll.o1; document.getElementById('pollOpt2').innerText=v.poll.o2; const t=(v.poll.v1||0)+(v.poll.v2||0); const p1=t?Math.round((v.poll.v1/t)*100):0; document.getElementById('bar1').style.width=p1+'%'; document.getElementById('pollPct1').innerText=p1+'%'; document.getElementById('bar2').style.width=(t?100-p1:0)+'%'; document.getElementById('pollPct2').innerText=(t?100-p1:0)+'%';}else{document.getElementById('pollBox').style.display='none';}
+  if(v.countdown&&v.countdown.active){document.getElementById('countdownBox').style.display='block'; startTimer(v.countdown.target, v.countdown.title);}else{document.getElementById('countdownBox').style.display='none';}
+  if(v.maint&&!isAdmin) document.getElementById('maintenanceScreen').style.display='flex'; else document.getElementById('maintenanceScreen').style.display='none';
+ });
+ initChat(); initPresence();
+}
 
-    <script>
-        const backupJsonData = [{"title": "SUPMOT İPTV İNDİR", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/supmot-iptv.m3u", "web_link_url": "https://ay.live/sBLi", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "19.01.2026"}, {"title": "10 ADET MAC ADRESİ İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/inadinamackod.m3u", "web_link_url": "https://ay.live/ZZ5c", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "18.01.2026"}, {"title": "KRİSTAL İPTV EKLENDİ", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Kristal-iptv-W.m3u", "web_link_url": "https://ay.live/8Gxpf", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "18.01.2026"}, {"title": "SMARTES2 İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=zrdQ5UHD&password=q82fkQT&type=m3u_plus", "web_link_url": "https://ay.live/xAdwL", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "17.01.2026"}, {"title": "10 BİN KİSİLİK İPTV", "m3u_url": "https://broken-night-dffb.deathlesstelenyu.workers.dev/dth-iptv.m3u", "web_link_url": "https://ay.live/QfCR", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "16.01.2026"}, {"title": "SMART İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=utSzxq7SY6&password=dj1yyFAQJy&type=m3u_plus", "web_link_url": "https://ay.live/5kQj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "15.01.2026"}, {"title": "YENİ SPORT İPTV", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/sport-connec.m3u", "web_link_url": "https://ay.live/Ry1l", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "14.01.2026"}, {"title": "10 SİNİRSİZ İPTV M3U", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "web_link_url": "https://ay.live/7LxRP8", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "13.01.2026"}, {"title": "SMARTZONE İPTV", "m3u_url": "http://smartzone1.xyz:8080/get.php?username=gRNhEpGh3m&password=fmaAdfkHXJ&type=m3u_plus", "web_link_url": "https://ay.live/q9fMZa", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "12.01.2026"}, {"title": "MEGA İPTV İNDİR", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "web_link_url": "https://ay.live/G7TFl", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "11.01.2026"}, {"title": "1500 MAX SPORTS İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/nadina-1500-Max-iptv.m3u", "web_link_url": "https://ay.live/Se6xQ", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "09.01.2026"}, {"title": "QUANTUM İPTV LİST", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Kuantum-iptv.m3u", "web_link_url": "https://ay.live/8Xy9", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "08.01.2026"}, {"title": "FULL BOT İPTV SPORTS", "m3u_url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "web_link_url": "https://ay.live/ld7M", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "07.01.2026"}, {"title": "Ekalite iptv m3u", "m3u_url": "http://ekalite.xyz:8080/get.php?username=ibrahimtak&password=qwkRZHAwaK&type=m3u_plus", "web_link_url": "https://ay.live/4eoXDj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "06.01.2026"}, {"title": "D SPORTS M3U ADRESİ EKLEND", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DTH-Sports.m3u", "web_link_url": "https://ay.live/w2Avb", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "05.01.2026"}, {"title": "30 ADET İPTV M3U LİSTE", "m3u_url": "http://maisonxp.click/get.php?username=thay123&password=thay123&type=m3u", "web_link_url": "https://ay.live/zcn3j7", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "04.01.2026"}, {"title": "ELİTE MAC ADRESLERİ İPTV", "m3u_url": "https://file.garden/aMCMLdwOhlHjDvvq/playlist.m3u", "web_link_url": "https://ay.live/DfpE", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "04.01.2026"}, {"title": "KARMA İPTV 23K", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Karma-iptv.m3u", "web_link_url": "https://ay.live/6WmReB", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "03.01.2026"}, {"title": "Yeni iptv liste", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "web_link_url": "https://ay.live/0cKg", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "02.01.2026"}, {"title": "Turkiye Connect iptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Turkiye-iptv.m3u", "web_link_url": "https://ay.live/6Dr", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "01.01.2026"}, {"title": "9500 İPTV M3U LİNKLER YİLBASİ OZEL", "m3u_url": "http://ss.wancolonel.xyz:8080/get.php?username=Denisurlu&password=Muri3091&type=m3u_plus", "web_link_url": "https://ay.live/3hJ9te", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "31.12.2025"}, {"title": "3 Adet İptv link", "m3u_url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "web_link_url": "https://ay.live/KCwKj", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "30.12.2025"}, {"title": "XTREAM İPTV LİSTELER EKLENDİ", "m3u_url": "http://s1.eldest99.xyz:8080/get.php?username=hdkaptantv3706&password=kptn@8723706&type=m3u_plus", "web_link_url": "https://ay.live/Clqz", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "29.12.2025"}, {"title": "FİLM EKSENİ İPTV", "m3u_url": "https://raw.githubusercontent.com/sultansmgr/smart/refs/heads/main/FilmEkseni.m3u", "web_link_url": "https://ay.live/qCS", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESVvVD7PLGjrzbMvNGvIFOhRBoSxzoGBFLm3iG-xX1ZEArpkhkSItDVY&s=10", "added_date": "28.12.2025"}, {"title": "B. Conneckt İptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/b-connect.m3u", "web_link_url": "https://ay.live/67w", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "28.12.2025"}, {"title": "Spor Kanallari bot iptv", "m3u_url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "web_link_url": "https://ay.live/9GlX", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "100 Bin kisilik iptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "web_link_url": "https://ay.live/6QE", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "Hibrit İptv", "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Toplu-Paket-V.m3u", "web_link_url": "https://ay.live/eAAA7K", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "m3u_url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "web_link_url": "https://ay.live/DGKU", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "added_date": "27.12.2025"}];
-        const LINK_API_KEY = "cce8efcdd2693c8adde90f05832332f7f30fbf41";
-        const ADMIN_PASS = "burhan_baba_72";
-        const TG_BOT_TOKEN = "8437262061:AAGnhDFIjFqNL5PlUGS33mUaXEMlKd1yyzk";
-        const TG_CHAT_ID = "666941331";
+function render(){
+ const c=document.getElementById('list'); c.innerHTML='';
+ filtered.forEach((i,x)=>{ if(x>=shown)return;
+  const isNew = checkNew(i.added_date);
+  const badge = isNew ? '<span class="badge badge-new">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>';
+  const div=document.createElement('div'); div.className='card';
+  div.innerHTML=`<div class="img-box"><img src="${i.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'">${badge}</div><div class="card-info"><div class="card-name">${i.title}</div><div class="card-meta"><span>${i.added_date||""}</span></div></div><i class="fas fa-play-circle play-icon"></i>`;
+  div.onclick=()=>{ document.getElementById('mTitle').innerText=i.title; document.getElementById('playerModal').style.display='flex'; setupPlayer(i); };
+  c.appendChild(div);
+ });
+ if(filtered.length>shown) document.getElementById('loadMoreBtn').classList.remove('hidden'); else document.getElementById('loadMoreBtn').classList.add('hidden');
+}
 
-        const firebaseConfig = {
-          apiKey: "AIzaSyCZFwiLcV4K3EnRDWpPPlXPrXSJxAuMfaQ",
-          authDomain: "iptvbotcoun.firebaseapp.com",
-          databaseURL: "https://iptvbotcoun-default-rtdb.firebaseio.com",
-          projectId: "iptvbotcoun",
-          storageBucket: "iptvbotcoun.firebasestorage.app",
-          messagingSenderId: "229841892818",
-          appId: "1:229841892818:web:a91dd3792919140a5d440b"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+function checkNew(dateStr){ if(!dateStr)return false; const p=dateStr.split('.'); if(p.length!=3)return false; const d=new Date(p[2],p[1]-1,p[0]); const diff=(new Date()-d)/(1000*3600*24); return diff<=3; }
+function setupPlayer(i){
+ document.getElementById('btnWuffy').onclick=()=>{window.location.href=`intent://${btoa(i.m3u_url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`;};
+ document.getElementById('btnXpola').onclick=()=>{window.location.href=`intent://${btoa(i.m3u_url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`;};
+ document.getElementById('btnWeb').onclick=()=>{if(i.web_link_url)window.open(i.web_link_url,'_blank');};
+}
 
-        let categoryData = { iptv_list: { items: [] } };
-        let activeCategoryKey = 'iptv_list';
-        let itemsPerPage = 10; 
-        let currentlyShown = itemsPerPage;
-        let isAdmin = localStorage.getItem('is_admin') === 'true';
-        let myUserName = localStorage.getItem('chat_username') || "Misafir_" + Math.floor(Math.random() * 9000 + 1000);
-        let myUUID = localStorage.getItem('user_uuid') || 'user_' + Date.now();
-        localStorage.setItem('user_uuid', myUUID);
-        localStorage.setItem('chat_username', myUserName);
-        let globalViewCounts = {}, globalLikeCounts = {}, myLikes = JSON.parse(localStorage.getItem('my_likes') || "[]");
-        let filteredItems = [];
-        let currentReportTarget = null;
+// CHAT SYSTEM
+function initChat(){
+ db.ref('chat').limitToLast(50).on('child_added',s=>{
+  const m=s.val(); const d=document.createElement('div'); d.className=`message-bubble ${m.uid===myId?'msg-right':'msg-left'}`;
+  if(m.isAdmin) d.style.border='1px solid #ffeb3b';
+  let content = m.type==='img' ? `<img src="${m.text}" class="chat-img" onclick="window.open('${m.text}')">` : `<div>${m.text}</div>`;
+  let reply = m.reply ? `<div class="quoted-msg"><b>${m.reply.user}</b>: ${m.reply.text}</div>` : '';
+  let actions = `<div class="msg-actions"><i class="fas fa-reply action-btn" onclick="prepReply('${m.user}','${m.text}')"></i> <i class="fas fa-heart action-btn" onclick="likeMsg('${s.key}')"></i> <span style="font-size:0.7rem">${m.likes||0}</span></div>`;
+  d.innerHTML=`<span class="msg-user" onclick="openAct('${m.uid}','${m.user}','${s.key}')">${m.user} ${m.isAdmin?'🛡️':''}</span>${reply}${content}${actions}`;
+  document.getElementById('chatMessages').appendChild(d); document.getElementById('chatMessages').scrollTop=99999;
+ });
+}
 
-        function init() {
-            listenToChannels(); listenToStats(); listenToExtras(); listenToReports(); listenToChat(); initPresence();
-            if(localStorage.getItem('theme') === 'light') toggleTheme();
-            if(isAdmin) { document.getElementById('adminBtn').style.display = "flex"; document.getElementById('chatStatus').innerText = "Yönetici 👮‍♂️"; }
-        }
+function sendMsg(){
+ const t=document.getElementById('msgInput').value; if(!t)return;
+ if(t===ADMIN_PASS){ localStorage.setItem('isAdmin','true'); location.reload(); return; }
+ db.ref('chat').push({user:isAdmin?'YÖNETİCİ':myUser, text:t, uid:myId, isAdmin:isAdmin, reply:repData, type:'text', time:Date.now()});
+ document.getElementById('msgInput').value=''; cancelReply();
+}
 
-        function toggleSearch() {
-            const input = document.getElementById('searchInput');
-            input.classList.toggle('active');
-            if(input.classList.contains('active')) input.focus();
-        }
+function uploadImg(e){
+ const f=e.target.files[0]; if(!f)return;
+ const r=new FileReader(); r.onload=function(ev){
+  const img=new Image(); img.onload=function(){
+   const c=document.createElement('canvas'); const ctx=c.getContext('2d');
+   const scale=500/img.width; c.width=500; c.height=img.height*scale;
+   ctx.drawImage(img,0,0,c.width,c.height);
+   db.ref('chat').push({user:myUser, text:c.toDataURL('image/jpeg',0.7), uid:myId, isAdmin:isAdmin, type:'img', time:Date.now()});
+  }; img.src=ev.target.result;
+ }; r.readAsDataURL(f);
+}
 
-        window.filterList = function() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const allItems = categoryData.iptv_list.items;
-            filteredItems = allItems.filter(item => item.title.toLowerCase().includes(query));
-            currentlyShown = itemsPerPage; render();
-        };
+// INTERACTIONS
+window.prepReply=function(u,t){ repData={user:u,text:t.substring(0,20)+'...'}, document.getElementById('replyPreview').style.display='flex'; document.getElementById('replyUser').innerText=u; document.getElementById('replyText').innerText=repData.text; };
+window.cancelReply=function(){ repData=null; document.getElementById('replyPreview').style.display='none'; };
+window.likeMsg=function(k){ db.ref('chat/'+k+'/likes').transaction(c=>(c||0)+1); };
+window.openAct=function(uid,u,k){ if(uid===myId)return; document.getElementById('actTitle').innerText=u; document.getElementById('actionModal').style.display='flex'; if(isAdmin){document.getElementById('admActs').style.display='block';} window.selMsg={uid,k,u}; };
+window.actReply=function(){ document.getElementById('actionModal').style.display='none'; prepReply(selMsg.u, "Mesaj..."); };
+window.actDel=function(){ db.ref('chat/'+selMsg.k).remove(); document.getElementById('actionModal').style.display='none'; location.reload(); };
+window.actBan=function(){ db.ref('banned/'+selMsg.uid).set(true); document.getElementById('actionModal').style.display='none'; };
 
-        window.restoreBackup = function() {
-            if(confirm("Eski JSON verisi yüklensin mi?")) {
-                if (!backupJsonData || backupJsonData.length === 0) { showToast("Yedek yok!", "fa-exclamation"); return; }
-                backupJsonData.forEach((item, index) => {
-                    database.ref('channels').push({
-                        title: item.title, m3u_url: item.m3u_url || "#", web_link_url: item.web_link_url || "#",
-                        image: item.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-                        added_date: item.added_date || new Date().toLocaleDateString('tr-TR'), order: index + 1
-                    });
-                });
-                showToast("Yüklendi!", "fa-check");
-            }
-        };
+// ADMIN
+async function addNewChannel(){
+ const t=document.getElementById('addTitle').value, m=document.getElementById('addM3u').value, i=document.getElementById('addImg').value, o=document.getElementById('addOrder').value; let w=document.getElementById('addWeb').value;
+ if(!t)return alert('Başlık şart!');
+ if(w && w.startsWith('http')){ try{ const r=await fetch(`https://ay.live/api/?api=${API_KEY}&url=${encodeURIComponent(w)}&format=text`); const txt=await r.text(); if(txt.startsWith('http')) w=txt; }catch(e){} }
+ db.ref('channels').push({title:t,m3u_url:m||'#',web_link_url:w||'#',image:i||'',added_date:new Date().toLocaleDateString('tr-TR'),order:parseInt(o)||99});
+ alert('Eklendi');
+}
+function renderAdminList(arr){ const d=document.getElementById('adminChannelList'); d.innerHTML=''; arr.forEach(i=>{ d.innerHTML+=`<div style="display:flex;justify-content:space-between;background:#333;padding:5px;margin:2px;"><span>${i.title}</span><button onclick="db.ref('channels/${i.key}').remove()">Sil</button></div>`; }); }
+window.saveAnno=()=>{ db.ref('extras/announcement').set({active:true,text:document.getElementById('annoInp').value}); };
+window.stopAnno=()=>{ db.ref('extras/announcement').set({active:false}); };
+window.savePoll=()=>{ db.ref('extras/poll').set({active:true,q:document.getElementById('pollQ').value,o1:document.getElementById('pollO1').value,o2:document.getElementById('pollO2').value,v1:0,v2:0}); };
+window.resetPoll=()=>{ db.ref('extras/poll').set({active:false}); };
+window.saveCountdown=()=>{ db.ref('extras/countdown').set({active:true,title:document.getElementById('cdT').value,target:new Date(document.getElementById('cdD').value).getTime()}); };
+window.stopCountdown=()=>{ db.ref('extras/countdown').set({active:false}); };
+window.toggleMaint=()=>{ db.ref('extras/maint').transaction(v=>!v); };
+window.clearChat=()=>{ if(confirm('Sil?')) db.ref('chat').remove(); };
+window.restoreBackup=()=>{ if(backup.length) backup.forEach(i=>db.ref('channels').push(i)); alert('Yüklendi'); };
 
-        function listenToChannels() {
-            database.ref('channels').on('value', (snapshot) => {
-                const data = snapshot.val();
-                let items = [];
-                if(data) { items = Object.keys(data).map(key => { return { ...data[key], firebaseKey: key }; }); items.sort((a, b) => (a.order || 9999) - (b.order || 9999)); }
-                categoryData.iptv_list.items = items; filteredItems = items; render();
-                if(isAdmin) renderAdminChannelList(items);
-            });
-        }
+// HELPERS
+function toggleSearch(){ const i=document.getElementById('searchInput'); i.classList.toggle('active'); if(i.classList.contains('active'))i.focus(); }
+function filterList(){ const q=document.getElementById('searchInput').value.toLowerCase(); filtered=catData.items.filter(i=>i.title.toLowerCase().includes(q)); render(); }
+function startTimer(target, title){
+ document.getElementById('countdownTitle').innerText=title;
+ setInterval(()=>{ const now=new Date().getTime(), d=target-now; 
+  if(d<0) return;
+  document.getElementById('countdownTimer').innerText = Math.floor(d/(1000*60*60*24))+"G "+Math.floor((d%(1000*60*60*24))/(1000*60*60))+"S "+Math.floor((d%(1000*60*60))/(1000*60))+"D";
+ },1000);
+}
+function vote(o){ if(localStorage.getItem('voted'))return alert('Zaten oy verdin'); db.ref('extras/poll/'+(o=='opt1'?'v1':'v2')).transaction(c=>(c||0)+1); localStorage.setItem('voted','1'); }
+function toggleTheme(){ document.body.classList.toggle('light-theme'); localStorage.setItem('theme', document.body.classList.contains('light-theme')?'light':'dark'); }
+function loadMore(){ shown+=perPage; render(); }
+function toggleChat(){ document.getElementById('chatModal').classList.toggle('active'); }
+function openAdminPanel(){ document.getElementById('adminPanelModal').style.display='flex'; }
+function toggleSubMenu(id){ document.getElementById(id).style.display = document.getElementById(id).style.display==='block'?'none':'block'; }
+function openNameModal(){ document.getElementById('nameModal').style.display='flex'; document.getElementById('newName').value=myUser; }
+function saveName(){ myUser=document.getElementById('newName').value; localStorage.setItem('user',myUser); document.getElementById('nameModal').style.display='none'; }
+function initPresence(){ const r=db.ref('online'); r.push().onDisconnect().remove(); r.on('value',s=>document.getElementById('onlineCount').innerText=s.numChildren()); }
+if(localStorage.getItem('theme')==='light') toggleTheme();
 
-        function isNew(dateString) {
-            if(!dateString) return false;
-            const parts = dateString.split('.');
-            if(parts.length !== 3) return false;
-            const added = new Date(parts[2], parts[1]-1, parts[0]);
-            const diff = new Date() - added;
-            const days = diff / (1000 * 60 * 60 * 24);
-            return days <= 3; // Son 3 gün
-        }
-
-        function render() {
-            const container = document.getElementById('list'); container.innerHTML = '';
-            if(filteredItems.length === 0) { container.innerHTML = '<p style="text-align:center;opacity:0.5;">İçerik yok.</p>'; return; }
-            filteredItems.forEach((item, index) => {
-                if (index >= currentlyShown) return;
-                const card = document.createElement('div'); card.className = 'card'; card.setAttribute('data-title', item.title);
-                const safeKey = sanitizeKey(item.title);
-                const views = globalViewCounts[safeKey] || 0; const likes = globalLikeCounts[safeKey] || 0; const isLiked = myLikes.includes(safeKey) ? 'liked' : '';
-                
-                let badgeHTML = '<span class="badge badge-iptv">IPTV</span>';
-                if(isNew(item.added_date)) badgeHTML = '<span class="badge badge-new">YENİ</span>';
-
-                card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'">${badgeHTML}</div>
-                <div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta"><span>${item.added_date||""}</span><span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span><span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span><span class="stat-badge"><i class="fas fa-exclamation-triangle stat-report" onclick="openReportModal(event, '${item.title}')"></i></span></div></div><i class="fas fa-play-circle play-icon"></i>`;
-                card.onclick = (e) => { 
-                    if(e.target.classList.contains('stat-heart') || e.target.classList.contains('stat-report')) return;
-                    let current = item; incrementViewCount(item.title); document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; 
-                    document.getElementById('wuffy').onclick = () => { if(current.m3u_url!="#") window.location.href=`intent://${btoa(current.m3u_url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; }; 
-                    document.getElementById('xpola').onclick = () => { if(current.m3u_url!="#") window.location.href=`intent://${btoa(current.m3u_url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; }; 
-                    document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url !== "#") window.open(current.web_link_url, '_blank'); }; 
-                };
-                container.appendChild(card);
-            });
-            if(filteredItems.length > currentlyShown) document.getElementById('loadMoreBtn').classList.remove('hidden'); else document.getElementById('loadMoreBtn').classList.add('hidden');
-        }
-        function loadMore() { currentlyShown += itemsPerPage; render(); }
-
-        window.openReportModal = function(e, title) { e.stopPropagation(); currentReportTarget = title; document.getElementById('confirmReportModal').style.display = 'flex'; };
-        document.getElementById('btnConfirmReport').onclick = function() { if(currentReportTarget) { database.ref('reports').push({ channel: currentReportTarget, user: myUserName, time: new Date().toLocaleTimeString() }); showToast("Bildirildi", "fa-check"); } document.getElementById('confirmReportModal').style.display = 'none'; };
-
-        function listenToReports() { if(!isAdmin) return; database.ref('reports').on('value', s => { const l=document.getElementById('adminReportsList'); l.innerHTML=""; const c=s.exists()?s.numChildren():0; document.getElementById('reportCount').innerText=c; if(!s.exists())return; s.forEach(ch=>{const r=ch.val();l.innerHTML+=`<div class="report-item"><div class="report-header"><span>${r.user}</span><span>${r.time}</span></div><div class="report-msg">${r.channel}</div><button onclick="deleteReport('${ch.key}')" class="btn-sm" style="background:#555;margin-top:5px;">Sil</button></div>`;}); }); }
-        window.deleteReport = function(k) { database.ref('reports/'+k).remove(); }; window.deleteAllReports = function() { if(confirm("Tümünü sil?")) database.ref('reports').remove(); };
-
-        function listenToExtras() { database.ref('extras').on('value', s => { const val = s.val() || {}; if(val.announcement && val.announcement.active) { document.getElementById('announcementBar').style.display = 'block'; document.getElementById('announcementText').innerText = val.announcement.text; } else { document.getElementById('announcementBar').style.display = 'none'; } if(val.maintenance && !isAdmin) document.getElementById('maintenanceScreen').style.display = 'flex'; else document.getElementById('maintenanceScreen').style.display = 'none'; }); }
-
-        // --- SOHBET VE RESİM ---
-        function listenToChat() {
-            database.ref('global_chat').limitToLast(50).on('child_added', (s) => {
-                const msg = s.val(); const div = document.createElement('div'); const isMe = msg.user === myUserName;
-                div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'}`;
-                if(msg.isAdminMsg) div.style.border = "1px solid #ffeb3b";
-                
-                let content = msg.text;
-                if(msg.type === 'image') {
-                    content = `<img src="${msg.image}" class="chat-img" onclick="window.open('${msg.image}')">`;
-                }
-
-                div.innerHTML = `<span class="msg-user">${msg.isAdminMsg ? '<span class="msg-admin">🛡️ YÖNETİCİ</span>' : msg.user}</span><div>${content}</div>`;
-                document.getElementById('chatContainer').appendChild(div); document.getElementById('chatContainer').scrollTop = 99999;
-            });
-        }
-
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if(!file) return;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                // Resmi küçültme (Canvas ile) - Basit versiyon
-                const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    const maxWidth = 500; 
-                    const scaleSize = maxWidth / img.width;
-                    canvas.width = maxWidth;
-                    canvas.height = img.height * scaleSize;
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
-                    
-                    const msgData = { user: isAdmin ? "YÖNETİCİ" : myUserName, type: 'image', image: dataUrl, isAdminMsg: isAdmin, time: Date.now() };
-                    database.ref('global_chat').push(msgData);
-                }
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        window.sendMsg = function() {
-            const txt = document.getElementById('msgInput').value.trim();
-            if(txt === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); location.reload(); return; }
-            if(!txt) return;
-            
-            const msgData = { user: isAdmin ? "YÖNETİCİ" : myUserName, text: txt, type: 'text', isAdminMsg: isAdmin, time: Date.now() };
-            database.ref('global_chat').push(msgData);
-            document.getElementById('msgInput').value = "";
-            if(!isAdmin && "8437262061:AAGnhDFIjFqNL5PlUGS33mUaXEMlKd1yyzk" !== "BURAYA") fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage?chat_id=${TG_CHAT_ID}&text=${encodeURIComponent(myUserName + ": " + txt)}`).catch(e=>{});
-        };
-
-        // --- DİĞER FONKSİYONLAR ---
-        async function addNewChannel() { const t = document.getElementById('addTitle').value; const m = document.getElementById('addM3u').value; let w = document.getElementById('addWeb').value; const i = document.getElementById('addImg').value; const o = document.getElementById('addOrder').value; if(!t) { showToast("Başlık zorunlu", "fa-exclamation"); return; } if(w && w.startsWith('http')) { try { const r = await fetch(`https://ay.live/api/?api=${LINK_API_KEY}&url=${encodeURIComponent(w)}&format=text`); const txt = await r.text(); if(txt.startsWith('http')) w = txt; } catch(e){} } database.ref('channels').push({ title: t, m3u_url: m||"#", web_link_url: w||"#", image: i||"", added_date: new Date().toLocaleDateString('tr-TR'), order: parseInt(o)||9999 }); showToast("Eklendi", "fa-check"); }
-        window.saveAnnouncement = function() { database.ref('extras/announcement').set({ active: true, text: document.getElementById('annoInput').value }); showToast("Yayınlandı", "fa-bullhorn"); };
-        window.stopAnnouncement = function() { database.ref('extras/announcement').set({active: false}); };
-        window.toggleMaintenance = function() { database.ref('extras/maintenance').transaction(val => !val); };
-        window.clearChat = function() { if(confirm("Sil?")) database.ref('global_chat').remove(); };
-        window.shortenUrl = function(id) { const u=document.getElementById(id).value; if(u) fetch(`https://ay.live/api/?api=${LINK_API_KEY}&url=${encodeURIComponent(u)}&format=text`).then(r=>r.text()).then(t=>{ if(t.startsWith("http")) document.getElementById(id).value=t; }); };
-        function listenToStats() { database.ref('channel_views').on('value', s=>{globalViewCounts=s.val()||{};updateStatsDOM()}); database.ref('channel_likes').on('value', s=>{globalLikeCounts=s.val()||{};updateStatsDOM()}); }
-        function updateStatsDOM() { document.querySelectorAll('.card').forEach(c=>{ const t=c.getAttribute('data-title'); if(t){ const k=sanitizeKey(t); const v=c.querySelector('.count-val-eye'); const l=c.querySelector('.count-val-heart'); if(v)v.innerText=globalViewCounts[k]||0; if(l)l.innerText=globalLikeCounts[k]||0; } }); }
-        function sanitizeKey(k) { return (k||"").replace(/[.#$\/\[\]]/g, '_'); }
-        function incrementViewCount(t) { database.ref('channel_views/' + sanitizeKey(t)).transaction(c => (c||0)+1); }
-        window.toggleLike = function(e, t) { e.stopPropagation(); const k = sanitizeKey(t); if(myLikes.includes(k)) return; myLikes.push(k); localStorage.setItem('my_likes', JSON.stringify(myLikes)); database.ref('channel_likes/'+k).transaction(c=>(c||0)+1); e.target.classList.add('liked'); };
-        function renderAdminChannelList(items) { const l = document.getElementById('adminChannelList'); l.innerHTML = ""; items.forEach(i => { l.innerHTML += `<div class="channel-item-admin"><div style="flex:1;"><b>${i.order||0}.</b> ${i.title}</div><div class="channel-actions"><button class="btn-sm btn-del" onclick="database.ref('channels/${i.firebaseKey}').remove()">Sil</button></div></div>`; }); }
-        function showToast(msg, icon) { const t = document.getElementById('toast'); t.innerHTML = `<i class="fas ${icon}"></i> <span>${msg}</span>`; t.className = "toast show"; setTimeout(() => t.className = t.className.replace("show", ""), 3000); }
-        function openAdminPanel() { document.getElementById('adminPanelModal').style.display = 'flex'; }
-        function toggleSubMenu(id) { document.getElementById(id).classList.toggle('active'); }
-        function toggleChat() { document.getElementById('chatModal').classList.toggle('active'); }
-        function initPresence() { const ref = database.ref('online'); ref.push().onDisconnect().remove(); ref.on('value', s => document.getElementById('onlineCount').innerText = s.numChildren()); }
-        function toggleTheme() { document.body.classList.toggle('light-theme'); const isLight = document.body.classList.contains('light-theme'); localStorage.setItem('theme', isLight ? 'light' : 'dark'); document.getElementById('themeBtn').innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; document.getElementById('telegramBtn').style.color = isLight ? '#1a1a1a' : 'white'; }
-        window.openNameModal = function() { document.getElementById('nameChangeModal').style.display='flex'; };
-        window.saveName = function() { const n=document.getElementById('newNameInput').value; if(n){ myUserName=n; localStorage.setItem('chat_username',n); document.getElementById('nameChangeModal').style.display='none'; } };
-        window.emergencyLogin = function() { if(document.getElementById('emergencyPass').value===ADMIN_PASS){localStorage.setItem('is_admin','true');location.reload();} };
-        
-        init();
-    </script>
-</body>
-</html>
+init();
+</script></body></html>
