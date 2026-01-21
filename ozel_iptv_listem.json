@@ -1,5 +1,12 @@
 [
     {
+        "title": "711X İPTV LİSTE EKLENDİ",
+        "m3u_url": "http://protv65.shop:8080/get.php?username=fk4608&password=fk00xy&type=m3u_plus",
+        "web_link_url": "https://ay.live/h7pa",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "21.01.2026"
+    },
+    {
         "title": "JOKER İPTV M3U",
         "m3u_url": "https://file.garden/Z-hq5n4Shk27aY58/Joker-iptv.m3u",
         "web_link_url": "https://ay.live/pRN",
