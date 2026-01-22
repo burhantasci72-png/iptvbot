@@ -658,7 +658,7 @@ ${message || "[Dosya/Resim]"}`;
             const div = document.createElement('div');
             let isMe = msg.user === myUserName;
             let bgColor = isMe ? '' : `background-color: ${getUserColor(msg.user)};`;
-            div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'}`;
+            div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'} ${isAdmin ? 'is-admin' : ''}`;
             if(!isMe) div.style.cssText = bgColor;
             
             let contentHTML = "";
@@ -958,7 +958,6 @@ ${message || "[Dosya/Resim]"}`;
                 const key = e.key;
                 const focusable = Array.from(document.querySelectorAll('.focusable, .card:not(.hidden)'));
                 
-                // Visible focusables only
                 const visibleFocusables = focusable.filter(el => {
                     return el.offsetParent !== null && window.getComputedStyle(el).display !== 'none';
                 });
@@ -1008,13 +1007,18 @@ ${message || "[Dosya/Resim]"}`;
                         if (bestCandidate) {
                             bestCandidate.focus();
                             bestCandidate.scrollIntoView({behavior: "smooth", block: "center"});
-                            // Add custom class for styling
                             document.querySelectorAll('.focused').forEach(el => el.classList.remove('focused'));
                             bestCandidate.classList.add('focused');
                         }
                     }
                 } else if (key === 'Backspace' || key === 'Escape' || e.keyCode === 461 || e.keyCode === 8) {
-                    // Back button logic
+                    // FIX: If typing in an input field, do NOT treat Backspace as "Back Button"
+                    const tag = document.activeElement.tagName.toLowerCase();
+                    if ((key === 'Backspace' || e.keyCode === 8) && (tag === 'input' || tag === 'textarea')) {
+                        return; // Let default delete happen
+                    }
+
+                    // Back button logic for navigation
                     const openModals = document.querySelectorAll('.modal[style*="display: flex"]');
                     if(openModals.length > 0) {
                         e.preventDefault();
@@ -1034,7 +1038,7 @@ ${message || "[Dosya/Resim]"}`;
             setTimeout(listenToData, 500); 
             setTimeout(initPresence, 1000); 
             setTimeout(listenToAllPrivateChats, 1500);
-            setTimeout(handleRemoteControl, 1000); // Activate TV controls
+            setTimeout(handleRemoteControl, 1000); 
         })();
     </script>
 </body>
