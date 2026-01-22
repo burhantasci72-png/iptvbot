@@ -93,10 +93,28 @@
         .poll-text { position: absolute; top: 0; left: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
         .poll-percent { position: absolute; top: 0; right: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
 
-        @keyframes pulse-beat { 0% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); } 50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(0, 210, 255, 0.6); } 100% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); } }
-        .chat-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: linear-gradient(135deg, #00d2ff, #3a7bd5); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 200; animation: pulse-beat 2s infinite ease-in-out; }
-        .chat-btn:hover { animation: none; transform: scale(1.1); }
+        /* YENİ GELİŞMİŞ CHAT İKONU */
+        @keyframes gradient-anim { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         
+        .chat-btn-container { position: fixed; bottom: 20px; right: 20px; z-index: 200; display:flex; flex-direction:column; align-items:center; gap:5px; }
+        .chat-label { background: #ff0040; color:white; font-size:0.7rem; padding:3px 8px; border-radius:10px; font-weight:bold; box-shadow: 0 2px 5px rgba(0,0,0,0.5); animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-5px);} 60% {transform: translateY(-3px);} }
+
+        .chat-btn { 
+            width: 65px; height: 65px; 
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5, #ff0040); 
+            background-size: 200% 200%;
+            border-radius: 50%; 
+            display: flex; justify-content: center; align-items: center; 
+            color: white; font-size: 1.8rem; 
+            box-shadow: 0 5px 20px rgba(0,210,255,0.4); 
+            cursor: pointer; 
+            animation: gradient-anim 3s ease infinite, pulse-beat 2s infinite;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .chat-btn:hover { animation: gradient-anim 1s ease infinite; transform: scale(1.1); }
+        @keyframes pulse-beat { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(0, 210, 255, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); } }
+
         .chat-modal { position: fixed; bottom: -100%; left: 0; width: 100%; height: 96%; background: var(--surface); border-radius: 20px 20px 0 0; z-index: 201; transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); }
         .chat-modal.active { bottom: 0; }
         .chat-header { padding: 15px; background: rgba(0,0,0,0.2); display: flex; flex-direction: column; border-radius: 20px 20px 0 0; gap: 10px; }
@@ -402,7 +420,14 @@
     
     <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">Daha Fazla Göster</button>
 
-    <div class="chat-btn" onclick="toggleChat()"><i class="fas fa-comment-dots"></i></div>
+    <!-- HAREKETLİ VE DİKKAT ÇEKİCİ YENİ SOHBET İKONU -->
+    <div class="chat-btn-container" onclick="toggleChat()">
+        <span class="chat-label">FORUM/SOHBET</span>
+        <div class="chat-btn">
+            <i class="fas fa-comment-dots" id="chatIcon"></i>
+        </div>
+    </div>
+
     <div class="admin-panel-btn" id="adminBtn" onclick="openAdminPanel()"><i class="fas fa-shield-alt"></i></div>
     
     <div class="chat-modal" id="chatModal">
@@ -715,17 +740,17 @@ ${message || "[Dosya/Resim]"}`;
             const file = event.target.files[0];
             if (!file) return;
             if(isChatLocked && !isAdmin && currentTab === 'global') { showToast("Sohbet kilitli!", "fa-lock"); return; }
-            showToast("Resim işleniyor...", "fa-cog fa-spin");
+            showToast("Resim işleniyor (Max 10MB)...", "fa-cog fa-spin");
             const reader = new FileReader();
             reader.onload = (e) => {
                 const img = new Image();
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    let width = img.width; let height = img.height; const MAX_WIDTH = 600;
+                    let width = img.width; let height = img.height; const MAX_WIDTH = 800; // Biraz daha kaliteli resim
                     if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
                     canvas.width = width; canvas.height = height;
                     const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
-                    const dataURL = canvas.toDataURL('image/jpeg', 0.6);
+                    const dataURL = canvas.toDataURL('image/jpeg', 0.7);
                     sendMediaMsg(dataURL, null);
                 };
                 img.src = e.target.result;
@@ -737,7 +762,8 @@ ${message || "[Dosya/Resim]"}`;
         function handleFileUpload(event) {
             const file = event.target.files[0];
             if(!file) return;
-            if(file.size > 50 * 1024) { showToast("Dosya çok büyük! (Max 50KB)", "fa-exclamation-triangle"); return; }
+            // 10 MB LIMIT (10 * 1024 * 1024)
+            if(file.size > 10 * 1024 * 1024) { showToast("Dosya çok büyük! (Max 10MB)", "fa-exclamation-triangle"); return; }
             if(isChatLocked && !isAdmin && currentTab === 'global') { showToast("Sohbet kilitli!", "fa-lock"); return; }
             
             showToast("Dosya yükleniyor...", "fa-cog fa-spin");
@@ -778,7 +804,7 @@ ${message || "[Dosya/Resim]"}`;
             database.ref('extras').on('value', (s) => { if(s.exists()) { const extras = s.val(); if(extras.countdown && extras.countdown.active) { document.getElementById('countdownBox').style.display = 'block'; document.getElementById('countdownTitle').innerText = extras.countdown.title; updateCountdownDisplay(extras.countdown.target); } else { document.getElementById('countdownBox').style.display = 'none'; } if(extras.poll && extras.poll.active) { document.getElementById('pollBox').style.display = 'block'; updatePollDisplay(extras.poll); } else { document.getElementById('pollBox').style.display = 'none'; localStorage.removeItem('poll_voted'); } if(extras.announcement && extras.announcement.active) { document.getElementById('announcementBar').style.display = 'block'; document.getElementById('announcementText').innerText = extras.announcement.text; } else { document.getElementById('announcementBar').style.display = 'none'; } } });
             database.ref('settings').on('value', (s) => { if(s.exists()) { const settings = s.val(); if(settings.maintenance && !isAdmin) document.getElementById('maintenanceScreen').style.display = 'flex'; else document.getElementById('maintenanceScreen').style.display = 'none'; if(document.getElementById('maintenanceToggle')) document.getElementById('maintenanceToggle').checked = settings.maintenance; isChatLocked = settings.chat_locked; if(isChatLocked) { document.getElementById('chatStatus').innerText = "Sohbet Kilitli 🔒"; if(currentTab==='global') document.getElementById('msgInput').placeholder = "Sohbet yönetici tarafından kilitlendi."; document.getElementById('msgInput').disabled = !isAdmin && currentTab==='global'; } else { document.getElementById('chatStatus').innerText = isAdmin ? "Canlı Sohbet (YÖNETİCİ) 👮‍♂️" : "Canlı Sohbet 🟢"; if(currentTab==='global') document.getElementById('msgInput').placeholder = "Mesaj yaz..."; document.getElementById('msgInput').disabled = false; } if(document.getElementById('chatLockToggle')) document.getElementById('chatLockToggle').checked = settings.chat_locked; } });
             database.ref('startup_message').on('value', (s) => { if(s.exists()) { const data = s.val(); if(data.active && !sessionStorage.getItem('startup_msg_shown')) { showToast(data.text, "fa-bullhorn"); sessionStorage.setItem('startup_msg_shown', 'true'); } if(document.getElementById('adminToastInput')) { document.getElementById('adminToastInput').value = data.text; document.getElementById('adminToastActive').checked = data.active; } } });
-            database.ref('banned_users/' + myUUID).on('value', (s) => { if(s.exists()) { document.getElementById('bannedScreen').style.display = 'flex'; document.getElementById('chatModal').style.display = 'none'; document.querySelector('.chat-btn').style.display = 'none'; } });
+            database.ref('banned_users/' + myUUID).on('value', (s) => { if(s.exists()) { document.getElementById('bannedScreen').style.display = 'flex'; document.getElementById('chatModal').style.display = 'none'; document.querySelector('.chat-btn-container').style.display = 'none'; } });
             database.ref('channel_views').on('value', (s) => { if(s.exists()) { globalViewCounts = s.val(); updateStatsInDOM(); } });
             database.ref('channel_likes').on('value', (s) => { if(s.exists()) { globalLikeCounts = s.val(); updateStatsInDOM(); } });
             
@@ -888,6 +914,20 @@ ${message || "[Dosya/Resim]"}`;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
         }
+
+        // --- ICON ANIMATION LOOP ---
+        setInterval(() => {
+            const icon = document.getElementById('chatIcon');
+            if(icon) {
+                if(icon.classList.contains('fa-comment-dots')) {
+                    icon.classList.remove('fa-comment-dots');
+                    icon.classList.add('fa-users');
+                } else {
+                    icon.classList.remove('fa-users');
+                    icon.classList.add('fa-comment-dots');
+                }
+            }
+        }, 3000);
 
         function openAdminPanel() { document.getElementById('adminPanelModal').style.display = 'flex'; database.ref('reports').once('value', (s) => { const count = s.exists() ? s.numChildren() : 0; document.getElementById('reportCount').innerText = count; }); }
         function toggleSubMenu(id) { const el = document.getElementById(id); el.classList.toggle('active'); }
