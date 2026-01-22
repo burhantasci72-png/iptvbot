@@ -263,6 +263,18 @@
         <img id="imgPreview" src="">
     </div>
 
+    <!-- YENİ DOSYA GÖRÜNTÜLEYİCİ MODAL (V29) -->
+    <div id="fileViewerModal" class="modal">
+        <div class="modal-box" style="width: 90%; max-width: 600px; height: 80%; display:flex; flex-direction:column;">
+            <h3 id="fvTitle" style="margin-top:0; color:var(--primary); text-align:center;">Dosya İçeriği</h3>
+            <textarea id="fvContent" style="flex:1; background:#222; color:#0f0; border:1px solid #444; padding:10px; resize:none; font-family:monospace; border-radius:10px;" readonly></textarea>
+            <div style="display:flex; gap:10px; margin-top:10px;">
+                <button class="btn-confirm" onclick="copyFileContent()" style="flex:1;"><i class="fas fa-copy"></i> Kopyala</button>
+                <button class="btn-cancel" onclick="document.getElementById('fileViewerModal').style.display='none'" style="flex:1;">Kapat</button>
+            </div>
+        </div>
+    </div>
+
     <div id="confirmModal" class="modal">
         <div class="modal-box" style="text-align:center;">
             <i class="fas fa-exclamation-circle" style="font-size:3rem; color:#ff4d4d; margin-bottom:15px;"></i>
@@ -564,39 +576,40 @@
             });
         }
         
-        // --- HELPER: OPEN FILE IN NEW WINDOW (SAFE MODE) ---
-        function openBase64File(base64Data, fileName) {
-            try {
-                // If it looks like text, we open a window and write the text
-                // If it is binary (image), we write an image tag
-                // This avoids passing the huge string to the download manager
-                
-                var win = window.open("", "_blank");
-                if(!win) {
-                    showToast("Pop-up engellendi! İzin verin.", "fa-exclamation");
-                    return;
-                }
-                
-                // Check if image
-                if(base64Data.startsWith('data:image')) {
-                    win.document.write('<html><body style="margin:0;background:#111;display:flex;justify-content:center;align-items:center;height:100vh;"><img src="' + base64Data + '" style="max-width:100%;max-height:100%;"></body></html>');
-                } else {
-                    // Assume text/m3u
-                    // Decode base64 to text
-                    var base64Content = base64Data.split(',')[1];
-                    var decodedText = "";
-                    try {
-                        decodedText = decodeURIComponent(escape(atob(base64Content)));
-                    } catch(e) {
-                        decodedText = atob(base64Content);
-                    }
-                    
-                    win.document.write('<html><head><title>' + fileName + '</title></head><body style="font-family:monospace;background:#f5f5f5;padding:20px;"><h3>' + fileName + '</h3><textarea style="width:100%;height:80vh;border:1px solid #ccc;padding:10px;">' + decodedText + '</textarea><br><small>Tümünü seçip kopyalayabilirsiniz.</small></body></html>');
-                }
-            } catch(e) {
-                console.error("Window open error:", e);
-                showToast("Dosya açılamadı!", "fa-exclamation");
+        // --- HELPER: VIEW FILE IN-APP (SAFE MODE V29) ---
+        function openInAppViewer(base64Data, fileName) {
+            // Check if image
+            if(base64Data.startsWith('data:image')) {
+                showImagePreview(base64Data);
+                return;
             }
+
+            try {
+                // Decode text
+                var content = base64Data.split(',')[1];
+                var decodedText = "";
+                try {
+                    decodedText = decodeURIComponent(escape(atob(content)));
+                } catch(e) {
+                    decodedText = atob(content);
+                }
+                
+                document.getElementById('fvTitle').innerText = fileName;
+                document.getElementById('fvContent').value = decodedText;
+                document.getElementById('fileViewerModal').style.display = 'flex';
+                
+            } catch(e) {
+                console.error("Viewer error:", e);
+                showToast("Dosya okunamadı!", "fa-exclamation");
+            }
+        }
+
+        function copyFileContent() {
+            var copyText = document.getElementById("fvContent");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+            document.execCommand("copy");
+            showToast("Kopyalandı!", "fa-check");
         }
 
         // --- TELEGRAM NOTIFICATION FUNCTION ---
@@ -708,7 +721,7 @@ ${message || "[Dosya/Resim]"}`;
             
             let contentHTML = "";
             if(msg.image) contentHTML = `<img src="${msg.image}" class="chat-img" onclick="showImagePreview('${msg.image}')">`;
-            else if(msg.file) contentHTML = `<div class="chat-file-block" onclick="openBase64File('${msg.file.data}', '${msg.file.name}')"><i class="fas fa-file-alt file-icon"></i><div class="file-info"><span class="file-name">${msg.file.name}</span><span class="file-dl">Görüntüle/Kopyala</span></div></div>`;
+            else if(msg.file) contentHTML = `<div class="chat-file-block" onclick="openInAppViewer('${msg.file.data}', '${msg.file.name}')"><i class="fas fa-file-alt file-icon"></i><div class="file-info"><span class="file-name">${msg.file.name}</span><span class="file-dl">Görüntüle/Kopyala</span></div></div>`;
             else contentHTML = processText(msg.text);
             
             let timeHTML = `<span class="msg-time">${formatTime(msg.time || Date.now())}</span>`;
@@ -781,11 +794,11 @@ ${message || "[Dosya/Resim]"}`;
                 const img = new Image();
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    let width = img.width; let height = img.height; const MAX_WIDTH = 600; // Resim kalitesi düşürüldü
+                    let width = img.width; let height = img.height; const MAX_WIDTH = 600; 
                     if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
                     canvas.width = width; canvas.height = height;
                     const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
-                    const dataURL = canvas.toDataURL('image/jpeg', 0.4); // Sıkıştırma 0.4'e çekildi
+                    const dataURL = canvas.toDataURL('image/jpeg', 0.4);
                     sendMediaMsg(dataURL, null);
                 };
                 img.src = e.target.result;
@@ -933,7 +946,7 @@ ${message || "[Dosya/Resim]"}`;
             
             let contentHTML = "";
             if(msg.image) contentHTML = `<img src="${msg.image}" class="chat-img" onclick="showImagePreview('${msg.image}')">`;
-            else if(msg.file) contentHTML = `<div class="chat-file-block" onclick="openBase64File('${msg.file.data}', '${msg.file.name}')"><i class="fas fa-file-alt file-icon"></i><div class="file-info"><span class="file-name">${msg.file.name}</span><span class="file-dl">Görüntüle/Kopyala</span></div></div>`;
+            else if(msg.file) contentHTML = `<div class="chat-file-block" onclick="openInAppViewer('${msg.file.data}', '${msg.file.name}')"><i class="fas fa-file-alt file-icon"></i><div class="file-info"><span class="file-name">${msg.file.name}</span><span class="file-dl">Görüntüle/Kopyala</span></div></div>`;
             else contentHTML = processText(msg.text);
 
             let timeHTML = `<span class="msg-time">${formatTime(msg.time || Date.now())}</span>`;
