@@ -564,51 +564,38 @@
             });
         }
         
-        // --- HELPER: DOWNLOAD BASE64 FILE (MEMORY OPTIMIZED) ---
-        function base64ToBlob(base64, mime) {
-            mime = mime || '';
-            var sliceSize = 1024;
-            var byteCharacters = atob(base64);
-            var byteArrays = [];
-            for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-                var slice = byteCharacters.slice(offset, offset + sliceSize);
-                var byteNumbers = new Array(slice.length);
-                for (var i = 0; i < slice.length; i++) {
-                    byteNumbers[i] = slice.charCodeAt(i);
-                }
-                var byteArray = new Uint8Array(byteNumbers);
-                byteArrays.push(byteArray);
-            }
-            return new Blob(byteArrays, {type: mime});
-        }
-
-        function downloadBase64File(base64Data, fileName) {
+        // --- HELPER: OPEN FILE IN NEW WINDOW (SAFE MODE) ---
+        function openBase64File(base64Data, fileName) {
             try {
-                // Remove data prefix if exists
-                var base64 = base64Data;
-                var mime = 'application/octet-stream';
-                if(base64Data.indexOf(';base64,') > -1) {
-                    var parts = base64Data.split(';base64,');
-                    mime = parts[0].replace('data:', '');
-                    base64 = parts[1];
+                // If it looks like text, we open a window and write the text
+                // If it is binary (image), we write an image tag
+                // This avoids passing the huge string to the download manager
+                
+                var win = window.open("", "_blank");
+                if(!win) {
+                    showToast("Pop-up engellendi! İzin verin.", "fa-exclamation");
+                    return;
                 }
                 
-                var blob = base64ToBlob(base64, mime);
-                var url = URL.createObjectURL(blob);
-                
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = fileName;
-                document.body.appendChild(link);
-                link.click();
-                
-                setTimeout(function() {
-                    document.body.removeChild(link);
-                    window.URL.revokeObjectURL(url);
-                }, 100);
+                // Check if image
+                if(base64Data.startsWith('data:image')) {
+                    win.document.write('<html><body style="margin:0;background:#111;display:flex;justify-content:center;align-items:center;height:100vh;"><img src="' + base64Data + '" style="max-width:100%;max-height:100%;"></body></html>');
+                } else {
+                    // Assume text/m3u
+                    // Decode base64 to text
+                    var base64Content = base64Data.split(',')[1];
+                    var decodedText = "";
+                    try {
+                        decodedText = decodeURIComponent(escape(atob(base64Content)));
+                    } catch(e) {
+                        decodedText = atob(base64Content);
+                    }
+                    
+                    win.document.write('<html><head><title>' + fileName + '</title></head><body style="font-family:monospace;background:#f5f5f5;padding:20px;"><h3>' + fileName + '</h3><textarea style="width:100%;height:80vh;border:1px solid #ccc;padding:10px;">' + decodedText + '</textarea><br><small>Tümünü seçip kopyalayabilirsiniz.</small></body></html>');
+                }
             } catch(e) {
-                console.error("Download error:", e);
-                showToast("İndirme başlatılamadı!", "fa-exclamation");
+                console.error("Window open error:", e);
+                showToast("Dosya açılamadı!", "fa-exclamation");
             }
         }
 
@@ -721,7 +708,7 @@ ${message || "[Dosya/Resim]"}`;
             
             let contentHTML = "";
             if(msg.image) contentHTML = `<img src="${msg.image}" class="chat-img" onclick="showImagePreview('${msg.image}')">`;
-            else if(msg.file) contentHTML = `<div class="chat-file-block" onclick="downloadBase64File('${msg.file.data}', '${msg.file.name}')"><i class="fas fa-file-alt file-icon"></i><div class="file-info"><span class="file-name">${msg.file.name}</span><span class="file-dl">İndir</span></div></div>`;
+            else if(msg.file) contentHTML = `<div class="chat-file-block" onclick="openBase64File('${msg.file.data}', '${msg.file.name}')"><i class="fas fa-file-alt file-icon"></i><div class="file-info"><span class="file-name">${msg.file.name}</span><span class="file-dl">Görüntüle/Kopyala</span></div></div>`;
             else contentHTML = processText(msg.text);
             
             let timeHTML = `<span class="msg-time">${formatTime(msg.time || Date.now())}</span>`;
@@ -810,8 +797,8 @@ ${message || "[Dosya/Resim]"}`;
         function handleFileUpload(event) {
             const file = event.target.files[0];
             if(!file) return;
-            // 2.5 MB SAFE LIMIT
-            if(file.size > 2.5 * 1024 * 1024) { showToast("Dosya çok büyük! (Max 2.5MB)", "fa-exclamation-triangle"); return; }
+            // 1 MB LIMIT (STRICT ANDROID LIMIT)
+            if(file.size > 1 * 1024 * 1024) { showToast("Dosya çok büyük! (Max 1MB)", "fa-exclamation-triangle"); return; }
             if(isChatLocked && !isAdmin && currentTab === 'global') { showToast("Sohbet kilitli!", "fa-lock"); return; }
             
             showToast("Dosya yükleniyor...", "fa-cog fa-spin");
@@ -946,7 +933,7 @@ ${message || "[Dosya/Resim]"}`;
             
             let contentHTML = "";
             if(msg.image) contentHTML = `<img src="${msg.image}" class="chat-img" onclick="showImagePreview('${msg.image}')">`;
-            else if(msg.file) contentHTML = `<div class="chat-file-block" onclick="downloadBase64File('${msg.file.data}', '${msg.file.name}')"><i class="fas fa-file-alt file-icon"></i><div class="file-info"><span class="file-name">${msg.file.name}</span><span class="file-dl">İndir (Dosya)</span></div></div>`;
+            else if(msg.file) contentHTML = `<div class="chat-file-block" onclick="openBase64File('${msg.file.data}', '${msg.file.name}')"><i class="fas fa-file-alt file-icon"></i><div class="file-info"><span class="file-name">${msg.file.name}</span><span class="file-dl">Görüntüle/Kopyala</span></div></div>`;
             else contentHTML = processText(msg.text);
 
             let timeHTML = `<span class="msg-time">${formatTime(msg.time || Date.now())}</span>`;
