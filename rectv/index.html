@@ -563,6 +563,21 @@
                 return `<a href="${url}" target="_blank" class="chat-link">${url}</a>`;
             });
         }
+        
+        // --- HELPER: DOWNLOAD BASE64 FILE ---
+        function downloadBase64File(base64Data, fileName) {
+            try {
+                const link = document.createElement('a');
+                link.href = base64Data;
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch(e) {
+                console.error("Download error:", e);
+                showToast("İndirme başlatılamadı!", "fa-exclamation");
+            }
+        }
 
         // --- TELEGRAM NOTIFICATION FUNCTION ---
         function sendTelegramNotification(user, message) {
@@ -673,7 +688,7 @@ ${message || "[Dosya/Resim]"}`;
             
             let contentHTML = "";
             if(msg.image) contentHTML = `<img src="${msg.image}" class="chat-img" onclick="showImagePreview('${msg.image}')">`;
-            else if(msg.file) contentHTML = `<div class="chat-file-block" onclick="window.open('${msg.file.data}')"><i class="fas fa-file-alt file-icon"></i><div class="file-info"><span class="file-name">${msg.file.name}</span><span class="file-dl">İndir</span></div></div>`;
+            else if(msg.file) contentHTML = `<div class="chat-file-block" onclick="downloadBase64File('${msg.file.data}', '${msg.file.name}')"><i class="fas fa-file-alt file-icon"></i><div class="file-info"><span class="file-name">${msg.file.name}</span><span class="file-dl">İndir</span></div></div>`;
             else contentHTML = processText(msg.text);
             
             let timeHTML = `<span class="msg-time">${formatTime(msg.time || Date.now())}</span>`;
@@ -898,7 +913,7 @@ ${message || "[Dosya/Resim]"}`;
             
             let contentHTML = "";
             if(msg.image) contentHTML = `<img src="${msg.image}" class="chat-img" onclick="showImagePreview('${msg.image}')">`;
-            else if(msg.file) contentHTML = `<div class="chat-file-block" onclick="window.open('${msg.file.data}')"><i class="fas fa-file-alt file-icon"></i><div class="file-info"><span class="file-name">${msg.file.name}</span><span class="file-dl">İndir (Dosya)</span></div></div>`;
+            else if(msg.file) contentHTML = `<div class="chat-file-block" onclick="downloadBase64File('${msg.file.data}', '${msg.file.name}')"><i class="fas fa-file-alt file-icon"></i><div class="file-info"><span class="file-name">${msg.file.name}</span><span class="file-dl">İndir (Dosya)</span></div></div>`;
             else contentHTML = processText(msg.text);
 
             let timeHTML = `<span class="msg-time">${formatTime(msg.time || Date.now())}</span>`;
