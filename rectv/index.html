@@ -37,10 +37,24 @@
         .light-theme .card { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
         .img-box { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
         .card-img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
-        .badge { position: absolute; top: -8px; right: -8px; font-size: 0.65rem; padding: 3px 8px; border-radius: 6px; font-weight: 800; z-index: 10; animation: pulse-glow 2s infinite ease-in-out; }
-        .badge-yeni { background: linear-gradient(135deg, #ffab00, #ffea00); color: #000; }
+        
+        /* GÜNCELLENMİŞ BELİRGİN VE HAREKETLİ ROZET */
+        .badge { position: absolute; top: -10px; right: -10px; font-size: 0.75rem; padding: 4px 10px; border-radius: 8px; font-weight: 900; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.4); text-transform: uppercase; border: 1px solid rgba(255,255,255,0.3); }
+        
+        .badge-yeni { 
+            background: linear-gradient(135deg, #ff0000, #ff4d00); 
+            color: #fff; 
+            animation: pulse-aggressive 1.5s infinite ease-in-out;
+        }
+        
         .badge-iptv { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: #fff; }
-        @keyframes pulse-glow { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        
+        @keyframes pulse-aggressive { 
+            0% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 0, 0, 0.7); } 
+            50% { transform: scale(1.15); box-shadow: 0 0 15px rgba(255, 77, 0, 0.8); } 
+            100% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 0, 0, 0.7); } 
+        }
+
         .card-info { flex: 1; margin-left: 12px; }
         .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; color: var(--text); }
         .card-meta { font-size: 0.75rem; opacity: 0.5; color: var(--text); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -102,13 +116,25 @@
         .chat-view.hidden { display: none; }
 
         .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
-        .message-bubble { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; position: relative; word-wrap: break-word; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .message-bubble { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; position: relative; word-wrap: break-word; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .msg-left { align-self: flex-start; border-bottom-left-radius: 2px; }
         .msg-right { align-self: flex-end; background: var(--primary); border-bottom-right-radius: 2px; }
-        .msg-user { font-size: 0.65rem; opacity: 0.8; margin-bottom: 2px; display: block; font-weight: bold; cursor: pointer; }
-        .msg-admin { color: #ffeb3b; }
+        .msg-user { font-size: 0.7rem; opacity: 0.8; margin-bottom: 2px; display: block; font-weight: bold; cursor: pointer; color: #ffeb3b; }
+        .msg-admin { color: #ff4d4d; text-shadow: 0 0 5px rgba(0,0,0,0.5); }
         .msg-time { display: block; font-size: 0.65rem; text-align: right; opacity: 0.6; margin-top: 4px; }
         
+        /* CHAT LINK STYLES */
+        .chat-link { color: #00d2ff; text-decoration: underline; font-weight: bold; word-break: break-all; }
+        .chat-link:hover { color: #fff; }
+
+        /* CHAT FILE ATTACHMENT STYLE */
+        .chat-file-block { display:flex; align-items:center; background: rgba(0,0,0,0.3); padding:8px; border-radius:8px; margin-top:5px; gap:10px; border:1px solid rgba(255,255,255,0.1); cursor:pointer; }
+        .chat-file-block:hover { background: rgba(0,0,0,0.5); }
+        .file-icon { font-size: 1.5rem; color: #ffeb3b; }
+        .file-info { display:flex; flex-direction:column; overflow:hidden; }
+        .file-name { font-size:0.8rem; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .file-dl { font-size:0.7rem; color:#00d2ff; }
+
         .quoted-msg { background: rgba(0,0,0,0.2); border-left: 3px solid #ff4d4d; padding: 5px 8px; border-radius: 4px; margin-bottom: 5px; font-size: 0.75rem; display: flex; flex-direction: column; opacity: 0.9; }
         .quote-user { font-weight: bold; color: #ffeb3b; margin-bottom: 2px; }
         .reply-btn-icon { margin-left: 8px; opacity: 0.6; cursor: pointer; transition: opacity 0.2s; font-size: 0.8rem; }
@@ -133,8 +159,10 @@
         .chat-input { flex: 1; padding: 10px; border-radius: 20px; border: none; outline: none; background: rgba(255,255,255,0.1); color: var(--text); }
         .light-theme .chat-input { background: white; color: black; }
         .chat-send { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
-        .chat-img-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
-        .light-theme .chat-img-btn { background: rgba(0,0,0,0.1); color: #333; }
+        
+        .chat-attach-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
+        .light-theme .chat-attach-btn { background: rgba(0,0,0,0.1); color: #333; }
+        
         .chat-img { max-width: 100%; border-radius: 10px; margin-top: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
 
         /* PRIVATE CHAT LIST STYLES */
@@ -427,9 +455,13 @@
         </div>
         <div class="chat-input-area">
             <div class="input-row">
-                <button class="chat-img-btn" onclick="document.getElementById('imgUpload').click()"><i class="fas fa-image"></i></button>
+                <button class="chat-attach-btn" onclick="document.getElementById('fileUpload').click()"><i class="fas fa-paperclip"></i></button>
+                <button class="chat-attach-btn" onclick="document.getElementById('imgUpload').click()"><i class="fas fa-image"></i></button>
+                
                 <input type="file" id="imgUpload" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
-                <input type="text" class="chat-input" id="msgInput" placeholder="Mesaj yaz...">
+                <input type="file" id="fileUpload" accept=".txt,.html,.xml,.m3u" style="display:none" onchange="handleFileUpload(event)">
+                
+                <input type="text" class="chat-input" id="msgInput" placeholder="Mesaj yaz veya link yapıştır...">
                 <button class="chat-send" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
@@ -447,7 +479,7 @@
         </div>
     </div>
 
-    <script>const categoryData = { 'iptv_list': { 'items': [{"title": "GOOD İPTV EKLENDİ", "url": "http://tv1site.com:8080/get.php?username=vns171&password=cMynxFnug3bG&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/AYJnPc", "is_new": true, "added_date": "22.01.2026"}, {"title": "711X İPTV LİSTE EKLENDİ", "url": "http://protv65.shop:8080/get.php?username=fk4608&password=fk00xy&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/h7pa", "is_new": false, "added_date": "21.01.2026"}, {"title": "JOKER İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/Joker-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/pRN", "is_new": false, "added_date": "20.01.2026"}, {"title": "SUPMOT İPTV İNDİR", "url": "https://file.garden/Z-hq5n4Shk27aY58/supmot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/sBLi", "is_new": false, "added_date": "19.01.2026"}, {"title": "10 ADET MAC ADRESİ İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/inadinamackod.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ZZ5c", "is_new": false, "added_date": "18.01.2026"}, {"title": "KRİSTAL İPTV EKLENDİ", "url": "https://file.garden/Z-hq5n4Shk27aY58/Kristal-iptv-W.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8Gxpf", "is_new": false, "added_date": "18.01.2026"}, {"title": "SMARTES2 İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=zrdQ5UHD&password=q82fkQT&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/xAdwL", "is_new": false, "added_date": "17.01.2026"}, {"title": "10 BİN KİSİLİK İPTV", "url": "https://broken-night-dffb.deathlesstelenyu.workers.dev/dth-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/QfCR", "is_new": false, "added_date": "16.01.2026"}, {"title": "SMART İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=utSzxq7SY6&password=dj1yyFAQJy&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/5kQj", "is_new": false, "added_date": "15.01.2026"}, {"title": "YENİ SPORT İPTV", "url": "https://file.garden/Z-hq5n4Shk27aY58/sport-connec.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Ry1l", "is_new": false, "added_date": "14.01.2026"}, {"title": "10 SİNİRSİZ İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/7LxRP8", "is_new": false, "added_date": "13.01.2026"}, {"title": "SMARTZONE İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=gRNhEpGh3m&password=fmaAdfkHXJ&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/q9fMZa", "is_new": false, "added_date": "12.01.2026"}, {"title": "MEGA İPTV İNDİR", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/G7TFl", "is_new": false, "added_date": "11.01.2026"}, {"title": "1500 MAX SPORTS İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/nadina-1500-Max-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Se6xQ", "is_new": false, "added_date": "09.01.2026"}, {"title": "QUANTUM İPTV LİST", "url": "https://file.garden/Z-hq5n4Shk27aY58/Kuantum-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8Xy9", "is_new": false, "added_date": "08.01.2026"}, {"title": "FULL BOT İPTV SPORTS", "url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ld7M", "is_new": false, "added_date": "07.01.2026"}, {"title": "Ekalite iptv m3u", "url": "http://ekalite.xyz:8080/get.php?username=ibrahimtak&password=qwkRZHAwaK&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/4eoXDj", "is_new": false, "added_date": "06.01.2026"}, {"title": "D SPORTS M3U ADRESİ EKLEND", "url": "https://file.garden/Z-hq5n4Shk27aY58/DTH-Sports.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/w2Avb", "is_new": false, "added_date": "05.01.2026"}, {"title": "30 ADET İPTV M3U LİSTE", "url": "http://maisonxp.click/get.php?username=thay123&password=thay123&type=m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/zcn3j7", "is_new": false, "added_date": "04.01.2026"}, {"title": "ELİTE MAC ADRESLERİ İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/playlist.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DfpE", "is_new": false, "added_date": "04.01.2026"}, {"title": "KARMA İPTV 23K", "url": "https://file.garden/Z-hq5n4Shk27aY58/Karma-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6WmReB", "is_new": false, "added_date": "03.01.2026"}, {"title": "Yeni iptv liste", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/0cKg", "is_new": false, "added_date": "02.01.2026"}, {"title": "Turkiye Connect iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Turkiye-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6Dr", "is_new": false, "added_date": "01.01.2026"}, {"title": "9500 İPTV M3U LİNKLER YİLBASİ OZEL", "url": "http://ss.wancolonel.xyz:8080/get.php?username=Denisurlu&password=Muri3091&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/3hJ9te", "is_new": false, "added_date": "31.12.2025"}, {"title": "3 Adet İptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/KCwKj", "is_new": false, "added_date": "30.12.2025"}, {"title": "XTREAM İPTV LİSTELER EKLENDİ", "url": "http://s1.eldest99.xyz:8080/get.php?username=hdkaptantv3706&password=kptn@8723706&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Clqz", "is_new": false, "added_date": "29.12.2025"}, {"title": "FİLM EKSENİ İPTV", "url": "https://raw.githubusercontent.com/sultansmgr/smart/refs/heads/main/FilmEkseni.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESVvVD7PLGjrzbMvNGvIFOhRBoSxzoGBFLm3iG-xX1ZEArpkhkSItDVY&s=10", "web_link_url": "https://ay.live/qCS", "is_new": false, "added_date": "28.12.2025"}, {"title": "B. Conneckt İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/b-connect.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/67w", "is_new": false, "added_date": "28.12.2025"}, {"title": "Spor Kanallari bot iptv", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/9GlX", "is_new": false, "added_date": "27.12.2025"}, {"title": "100 Bin kisilik iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6QE", "is_new": false, "added_date": "27.12.2025"}, {"title": "Hibrit İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Toplu-Paket-V.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/eAAA7K", "is_new": false, "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": false, "added_date": "27.12.2025"}] } }; const activeCategoryKey = 'iptv_list';</script>
+    <script>const categoryData = { 'iptv_list': { 'items': [{"title": "GOOD İPTV EKLENDİ", "url": "http://tv1site.com:8080/get.php?username=vns171&password=cMynxFnug3bG&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/AYJnPc", "is_new": true, "added_date": "22.01.2026"}, {"title": "711X İPTV LİSTE EKLENDİ", "url": "http://protv65.shop:8080/get.php?username=fk4608&password=fk00xy&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/h7pa", "is_new": true, "added_date": "21.01.2026"}, {"title": "JOKER İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/Joker-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/pRN", "is_new": true, "added_date": "20.01.2026"}, {"title": "SUPMOT İPTV İNDİR", "url": "https://file.garden/Z-hq5n4Shk27aY58/supmot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/sBLi", "is_new": false, "added_date": "19.01.2026"}, {"title": "10 ADET MAC ADRESİ İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/inadinamackod.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ZZ5c", "is_new": false, "added_date": "18.01.2026"}, {"title": "KRİSTAL İPTV EKLENDİ", "url": "https://file.garden/Z-hq5n4Shk27aY58/Kristal-iptv-W.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8Gxpf", "is_new": false, "added_date": "18.01.2026"}, {"title": "SMARTES2 İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=zrdQ5UHD&password=q82fkQT&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/xAdwL", "is_new": false, "added_date": "17.01.2026"}, {"title": "10 BİN KİSİLİK İPTV", "url": "https://broken-night-dffb.deathlesstelenyu.workers.dev/dth-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/QfCR", "is_new": false, "added_date": "16.01.2026"}, {"title": "SMART İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=utSzxq7SY6&password=dj1yyFAQJy&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/5kQj", "is_new": false, "added_date": "15.01.2026"}, {"title": "YENİ SPORT İPTV", "url": "https://file.garden/Z-hq5n4Shk27aY58/sport-connec.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Ry1l", "is_new": false, "added_date": "14.01.2026"}, {"title": "10 SİNİRSİZ İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/7LxRP8", "is_new": false, "added_date": "13.01.2026"}, {"title": "SMARTZONE İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=gRNhEpGh3m&password=fmaAdfkHXJ&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/q9fMZa", "is_new": false, "added_date": "12.01.2026"}, {"title": "MEGA İPTV İNDİR", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/G7TFl", "is_new": false, "added_date": "11.01.2026"}, {"title": "1500 MAX SPORTS İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/nadina-1500-Max-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Se6xQ", "is_new": false, "added_date": "09.01.2026"}, {"title": "QUANTUM İPTV LİST", "url": "https://file.garden/Z-hq5n4Shk27aY58/Kuantum-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8Xy9", "is_new": false, "added_date": "08.01.2026"}, {"title": "FULL BOT İPTV SPORTS", "url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ld7M", "is_new": false, "added_date": "07.01.2026"}, {"title": "Ekalite iptv m3u", "url": "http://ekalite.xyz:8080/get.php?username=ibrahimtak&password=qwkRZHAwaK&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/4eoXDj", "is_new": false, "added_date": "06.01.2026"}, {"title": "D SPORTS M3U ADRESİ EKLEND", "url": "https://file.garden/Z-hq5n4Shk27aY58/DTH-Sports.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/w2Avb", "is_new": false, "added_date": "05.01.2026"}, {"title": "30 ADET İPTV M3U LİSTE", "url": "http://maisonxp.click/get.php?username=thay123&password=thay123&type=m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/zcn3j7", "is_new": false, "added_date": "04.01.2026"}, {"title": "ELİTE MAC ADRESLERİ İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/playlist.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DfpE", "is_new": false, "added_date": "04.01.2026"}, {"title": "KARMA İPTV 23K", "url": "https://file.garden/Z-hq5n4Shk27aY58/Karma-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6WmReB", "is_new": false, "added_date": "03.01.2026"}, {"title": "Yeni iptv liste", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/0cKg", "is_new": false, "added_date": "02.01.2026"}, {"title": "Turkiye Connect iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Turkiye-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6Dr", "is_new": false, "added_date": "01.01.2026"}, {"title": "9500 İPTV M3U LİNKLER YİLBASİ OZEL", "url": "http://ss.wancolonel.xyz:8080/get.php?username=Denisurlu&password=Muri3091&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/3hJ9te", "is_new": false, "added_date": "31.12.2025"}, {"title": "3 Adet İptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/KCwKj", "is_new": false, "added_date": "30.12.2025"}, {"title": "XTREAM İPTV LİSTELER EKLENDİ", "url": "http://s1.eldest99.xyz:8080/get.php?username=hdkaptantv3706&password=kptn@8723706&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Clqz", "is_new": false, "added_date": "29.12.2025"}, {"title": "FİLM EKSENİ İPTV", "url": "https://raw.githubusercontent.com/sultansmgr/smart/refs/heads/main/FilmEkseni.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESVvVD7PLGjrzbMvNGvIFOhRBoSxzoGBFLm3iG-xX1ZEArpkhkSItDVY&s=10", "web_link_url": "https://ay.live/qCS", "is_new": false, "added_date": "28.12.2025"}, {"title": "B. Conneckt İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/b-connect.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/67w", "is_new": false, "added_date": "28.12.2025"}, {"title": "Spor Kanallari bot iptv", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/9GlX", "is_new": false, "added_date": "27.12.2025"}, {"title": "100 Bin kisilik iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6QE", "is_new": false, "added_date": "27.12.2025"}, {"title": "Hibrit İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Toplu-Paket-V.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/eAAA7K", "is_new": false, "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": false, "added_date": "27.12.2025"}] } }; const activeCategoryKey = 'iptv_list';</script>
 
     <script>
         const firebaseConfig = {
@@ -481,7 +513,6 @@
         let currentTab = 'global'; // 'global' or 'private'
         let currentPrivateRoom = null;
         let currentTargetUser = null;
-        let privateChatsData = {};
         let activePrivateListener = null;
 
         const ADMIN_PASS = "burhan_baba_72";
@@ -498,16 +529,23 @@
         function showToast(message, icon="fa-info-circle") { const t = document.getElementById('toast'); t.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`; t.className = "toast show"; setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000); }
         function formatTime(ts) { const d = new Date(ts); return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0'); }
 
+        // --- HELPER: LINKIFY & PROCESS TEXT ---
+        function processText(text) {
+            if(!text) return "";
+            // Replace URLs with clickable links
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            return text.replace(urlRegex, function(url) {
+                return `<a href="${url}" target="_blank" class="chat-link">${url}</a>`;
+            });
+        }
+
         // --- TELEGRAM NOTIFICATION FUNCTION ---
         function sendTelegramNotification(user, message) {
-            // Do not notify if admin is the sender or if tokens are missing
             if(isAdmin || !TG_BOT_TOKEN || TG_BOT_TOKEN.includes("BURAYA") || !TG_CHAT_ID) return;
-            
             const text = `💬 Yeni Mesaj: ${user}
 
-${message || "[Resim]"}`;
+${message || "[Dosya/Resim]"}`;
             const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage?chat_id=${TG_CHAT_ID}&text=${encodeURIComponent(text)}`;
-            
             fetch(url).catch(e => console.error("TG Error:", e));
         }
 
@@ -558,7 +596,6 @@ ${message || "[Resim]"}`;
                     document.getElementById('viewPrivateList').classList.remove('hidden');
                     document.getElementById('msgInput').placeholder = "Bir sohbet seç...";
                 }
-                // Clear badge
                 document.getElementById('pmBadge').style.display = 'none';
                 document.getElementById('pmBadge').innerText = '0';
             }
@@ -570,26 +607,23 @@ ${message || "[Resim]"}`;
         }
 
         function startPrivateChat(targetUUID, targetName) {
-            toggleChat(); // Close if open to refresh or ensure open
+            toggleChat(); 
             document.getElementById('chatModal').classList.add('active');
             
             currentTargetUser = { uuid: targetUUID, name: targetName };
             currentPrivateRoom = getRoomId(myUUID, targetUUID);
             
-            // Switch UI
             switchChatTab('private');
             document.getElementById('viewPrivateList').classList.add('hidden');
             document.getElementById('viewPrivateConv').classList.remove('hidden');
             document.getElementById('privateChatUserName').innerText = targetName;
             document.getElementById('privateChatContainer').innerHTML = '<p style="text-align:center; opacity:0.5; margin-top:20px;">Sohbet yükleniyor...</p>';
-            
-            // Listen to this room
             listenToPrivateRoom(currentPrivateRoom);
         }
 
         function backToPrivateList() {
             currentPrivateRoom = null;
-            if(activePrivateListener) activePrivateListener.off(); // Stop listening to specific room
+            if(activePrivateListener) activePrivateListener.off(); 
             switchChatTab('private');
         }
 
@@ -597,25 +631,28 @@ ${message || "[Resim]"}`;
             if(activePrivateListener) activePrivateListener.off();
             const ref = database.ref('private_chats/' + roomId);
             activePrivateListener = ref;
-            
             document.getElementById('privateChatContainer').innerHTML = '';
             ref.limitToLast(50).on('child_added', (snapshot) => {
                 const msg = snapshot.val();
-                appendPrivateMessage(msg.user, msg.text, msg.user === myUserName, msg.image, msg.time);
+                appendPrivateMessage(msg);
             });
         }
 
-        function appendPrivateMessage(user, text, isMe, image, time) {
+        function appendPrivateMessage(msg) {
             const container = document.getElementById('privateChatContainer');
             const div = document.createElement('div');
-            let bgColor = isMe ? '' : `background-color: ${getUserColor(user)};`;
+            let isMe = msg.user === myUserName;
+            let bgColor = isMe ? '' : `background-color: ${getUserColor(msg.user)};`;
             div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'}`;
             if(!isMe) div.style.cssText = bgColor;
             
-            let contentHTML = image ? `<img src="${image}" class="chat-img" onclick="showImagePreview('${image}')">` : text;
-            let timeHTML = `<span class="msg-time">${formatTime(time || Date.now())}</span>`;
+            let contentHTML = "";
+            if(msg.image) contentHTML = `<img src="${msg.image}" class="chat-img" onclick="showImagePreview('${msg.image}')">`;
+            else if(msg.file) contentHTML = `<div class="chat-file-block" onclick="window.open('${msg.file.data}')"><i class="fas fa-file-alt file-icon"></i><div class="file-info"><span class="file-name">${msg.file.name}</span><span class="file-dl">İndir</span></div></div>`;
+            else contentHTML = processText(msg.text);
             
-            div.innerHTML = `<span class="msg-user">${user}</span>${contentHTML}${timeHTML}`;
+            let timeHTML = `<span class="msg-time">${formatTime(msg.time || Date.now())}</span>`;
+            div.innerHTML = `<span class="msg-user">${msg.user}</span>${contentHTML}${timeHTML}`;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
         }
@@ -635,17 +672,10 @@ ${message || "[Resim]"}`;
                     const data = child.val();
                     const targetUUID = child.key;
                     count++;
-                    
                     const div = document.createElement('div');
                     div.className = 'private-chat-item';
                     div.onclick = () => startPrivateChat(targetUUID, data.name);
-                    div.innerHTML = `
-                        <div style="flex:1;">
-                            <div class="pc-user">${data.name}</div>
-                            <div class="pc-preview">${data.lastMsg || "Resim"}</div>
-                        </div>
-                        <div style="font-size:0.7rem; opacity:0.5;">${formatTime(data.timestamp)}</div>
-                    `;
+                    div.innerHTML = `<div style="flex:1;"><div class="pc-user">${data.name}</div><div class="pc-preview">${data.lastMsg || "Ek"}</div></div><div style="font-size:0.7rem; opacity:0.5;">${formatTime(data.timestamp)}</div>`;
                     listContainer.appendChild(div);
                 });
 
@@ -680,6 +710,7 @@ ${message || "[Resim]"}`;
         window.saveAnnouncement = function() { const txt = document.getElementById('annoInput').value; if(txt) { database.ref('extras/announcement').set({ active: true, text: txt }); showToast("Duyuru Yayında!", "fa-bullhorn"); } };
         window.stopAnnouncement = function() { database.ref('extras/announcement').set({ active: false }); showToast("Duyuru Kaldırıldı", "fa-times"); };
 
+        // --- FILE UPLOAD LOGIC ---
         function handleImageUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -695,7 +726,7 @@ ${message || "[Resim]"}`;
                     canvas.width = width; canvas.height = height;
                     const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
                     const dataURL = canvas.toDataURL('image/jpeg', 0.6);
-                    sendImageMsg(dataURL);
+                    sendMediaMsg(dataURL, null);
                 };
                 img.src = e.target.result;
             };
@@ -703,19 +734,40 @@ ${message || "[Resim]"}`;
             event.target.value = '';
         }
 
-        function sendImageMsg(imgData) {
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if(!file) return;
+            if(file.size > 50 * 1024) { showToast("Dosya çok büyük! (Max 50KB)", "fa-exclamation-triangle"); return; }
+            if(isChatLocked && !isAdmin && currentTab === 'global') { showToast("Sohbet kilitli!", "fa-lock"); return; }
+            
+            showToast("Dosya yükleniyor...", "fa-cog fa-spin");
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const dataURL = e.target.result; // Base64
+                const fileData = { name: file.name, data: dataURL };
+                sendMediaMsg(null, fileData);
+            };
+            reader.readAsDataURL(file);
+            event.target.value = '';
+        }
+
+        function sendMediaMsg(imgData, fileData) {
             if (currentTab === 'global') {
-                const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, image: imgData, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
+                const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
+                if(imgData) { messageData.image = imgData; sendTelegramNotification(myUserName, "[Resim]"); }
+                if(fileData) { messageData.file = fileData; sendTelegramNotification(myUserName, "[Dosya: " + fileData.name + "]"); }
                 database.ref('global_chat').push(messageData);
-                sendTelegramNotification(myUserName, "[Resim]");
             } else if (currentTab === 'private' && currentPrivateRoom) {
-                const messageData = { user: myUserName, image: imgData, uuid: myUUID, time: Date.now() };
+                const messageData = { user: myUserName, uuid: myUUID, time: Date.now() };
+                if(imgData) { messageData.image = imgData; }
+                if(fileData) { messageData.file = fileData; }
+                
                 database.ref('private_chats/' + currentPrivateRoom).push(messageData);
-                database.ref('user_inbox/' + currentTargetUser.uuid + '/' + myUUID).set({ lastMsg: "📷 Resim", timestamp: Date.now(), name: myUserName });
-                database.ref('user_inbox/' + myUUID + '/' + currentTargetUser.uuid).set({ lastMsg: "📷 Resim (Sen)", timestamp: Date.now(), name: currentTargetUser.name });
-                sendTelegramNotification(myUserName, "[Özel Mesaj: Resim]");
+                const desc = imgData ? "📷 Resim" : "📎 Dosya";
+                database.ref('user_inbox/' + currentTargetUser.uuid + '/' + myUUID).set({ lastMsg: desc, timestamp: Date.now(), name: myUserName });
+                database.ref('user_inbox/' + myUUID + '/' + currentTargetUser.uuid).set({ lastMsg: desc + " (Sen)", timestamp: Date.now(), name: currentTargetUser.name });
             }
-            showToast("Resim gönderildi", "fa-check");
+            showToast("Gönderildi", "fa-check");
         }
 
         function showImagePreview(src) { document.getElementById('imgPreview').src = src; document.getElementById('imgPreviewModal').style.display = 'flex'; }
@@ -731,7 +783,7 @@ ${message || "[Resim]"}`;
             database.ref('channel_likes').on('value', (s) => { if(s.exists()) { globalLikeCounts = s.val(); updateStatsInDOM(); } });
             
             database.ref('global_chat').limitToLast(50).on('child_changed', (snapshot) => { const msg = snapshot.val(); const likeEl = document.getElementById(`like-count-${snapshot.key}`); const dislikeEl = document.getElementById(`dislike-count-${snapshot.key}`); if(likeEl) likeEl.innerText = msg.likes || 0; if(dislikeEl) dislikeEl.innerText = msg.dislikes || 0; });
-            database.ref('global_chat').limitToLast(50).on('child_added', (snapshot) => { const msg = snapshot.val(); appendMessage(msg.user, msg.text, msg.user === myUserName, snapshot.key, msg.uuid, msg.isAdminMsg, msg.replyTo, msg.image, msg.likes, msg.dislikes, msg.time); });
+            database.ref('global_chat').limitToLast(50).on('child_added', (snapshot) => { const msg = snapshot.val(); appendMessage(msg, snapshot.key); });
             database.ref('global_chat').on('child_removed', (snapshot) => { const el = document.getElementById('msg-' + snapshot.key); if(el) el.remove(); });
         }
 
@@ -752,7 +804,6 @@ ${message || "[Resim]"}`;
         }
         
         function startReply(user, text, img) { 
-            // Only works for Global chat replying
             switchChatTab('global');
             currentReply = { user: user, text: text, image: img }; 
             document.getElementById('replyToUser').innerText = user; 
@@ -760,7 +811,7 @@ ${message || "[Resim]"}`;
             let content = "";
             if(img) content += `<img src="${img}" style="height:35px; border-radius:4px; vertical-align:middle; margin-right:5px;"> `;
             if(text) content += text.substring(0, 30) + (text.length>30 ? '...' : '');
-            if(!text && !img) content = "Bilinmeyen Mesaj";
+            if(!text && !img) content = "Dosya/Resim";
             
             document.getElementById('replyToText').innerHTML = content; 
             document.getElementById('replyPreviewBar').style.display = 'flex'; 
@@ -782,7 +833,6 @@ ${message || "[Resim]"}`;
             } else if (currentTab === 'private' && currentPrivateRoom) {
                 const messageData = { user: myUserName, text: txt, uuid: myUUID, time: Date.now() };
                 database.ref('private_chats/' + currentPrivateRoom).push(messageData);
-                // Update inbox for both users
                 database.ref('user_inbox/' + currentTargetUser.uuid + '/' + myUUID).set({ lastMsg: txt, timestamp: Date.now(), name: myUserName });
                 database.ref('user_inbox/' + myUUID + '/' + currentTargetUser.uuid).set({ lastMsg: "Sen: " + txt, timestamp: Date.now(), name: currentTargetUser.name });
                 sendTelegramNotification(myUserName, "[Özel Mesaj]: " + txt);
@@ -796,33 +846,36 @@ ${message || "[Resim]"}`;
             if (current === type) { database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) - 1); delete myReactions[key]; const btn = document.getElementById(`btn-${type}-${key}`); if(btn) btn.classList.remove(`active-${type}`); } else { if(current) { database.ref(`global_chat/${key}/${current}s`).transaction(c => (c || 0) - 1); const oldBtn = document.getElementById(`btn-${current}-${key}`); if(oldBtn) oldBtn.classList.remove(`active-${current}`); } database.ref(`global_chat/${key}/${type}s`).transaction(c => (c || 0) + 1); myReactions[key] = type; const newBtn = document.getElementById(`btn-${type}-${key}`); if(newBtn) newBtn.classList.add(`active-${type}`); } localStorage.setItem('chat_reactions', JSON.stringify(myReactions));
         }
         
-        function appendMessage(user, text, isMe, key, senderUUID, isAdminMsg, replyTo, image, likes = 0, dislikes = 0, time = null) {
+        function appendMessage(msg, key) {
             const container = document.getElementById('chatContainer');
             const div = document.createElement('div');
             div.id = 'msg-' + key;
-            let bgColor = isMe ? '' : `background-color: ${getUserColor(user)};`;
+            let isMe = msg.user === myUserName;
+            let bgColor = isMe ? '' : `background-color: ${getUserColor(msg.user)};`;
             div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'} ${isAdmin ? 'is-admin' : ''}`;
             if(!isMe) div.style.cssText = bgColor;
-            let userDisplay = user;
-            if(isAdminMsg) userDisplay = `<span class="msg-admin"><i class="fas fa-shield-alt"></i> YÖNETİCİ</span>`;
+            let userDisplay = msg.user;
+            if(msg.isAdminMsg) userDisplay = `<span class="msg-admin"><i class="fas fa-shield-alt"></i> YÖNETİCİ</span>`;
             
-            // Safe string escape for onclick
-            const safeText = text ? text.replace(/'/g, "\'").replace(/"/g, '&quot;') : "";
-            const safeImg = image || "";
-            let userClickAction = `onclick="openUserActionModal('${senderUUID}', '${user}', '${key}', '${safeText}', '${safeImg}')"`;
+            const safeText = msg.text ? msg.text.replace(/'/g, "\'").replace(/"/g, '&quot;') : "";
+            const safeImg = msg.image || "";
+            let userClickAction = `onclick="openUserActionModal('${msg.uuid}', '${msg.user}', '${key}', '${safeText}', '${safeImg}')"`;
             
             let quoteHTML = "";
-            if(replyTo) { 
+            if(msg.replyTo) { 
                 let qContent = "";
-                if(replyTo.image) qContent += `<img src="${replyTo.image}" style="height:40px; border-radius:4px; display:block; margin-bottom:2px;">`;
-                if(replyTo.text) qContent += `<span>${replyTo.text}</span>`;
-                if(!replyTo.text && !replyTo.image) qContent = "<i>Silinmiş Mesaj</i>";
-                
-                quoteHTML = `<div class="quoted-msg"><span class="quote-user">${replyTo.user}</span>${qContent}</div>`; 
+                if(msg.replyTo.image) qContent += `<img src="${msg.replyTo.image}" style="height:40px; border-radius:4px; display:block; margin-bottom:2px;">`;
+                if(msg.replyTo.text) qContent += `<span>${msg.replyTo.text}</span>`;
+                if(!msg.replyTo.text && !msg.replyTo.image) qContent = "<i>Silinmiş Mesaj</i>";
+                quoteHTML = `<div class="quoted-msg"><span class="quote-user">${msg.replyTo.user}</span>${qContent}</div>`; 
             }
             
-            let contentHTML = image ? `<img src="${image}" class="chat-img" onclick="showImagePreview('${image}')">` : text;
-            let timeHTML = `<span class="msg-time">${formatTime(time || Date.now())}</span>`;
+            let contentHTML = "";
+            if(msg.image) contentHTML = `<img src="${msg.image}" class="chat-img" onclick="showImagePreview('${msg.image}')">`;
+            else if(msg.file) contentHTML = `<div class="chat-file-block" onclick="window.open('${msg.file.data}')"><i class="fas fa-file-alt file-icon"></i><div class="file-info"><span class="file-name">${msg.file.name}</span><span class="file-dl">İndir (Dosya)</span></div></div>`;
+            else contentHTML = processText(msg.text);
+
+            let timeHTML = `<span class="msg-time">${formatTime(msg.time || Date.now())}</span>`;
             let adminControls = "";
             if (isAdmin) { adminControls = `<div class="admin-controls"><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; }
             
@@ -830,7 +883,7 @@ ${message || "[Resim]"}`;
             let myReact = myReactions[key];
             let likeClass = myReact === 'like' ? 'active-like' : '';
             let dislikeClass = myReact === 'dislike' ? 'active-dislike' : '';
-            let actionsHTML = `<div class="msg-actions"><span id="btn-like-${key}" class="action-btn ${likeClass}" onclick="toggleChatReaction('${key}', 'like')"><i class="fas fa-thumbs-up"></i> <span id="like-count-${key}">${likes || 0}</span></span><span id="btn-dislike-${key}" class="action-btn ${dislikeClass}" onclick="toggleChatReaction('${key}', 'dislike')"><i class="fas fa-thumbs-down"></i> <span id="dislike-count-${key}">${dislikes || 0}</span></span></div>`;
+            let actionsHTML = `<div class="msg-actions"><span id="btn-like-${key}" class="action-btn ${likeClass}" onclick="toggleChatReaction('${key}', 'like')"><i class="fas fa-thumbs-up"></i> <span id="like-count-${key}">${msg.likes || 0}</span></span><span id="btn-dislike-${key}" class="action-btn ${dislikeClass}" onclick="toggleChatReaction('${key}', 'dislike')"><i class="fas fa-thumbs-down"></i> <span id="dislike-count-${key}">${msg.dislikes || 0}</span></span></div>`;
             div.innerHTML = `${quoteHTML}<span class="msg-user" ${userClickAction}>${userDisplay}</span>${contentHTML}${timeHTML}${actionsHTML}${adminControls}`;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
