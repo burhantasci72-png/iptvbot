@@ -3,145 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INADINA TV</title>
+    <title>INADINA TV - Ana Menü</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- FIREBASE (Compat) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
     <style>
-        :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; --text: #e8e6e3; --card-bg: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.03); }
-        body { background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 20px; transition: background 0.3s, color 0.3s; }
-        body.light-theme { --bg: #f5f5f5; --surface: #ffffff; --text: #1a1a1a; --card-bg: #ffffff; --border: #e0e0e0; }
-        .top-bar { padding: 15px 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: background 0.3s; }
-        .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #ff0040, #ff4d00); -webkit-background-clip: text; color: transparent; }
+        :root {
+            --hue: 345; --primary-color: hsl(var(--hue), 100%, 50%); --primary-dark: hsl(var(--hue), 100%, 40%);
+            --primary-gradient: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+            --link-color: #4CAF50; --telegram-color: #2AABEE; --bg-color: #0f0a1a;
+            --text-color: hsl(var(--hue), 15%, 95%); --text-secondary: hsl(var(--hue), 15%, 75%);
+            --card-bg: rgba(30, 28, 40, 0.6);
+            --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 8px 12px rgba(0, 0, 0, 0.3);
+            --surface-dark: hsl(var(--hue), 15%, 10%);
+            --surface-light: hsl(var(--hue), 15%, 15%);
+        }
+        body.light-theme {
+            --hue: 210; --bg-color: #f0f4f8; --text-color: #2c3e50; --text-secondary: #7f8c8d;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --surface-dark: #e4e9ed; --surface-light: #ffffff;
+            --primary-color: hsl(var(--hue), 80%, 55%);
+        }
+        body.dark-theme { --hue: 345; --bg-color: #0f0a1a; }
+        body.blue-theme { --hue: 210; --bg-color: #0d1b2a; } 
+        body.green-theme { --hue: 145; --bg-color: #122a1e; }
+        body.purple-theme { --hue: 285; --bg-color: #1a122a; }
+        body.orange-theme { --hue: 35; --bg-color: #2a1a12; }
         
-        .header-actions { display: flex; align-items: center; gap: 12px; }
-        .theme-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; transition: all 0.3s; }
-        .light-theme .theme-btn { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #1a1a1a; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg-color); color: var(--text-color); overflow-x: hidden; min-height: 100vh; transition: background 0.4s ease, color 0.4s ease; line-height: 1.5; }
         
-        .online-badge { display: flex; align-items: center; gap: 6px; padding: 6px 10px; background: rgba(0, 255, 127, 0.1); border: 1px solid rgba(0, 255, 127, 0.2); border-radius: 8px; font-size: 0.8rem; font-weight: bold; color: #00ff7f; animation: pulse-green 2s infinite; }
+        .app-container { padding: 20px; padding-top: 80px; min-height: 100vh; display: flex; flex-direction: column; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: var(--surface-light); box-shadow: 0 2px 4px rgba(0,0,0, 0.2); }
+        .app-logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .top-bar-controls { display: flex; align-items: center; gap: 10px; }
+        .online-badge { display: flex; align-items: center; gap: 6px; padding: 5px 10px; background: rgba(0, 255, 127, 0.15); border: 1px solid #00ff7f; border-radius: 20px; font-size: 0.85rem; font-weight: bold; color: #00ff7f; animation: pulse-green 2s infinite; }
         @keyframes pulse-green { 0% { opacity: 0.8; } 50% { opacity: 1; text-shadow: 0 0 5px rgba(0,255,127,0.5); } 100% { opacity: 0.8; } }
-        .light-theme .online-badge { background: rgba(0, 128, 0, 0.1); color: #008000; border-color: rgba(0, 128, 0, 0.2); }
+        .control-button { background: none; border: none; color: var(--text-color); font-size: 1.3rem; cursor: pointer; transition: transform 0.3s ease; padding: 5px; }
+        .dropdown-menu { position: absolute; top: calc(100% + 8px); right: 0; background: var(--card-bg); border-radius: 8px; padding: 10px; z-index: 100; display: none; min-width: 170px; backdrop-filter: blur(8px); border: 1px solid var(--primary-color); }
+        .dropdown-menu.show { display: block; }
+        .theme-option, .apk-option { display: flex; align-items: center; gap: 12px; background: none; border: none; color: var(--text-color); padding: 10px; width: 100%; text-align: left; cursor: pointer; }
+        .theme-option:hover, .apk-option:hover { background: rgba(255,255,255,0.1); }
 
-        /* KAYAN YAZI STİLLERİ */
-        .announcement-bar { background: #ffeb3b; color: #000; overflow: hidden; white-space: nowrap; padding: 6px 0; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: none; border-bottom: 2px solid #ff4d00; }
-        .announcement-content { display: inline-block; padding-left: 100%; animation: scroll-left 15s linear infinite; }
-        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; margin: 20px auto; }
+        .category-card-button { background: var(--card-bg); backdrop-filter: blur(8px); border-radius: 15px; padding: 18px 20px; text-decoration: none; color: var(--text-color); display: flex; align-items: center; gap: 15px; transition: all 0.3s; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; }
+        .category-card-button:hover { transform: translateY(-5px); border-color: var(--primary-color); }
+        .category-card-button i { font-size: 2.4rem; color: var(--primary-color); }
+        .category-card-button span { font-weight: 700; font-size: 1.05rem; }
         
-        .container { padding: 15px; }
-        .card { background: var(--card-bg); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid var(--border); position: relative; transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .card.hidden { display: none; }
-        .light-theme .card { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .img-box { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
-        .card-img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
-        
-        /* GÜNCELLENMİŞ BELİRGİN VE HAREKETLİ ROZET */
-        .badge { position: absolute; top: -10px; right: -10px; font-size: 0.75rem; padding: 4px 10px; border-radius: 8px; font-weight: 900; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.4); text-transform: uppercase; border: 1px solid rgba(255,255,255,0.3); }
-        
-        .badge-yeni { 
-            background: linear-gradient(135deg, #ff0000, #ff4d00); 
-            color: #fff; 
-            animation: pulse-aggressive 1.5s infinite ease-in-out;
-        }
-        
-        .badge-iptv { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: #fff; }
-        
-        @keyframes pulse-aggressive { 
-            0% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 0, 0, 0.7); } 
-            50% { transform: scale(1.15); box-shadow: 0 0 15px rgba(255, 77, 0, 0.8); } 
-            100% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 0, 0, 0.7); } 
-        }
+        .footer { margin-top: auto; padding: 25px; text-align: center; font-size: 0.9rem; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.1); }
+        .notification { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--surface-light); color: var(--text-color); padding: 15px 20px; border-radius: 8px; z-index: 2000; display: flex; align-items: center; opacity: 0; transition: opacity 0.3s; pointer-events: none; border: 1px solid var(--primary-color); }
+        .notification.show { opacity: 1; }
 
-        .card-info { flex: 1; margin-left: 12px; }
-        .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; color: var(--text); }
-        .card-meta { font-size: 0.75rem; opacity: 0.5; color: var(--text); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        
-        .stat-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255, 255, 255, 0.05); padding: 2px 8px; border-radius: 8px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .light-theme .stat-badge { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); }
-        .stat-eye { color: var(--primary); }
-        .stat-heart { color: #ff3d3d; cursor: pointer; transition: transform 0.2s; }
-        .stat-heart:active { transform: scale(1.3); }
-        .stat-heart.liked { color: #ff0000; text-shadow: 0 0 10px rgba(255,0,0,0.5); }
-        .stat-report { color: #ff4d4d; cursor: pointer; transition: transform 0.2s; }
-        .stat-report:hover { transform: scale(1.2); }
-        .play-icon { color: var(--primary); font-size: 1.4rem; margin-left: 10px; }
-        .load-more-btn { width: calc(100% - 30px); margin: 20px 15px; padding: 15px; border: none; border-radius: 15px; background: linear-gradient(135deg, var(--primary), #ff4d00); color: white; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255, 0, 64, 0.3); }
-        .load-more-btn.hidden { display: none; }
-        
-        .toast { visibility: hidden; min-width: 250px; background-color: #1a1825; border: 1px solid rgba(255,255,255,0.1); color: #fff; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 2000; left: 50%; bottom: 80px; transform: translateX(-50%); font-size: 0.9rem; box-shadow: 0 5px 20px rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s, bottom 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .light-theme .toast { background-color: #fff; color: #333; border-color: #ddd; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-        .toast.show { visibility: visible; opacity: 1; bottom: 90px; }
-        
-        /* COUNTDOWN & POLL STYLES */
-        .feature-container { margin: 15px; display: flex; flex-direction: column; gap: 15px; }
-        .countdown-box { background: linear-gradient(135deg, #1a1825, #000); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; }
-        .countdown-title { color: var(--primary); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
-        .countdown-timer { display: flex; justify-content: center; gap: 10px; font-size: 1.5rem; font-weight: bold; color: white; font-family: monospace; }
-        .time-unit { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 8px; min-width: 40px; }
-        .time-label { font-size: 0.6rem; opacity: 0.7; font-family: sans-serif; margin-top: 2px; }
-        .live-blink { color: #ff0040; animation: blink 1s infinite; font-size: 2rem; font-weight: 800; display: none; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-        
-        .poll-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; display: none; }
-        .poll-question { font-weight: bold; margin-bottom: 10px; color: var(--text); display: block; }
-        .poll-option { margin-bottom: 8px; position: relative; cursor: pointer; }
-        .poll-bar-bg { background: rgba(255,255,255,0.1); height: 35px; border-radius: 8px; overflow: hidden; position: relative; }
-        .poll-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #ff4d00); width: 0%; transition: width 0.5s ease; opacity: 0.7; }
-        .poll-text { position: absolute; top: 0; left: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
-        .poll-percent { position: absolute; top: 0; right: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
-
-        /* YENİ GELİŞMİŞ CHAT İKONU */
-        @keyframes gradient-anim { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        
-        .chat-btn-container { position: fixed; bottom: 20px; right: 20px; z-index: 200; display:flex; flex-direction:column; align-items:center; gap:5px; }
+        /* --- SOHBET & DOSYA YÜKLEME STİLLERİ (V29) --- */
+        .chat-btn-container { position: fixed; bottom: 20px; right: 20px; z-index: 2000; display:flex; flex-direction:column; align-items:center; gap:5px; cursor: pointer; }
         .chat-label { background: #ff0040; color:white; font-size:0.7rem; padding:3px 8px; border-radius:10px; font-weight:bold; box-shadow: 0 2px 5px rgba(0,0,0,0.5); animation: bounce 2s infinite; }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-5px);} 60% {transform: translateY(-3px);} }
+        .chat-btn { width: 60px; height: 60px; background: var(--primary-gradient); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: pulse-beat 2s infinite; border: 2px solid rgba(255,255,255,0.2); }
+        @keyframes pulse-beat { 0% { transform: scale(1); box-shadow: 0 0 0 0 var(--primary-color); } 70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(0,0,0,0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,0,0,0); } }
 
-        .chat-btn { 
-            width: 65px; height: 65px; 
-            background: linear-gradient(45deg, #00d2ff, #3a7bd5, #ff0040); 
-            background-size: 200% 200%;
-            border-radius: 50%; 
-            display: flex; justify-content: center; align-items: center; 
-            color: white; font-size: 1.8rem; 
-            box-shadow: 0 5px 20px rgba(0,210,255,0.4); 
-            cursor: pointer; 
-            animation: gradient-anim 3s ease infinite, pulse-beat 2s infinite;
-            border: 2px solid rgba(255,255,255,0.2);
-        }
-        .chat-btn:hover { animation: gradient-anim 1s ease infinite; transform: scale(1.1); }
-        @keyframes pulse-beat { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(0, 210, 255, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); } }
-
-        .chat-modal { position: fixed; bottom: -100%; left: 0; width: 100%; height: 96%; background: var(--surface); border-radius: 20px 20px 0 0; z-index: 201; transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); }
+        .chat-modal { position: fixed; bottom: -100%; left: 0; width: 100%; height: 96%; background: var(--surface-dark); border-radius: 20px 20px 0 0; z-index: 2500; transition: bottom 0.4s; display: flex; flex-direction: column; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); }
         .chat-modal.active { bottom: 0; }
-        .chat-header { padding: 15px; background: rgba(0,0,0,0.2); display: flex; flex-direction: column; border-radius: 20px 20px 0 0; gap: 10px; }
-        .chat-header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .chat-close { font-size: 1.5rem; cursor: pointer; color: var(--text); }
-        .chat-rules { background: rgba(255, 0, 64, 0.15); border-bottom: 1px solid rgba(255, 0, 64, 0.3); color: #ff4d4d; padding: 10px; font-size: 0.8rem; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.5s ease-in-out; opacity: 1; max-height: 100px; }
-        .chat-rules.hidden { opacity: 0; max-height: 0; padding: 0; margin: 0; overflow: hidden; border: none; }
-        .light-theme .chat-rules { background: #ffe6e6; color: #cc0000; }
-
-        /* TAB STYLES FOR CHAT */
-        .chat-tabs { display: flex; width: 100%; background: rgba(0,0,0,0.2); border-radius: 10px; padding: 2px; }
-        .chat-tab { flex: 1; text-align: center; padding: 8px; font-size: 0.9rem; cursor: pointer; border-radius: 8px; transition: all 0.3s; position: relative; }
-        .chat-tab.active { background: var(--primary); color: white; font-weight: bold; }
+        .chat-header { padding: 15px; background: rgba(0,0,0,0.2); display: flex; flex-direction: column; gap: 10px; }
+        .chat-header-top { display: flex; justify-content: space-between; align-items: center; }
+        .chat-tabs { display: flex; background: rgba(0,0,0,0.2); border-radius: 10px; padding: 2px; }
+        .chat-tab { flex: 1; text-align: center; padding: 8px; cursor: pointer; border-radius: 8px; color: var(--text-color); position: relative; }
+        .chat-tab.active { background: var(--primary-color); color: white; font-weight: bold; }
         .chat-tab-badge { position: absolute; top: 2px; right: 10px; background: red; color: white; font-size: 0.6rem; padding: 2px 5px; border-radius: 50%; display: none; }
 
         .chat-view { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
         .chat-view.hidden { display: none; }
 
         .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
-        .message-bubble { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; position: relative; word-wrap: break-word; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .msg-left { align-self: flex-start; border-bottom-left-radius: 2px; }
-        .msg-right { align-self: flex-end; background: var(--primary); border-bottom-right-radius: 2px; }
-        .msg-user { font-size: 0.7rem; opacity: 0.8; margin-bottom: 2px; display: block; font-weight: bold; cursor: pointer; color: #ffeb3b; }
+        .message-bubble { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; position: relative; word-wrap: break-word; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .msg-left { align-self: flex-start; background: var(--surface-light); border: 1px solid rgba(255,255,255,0.1); }
+        .msg-right { align-self: flex-end; background: var(--primary-color); }
+        .msg-user { font-size: 0.7rem; opacity: 0.8; display: block; font-weight: bold; color: #ffeb3b; margin-bottom: 2px; cursor: pointer; }
         .msg-admin { color: #ff4d4d; text-shadow: 0 0 5px rgba(0,0,0,0.5); }
         .msg-time { display: block; font-size: 0.65rem; text-align: right; opacity: 0.6; margin-top: 4px; }
         
-        /* CHAT LINK STYLES */
+        /* CHAT LINK & FILE STYLES */
         .chat-link { color: #00d2ff; text-decoration: underline; font-weight: bold; word-break: break-all; }
         .chat-link:hover { color: #fff; }
 
@@ -153,37 +98,65 @@
         .file-name { font-size:0.8rem; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .file-dl { font-size:0.7rem; color:#00d2ff; }
 
+        .chat-input-area { padding: 10px; display: flex; gap: 10px; background: rgba(0,0,0,0.2); }
+        .input-row { display: flex; gap: 10px; width: 100%; align-items: center; }
+        .chat-input { flex: 1; padding: 10px; border-radius: 20px; border: none; background: rgba(255,255,255,0.1); color: var(--text-color); }
+        .chat-send, .chat-attach-btn { width: 40px; height: 40px; border-radius: 50%; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; color: white; }
+        .chat-send { background: var(--primary-color); }
+        .chat-attach-btn { background: rgba(255,255,255,0.1); }
+        .chat-img { max-width: 100%; border-radius: 10px; margin-top: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
+
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:3000; display:none; justify-content:center; align-items:center; }
+        .modal-box { background: var(--surface-dark); border: 1px solid var(--primary-color); border-radius: 20px; padding: 20px; width: 85%; max-width: 380px; color: var(--text-color); }
+        
+        /* DOSYA GÖRÜNTÜLEYİCİ PENCERESİ */
+        #fileViewerModal .modal-box { width: 90%; max-width: 600px; height: 80%; display:flex; flex-direction:column; }
+        #fvContent { flex:1; background:#111; color:#0f0; border:1px solid #333; padding:10px; resize:none; font-family:monospace; border-radius:10px; font-size: 0.85rem; }
+
+        /* YÖNETİCİ & EKSTRA */
+        .admin-panel-btn { position: fixed; bottom: 20px; left: 20px; width: 50px; height: 50px; background: #ff0040; border-radius: 50%; display: none; justify-content: center; align-items: center; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.5); cursor: pointer; z-index: 2000; }
+        .admin-menu-btn { background: rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; margin-top: 10px; color: var(--primary-color); font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.1); }
+        .admin-submenu { display: none; margin-top: 10px; padding-left: 5px; border-left: 2px solid var(--primary-color); }
+        .admin-submenu.active { display: block; }
+        
+        .announcement-bar { background: #ffeb3b; color: #000; overflow: hidden; white-space: nowrap; padding: 8px 0; font-weight: bold; font-size: 0.95rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: none; border-bottom: 2px solid var(--primary-color); width: 100%; border-radius: 8px; margin-bottom:15px; }
+        .announcement-content { display: inline-block; padding-left: 100%; animation: scroll-left 15s linear infinite; }
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        .feature-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 10px; width: 100%; max-width: 1200px; margin: 0 auto 15px auto; }
+        .countdown-box { background: linear-gradient(135deg, var(--surface-dark), #000); border: 1px solid var(--primary-color); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; }
+        .countdown-title { color: var(--primary-color); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .countdown-timer { display: flex; justify-content: center; gap: 10px; font-size: 1.5rem; font-weight: bold; color: var(--text-color); font-family: monospace; }
+        .time-unit { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 8px; min-width: 40px; }
+        .time-label { font-size: 0.6rem; opacity: 0.7; font-family: sans-serif; margin-top: 2px; }
+        .live-blink { color: #ff0040; animation: blink 1s infinite; font-size: 2rem; font-weight: 800; display: none; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        
+        .poll-box { background: var(--card-bg); border: 1px solid var(--primary-color); border-radius: 15px; padding: 15px; display: none; }
+        .poll-question { font-weight: bold; margin-bottom: 10px; color: var(--text); display: block; }
+        .poll-option { margin-bottom: 8px; position: relative; cursor: pointer; }
+        .poll-bar-bg { background: rgba(255,255,255,0.1); height: 35px; border-radius: 8px; overflow: hidden; position: relative; }
+        .poll-bar-fill { height: 100%; background: var(--primary-gradient); width: 0%; transition: width 0.5s ease; opacity: 0.7; }
+        .poll-text { position: absolute; top: 0; left: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
+        .poll-percent { position: absolute; top: 0; right: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
+
         .quoted-msg { background: rgba(0,0,0,0.2); border-left: 3px solid #ff4d4d; padding: 5px 8px; border-radius: 4px; margin-bottom: 5px; font-size: 0.75rem; display: flex; flex-direction: column; opacity: 0.9; }
         .quote-user { font-weight: bold; color: #ffeb3b; margin-bottom: 2px; }
         .reply-btn-icon { margin-left: 8px; opacity: 0.6; cursor: pointer; transition: opacity 0.2s; font-size: 0.8rem; }
         .reply-btn-icon:hover { opacity: 1; color: white; }
-        .reply-preview-bar { background: #2a2a2a; border-top: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; display: none; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #ddd; border-left: 4px solid var(--primary); }
-        .light-theme .reply-preview-bar { background: #f0f0f0; color: #333; }
+        .reply-preview-bar { background: var(--surface-light); border-top: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; display: none; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-color); border-left: 4px solid var(--primary-color); }
         
         .msg-actions { display: flex; gap: 10px; margin-top: 5px; justify-content: flex-end; font-size: 0.75rem; opacity: 0.9; }
         .action-btn { cursor: pointer; display: flex; align-items: center; gap: 3px; transition: all 0.2s; color: rgba(255,255,255,0.7); }
         .action-btn:hover { opacity: 1; color: white; }
         .action-btn.active-like { color: #ffeb3b; font-weight: bold; text-shadow: 0 0 5px rgba(0,0,0,0.5); transform: scale(1.1); }
         .action-btn.active-dislike { color: #f44336; font-weight: bold; text-shadow: 0 0 5px rgba(0,0,0,0.5); transform: scale(1.1); }
-        .light-theme .action-btn { color: rgba(0,0,0,0.6); }
         
         .admin-controls { display: none; margin-top: 5px; gap: 5px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; }
         .is-admin .admin-controls { display: flex; }
         .btn-ban { background: #ff0040; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
         .btn-del { background: #555; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
 
-        .chat-input-area { padding: 10px; display: flex; gap: 10px; background: rgba(0,0,0,0.2); flex-direction: column; }
-        .input-row { display: flex; gap: 10px; width: 100%; align-items: center; }
-        .chat-input { flex: 1; padding: 10px; border-radius: 20px; border: none; outline: none; background: rgba(255,255,255,0.1); color: var(--text); }
-        .light-theme .chat-input { background: white; color: black; }
-        .chat-send { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
-        
-        .chat-attach-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
-        .light-theme .chat-attach-btn { background: rgba(0,0,0,0.1); color: #333; }
-        
-        .chat-img { max-width: 100%; border-radius: 10px; margin-top: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
-
-        /* PRIVATE CHAT LIST STYLES */
         .private-chat-list { flex: 1; overflow-y: auto; padding: 10px; }
         .private-chat-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
         .private-chat-item:hover { background: rgba(255,255,255,0.1); }
@@ -199,7 +172,6 @@
         #imgPreviewModal img { max-width: 95%; max-height: 90%; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
         #imgPreviewModal i { position: absolute; top: 20px; right: 20px; font-size: 2rem; color: white; cursor: pointer; }
 
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; justify-content:center; align-items:center; }
         .modal-box { background: var(--surface); width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid var(--border); }
         .opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; color: white; }
         .light-theme .opt { background: rgba(0,0,0,0.05); color: #1a1a1a; }
@@ -516,7 +488,7 @@
         </div>
     </div>
 
-    <script>const categoryData = { 'iptv_list': { 'items': [{"title": "NERON İPTV", "url": "https://file.garden/Z-hq5n4Shk27aY58/neron-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/euM", "is_new": true, "added_date": "28.01.2026"}] } }; const activeCategoryKey = 'iptv_list';</script>
+    <script>const categoryData = { 'iptv_list': { 'items': [{"title": "HERON İPTV LİNK", "url": "https://file.garden/Z-hq5n4Shk27aY58/neron-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/2rbhTH", "is_new": true, "added_date": "28.01.2026"}, {"title": "600 KİSİLİK İPTV", "url": "http://tv.devtv.nl/get.php?username=Trexx&password=Trex1fhgd2z&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/VKbxEh", "is_new": false, "added_date": "25.01.2026"}, {"title": "MEGA SPORT BOT İPTV", "url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/0yLE8", "is_new": false, "added_date": "24.01.2026"}, {"title": "XTREAM İPTV KODLAR EKLENDİ", "url": "http://babatv.online:8080/get.php?username=Q1S68BKR&password=9U4F7AZ5&type=m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/qKcnO", "is_new": false, "added_date": "23.01.2026"}, {"title": "GOOD İPTV EKLENDİ", "url": "http://tv1site.com:8080/get.php?username=vns171&password=cMynxFnug3bG&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/AYJnPc", "is_new": false, "added_date": "22.01.2026"}, {"title": "711X İPTV LİSTE EKLENDİ", "url": "http://protv65.shop:8080/get.php?username=fk4608&password=fk00xy&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/h7pa", "is_new": false, "added_date": "21.01.2026"}, {"title": "JOKER İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/Joker-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/pRN", "is_new": false, "added_date": "20.01.2026"}, {"title": "SUPMOT İPTV İNDİR", "url": "https://file.garden/Z-hq5n4Shk27aY58/supmot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/sBLi", "is_new": false, "added_date": "19.01.2026"}, {"title": "10 ADET MAC ADRESİ İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/inadinamackod.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ZZ5c", "is_new": false, "added_date": "18.01.2026"}, {"title": "KRİSTAL İPTV EKLENDİ", "url": "https://file.garden/Z-hq5n4Shk27aY58/Kristal-iptv-W.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8Gxpf", "is_new": false, "added_date": "18.01.2026"}, {"title": "SMARTES2 İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=zrdQ5UHD&password=q82fkQT&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/xAdwL", "is_new": false, "added_date": "17.01.2026"}, {"title": "10 BİN KİSİLİK İPTV", "url": "https://broken-night-dffb.deathlesstelenyu.workers.dev/dth-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/QfCR", "is_new": false, "added_date": "16.01.2026"}, {"title": "SMART İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=utSzxq7SY6&password=dj1yyFAQJy&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/5kQj", "is_new": false, "added_date": "15.01.2026"}, {"title": "YENİ SPORT İPTV", "url": "https://file.garden/Z-hq5n4Shk27aY58/sport-connec.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Ry1l", "is_new": false, "added_date": "14.01.2026"}, {"title": "10 SİNİRSİZ İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/7LxRP8", "is_new": false, "added_date": "13.01.2026"}, {"title": "SMARTZONE İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=gRNhEpGh3m&password=fmaAdfkHXJ&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/q9fMZa", "is_new": false, "added_date": "12.01.2026"}, {"title": "MEGA İPTV İNDİR", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/G7TFl", "is_new": false, "added_date": "11.01.2026"}, {"title": "1500 MAX SPORTS İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/nadina-1500-Max-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Se6xQ", "is_new": false, "added_date": "09.01.2026"}, {"title": "QUANTUM İPTV LİST", "url": "https://file.garden/Z-hq5n4Shk27aY58/Kuantum-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8Xy9", "is_new": false, "added_date": "08.01.2026"}, {"title": "FULL BOT İPTV SPORTS", "url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ld7M", "is_new": false, "added_date": "07.01.2026"}, {"title": "Ekalite iptv m3u", "url": "http://ekalite.xyz:8080/get.php?username=ibrahimtak&password=qwkRZHAwaK&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/4eoXDj", "is_new": false, "added_date": "06.01.2026"}, {"title": "D SPORTS M3U ADRESİ EKLEND", "url": "https://file.garden/Z-hq5n4Shk27aY58/DTH-Sports.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/w2Avb", "is_new": false, "added_date": "05.01.2026"}, {"title": "30 ADET İPTV M3U LİSTE", "url": "http://maisonxp.click/get.php?username=thay123&password=thay123&type=m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/zcn3j7", "is_new": false, "added_date": "04.01.2026"}, {"title": "ELİTE MAC ADRESLERİ İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/playlist.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DfpE", "is_new": false, "added_date": "04.01.2026"}, {"title": "KARMA İPTV 23K", "url": "https://file.garden/Z-hq5n4Shk27aY58/Karma-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6WmReB", "is_new": false, "added_date": "03.01.2026"}, {"title": "Yeni iptv liste", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/0cKg", "is_new": false, "added_date": "02.01.2026"}, {"title": "Turkiye Connect iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Turkiye-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6Dr", "is_new": false, "added_date": "01.01.2026"}, {"title": "9500 İPTV M3U LİNKLER YİLBASİ OZEL", "url": "http://ss.wancolonel.xyz:8080/get.php?username=Denisurlu&password=Muri3091&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/3hJ9te", "is_new": false, "added_date": "31.12.2025"}, {"title": "3 Adet İptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/KCwKj", "is_new": false, "added_date": "30.12.2025"}, {"title": "XTREAM İPTV LİSTELER EKLENDİ", "url": "http://s1.eldest99.xyz:8080/get.php?username=hdkaptantv3706&password=kptn@8723706&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Clqz", "is_new": false, "added_date": "29.12.2025"}, {"title": "FİLM EKSENİ İPTV", "url": "https://raw.githubusercontent.com/sultansmgr/smart/refs/heads/main/FilmEkseni.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESVvVD7PLGjrzbMvNGvIFOhRBoSxzoGBFLm3iG-xX1ZEArpkhkSItDVY&s=10", "web_link_url": "https://ay.live/qCS", "is_new": false, "added_date": "28.12.2025"}, {"title": "B. Conneckt İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/b-connect.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/67w", "is_new": false, "added_date": "28.12.2025"}, {"title": "Spor Kanallari bot iptv", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/9GlX", "is_new": false, "added_date": "27.12.2025"}, {"title": "100 Bin kisilik iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6QE", "is_new": false, "added_date": "27.12.2025"}, {"title": "Hibrit İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Toplu-Paket-V.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/eAAA7K", "is_new": false, "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": false, "added_date": "27.12.2025"}] } }; const activeCategoryKey = 'iptv_list';</script>
 
     <script>
         const firebaseConfig = {
