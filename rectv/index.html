@@ -3,145 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INADINA TV</title>
+    <title>INADINA TV - Ana Menü</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- FIREBASE (Compat) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
     <style>
-        :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; --text: #e8e6e3; --card-bg: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.03); }
-        body { background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 20px; transition: background 0.3s, color 0.3s; overflow-x: hidden; }
-        body.light-theme { --bg: #f5f5f5; --surface: #ffffff; --text: #1a1a1a; --card-bg: #ffffff; --border: #e0e0e0; }
-        
-        /* TV BOX FOCUS STYLES */
-        .focusable { outline: none; transition: transform 0.2s, box-shadow 0.2s, background 0.2s; border: 2px solid transparent; }
-        .focusable:focus, .focusable.focused {
-            transform: scale(1.05);
-            box-shadow: 0 0 0 4px #ff0040, 0 0 20px rgba(255, 0, 64, 0.6) !important;
-            z-index: 100;
-            background-color: rgba(255, 255, 255, 0.15);
-            border-color: #fff;
+        :root {
+            --hue: 345; --primary-color: hsl(var(--hue), 100%, 50%); --primary-dark: hsl(var(--hue), 100%, 40%);
+            --primary-gradient: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+            --link-color: #4CAF50; --telegram-color: #2AABEE; --bg-color: #0f0a1a;
+            --text-color: hsl(var(--hue), 15%, 95%); --text-secondary: hsl(var(--hue), 15%, 75%);
+            --card-bg: rgba(30, 28, 40, 0.6);
+            --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 8px 12px rgba(0, 0, 0, 0.3);
+            --surface-dark: hsl(var(--hue), 15%, 10%);
+            --surface-light: hsl(var(--hue), 15%, 15%);
         }
+        body.light-theme {
+            --hue: 210; --bg-color: #f0f4f8; --text-color: #2c3e50; --text-secondary: #7f8c8d;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --surface-dark: #e4e9ed; --surface-light: #ffffff;
+            --primary-color: hsl(var(--hue), 80%, 55%);
+        }
+        body.dark-theme { --hue: 345; --bg-color: #0f0a1a; }
+        body.blue-theme { --hue: 210; --bg-color: #0d1b2a; } 
+        body.green-theme { --hue: 145; --bg-color: #122a1e; }
+        body.purple-theme { --hue: 285; --bg-color: #1a122a; }
+        body.orange-theme { --hue: 35; --bg-color: #2a1a12; }
         
-        .top-bar { padding: 15px 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: background 0.3s; }
-        .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #ff0040, #ff4d00); -webkit-background-clip: text; color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg-color); color: var(--text-color); overflow-x: hidden; min-height: 100vh; transition: background 0.4s ease, color 0.4s ease; line-height: 1.5; }
         
-        .header-actions { display: flex; align-items: center; gap: 12px; }
-        .theme-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; transition: all 0.3s; }
-        .light-theme .theme-btn { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #1a1a1a; }
-        
-        .online-badge { display: flex; align-items: center; gap: 6px; padding: 6px 10px; background: rgba(0, 255, 127, 0.1); border: 1px solid rgba(0, 255, 127, 0.2); border-radius: 8px; font-size: 0.8rem; font-weight: bold; color: #00ff7f; animation: pulse-green 2s infinite; }
+        .app-container { padding: 20px; padding-top: 80px; min-height: 100vh; display: flex; flex-direction: column; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: var(--surface-light); box-shadow: 0 2px 4px rgba(0,0,0, 0.2); }
+        .app-logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .top-bar-controls { display: flex; align-items: center; gap: 10px; }
+        .online-badge { display: flex; align-items: center; gap: 6px; padding: 5px 10px; background: rgba(0, 255, 127, 0.15); border: 1px solid #00ff7f; border-radius: 20px; font-size: 0.85rem; font-weight: bold; color: #00ff7f; animation: pulse-green 2s infinite; }
         @keyframes pulse-green { 0% { opacity: 0.8; } 50% { opacity: 1; text-shadow: 0 0 5px rgba(0,255,127,0.5); } 100% { opacity: 0.8; } }
-        .light-theme .online-badge { background: rgba(0, 128, 0, 0.1); color: #008000; border-color: rgba(0, 128, 0, 0.2); }
+        .control-button { background: none; border: none; color: var(--text-color); font-size: 1.3rem; cursor: pointer; transition: transform 0.3s ease; padding: 5px; }
+        .dropdown-menu { position: absolute; top: calc(100% + 8px); right: 0; background: var(--card-bg); border-radius: 8px; padding: 10px; z-index: 100; display: none; min-width: 170px; backdrop-filter: blur(8px); border: 1px solid var(--primary-color); }
+        .dropdown-menu.show { display: block; }
+        .theme-option, .apk-option { display: flex; align-items: center; gap: 12px; background: none; border: none; color: var(--text-color); padding: 10px; width: 100%; text-align: left; cursor: pointer; }
+        .theme-option:hover, .apk-option:hover { background: rgba(255,255,255,0.1); }
 
-        .announcement-bar { background: #ffeb3b; color: #000; overflow: hidden; white-space: nowrap; padding: 6px 0; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: none; border-bottom: 2px solid #ff4d00; }
-        .announcement-content { display: inline-block; padding-left: 100%; animation: scroll-left 15s linear infinite; }
-        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; margin: 20px auto; }
+        .category-card-button { background: var(--card-bg); backdrop-filter: blur(8px); border-radius: 15px; padding: 18px 20px; text-decoration: none; color: var(--text-color); display: flex; align-items: center; gap: 15px; transition: all 0.3s; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; }
+        .category-card-button:hover { transform: translateY(-5px); border-color: var(--primary-color); }
+        .category-card-button i { font-size: 2.4rem; color: var(--primary-color); }
+        .category-card-button span { font-weight: 700; font-size: 1.05rem; }
         
-        .container { padding: 15px; }
-        .card { background: var(--card-bg); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid var(--border); position: relative; transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .card.hidden { display: none; }
-        .light-theme .card { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .img-box { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
-        .card-img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
-        
-        .badge { position: absolute; top: -10px; right: -10px; font-size: 0.75rem; padding: 4px 10px; border-radius: 8px; font-weight: 900; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.4); text-transform: uppercase; border: 1px solid rgba(255,255,255,0.3); }
-        .badge-yeni { background: linear-gradient(135deg, #ff0000, #ff4d00); color: #fff; animation: pulse-aggressive 1.5s infinite ease-in-out; }
-        .badge-iptv { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: #fff; }
-        
-        @keyframes pulse-aggressive { 
-            0% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 0, 0, 0.7); } 
-            50% { transform: scale(1.15); box-shadow: 0 0 15px rgba(255, 77, 0, 0.8); } 
-            100% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 0, 0, 0.7); } 
-        }
+        .footer { margin-top: auto; padding: 25px; text-align: center; font-size: 0.9rem; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.1); }
+        .notification { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--surface-light); color: var(--text-color); padding: 15px 20px; border-radius: 8px; z-index: 2000; display: flex; align-items: center; opacity: 0; transition: opacity 0.3s; pointer-events: none; border: 1px solid var(--primary-color); }
+        .notification.show { opacity: 1; }
 
-        .card-info { flex: 1; margin-left: 12px; }
-        .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; color: var(--text); }
-        .card-meta { font-size: 0.75rem; opacity: 0.5; color: var(--text); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        
-        .stat-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255, 255, 255, 0.05); padding: 2px 8px; border-radius: 8px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .light-theme .stat-badge { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); }
-        .stat-eye { color: var(--primary); }
-        .stat-heart { color: #ff3d3d; cursor: pointer; transition: transform 0.2s; }
-        .stat-heart.liked { color: #ff0000; text-shadow: 0 0 10px rgba(255,0,0,0.5); }
-        .stat-report { color: #ff4d4d; cursor: pointer; transition: transform 0.2s; }
-        .play-icon { color: var(--primary); font-size: 1.4rem; margin-left: 10px; }
-        .load-more-btn { width: calc(100% - 30px); margin: 20px 15px; padding: 15px; border: none; border-radius: 15px; background: linear-gradient(135deg, var(--primary), #ff4d00); color: white; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255, 0, 64, 0.3); }
-        .load-more-btn.hidden { display: none; }
-        
-        .toast { visibility: hidden; min-width: 250px; background-color: #1a1825; border: 1px solid rgba(255,255,255,0.1); color: #fff; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 2000; left: 50%; bottom: 80px; transform: translateX(-50%); font-size: 0.9rem; box-shadow: 0 5px 20px rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s, bottom 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .light-theme .toast { background-color: #fff; color: #333; border-color: #ddd; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-        .toast.show { visibility: visible; opacity: 1; bottom: 90px; }
-        
-        .feature-container { margin: 15px; display: flex; flex-direction: column; gap: 15px; }
-        .countdown-box { background: linear-gradient(135deg, #1a1825, #000); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; }
-        .countdown-title { color: var(--primary); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
-        .countdown-timer { display: flex; justify-content: center; gap: 10px; font-size: 1.5rem; font-weight: bold; color: white; font-family: monospace; }
-        .time-unit { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 8px; min-width: 40px; }
-        .time-label { font-size: 0.6rem; opacity: 0.7; font-family: sans-serif; margin-top: 2px; }
-        .live-blink { color: #ff0040; animation: blink 1s infinite; font-size: 2rem; font-weight: 800; display: none; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-        
-        .poll-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; display: none; }
-        .poll-question { font-weight: bold; margin-bottom: 10px; color: var(--text); display: block; }
-        .poll-option { margin-bottom: 8px; position: relative; cursor: pointer; }
-        .poll-bar-bg { background: rgba(255,255,255,0.1); height: 35px; border-radius: 8px; overflow: hidden; position: relative; }
-        .poll-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #ff4d00); width: 0%; transition: width 0.5s ease; opacity: 0.7; }
-        .poll-text { position: absolute; top: 0; left: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
-        .poll-percent { position: absolute; top: 0; right: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
-
-        @keyframes gradient-anim { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        
-        .chat-btn-container { position: fixed; bottom: 20px; right: 20px; z-index: 200; display:flex; flex-direction:column; align-items:center; gap:5px; }
+        /* --- SOHBET & DOSYA YÜKLEME STİLLERİ (V29) --- */
+        .chat-btn-container { position: fixed; bottom: 20px; right: 20px; z-index: 2000; display:flex; flex-direction:column; align-items:center; gap:5px; cursor: pointer; }
         .chat-label { background: #ff0040; color:white; font-size:0.7rem; padding:3px 8px; border-radius:10px; font-weight:bold; box-shadow: 0 2px 5px rgba(0,0,0,0.5); animation: bounce 2s infinite; }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-5px);} 60% {transform: translateY(-3px);} }
+        .chat-btn { width: 60px; height: 60px; background: var(--primary-gradient); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: pulse-beat 2s infinite; border: 2px solid rgba(255,255,255,0.2); }
+        @keyframes pulse-beat { 0% { transform: scale(1); box-shadow: 0 0 0 0 var(--primary-color); } 70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(0,0,0,0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,0,0,0); } }
 
-        .chat-btn { 
-            width: 65px; height: 65px; 
-            background: linear-gradient(45deg, #00d2ff, #3a7bd5, #ff0040); 
-            background-size: 200% 200%;
-            border-radius: 50%; 
-            display: flex; justify-content: center; align-items: center; 
-            color: white; font-size: 1.8rem; 
-            box-shadow: 0 5px 20px rgba(0,210,255,0.4); 
-            cursor: pointer; 
-            animation: gradient-anim 3s ease infinite, pulse-beat 2s infinite;
-            border: 2px solid rgba(255,255,255,0.2);
-        }
-        .chat-btn:hover { animation: gradient-anim 1s ease infinite; transform: scale(1.1); }
-        @keyframes pulse-beat { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(0, 210, 255, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); } }
-
-        .chat-modal { position: fixed; bottom: -100%; left: 0; width: 100%; height: 96%; background: var(--surface); border-radius: 20px 20px 0 0; z-index: 201; transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); }
+        .chat-modal { position: fixed; bottom: -100%; left: 0; width: 100%; height: 96%; background: var(--surface-dark); border-radius: 20px 20px 0 0; z-index: 2500; transition: bottom 0.4s; display: flex; flex-direction: column; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); }
         .chat-modal.active { bottom: 0; }
-        .chat-header { padding: 15px; background: rgba(0,0,0,0.2); display: flex; flex-direction: column; border-radius: 20px 20px 0 0; gap: 10px; }
-        .chat-header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .chat-close { font-size: 1.5rem; cursor: pointer; color: var(--text); }
-        .chat-rules { background: rgba(255, 0, 64, 0.15); border-bottom: 1px solid rgba(255, 0, 64, 0.3); color: #ff4d4d; padding: 10px; font-size: 0.8rem; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.5s ease-in-out; opacity: 1; max-height: 100px; }
-        .chat-rules.hidden { opacity: 0; max-height: 0; padding: 0; margin: 0; overflow: hidden; border: none; }
-        .light-theme .chat-rules { background: #ffe6e6; color: #cc0000; }
-
-        .chat-tabs { display: flex; width: 100%; background: rgba(0,0,0,0.2); border-radius: 10px; padding: 2px; }
-        .chat-tab { flex: 1; text-align: center; padding: 8px; font-size: 0.9rem; cursor: pointer; border-radius: 8px; transition: all 0.3s; position: relative; }
-        .chat-tab.active { background: var(--primary); color: white; font-weight: bold; }
+        .chat-header { padding: 15px; background: rgba(0,0,0,0.2); display: flex; flex-direction: column; gap: 10px; }
+        .chat-header-top { display: flex; justify-content: space-between; align-items: center; }
+        .chat-tabs { display: flex; background: rgba(0,0,0,0.2); border-radius: 10px; padding: 2px; }
+        .chat-tab { flex: 1; text-align: center; padding: 8px; cursor: pointer; border-radius: 8px; color: var(--text-color); position: relative; }
+        .chat-tab.active { background: var(--primary-color); color: white; font-weight: bold; }
         .chat-tab-badge { position: absolute; top: 2px; right: 10px; background: red; color: white; font-size: 0.6rem; padding: 2px 5px; border-radius: 50%; display: none; }
 
         .chat-view { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
         .chat-view.hidden { display: none; }
 
         .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
-        .message-bubble { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; position: relative; word-wrap: break-word; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .msg-left { align-self: flex-start; border-bottom-left-radius: 2px; }
-        .msg-right { align-self: flex-end; background: var(--primary); border-bottom-right-radius: 2px; }
-        .msg-user { font-size: 0.7rem; opacity: 0.8; margin-bottom: 2px; display: block; font-weight: bold; cursor: pointer; color: #ffeb3b; }
+        .message-bubble { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; position: relative; word-wrap: break-word; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .msg-left { align-self: flex-start; background: var(--surface-light); border: 1px solid rgba(255,255,255,0.1); }
+        .msg-right { align-self: flex-end; background: var(--primary-color); }
+        .msg-user { font-size: 0.7rem; opacity: 0.8; display: block; font-weight: bold; color: #ffeb3b; margin-bottom: 2px; cursor: pointer; }
         .msg-admin { color: #ff4d4d; text-shadow: 0 0 5px rgba(0,0,0,0.5); }
         .msg-time { display: block; font-size: 0.65rem; text-align: right; opacity: 0.6; margin-top: 4px; }
         
+        /* CHAT LINK & FILE STYLES */
         .chat-link { color: #00d2ff; text-decoration: underline; font-weight: bold; word-break: break-all; }
         .chat-link:hover { color: #fff; }
 
+        /* CHAT FILE ATTACHMENT STYLE */
         .chat-file-block { display:flex; align-items:center; background: rgba(0,0,0,0.3); padding:8px; border-radius:8px; margin-top:5px; gap:10px; border:1px solid rgba(255,255,255,0.1); cursor:pointer; }
         .chat-file-block:hover { background: rgba(0,0,0,0.5); }
         .file-icon { font-size: 1.5rem; color: #ffeb3b; }
@@ -149,35 +98,64 @@
         .file-name { font-size:0.8rem; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .file-dl { font-size:0.7rem; color:#00d2ff; }
 
+        .chat-input-area { padding: 10px; display: flex; gap: 10px; background: rgba(0,0,0,0.2); }
+        .input-row { display: flex; gap: 10px; width: 100%; align-items: center; }
+        .chat-input { flex: 1; padding: 10px; border-radius: 20px; border: none; background: rgba(255,255,255,0.1); color: var(--text-color); }
+        .chat-send, .chat-attach-btn { width: 40px; height: 40px; border-radius: 50%; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; color: white; }
+        .chat-send { background: var(--primary-color); }
+        .chat-attach-btn { background: rgba(255,255,255,0.1); }
+        .chat-img { max-width: 100%; border-radius: 10px; margin-top: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
+
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:3000; display:none; justify-content:center; align-items:center; }
+        .modal-box { background: var(--surface-dark); border: 1px solid var(--primary-color); border-radius: 20px; padding: 20px; width: 85%; max-width: 380px; color: var(--text-color); }
+        
+        /* DOSYA GÖRÜNTÜLEYİCİ PENCERESİ */
+        #fileViewerModal .modal-box { width: 90%; max-width: 600px; height: 80%; display:flex; flex-direction:column; }
+        #fvContent { flex:1; background:#111; color:#0f0; border:1px solid #333; padding:10px; resize:none; font-family:monospace; border-radius:10px; font-size: 0.85rem; }
+
+        /* YÖNETİCİ & EKSTRA */
+        .admin-panel-btn { position: fixed; bottom: 20px; left: 20px; width: 50px; height: 50px; background: #ff0040; border-radius: 50%; display: none; justify-content: center; align-items: center; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.5); cursor: pointer; z-index: 2000; }
+        .admin-menu-btn { background: rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; margin-top: 10px; color: var(--primary-color); font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.1); }
+        .admin-submenu { display: none; margin-top: 10px; padding-left: 5px; border-left: 2px solid var(--primary-color); }
+        .admin-submenu.active { display: block; }
+        
+        .announcement-bar { background: #ffeb3b; color: #000; overflow: hidden; white-space: nowrap; padding: 8px 0; font-weight: bold; font-size: 0.95rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: none; border-bottom: 2px solid var(--primary-color); width: 100%; border-radius: 8px; margin-bottom:15px; }
+        .announcement-content { display: inline-block; padding-left: 100%; animation: scroll-left 15s linear infinite; }
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        .feature-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 10px; width: 100%; max-width: 1200px; margin: 0 auto 15px auto; }
+        .countdown-box { background: linear-gradient(135deg, var(--surface-dark), #000); border: 1px solid var(--primary-color); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; }
+        .countdown-title { color: var(--primary-color); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .countdown-timer { display: flex; justify-content: center; gap: 10px; font-size: 1.5rem; font-weight: bold; color: var(--text-color); font-family: monospace; }
+        .time-unit { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 8px; min-width: 40px; }
+        .time-label { font-size: 0.6rem; opacity: 0.7; font-family: sans-serif; margin-top: 2px; }
+        .live-blink { color: #ff0040; animation: blink 1s infinite; font-size: 2rem; font-weight: 800; display: none; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        
+        .poll-box { background: var(--card-bg); border: 1px solid var(--primary-color); border-radius: 15px; padding: 15px; display: none; }
+        .poll-question { font-weight: bold; margin-bottom: 10px; color: var(--text); display: block; }
+        .poll-option { margin-bottom: 8px; position: relative; cursor: pointer; }
+        .poll-bar-bg { background: rgba(255,255,255,0.1); height: 35px; border-radius: 8px; overflow: hidden; position: relative; }
+        .poll-bar-fill { height: 100%; background: var(--primary-gradient); width: 0%; transition: width 0.5s ease; opacity: 0.7; }
+        .poll-text { position: absolute; top: 0; left: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
+        .poll-percent { position: absolute; top: 0; right: 10px; height: 100%; display: flex; align-items: center; font-size: 0.9rem; font-weight: bold; color: white; z-index: 2; text-shadow: 0 0 3px black; }
+
         .quoted-msg { background: rgba(0,0,0,0.2); border-left: 3px solid #ff4d4d; padding: 5px 8px; border-radius: 4px; margin-bottom: 5px; font-size: 0.75rem; display: flex; flex-direction: column; opacity: 0.9; }
         .quote-user { font-weight: bold; color: #ffeb3b; margin-bottom: 2px; }
         .reply-btn-icon { margin-left: 8px; opacity: 0.6; cursor: pointer; transition: opacity 0.2s; font-size: 0.8rem; }
         .reply-btn-icon:hover { opacity: 1; color: white; }
-        .reply-preview-bar { background: #2a2a2a; border-top: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; display: none; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #ddd; border-left: 4px solid var(--primary); }
-        .light-theme .reply-preview-bar { background: #f0f0f0; color: #333; }
+        .reply-preview-bar { background: var(--surface-light); border-top: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; display: none; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-color); border-left: 4px solid var(--primary-color); }
         
         .msg-actions { display: flex; gap: 10px; margin-top: 5px; justify-content: flex-end; font-size: 0.75rem; opacity: 0.9; }
         .action-btn { cursor: pointer; display: flex; align-items: center; gap: 3px; transition: all 0.2s; color: rgba(255,255,255,0.7); }
         .action-btn:hover { opacity: 1; color: white; }
         .action-btn.active-like { color: #ffeb3b; font-weight: bold; text-shadow: 0 0 5px rgba(0,0,0,0.5); transform: scale(1.1); }
         .action-btn.active-dislike { color: #f44336; font-weight: bold; text-shadow: 0 0 5px rgba(0,0,0,0.5); transform: scale(1.1); }
-        .light-theme .action-btn { color: rgba(0,0,0,0.6); }
         
         .admin-controls { display: none; margin-top: 5px; gap: 5px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; }
         .is-admin .admin-controls { display: flex; }
         .btn-ban { background: #ff0040; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
         .btn-del { background: #555; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
-
-        .chat-input-area { padding: 10px; display: flex; gap: 10px; background: rgba(0,0,0,0.2); flex-direction: column; }
-        .input-row { display: flex; gap: 10px; width: 100%; align-items: center; }
-        .chat-input { flex: 1; padding: 10px; border-radius: 20px; border: none; outline: none; background: rgba(255,255,255,0.1); color: var(--text); }
-        .light-theme .chat-input { background: white; color: black; }
-        .chat-send { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
-        
-        .chat-attach-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
-        .light-theme .chat-attach-btn { background: rgba(0,0,0,0.1); color: #333; }
-        
-        .chat-img { max-width: 100%; border-radius: 10px; margin-top: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
 
         .private-chat-list { flex: 1; overflow-y: auto; padding: 10px; }
         .private-chat-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
@@ -194,7 +172,6 @@
         #imgPreviewModal img { max-width: 95%; max-height: 90%; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
         #imgPreviewModal i { position: absolute; top: 20px; right: 20px; font-size: 2rem; color: white; cursor: pointer; }
 
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; justify-content:center; align-items:center; }
         .modal-box { background: var(--surface); width: 85%; max-width: 380px; border-radius: 20px; padding: 20px; border: 1px solid var(--border); }
         .opt { display: flex; align-items: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,0.05); gap: 15px; cursor: pointer; color: white; }
         .light-theme .opt { background: rgba(0,0,0,0.05); color: #1a1a1a; }
@@ -243,8 +220,8 @@
         <i class="fas fa-tools" style="font-size:4rem; margin-bottom:20px;"></i>
         <h1>BAKIM MODU</h1>
         <p style="color:#fff; opacity:0.7;">Şu an sistem güncelleniyor.<br>Lütfen daha sonra tekrar deneyin.</p>
-        <input type="password" id="emergencyPass" class="emergency-input focusable" placeholder="Yönetici Şifresi">
-        <button onclick="emergencyLogin()" class="emergency-btn focusable">Giriş Yap</button>
+        <input type="password" id="emergencyPass" class="emergency-input" placeholder="Yönetici Şifresi">
+        <button onclick="emergencyLogin()" class="emergency-btn">Giriş Yap</button>
     </div>
 
     <div id="bannedScreen" class="banned-screen">
@@ -258,13 +235,14 @@
         <img id="imgPreview" src="">
     </div>
 
+    <!-- YENİ DOSYA GÖRÜNTÜLEYİCİ MODAL (V29) -->
     <div id="fileViewerModal" class="modal">
         <div class="modal-box" style="width: 90%; max-width: 600px; height: 80%; display:flex; flex-direction:column;">
             <h3 id="fvTitle" style="margin-top:0; color:var(--primary); text-align:center;">Dosya İçeriği</h3>
             <textarea id="fvContent" style="flex:1; background:#222; color:#0f0; border:1px solid #444; padding:10px; resize:none; font-family:monospace; border-radius:10px;" readonly></textarea>
             <div style="display:flex; gap:10px; margin-top:10px;">
-                <button class="btn-confirm focusable" onclick="copyFileContent()" style="flex:1;"><i class="fas fa-copy"></i> Kopyala</button>
-                <button class="btn-cancel focusable" onclick="document.getElementById('fileViewerModal').style.display='none'" style="flex:1;">Kapat</button>
+                <button class="btn-confirm" onclick="copyFileContent()" style="flex:1;"><i class="fas fa-copy"></i> Kopyala</button>
+                <button class="btn-cancel" onclick="document.getElementById('fileViewerModal').style.display='none'" style="flex:1;">Kapat</button>
             </div>
         </div>
     </div>
@@ -275,8 +253,8 @@
             <h3 id="confirmTitle" style="color:var(--text); margin-bottom:10px;">Emin misin?</h3>
             <p id="confirmText" style="color:var(--text); opacity:0.8; margin-bottom:20px;">Bu işlem geri alınamaz.</p>
             <div style="display:flex; gap:10px; justify-content:center;">
-                <button class="btn-cancel focusable" onclick="closeConfirm()">Vazgeç</button>
-                <button class="btn-confirm focusable" id="btnConfirmAction">ONAYLA</button>
+                <button class="btn-cancel" onclick="closeConfirm()">Vazgeç</button>
+                <button class="btn-confirm" id="btnConfirmAction">ONAYLA</button>
             </div>
         </div>
     </div>
@@ -284,13 +262,13 @@
     <div id="userActionModal" class="modal">
         <div class="modal-box">
             <h3 id="uaTitle" style="color:var(--primary); margin-top:0;">Kullanıcı İşlemleri</h3>
-            <button class="action-menu-btn focusable" onclick="executeUserAction('reply')"><i class="fas fa-reply"></i> Yanıtla</button>
-            <button class="action-menu-btn focusable" onclick="executeUserAction('private')"><i class="fas fa-lock"></i> Özel Mesaj At</button>
+            <button class="action-menu-btn" onclick="executeUserAction('reply')"><i class="fas fa-reply"></i> Yanıtla</button>
+            <button class="action-menu-btn" onclick="executeUserAction('private')"><i class="fas fa-lock"></i> Özel Mesaj At</button>
             <div id="adminUserActions" style="display:none; border-top:1px solid rgba(255,255,255,0.1); margin-top:5px; padding-top:5px;">
-                <button class="action-menu-btn focusable" onclick="executeUserAction('ban')" style="color:#ff4d4d;"><i class="fas fa-ban"></i> Engelle</button>
-                <button class="action-menu-btn focusable" onclick="executeUserAction('delete')" style="color:#aaa;"><i class="fas fa-trash"></i> Mesajı Sil</button>
+                <button class="action-menu-btn" onclick="executeUserAction('ban')" style="color:#ff4d4d;"><i class="fas fa-ban"></i> Engelle</button>
+                <button class="action-menu-btn" onclick="executeUserAction('delete')" style="color:#aaa;"><i class="fas fa-trash"></i> Mesajı Sil</button>
             </div>
-            <button class="btn-cancel focusable" onclick="document.getElementById('userActionModal').style.display='none'" style="width:100%; margin-top:10px;">Kapat</button>
+            <button class="btn-cancel" onclick="document.getElementById('userActionModal').style.display='none'" style="width:100%; margin-top:10px;">Kapat</button>
         </div>
     </div>
 
@@ -298,10 +276,10 @@
         <div class="modal-box">
             <h3 style="color:var(--primary); margin-top:0;">İsim Değiştir</h3>
             <p style="opacity:0.7; font-size:0.9rem;">Sohbette görünecek adınızı yazın:</p>
-            <input type="text" id="newNameInput" class="custom-input focusable" placeholder="Örn: Ahmet_Bey" maxlength="15">
+            <input type="text" id="newNameInput" class="custom-input" placeholder="Örn: Ahmet_Bey" maxlength="15">
             <div style="display:flex; gap:10px; justify-content:center;">
-                <button class="btn-cancel focusable" onclick="document.getElementById('nameChangeModal').style.display='none'">İptal</button>
-                <button class="btn-confirm focusable" onclick="saveName()">Kaydet</button>
+                <button class="btn-cancel" onclick="document.getElementById('nameChangeModal').style.display='none'">İptal</button>
+                <button class="btn-confirm" onclick="saveName()">Kaydet</button>
             </div>
         </div>
     </div>
@@ -312,66 +290,69 @@
             <h3 style="text-align:center; color:#ff0040; margin-top:0;">🛡️ Yönetici Paneli</h3>
             
             <div class="admin-modal-body">
-                <div class="admin-menu-btn focusable" onclick="toggleSubMenu('pollAdmin')">
+                <!-- POLL & COUNTDOWN ADMIN SECTION -->
+                <div class="admin-menu-btn" onclick="toggleSubMenu('pollAdmin')">
                     <span>📊 Anket Yönetimi</span> <i class="fas fa-chevron-down"></i>
                 </div>
                 <div id="pollAdmin" class="admin-submenu">
-                    <input type="text" id="pollQuestion" class="custom-input focusable" placeholder="Soru: Örn. Kim Kazanır?">
-                    <input type="text" id="pollOpt1" class="custom-input focusable" placeholder="Seçenek 1 (Örn. GS)">
-                    <input type="text" id="pollOpt2" class="custom-input focusable" placeholder="Seçenek 2 (Örn. FB)">
+                    <input type="text" id="pollQuestion" class="custom-input" placeholder="Soru: Örn. Kim Kazanır?">
+                    <input type="text" id="pollOpt1" class="custom-input" placeholder="Seçenek 1 (Örn. GS)">
+                    <input type="text" id="pollOpt2" class="custom-input" placeholder="Seçenek 2 (Örn. FB)">
                     <div style="display:flex; gap:5px;">
-                        <button onclick="savePoll()" class="btn-confirm focusable" style="flex:1;">Başlat</button>
-                        <button onclick="resetPoll()" class="btn-cancel focusable" style="flex:1;">Sıfırla</button>
+                        <button onclick="savePoll()" class="btn-confirm" style="flex:1;">Başlat</button>
+                        <button onclick="resetPoll()" class="btn-cancel" style="flex:1;">Sıfırla</button>
                     </div>
                 </div>
 
-                <div class="admin-menu-btn focusable" onclick="toggleSubMenu('countdownAdmin')">
+                <div class="admin-menu-btn" onclick="toggleSubMenu('countdownAdmin')">
                     <span>⏳ Geri Sayım Yönetimi</span> <i class="fas fa-chevron-down"></i>
                 </div>
                 <div id="countdownAdmin" class="admin-submenu">
-                    <input type="text" id="cdTitle" class="custom-input focusable" placeholder="Başlık: Örn. DERBİ MAÇI">
-                    <input type="datetime-local" id="cdDate" class="custom-input focusable" style="color-scheme: dark;">
+                    <input type="text" id="cdTitle" class="custom-input" placeholder="Başlık: Örn. DERBİ MAÇI">
+                    <input type="datetime-local" id="cdDate" class="custom-input" style="color-scheme: dark;">
                     <div style="display:flex; gap:5px;">
-                        <button onclick="saveCountdown()" class="btn-confirm focusable" style="flex:1;">Başlat</button>
-                        <button onclick="stopCountdown()" class="btn-cancel focusable" style="flex:1;">Durdur</button>
+                        <button onclick="saveCountdown()" class="btn-confirm" style="flex:1;">Başlat</button>
+                        <button onclick="stopCountdown()" class="btn-cancel" style="flex:1;">Durdur</button>
                     </div>
                 </div>
 
-                <div class="admin-menu-btn focusable" onclick="toggleSubMenu('annoAdmin')">
+                <!-- ANNOUNCEMENT (SCROLLING TEXT) ADMIN -->
+                <div class="admin-menu-btn" onclick="toggleSubMenu('annoAdmin')">
                     <span>📢 Kayan Yazı Duyuru</span> <i class="fas fa-chevron-down"></i>
                 </div>
                 <div id="annoAdmin" class="admin-submenu">
-                    <input type="text" id="annoInput" class="custom-input focusable" placeholder="Duyuru Metni: (Örn: Yayınlar Başladı!)">
+                    <input type="text" id="annoInput" class="custom-input" placeholder="Duyuru Metni: (Örn: Yayınlar Başladı!)">
                     <div style="display:flex; gap:5px;">
-                        <button onclick="saveAnnouncement()" class="btn-confirm focusable" style="flex:1;">Yayınla</button>
-                        <button onclick="stopAnnouncement()" class="btn-cancel focusable" style="flex:1;">Kaldır</button>
+                        <button onclick="saveAnnouncement()" class="btn-confirm" style="flex:1;">Yayınla</button>
+                        <button onclick="stopAnnouncement()" class="btn-cancel" style="flex:1;">Kaldır</button>
                     </div>
                 </div>
 
-                <div class="admin-menu-btn focusable" onclick="toggleSubMenu('settingsContainer')"><span>⚙️ Genel Ayarlar</span> <i class="fas fa-chevron-down"></i></div>
+                <!-- OTHER ADMIN SECTIONS -->
+                <div class="admin-menu-btn" onclick="toggleSubMenu('settingsContainer')"><span>⚙️ Genel Ayarlar</span> <i class="fas fa-chevron-down"></i></div>
                 <div id="settingsContainer" class="admin-submenu">
-                    <div style="margin-bottom:10px;"><input type="checkbox" id="maintenanceToggle" class="focusable" onchange="toggleMaintenance()"> <label style="color:inherit">🚧 Bakım Modu</label></div>
-                    <div><input type="checkbox" id="chatLockToggle" class="focusable" onchange="toggleChatLock()"> <label style="color:inherit">🔒 Sohbeti Kilitle</label></div>
-                    <button class="delete-all-btn focusable" style="background:#555; margin-top:10px;" onclick="clearChat()">🧹 Sohbeti Temizle</button>
+                    <div style="margin-bottom:10px;"><input type="checkbox" id="maintenanceToggle" onchange="toggleMaintenance()"> <label style="color:inherit">🚧 Bakım Modu</label></div>
+                    <div><input type="checkbox" id="chatLockToggle" onchange="toggleChatLock()"> <label style="color:inherit">🔒 Sohbeti Kilitle</label></div>
+                    <button class="delete-all-btn" style="background:#555; margin-top:10px;" onclick="clearChat()">🧹 Sohbeti Temizle</button>
                 </div>
 
-                <div class="admin-menu-btn focusable" onclick="toggleSubMenu('toastContainer')"><span>📢 Açılış Mesajı</span> <i class="fas fa-chevron-down"></i></div>
+                <div class="admin-menu-btn" onclick="toggleSubMenu('toastContainer')"><span>📢 Açılış Mesajı</span> <i class="fas fa-chevron-down"></i></div>
                 <div id="toastContainer" class="admin-submenu">
-                    <input type="text" id="adminToastInput" class="custom-input focusable" placeholder="Mesajınız...">
+                    <input type="text" id="adminToastInput" class="custom-input" placeholder="Mesajınız...">
                     <div style="display:flex; align-items:center; gap:10px; margin-top:5px;"><input type="checkbox" id="adminToastActive" style="width:20px; height:20px;"> <label for="adminToastActive" style="color:inherit">Aktif Et</label></div>
-                    <button onclick="saveStartupMessage()" class="btn-confirm focusable" style="width:100%; margin-top:10px;">Kaydet</button>
+                    <button onclick="saveStartupMessage()" class="btn-confirm" style="width:100%; margin-top:10px;">Kaydet</button>
                 </div>
 
-                <div class="admin-menu-btn focusable" onclick="toggleBannedList()"><span>🚫 Yasaklılar</span> <i class="fas fa-chevron-down"></i></div>
+                <div class="admin-menu-btn" onclick="toggleBannedList()"><span>🚫 Yasaklılar</span> <i class="fas fa-chevron-down"></i></div>
                 <div id="bannedContainer" class="admin-submenu"><div id="bannedList"><p style="opacity:0.5">Yükleniyor...</p></div></div>
 
-                <div class="admin-menu-btn focusable" onclick="toggleReports()"><span>⚠️ Bildirimler (<span id="reportCount">0</span>)</span> <i class="fas fa-chevron-down"></i></div>
+                <div class="admin-menu-btn" onclick="toggleReports()"><span>⚠️ Bildirimler (<span id="reportCount">0</span>)</span> <i class="fas fa-chevron-down"></i></div>
                 <div id="reportsContainer" class="admin-submenu">
-                    <button class="delete-all-btn focusable" onclick="deleteAllReports()"><i class="fas fa-trash-alt"></i> TÜMÜNÜ SİL</button>
+                    <button class="delete-all-btn" onclick="deleteAllReports()"><i class="fas fa-trash-alt"></i> TÜMÜNÜ SİL</button>
                     <div id="adminReportsList"><p style="opacity:0.5">Yükleniyor...</p></div>
                 </div>
             </div>
-            <button onclick="document.getElementById('adminPanelModal').style.display='none'" id="modalCloseBtn2" class="focusable">Kapat</button>
+            <button onclick="document.getElementById('adminPanelModal').style.display='none'" id="modalCloseBtn2">Kapat</button>
         </div>
     </div>
 
@@ -379,16 +360,19 @@
         <div class="logo">INADINA TV</div>
         <div class="header-actions">
             <div class="online-badge" title="Online Sayısı"><i class="fas fa-users"></i> <span id="onlineCount">0</span></div>
-            <button class="theme-btn focusable" onclick="toggleTheme()" id="themeBtn"><i class="fas fa-moon"></i></button>
-            <a href="https://t.me/inadinatv" id="telegramBtn" class="focusable" style="color:white; font-size:1.4rem; padding:5px;"><i class="fab fa-telegram"></i></a>
+            <button class="theme-btn" onclick="toggleTheme()" id="themeBtn"><i class="fas fa-moon"></i></button>
+            <a href="https://t.me/inadinatv" id="telegramBtn" style="color:white; font-size:1.4rem;"><i class="fab fa-telegram"></i></a>
         </div>
     </div>
 
+    <!-- ANNOUNCEMENT BAR (SCROLLING TEXT) -->
     <div id="announcementBar" class="announcement-bar">
         <div class="announcement-content" id="announcementText"></div>
     </div>
 
+    <!-- FEATURE CONTAINER (COUNTDOWN & POLL) -->
     <div class="feature-container" id="featureContainer">
+        <!-- COUNTDOWN -->
         <div id="countdownBox" class="countdown-box">
             <div id="countdownTitle" class="countdown-title">GERİ SAYIM</div>
             <div id="countdownTimer" class="countdown-timer">
@@ -400,14 +384,15 @@
             <div id="liveIndicator" class="live-blink">CANLI 🔴</div>
         </div>
 
+        <!-- POLL -->
         <div id="pollBox" class="poll-box">
             <span id="displayPollQuestion" class="poll-question">Anket Yükleniyor...</span>
-            <div class="poll-option focusable" onclick="votePoll('opt1')">
+            <div class="poll-option" onclick="votePoll('opt1')">
                 <div class="poll-bar-bg"><div id="bar1" class="poll-bar-fill"></div></div>
                 <div class="poll-text" id="displayOpt1">A</div>
                 <div class="poll-percent" id="percent1">0%</div>
             </div>
-            <div class="poll-option focusable" onclick="votePoll('opt2')">
+            <div class="poll-option" onclick="votePoll('opt2')">
                 <div class="poll-bar-bg"><div id="bar2" class="poll-bar-fill"></div></div>
                 <div class="poll-text" id="displayOpt2">B</div>
                 <div class="poll-percent" id="percent2">0%</div>
@@ -417,47 +402,51 @@
 
     <div class="container"><div id="list"></div></div>
     
-    <button class="load-more-btn focusable" id="loadMoreBtn" onclick="loadMore()">Daha Fazla Göster</button>
+    <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">Daha Fazla Göster</button>
 
+    <!-- HAREKETLİ VE DİKKAT ÇEKİCİ YENİ SOHBET İKONU -->
     <div class="chat-btn-container" onclick="toggleChat()">
         <span class="chat-label">FORUM/SOHBET</span>
-        <div class="chat-btn focusable" tabindex="0">
+        <div class="chat-btn">
             <i class="fas fa-comment-dots" id="chatIcon"></i>
         </div>
     </div>
 
-    <div class="admin-panel-btn focusable" id="adminBtn" onclick="openAdminPanel()" tabindex="0"><i class="fas fa-shield-alt"></i></div>
+    <div class="admin-panel-btn" id="adminBtn" onclick="openAdminPanel()"><i class="fas fa-shield-alt"></i></div>
     
     <div class="chat-modal" id="chatModal">
         <div class="chat-header">
             <div class="chat-header-top">
                 <div style="display:flex; align-items:center; gap:10px;">
                     <span style="font-weight:bold;" id="chatStatus">Canlı Sohbet 🟢</span>
-                    <i class="fas fa-edit focusable" onclick="openNameModal()" style="cursor:pointer; opacity:0.7; font-size:0.9rem; padding:5px;" title="İsim Değiştir"></i>
+                    <i class="fas fa-edit" onclick="openNameModal()" style="cursor:pointer; opacity:0.7; font-size:0.9rem;" title="İsim Değiştir"></i>
                 </div>
-                <i class="fas fa-times chat-close focusable" onclick="toggleChat()" style="padding:5px;"></i>
+                <i class="fas fa-times chat-close" onclick="toggleChat()"></i>
             </div>
             <div class="chat-tabs">
-                <div class="chat-tab active focusable" id="tabGlobal" onclick="switchChatTab('global')">Genel</div>
-                <div class="chat-tab focusable" id="tabPrivate" onclick="switchChatTab('private')">Özel Mesajlar <span id="pmBadge" class="chat-tab-badge">0</span></div>
+                <div class="chat-tab active" id="tabGlobal" onclick="switchChatTab('global')">Genel</div>
+                <div class="chat-tab" id="tabPrivate" onclick="switchChatTab('private')">Özel Mesajlar <span id="pmBadge" class="chat-tab-badge">0</span></div>
             </div>
         </div>
         
         <div class="chat-rules" id="chatRulesBanner"><i class="fas fa-exclamation-triangle"></i> UYARI: Argo ve sohbet dışı mesaj atanlar SÜRESİZ banlanır!</div>
         
+        <!-- GLOBAL CHAT VIEW -->
         <div id="viewGlobal" class="chat-view">
             <div class="chat-messages" id="chatContainer"></div>
         </div>
         
+        <!-- PRIVATE CHAT LIST VIEW -->
         <div id="viewPrivateList" class="chat-view hidden">
             <div class="private-chat-list" id="privateChatListContainer">
                 <p style="text-align:center; opacity:0.6; margin-top:20px;">Henüz özel mesajın yok.</p>
             </div>
         </div>
         
+        <!-- PRIVATE CHAT CONVERSATION VIEW -->
         <div id="viewPrivateConv" class="chat-view hidden">
             <div style="background:rgba(0,0,0,0.3); padding:8px; display:flex; align-items:center;">
-                <button onclick="backToPrivateList()" class="focusable" style="background:none; border:none; color:white; font-size:1.2rem; cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
+                <button onclick="backToPrivateList()" style="background:none; border:none; color:white; font-size:1.2rem; cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
                 <span id="privateChatUserName" style="margin-left:15px; font-weight:bold;">Kullanıcı</span>
             </div>
             <div class="chat-messages" id="privateChatContainer"></div>
@@ -471,18 +460,18 @@
                     <div id="replyToText" style="font-size:0.8rem; font-style:italic;">Mesaj...</div>
                 </div>
             </div>
-            <i class="fas fa-times focusable" onclick="cancelReply()" style="cursor:pointer; font-size:1.2rem;"></i>
+            <i class="fas fa-times" onclick="cancelReply()" style="cursor:pointer; font-size:1.2rem;"></i>
         </div>
         <div class="chat-input-area">
             <div class="input-row">
-                <button class="chat-attach-btn focusable" onclick="document.getElementById('fileUpload').click()"><i class="fas fa-paperclip"></i></button>
-                <button class="chat-attach-btn focusable" onclick="document.getElementById('imgUpload').click()"><i class="fas fa-image"></i></button>
+                <button class="chat-attach-btn" onclick="document.getElementById('fileUpload').click()"><i class="fas fa-paperclip"></i></button>
+                <button class="chat-attach-btn" onclick="document.getElementById('imgUpload').click()"><i class="fas fa-image"></i></button>
                 
                 <input type="file" id="imgUpload" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
                 <input type="file" id="fileUpload" accept=".txt,.html,.xml,.m3u" style="display:none" onchange="handleFileUpload(event)">
                 
-                <input type="text" class="chat-input focusable" id="msgInput" placeholder="Mesaj yaz veya link yapıştır...">
-                <button class="chat-send focusable" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
+                <input type="text" class="chat-input" id="msgInput" placeholder="Mesaj yaz veya link yapıştır...">
+                <button class="chat-send" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
@@ -490,12 +479,12 @@
     <div class="modal" id="modal">
         <div class="modal-box">
             <h3 id="mTitle" style="text-align:center; margin-top:0; color:var(--primary);"></h3>
-            <div class="opt focusable" id="wuffy"><i class="fas fa-play" style="color:var(--primary)"></i> <b>Wuffy Player</b></div>
-            <div class="opt focusable" id="xpola"><i class="fas fa-rocket" style="color:var(--primary)"></i> <b>Xpola Player</b></div>
-            <div class="opt focusable" id="externalWeb" style="background: rgba(255,171,0,0.1); border: 1px solid #ffab00;">
+            <div class="opt" id="wuffy"><i class="fas fa-play" style="color:var(--primary)"></i> <b>Wuffy Player</b></div>
+            <div class="opt" id="xpola"><i class="fas fa-rocket" style="color:var(--primary)"></i> <b>Xpola Player</b></div>
+            <div class="opt" id="externalWeb" style="background: rgba(255,171,0,0.1); border: 1px solid #ffab00;">
                 <i class="fas fa-external-link-alt" style="color:#ffab00"></i> <b style="color:#ffab00">Tarayıcıda Aç / İndir</b>
             </div>
-            <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:12px; border-radius:10px; border:none; background:#333; color:white; margin-top:10px; cursor:pointer; font-weight:bold;" id="modalCloseBtn" class="focusable">Vazgeç</button>
+            <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:12px; border-radius:10px; border:none; background:#333; color:white; margin-top:10px; cursor:pointer; font-weight:bold;" id="modalCloseBtn">Vazgeç</button>
         </div>
     </div>
 
@@ -529,7 +518,8 @@
         let countdownInterval;
         let rulesTimeout;
 
-        let currentTab = 'global'; 
+        // PRIVATE CHAT VARIABLES
+        let currentTab = 'global'; // 'global' or 'private'
         let currentPrivateRoom = null;
         let currentTargetUser = null;
         let activePrivateListener = null;
@@ -548,32 +538,53 @@
         function showToast(message, icon="fa-info-circle") { const t = document.getElementById('toast'); t.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`; t.className = "toast show"; setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000); }
         function formatTime(ts) { const d = new Date(ts); return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0'); }
 
+        // --- HELPER: LINKIFY & PROCESS TEXT ---
         function processText(text) {
             if(!text) return "";
+            // Replace URLs with clickable links
             const urlRegex = /(https?:\/\/[^\s]+)/g;
             return text.replace(urlRegex, function(url) {
-                return `<a href="${url}" target="_blank" class="chat-link focusable">${url}</a>`;
+                return `<a href="${url}" target="_blank" class="chat-link">${url}</a>`;
             });
         }
         
+        // --- HELPER: VIEW FILE IN-APP (SAFE MODE V29) ---
         function openInAppViewer(base64Data, fileName) {
-            if(base64Data.startsWith('data:image')) { showImagePreview(base64Data); return; }
+            // Check if image
+            if(base64Data.startsWith('data:image')) {
+                showImagePreview(base64Data);
+                return;
+            }
+
             try {
+                // Decode text
                 var content = base64Data.split(',')[1];
                 var decodedText = "";
-                try { decodedText = decodeURIComponent(escape(atob(content))); } catch(e) { decodedText = atob(content); }
+                try {
+                    decodedText = decodeURIComponent(escape(atob(content)));
+                } catch(e) {
+                    decodedText = atob(content);
+                }
+                
                 document.getElementById('fvTitle').innerText = fileName;
                 document.getElementById('fvContent').value = decodedText;
                 document.getElementById('fileViewerModal').style.display = 'flex';
-            } catch(e) { console.error("Viewer error:", e); showToast("Dosya okunamadı!", "fa-exclamation"); }
+                
+            } catch(e) {
+                console.error("Viewer error:", e);
+                showToast("Dosya okunamadı!", "fa-exclamation");
+            }
         }
 
         function copyFileContent() {
             var copyText = document.getElementById("fvContent");
-            copyText.select(); copyText.setSelectionRange(0, 99999);
-            document.execCommand("copy"); showToast("Kopyalandı!", "fa-check");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+            document.execCommand("copy");
+            showToast("Kopyalandı!", "fa-check");
         }
 
+        // --- TELEGRAM NOTIFICATION FUNCTION ---
         function sendTelegramNotification(user, message) {
             if(isAdmin || !TG_BOT_TOKEN || TG_BOT_TOKEN.includes("BURAYA") || !TG_CHAT_ID) return;
             const text = `💬 Yeni Mesaj: ${user}
@@ -583,6 +594,7 @@ ${message || "[Dosya/Resim]"}`;
             fetch(url).catch(e => console.error("TG Error:", e));
         }
 
+        // --- USER ACTION MODAL ---
         let selectedUserForAction = null;
         function openUserActionModal(targetUUID, targetName, msgId, textContent, imgContent) {
             if(targetUUID === myUUID) return; 
@@ -596,12 +608,18 @@ ${message || "[Dosya/Resim]"}`;
         function executeUserAction(action) {
             document.getElementById('userActionModal').style.display = 'none';
             if(!selectedUserForAction) return;
-            if(action === 'reply') { startReply(selectedUserForAction.name, selectedUserForAction.text, selectedUserForAction.image); } 
-            else if (action === 'private') { startPrivateChat(selectedUserForAction.uuid, selectedUserForAction.name); } 
-            else if (action === 'ban') { openConfirmModal('ban', selectedUserForAction.uuid); } 
-            else if (action === 'delete') { openConfirmModal('del', selectedUserForAction.msgId); }
+            if(action === 'reply') {
+                startReply(selectedUserForAction.name, selectedUserForAction.text, selectedUserForAction.image);
+            } else if (action === 'private') {
+                startPrivateChat(selectedUserForAction.uuid, selectedUserForAction.name);
+            } else if (action === 'ban') {
+                openConfirmModal('ban', selectedUserForAction.uuid);
+            } else if (action === 'delete') {
+                openConfirmModal('del', selectedUserForAction.msgId);
+            }
         }
 
+        // --- PRIVATE CHAT LOGIC ---
         function switchChatTab(tab) {
             currentTab = tab;
             document.querySelectorAll('.chat-tab').forEach(t => t.classList.remove('active'));
@@ -628,13 +646,18 @@ ${message || "[Dosya/Resim]"}`;
             }
         }
 
-        function getRoomId(uid1, uid2) { const sorted = [uid1, uid2].sort(); return sorted[0] + "_" + sorted[1]; }
+        function getRoomId(uid1, uid2) {
+            const sorted = [uid1, uid2].sort();
+            return sorted[0] + "_" + sorted[1];
+        }
 
         function startPrivateChat(targetUUID, targetName) {
             toggleChat(); 
             document.getElementById('chatModal').classList.add('active');
+            
             currentTargetUser = { uuid: targetUUID, name: targetName };
             currentPrivateRoom = getRoomId(myUUID, targetUUID);
+            
             switchChatTab('private');
             document.getElementById('viewPrivateList').classList.add('hidden');
             document.getElementById('viewPrivateConv').classList.remove('hidden');
@@ -643,14 +666,21 @@ ${message || "[Dosya/Resim]"}`;
             listenToPrivateRoom(currentPrivateRoom);
         }
 
-        function backToPrivateList() { currentPrivateRoom = null; if(activePrivateListener) activePrivateListener.off(); switchChatTab('private'); }
+        function backToPrivateList() {
+            currentPrivateRoom = null;
+            if(activePrivateListener) activePrivateListener.off(); 
+            switchChatTab('private');
+        }
 
         function listenToPrivateRoom(roomId) {
             if(activePrivateListener) activePrivateListener.off();
             const ref = database.ref('private_chats/' + roomId);
             activePrivateListener = ref;
             document.getElementById('privateChatContainer').innerHTML = '';
-            ref.limitToLast(50).on('child_added', (snapshot) => { const msg = snapshot.val(); appendPrivateMessage(msg); });
+            ref.limitToLast(50).on('child_added', (snapshot) => {
+                const msg = snapshot.val();
+                appendPrivateMessage(msg);
+            });
         }
 
         function appendPrivateMessage(msg) {
@@ -658,7 +688,7 @@ ${message || "[Dosya/Resim]"}`;
             const div = document.createElement('div');
             let isMe = msg.user === myUserName;
             let bgColor = isMe ? '' : `background-color: ${getUserColor(msg.user)};`;
-            div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'} ${isAdmin ? 'is-admin' : ''}`;
+            div.className = `message-bubble ${isMe ? 'msg-right' : 'msg-left'}`;
             if(!isMe) div.style.cssText = bgColor;
             
             let contentHTML = "";
@@ -677,21 +707,32 @@ ${message || "[Dosya/Resim]"}`;
                 const listContainer = document.getElementById('privateChatListContainer');
                 listContainer.innerHTML = '';
                 let count = 0;
-                if(!s.exists()) { listContainer.innerHTML = '<p style="text-align:center; opacity:0.6; margin-top:20px;">Henüz özel mesajın yok.</p>'; return; }
+                
+                if(!s.exists()) {
+                    listContainer.innerHTML = '<p style="text-align:center; opacity:0.6; margin-top:20px;">Henüz özel mesajın yok.</p>';
+                    return;
+                }
+                
                 s.forEach(child => {
                     const data = child.val();
                     const targetUUID = child.key;
                     count++;
                     const div = document.createElement('div');
-                    div.className = 'private-chat-item focusable';
+                    div.className = 'private-chat-item';
                     div.onclick = () => startPrivateChat(targetUUID, data.name);
                     div.innerHTML = `<div style="flex:1;"><div class="pc-user">${data.name}</div><div class="pc-preview">${data.lastMsg || "Ek"}</div></div><div style="font-size:0.7rem; opacity:0.5;">${formatTime(data.timestamp)}</div>`;
                     listContainer.appendChild(div);
                 });
-                if(currentTab === 'global') { const badge = document.getElementById('pmBadge'); badge.innerText = count > 0 ? "!" : "0"; badge.style.display = count > 0 ? 'inline-block' : 'none'; }
+
+                if(currentTab === 'global') {
+                    const badge = document.getElementById('pmBadge');
+                    badge.innerText = count > 0 ? "!" : "0";
+                    badge.style.display = count > 0 ? 'inline-block' : 'none';
+                }
             });
         }
 
+        // --- GLOBAL CHAT & GENERAL LOGIC ---
         function updateCountdownDisplay(targetTime) {
             if (countdownInterval) clearInterval(countdownInterval);
             countdownInterval = setInterval(() => {
@@ -714,6 +755,7 @@ ${message || "[Dosya/Resim]"}`;
         window.saveAnnouncement = function() { const txt = document.getElementById('annoInput').value; if(txt) { database.ref('extras/announcement').set({ active: true, text: txt }); showToast("Duyuru Yayında!", "fa-bullhorn"); } };
         window.stopAnnouncement = function() { database.ref('extras/announcement').set({ active: false }); showToast("Duyuru Kaldırıldı", "fa-times"); };
 
+        // --- FILE UPLOAD LOGIC ---
         function handleImageUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -740,12 +782,14 @@ ${message || "[Dosya/Resim]"}`;
         function handleFileUpload(event) {
             const file = event.target.files[0];
             if(!file) return;
+            // 1 MB LIMIT (STRICT ANDROID LIMIT)
             if(file.size > 1 * 1024 * 1024) { showToast("Dosya çok büyük! (Max 1MB)", "fa-exclamation-triangle"); return; }
             if(isChatLocked && !isAdmin && currentTab === 'global') { showToast("Sohbet kilitli!", "fa-lock"); return; }
+            
             showToast("Dosya yükleniyor...", "fa-cog fa-spin");
             const reader = new FileReader();
             reader.onload = (e) => {
-                const dataURL = e.target.result; 
+                const dataURL = e.target.result; // Base64
                 const fileData = { name: file.name, data: dataURL };
                 sendMediaMsg(null, fileData);
             };
@@ -763,6 +807,7 @@ ${message || "[Dosya/Resim]"}`;
                 const messageData = { user: myUserName, uuid: myUUID, time: Date.now() };
                 if(imgData) { messageData.image = imgData; }
                 if(fileData) { messageData.file = fileData; }
+                
                 database.ref('private_chats/' + currentPrivateRoom).push(messageData);
                 const desc = imgData ? "📷 Resim" : "📎 Dosya";
                 database.ref('user_inbox/' + currentTargetUser.uuid + '/' + myUUID).set({ lastMsg: desc, timestamp: Date.now(), name: myUserName });
@@ -878,18 +923,19 @@ ${message || "[Dosya/Resim]"}`;
 
             let timeHTML = `<span class="msg-time">${formatTime(msg.time || Date.now())}</span>`;
             let adminControls = "";
-            if (isAdmin) { adminControls = `<div class="admin-controls"><button class="btn-del focusable" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; }
+            if (isAdmin) { adminControls = `<div class="admin-controls"><button class="btn-del" onclick="openConfirmModal('del', '${key}')">🗑️ SİL</button></div>`; }
             
             let myReactions = JSON.parse(localStorage.getItem('chat_reactions') || "{}");
             let myReact = myReactions[key];
             let likeClass = myReact === 'like' ? 'active-like' : '';
             let dislikeClass = myReact === 'dislike' ? 'active-dislike' : '';
-            let actionsHTML = `<div class="msg-actions"><span id="btn-like-${key}" class="action-btn ${likeClass} focusable" onclick="toggleChatReaction('${key}', 'like')"><i class="fas fa-thumbs-up"></i> <span id="like-count-${key}">${msg.likes || 0}</span></span><span id="btn-dislike-${key}" class="action-btn ${dislikeClass} focusable" onclick="toggleChatReaction('${key}', 'dislike')"><i class="fas fa-thumbs-down"></i> <span id="dislike-count-${key}">${msg.dislikes || 0}</span></span></div>`;
-            div.innerHTML = `${quoteHTML}<span class="msg-user focusable" ${userClickAction}>${userDisplay}</span>${contentHTML}${timeHTML}${actionsHTML}${adminControls}`;
+            let actionsHTML = `<div class="msg-actions"><span id="btn-like-${key}" class="action-btn ${likeClass}" onclick="toggleChatReaction('${key}', 'like')"><i class="fas fa-thumbs-up"></i> <span id="like-count-${key}">${msg.likes || 0}</span></span><span id="btn-dislike-${key}" class="action-btn ${dislikeClass}" onclick="toggleChatReaction('${key}', 'dislike')"><i class="fas fa-thumbs-down"></i> <span id="dislike-count-${key}">${msg.dislikes || 0}</span></span></div>`;
+            div.innerHTML = `${quoteHTML}<span class="msg-user" ${userClickAction}>${userDisplay}</span>${contentHTML}${timeHTML}${actionsHTML}${adminControls}`;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
         }
 
+        // --- ICON ANIMATION LOOP ---
         setInterval(() => {
             const icon = document.getElementById('chatIcon');
             if(icon) {
@@ -905,9 +951,9 @@ ${message || "[Dosya/Resim]"}`;
 
         function openAdminPanel() { document.getElementById('adminPanelModal').style.display = 'flex'; database.ref('reports').once('value', (s) => { const count = s.exists() ? s.numChildren() : 0; document.getElementById('reportCount').innerText = count; }); }
         function toggleSubMenu(id) { const el = document.getElementById(id); el.classList.toggle('active'); }
-        function toggleBannedList() { const container = document.getElementById('bannedContainer'); container.classList.toggle('active'); if(container.classList.contains('active')) { const list = document.getElementById('bannedList'); list.innerHTML = '<p style="opacity:0.5;">Yükleniyor...</p>'; database.ref('banned_users').once('value', (s) => { list.innerHTML = ''; if(!s.exists()) { list.innerHTML = '<p style="opacity:0.5;">Yasaklı kullanıcı yok.</p>'; return; } s.forEach(child => { const div = document.createElement('div'); div.style = "display:flex; justify-content:space-between; margin-bottom:5px; background:rgba(255,255,255,0.1); padding:5px; border-radius:5px; color:inherit;"; div.innerHTML = `<span>User ID: ${child.key.substring(0,8)}...</span> <button class="focusable" onclick="unbanUser('${child.key}')" style="background:#4caf50; border:none; color:white; border-radius:3px;">Aç</button>`; list.appendChild(div); }); }); } }
+        function toggleBannedList() { const container = document.getElementById('bannedContainer'); container.classList.toggle('active'); if(container.classList.contains('active')) { const list = document.getElementById('bannedList'); list.innerHTML = '<p style="opacity:0.5;">Yükleniyor...</p>'; database.ref('banned_users').once('value', (s) => { list.innerHTML = ''; if(!s.exists()) { list.innerHTML = '<p style="opacity:0.5;">Yasaklı kullanıcı yok.</p>'; return; } s.forEach(child => { const div = document.createElement('div'); div.style = "display:flex; justify-content:space-between; margin-bottom:5px; background:rgba(255,255,255,0.1); padding:5px; border-radius:5px; color:inherit;"; div.innerHTML = `<span>User ID: ${child.key.substring(0,8)}...</span> <button onclick="unbanUser('${child.key}')" style="background:#4caf50; border:none; color:white; border-radius:3px;">Aç</button>`; list.appendChild(div); }); }); } }
         window.unbanUser = function(key) { database.ref('banned_users/' + key).remove().then(() => { toggleBannedList(); toggleBannedList(); showToast("Yasak Kaldırıldı", "fa-check"); }); };
-        function toggleReports() { const container = document.getElementById('reportsContainer'); container.classList.toggle('active'); if(container.classList.contains('active')) { const list = document.getElementById('adminReportsList'); list.innerHTML = '<p style="text-align:center;">Yükleniyor...</p>'; database.ref('reports').once('value', (s) => { list.innerHTML = ''; if(!s.exists()) { list.innerHTML = '<p style="text-align:center;">Henüz bildirim yok. 🧼</p>'; return; } s.forEach((child) => { const r = child.val(); const item = document.createElement('div'); item.className = 'report-item'; item.innerHTML = `<div class="report-header"><span><i class="fas fa-user"></i> ${r.user}</span><span>${r.time}</span></div><div class="report-msg"><i class="fas fa-tv"></i> ${r.channel}</div><div style="text-align:right; margin-top:5px;"><button onclick="deleteReport('${child.key}')" class="focusable" style="background:#555; border:none; color:white; padding:3px 8px; border-radius:4px;">Sil</button></div>`; list.appendChild(item); }); }); } }
+        function toggleReports() { const container = document.getElementById('reportsContainer'); container.classList.toggle('active'); if(container.classList.contains('active')) { const list = document.getElementById('adminReportsList'); list.innerHTML = '<p style="text-align:center;">Yükleniyor...</p>'; database.ref('reports').once('value', (s) => { list.innerHTML = ''; if(!s.exists()) { list.innerHTML = '<p style="text-align:center;">Henüz bildirim yok. 🧼</p>'; return; } s.forEach((child) => { const r = child.val(); const item = document.createElement('div'); item.className = 'report-item'; item.innerHTML = `<div class="report-header"><span><i class="fas fa-user"></i> ${r.user}</span><span>${r.time}</span></div><div class="report-msg"><i class="fas fa-tv"></i> ${r.channel}</div><div style="text-align:right; margin-top:5px;"><button onclick="deleteReport('${child.key}')" style="background:#555; border:none; color:white; padding:3px 8px; border-radius:4px;">Sil</button></div>`; list.appendChild(item); }); }); } }
         window.deleteReport = function(key) { database.ref('reports/' + key).remove().then(() => { toggleReports(); toggleReports(); openAdminPanel(); }); };
         window.deleteAllReports = function() { if(confirm("Tüm bildirimleri silmek istediğine emin misin?")) { database.ref('reports').remove(); document.getElementById('adminReportsList').innerHTML = '<p style="text-align:center;">Temizlendi! ✨</p>'; document.getElementById('reportCount').innerText = 0; } };
         window.saveStartupMessage = function() { const msg = document.getElementById('adminToastInput').value; const active = document.getElementById('adminToastActive').checked; database.ref('startup_message').set({ text: msg, active: active }); showToast("Mesaj Güncellendi!", "fa-save"); };
@@ -922,124 +968,14 @@ ${message || "[Dosya/Resim]"}`;
 
         function sanitizeKey(key) { return key.replace(/[.#$\/\[\]]/g, '_').substring(0, 50); }
         function toggleTheme() { document.body.classList.toggle('light-theme'); const isLight = document.body.classList.contains('light-theme'); localStorage.setItem('theme', isLight ? 'light' : 'dark'); document.getElementById('themeBtn').innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; document.getElementById('telegramBtn').style.color = isLight ? '#1a1a1a' : 'white'; document.getElementById('modalCloseBtn').style.background = isLight ? '#e0e0e0' : '#333'; document.getElementById('modalCloseBtn').style.color = isLight ? '#1a1a1a' : 'white'; document.getElementById('modalCloseBtn2').style.background = isLight ? '#e0e0e0' : '#333'; document.getElementById('modalCloseBtn2').style.color = isLight ? '#1a1a1a' : 'white'; }
-        
-        function render() { 
-            const container = document.getElementById('list'); 
-            const loadMoreBtn = document.getElementById('loadMoreBtn'); 
-            if (typeof categoryData === 'undefined') return; 
-            const items = categoryData[activeCategoryKey].items; 
-            container.innerHTML = ''; 
-            currentlyShown = itemsPerPage; 
-            items.forEach((item, index) => { 
-                const card = document.createElement('div'); 
-                card.className = 'card focusable'; 
-                card.tabIndex = 0; 
-                if (index >= itemsPerPage) card.classList.add('hidden'); 
-                const badgeHTML = item.is_new ? '<span class="badge badge-yeni">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>'; 
-                const safeKey = sanitizeKey(item.title); 
-                const views = globalViewCounts[safeKey] || 0; 
-                const likes = globalLikeCounts[safeKey] || 0; 
-                const isLiked = myLikes.includes(safeKey) ? 'liked' : ''; 
-                card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${badgeHTML}</div><div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta"><span>${item.added_date}</span> <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span><span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span><span class="stat-badge"><i class="fas fa-exclamation-triangle stat-report" onclick="openReportModal(event, '${item.title}')"></i></span></div></div><i class="fas fa-play-circle play-icon"></i>`; 
-                card.onclick = () => { current = item; incrementViewCount(item.title); document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; }; 
-                container.appendChild(card); 
-            }); 
-            if (items.length > itemsPerPage) loadMoreBtn.classList.remove('hidden'); else loadMoreBtn.classList.add('hidden'); 
-        }
+        function render() { const container = document.getElementById('list'); const loadMoreBtn = document.getElementById('loadMoreBtn'); if (typeof categoryData === 'undefined') return; const items = categoryData[activeCategoryKey].items; container.innerHTML = ''; currentlyShown = itemsPerPage; items.forEach((item, index) => { const card = document.createElement('div'); card.className = 'card'; if (index >= itemsPerPage) card.classList.add('hidden'); const badgeHTML = item.is_new ? '<span class="badge badge-yeni">YENİ</span>' : '<span class="badge badge-iptv">IPTV</span>'; const safeKey = sanitizeKey(item.title); const views = globalViewCounts[safeKey] || 0; const likes = globalLikeCounts[safeKey] || 0; const isLiked = myLikes.includes(safeKey) ? 'liked' : ''; card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${badgeHTML}</div><div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta"><span>${item.added_date}</span> <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span><span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span><span class="stat-badge"><i class="fas fa-exclamation-triangle stat-report" onclick="openReportModal(event, '${item.title}')"></i></span></div></div><i class="fas fa-play-circle play-icon"></i>`; card.onclick = () => { current = item; incrementViewCount(item.title); document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; }; container.appendChild(card); }); if (items.length > itemsPerPage) loadMoreBtn.classList.remove('hidden'); else loadMoreBtn.classList.add('hidden'); }
         function loadMore() { const items = categoryData[activeCategoryKey].items; const cards = document.querySelectorAll('.card'); const loadMoreBtn = document.getElementById('loadMoreBtn'); for (let i = currentlyShown; i < Math.min(currentlyShown + itemsPerPage, items.length); i++) { if (cards[i]) cards[i].classList.remove('hidden'); } currentlyShown += itemsPerPage; if (currentlyShown >= items.length) loadMoreBtn.classList.add('hidden'); }
         document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url !== "#") { const url = current.web_link_url; window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=' + (url.startsWith('https') ? 'https' : 'http') + ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;component=com.android.chrome/com.google.android.apps.chrome.Main;end'; document.getElementById('modal').style.display='none'; } };
         document.getElementById('wuffy').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
         document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
         window.onclick = (e) => { if(e.target == document.getElementById('modal')) document.getElementById('modal').style.display='none'; if(e.target == document.getElementById('confirmModal')) closeConfirm(); if(e.target == document.getElementById('adminPanelModal')) document.getElementById('adminPanelModal').style.display='none'; if(e.target == document.getElementById('nameChangeModal')) document.getElementById('nameChangeModal').style.display='none'; if(e.target == document.getElementById('userActionModal')) document.getElementById('userActionModal').style.display='none'; }
 
-        // --- TV BOX NAVIGATION LOGIC ---
-        function handleRemoteControl() {
-            document.addEventListener('keydown', function(e) {
-                const key = e.key;
-                const focusable = Array.from(document.querySelectorAll('.focusable, .card:not(.hidden)'));
-                
-                const visibleFocusables = focusable.filter(el => {
-                    return el.offsetParent !== null && window.getComputedStyle(el).display !== 'none';
-                });
-
-                const currentFocus = document.activeElement;
-                const currentIndex = visibleFocusables.indexOf(currentFocus);
-
-                if (key === 'Enter') {
-                    if (currentFocus && visibleFocusables.includes(currentFocus)) {
-                        currentFocus.click();
-                        if(currentFocus.tagName === 'INPUT') currentFocus.focus();
-                    }
-                } else if (key === 'ArrowDown' || key === 'ArrowUp' || key === 'ArrowLeft' || key === 'ArrowRight') {
-                    e.preventDefault();
-                    if (currentIndex === -1) {
-                        if (visibleFocusables.length > 0) visibleFocusables[0].focus();
-                    } else {
-                        // Spatial Navigation Logic
-                        const currentRect = currentFocus.getBoundingClientRect();
-                        let bestCandidate = null;
-                        let minDistance = Infinity;
-
-                        visibleFocusables.forEach(candidate => {
-                            if (candidate === currentFocus) return;
-                            const candRect = candidate.getBoundingClientRect();
-                            
-                            // Direction filtering
-                            let isDirectionCorrect = false;
-                            if (key === 'ArrowDown') isDirectionCorrect = candRect.top >= currentRect.top + (currentRect.height/2);
-                            if (key === 'ArrowUp') isDirectionCorrect = candRect.bottom <= currentRect.top + (currentRect.height/2);
-                            if (key === 'ArrowRight') isDirectionCorrect = candRect.left >= currentRect.left + (currentRect.width/2);
-                            if (key === 'ArrowLeft') isDirectionCorrect = candRect.right <= currentRect.left + (currentRect.width/2);
-
-                            if (isDirectionCorrect) {
-                                // Euclidean distance
-                                const dx = (candRect.left + candRect.width/2) - (currentRect.left + currentRect.width/2);
-                                const dy = (candRect.top + candRect.height/2) - (currentRect.top + currentRect.height/2);
-                                const dist = Math.sqrt(dx*dx + dy*dy);
-                                
-                                if (dist < minDistance) {
-                                    minDistance = dist;
-                                    bestCandidate = candidate;
-                                }
-                            }
-                        });
-
-                        if (bestCandidate) {
-                            bestCandidate.focus();
-                            bestCandidate.scrollIntoView({behavior: "smooth", block: "center"});
-                            document.querySelectorAll('.focused').forEach(el => el.classList.remove('focused'));
-                            bestCandidate.classList.add('focused');
-                        }
-                    }
-                } else if (key === 'Backspace' || key === 'Escape' || e.keyCode === 461 || e.keyCode === 8) {
-                    // FIX: If typing in an input field, do NOT treat Backspace as "Back Button"
-                    const tag = document.activeElement.tagName.toLowerCase();
-                    if ((key === 'Backspace' || e.keyCode === 8) && (tag === 'input' || tag === 'textarea')) {
-                        return; // Let default delete happen
-                    }
-
-                    // Back button logic for navigation
-                    const openModals = document.querySelectorAll('.modal[style*="display: flex"]');
-                    if(openModals.length > 0) {
-                        e.preventDefault();
-                        openModals.forEach(m => m.style.display = 'none');
-                    } else if (document.getElementById('chatModal').classList.contains('active')) {
-                        toggleChat();
-                    }
-                }
-            });
-        }
-
-        (function() { 
-            const savedTheme = localStorage.getItem('theme'); 
-            if (savedTheme === 'light') toggleTheme(); 
-            if(isAdmin) { document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; } 
-            render(); 
-            setTimeout(listenToData, 500); 
-            setTimeout(initPresence, 1000); 
-            setTimeout(listenToAllPrivateChats, 1500);
-            setTimeout(handleRemoteControl, 1000); 
-        })();
+        (function() { const savedTheme = localStorage.getItem('theme'); if (savedTheme === 'light') toggleTheme(); if(isAdmin) { document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; } render(); setTimeout(listenToData, 500); setTimeout(initPresence, 1000); setTimeout(listenToAllPrivateChats, 1500); })();
     </script>
 </body>
 </html>
