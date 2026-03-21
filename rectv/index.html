@@ -29,6 +29,24 @@
         .top-bar { padding: 15px 20px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: background 0.3s; }
         .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #ff0040, #ff4d00); -webkit-background-clip: text; color: transparent; }
         
+        /* --- IPTV ARAÇLAR MENÜSÜ CSS BAŞLANGICI --- */
+        .dropdown { position: relative; display: inline-block; z-index: 200; }
+        .dropbtn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 6px 14px; border-radius: 8px; font-size: 0.9rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.3s; }
+        .light-theme .dropbtn { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #1a1a1a; }
+        
+        .dropdown-content { display: none; position: absolute; background-color: var(--surface); min-width: 220px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 201; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); top: 120%; left: 0; }
+        .light-theme .dropdown-content { box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); }
+        
+        .dropdown-content a { color: var(--text); padding: 12px 16px; text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; border-bottom: 1px solid var(--border); transition: background 0.2s, padding-left 0.2s; }
+        .dropdown-content a:last-child { border-bottom: none; }
+        
+        .dropdown-content a:hover, .dropdown-content a:focus, .dropdown-content a.focused { background-color: rgba(255, 0, 64, 0.15); color: #ff0040; outline: none; padding-left: 20px; }
+        
+        /* Focus-within allows TV Box arrow navigation to keep menu open */
+        .dropdown:hover .dropdown-content, .dropdown:focus-within .dropdown-content { display: block; animation: fadeInMenu 0.3s ease; }
+        @keyframes fadeInMenu { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        /* --- IPTV ARAÇLAR MENÜSÜ CSS BİTİŞİ --- */
+
         .header-actions { display: flex; align-items: center; gap: 12px; }
         .theme-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; transition: all 0.3s; }
         .light-theme .theme-btn { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #1a1a1a; }
@@ -376,7 +394,26 @@
     </div>
 
     <div class="top-bar">
-        <div class="logo">INADINA TV</div>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="logo">INADINA TV</div>
+            
+            <!-- --- IPTV ARAÇLAR MENÜSÜ BAŞLANGICI --- -->
+            <div class="dropdown">
+                <button class="dropbtn focusable">IPTV ARAÇLAR <i class="fas fa-tools"></i></button>
+                <div class="dropdown-content">
+                    <a href="go:combo" class="focusable"><i class="fas fa-search"></i> Combo Tarama</a>
+                    <a href="go:panel" class="focusable"><i class="fas fa-server"></i> IPTV Panel Kontrol</a>
+                    
+                    <!-- YENİ LİNK EKLEME ALANI -->
+                    <!-- Kendi linkinizi eklemek için aşağıdaki satırı kopyalayıp yorumdan çıkarabilirsiniz: -->
+                    <!-- <a href="go:kendi_linkim" class="focusable"><i class="fas fa-star"></i> Yeni Özellik</a> -->
+                    <!-- <a href="go:baska_link" class="focusable"><i class="fas fa-link"></i> Diğer Sayfa</a> -->
+                    
+                </div>
+            </div>
+            <!-- --- IPTV ARAÇLAR MENÜSÜ BİTİŞİ --- -->
+            
+        </div>
         <div class="header-actions">
             <div class="online-badge" title="Online Sayısı"><i class="fas fa-users"></i> <span id="onlineCount">0</span></div>
             <button class="theme-btn focusable" onclick="toggleTheme()" id="themeBtn"><i class="fas fa-moon"></i></button>
@@ -628,7 +665,7 @@ ${message || "[Dosya/Resim]"}`;
             }
         }
 
-        function getRoomId(uid1, uid2) { const sorted = [uid1, uid2].sort(); return sorted[0] + "_" + sorted[1]; }
+        function getRoomId(uid1, uid2) { const sorted =[uid1, uid2].sort(); return sorted[0] + "_" + sorted[1]; }
 
         function startPrivateChat(targetUUID, targetName) {
             toggleChat(); 
