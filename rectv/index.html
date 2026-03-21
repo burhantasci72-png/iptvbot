@@ -26,15 +26,13 @@
             border-color: #fff;
         }
         
-        /* --- YENİLENMİŞ TOP BAR YAPISI --- */
+        /* --- YENİLENMİŞ LOGOSUZ TOP BAR YAPISI --- */
         .top-bar { 
-            padding: 12px 15px; 
+            padding: 10px 15px; 
             background: var(--surface); 
             display: flex; 
-            flex-wrap: wrap; /* Dar ekranda alt satıra geçmesine izin ver */
-            justify-content: space-between; 
+            justify-content: space-between; /* Sol ve sağı iki uca ayırır */
             align-items: center; 
-            gap: 12px; 
             position: sticky; 
             top: 0; 
             z-index: 100; 
@@ -42,31 +40,18 @@
             transition: background 0.3s; 
         }
         
-        .logo { 
-            font-size: 1.5rem; 
-            font-weight: 800; 
-            background: linear-gradient(135deg, #ff0040, #ff4d00); 
-            -webkit-background-clip: text; 
-            color: transparent; 
-            white-space: nowrap; /* INADINA TV yazısının bölünmesini engeller */
-            flex-shrink: 0; 
-        }
-        
         .header-actions { 
             display: flex; 
             align-items: center; 
-            gap: 10px; 
-            flex-wrap: wrap; /* İkonların sıkışmadan dizilmesini sağlar */
-            justify-content: flex-end;
-            flex: 1; /* Sağ taraftaki alanı doldurur */
+            gap: 12px; 
         }
         
         /* Dar ekranlar için (Mobil Düzeltmeleri) */
         @media (max-width: 500px) {
-            .top-bar { justify-content: center; padding: 10px; }
-            .header-actions { justify-content: center; width: 100%; margin-top: 5px; }
-            .logo { font-size: 1.4rem; }
+            .top-bar { padding: 8px 10px; }
             .dropbtn { font-size: 0.8rem; padding: 6px 10px; }
+            .header-actions { gap: 8px; }
+            .online-badge { padding: 4px 8px; font-size: 0.75rem; }
         }
         
         /* --- IPTV ARAÇLAR MENÜSÜ CSS --- */
@@ -85,8 +70,7 @@
             overflow: hidden; 
             border: 1px solid var(--border); 
             top: 120%; 
-            left: 50%; /* Menüyü butona göre tam ortalar (taşmayı engeller) */
-            transform: translateX(-50%); 
+            left: 0; /* Menü soldan başlar */
         }
         .light-theme .dropdown-content { box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); }
         
@@ -96,7 +80,7 @@
         .dropdown-content a:hover, .dropdown-content a:focus, .dropdown-content a.focused { background-color: rgba(255, 0, 64, 0.15); color: #ff0040; outline: none; padding-left: 20px; }
         
         .dropdown:hover .dropdown-content, .dropdown:focus-within .dropdown-content { display: block; animation: fadeInMenu 0.3s ease; }
-        @keyframes fadeInMenu { from { opacity: 0; transform: translate(-50%, -10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+        @keyframes fadeInMenu { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- Kalan CSS Düzenlemeleri --- */
         .theme-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; transition: all 0.3s; }
@@ -444,29 +428,29 @@
         </div>
     </div>
 
-    <!-- ===== DÜZELTİLMİŞ ÜST BAR (YENİ YAPILANMA) ===== -->
+    <!-- ===== DÜZELTİLMİŞ ÜST BAR (LOGOSUZ) ===== -->
     <div class="top-bar">
-        <div class="logo">INADINA TV</div>
         
-        <div class="header-actions">
-            <!-- IPTV ARAÇLAR MENÜSÜ -->
-            <div class="dropdown">
-                <button class="dropbtn focusable">IPTV ARAÇLAR <i class="fas fa-tools"></i></button>
-                <div class="dropdown-content">
-                    <a href="go:combo" class="focusable"><i class="fas fa-search"></i> Combo Tarama</a>
-                    <a href="go:panel" class="focusable"><i class="fas fa-server"></i> IPTV Panel Kontrol</a>
-                    
-                    <!-- YENİ LİNK EKLEME ALANI -->
-                    <!-- Kendi linkinizi eklemek için aşağıdaki satırı kopyalayıp yorumdan çıkarabilirsiniz: -->
-                    <!-- <a href="go:kendi_linkim" class="focusable"><i class="fas fa-star"></i> Yeni Özellik</a> -->
-                    <!-- <a href="go:baska_link" class="focusable"><i class="fas fa-link"></i> Diğer Sayfa</a> -->
-                </div>
+        <!-- SOL KISIM: IPTV ARAÇLAR MENÜSÜ -->
+        <div class="dropdown">
+            <button class="dropbtn focusable">IPTV ARAÇLAR <i class="fas fa-tools"></i></button>
+            <div class="dropdown-content">
+                <a href="go:combo" class="focusable"><i class="fas fa-search"></i> Combo Tarama</a>
+                <a href="go:panel" class="focusable"><i class="fas fa-server"></i> IPTV Panel Kontrol</a>
+                
+                <!-- YENİ LİNK EKLEME ALANI -->
+                <!-- <a href="go:kendi_linkim" class="focusable"><i class="fas fa-star"></i> Yeni Özellik</a> -->
+                <!-- <a href="go:baska_link" class="focusable"><i class="fas fa-link"></i> Diğer Sayfa</a> -->
             </div>
-            
+        </div>
+        
+        <!-- SAĞ KISIM: DİĞER İKONLAR -->
+        <div class="header-actions">
             <div class="online-badge" title="Online Sayısı"><i class="fas fa-users"></i> <span id="onlineCount">0</span></div>
             <button class="theme-btn focusable" onclick="toggleTheme()" id="themeBtn"><i class="fas fa-moon"></i></button>
             <a href="https://t.me/inadinatv" id="telegramBtn" class="focusable" style="color:white; font-size:1.4rem; padding:5px;"><i class="fab fa-telegram"></i></a>
         </div>
+        
     </div>
 
     <div id="announcementBar" class="announcement-bar">
