@@ -1,5 +1,12 @@
 [
     {
+        "title": "YENİ İPTV LİSTELER EKLENDİ",
+        "m3u_url": "http://abe4kiptv.shop:8080/get.php?username=ysr3457&password=ysr1354&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/9qvKBk",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "03.04.2026"
+    },
+    {
         "title": "1209 PrimeTv panel iptv",
         "m3u_url": "http://primetv4k.xyz:2095/get.php?username=mss1201&password=mss0201dd00bb&type=m3u_plus",
         "web_link_url": "https://ay.live/pDQvJ",
