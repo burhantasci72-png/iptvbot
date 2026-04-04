@@ -1,5 +1,12 @@
 [
     {
+        "title": "YENİ İPTV LİSTELER EKLENDİ",
+        "m3u_url": "http://kgms.xyz:80/get.php?username=emrahlehimler&password=G4wQ5ctyud&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/cKEPJ",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "04.04.2026"
+    },
+    {
         "title": "YENİ AKTİF İPTV LİSTELER EKLEBDİ",
         "m3u_url": "muratersoz:rIegeiRuPw6Mjyxw",
         "web_link_url": "grkt2715:1d00212becbf89bb",
