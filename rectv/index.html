@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INADINA TV</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- FIREBASE (Compat) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -31,7 +31,7 @@
             padding: 10px 15px; 
             background: var(--surface); 
             display: flex; 
-            justify-content: space-between; 
+            justify-content: space-between; /* Sol ve sağı iki uca ayırır */
             align-items: center; 
             position: sticky; 
             top: 0; 
@@ -46,6 +46,7 @@
             gap: 12px; 
         }
         
+        /* Dar ekranlar için (Mobil Düzeltmeleri) */
         @media (max-width: 500px) {
             .top-bar { padding: 8px 10px; }
             .dropbtn { font-size: 0.8rem; padding: 6px 10px; }
@@ -53,54 +54,10 @@
             .online-badge { padding: 4px 8px; font-size: 0.75rem; }
         }
         
-        /* --- YENİ IPTV ARAÇLAR MENÜSÜ CSS (GELİŞTİRİLMİŞ) --- */
+        /* --- IPTV ARAÇLAR MENÜSÜ CSS --- */
         .dropdown { position: relative; display: inline-block; z-index: 200; }
-        
-        .dropbtn { 
-            background: linear-gradient(135deg, #00d2ff, #3a7bd5); 
-            border: 1px solid rgba(255, 255, 255, 0.3); 
-            color: #fff; 
-            padding: 8px 16px; 
-            border-radius: 8px; 
-            font-size: 0.95rem; 
-            font-weight: 800; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            transition: all 0.3s ease; 
-            white-space: nowrap; 
-            box-shadow: 0 4px 10px rgba(58, 123, 213, 0.4); 
-            text-transform: uppercase; 
-            letter-spacing: 0.5px;
-        }
-        
-        .dropbtn i { animation: wrench-wiggle 2s infinite ease-in-out; }
-        
-        @keyframes wrench-wiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-15deg); }
-            75% { transform: rotate(15deg); }
-        }
-        
-        .dropbtn:hover, .dropbtn:focus, .dropbtn.focused { 
-            background: linear-gradient(135deg, #3a7bd5, #00d2ff); 
-            box-shadow: 0 6px 15px rgba(58, 123, 213, 0.6); 
-            transform: translateY(-2px); 
-            border-color: #fff;
-        }
-        
-        /* Açık Tema için IPTV Araçlar Butonu */
-        .light-theme .dropbtn { 
-            background: linear-gradient(135deg, #ff9900, #ff5500); 
-            border-color: rgba(0, 0, 0, 0.2); 
-            color: #fff; 
-            box-shadow: 0 4px 10px rgba(255, 85, 0, 0.3);
-        }
-        .light-theme .dropbtn:hover, .light-theme .dropbtn:focus, .light-theme .dropbtn.focused {
-            background: linear-gradient(135deg, #ff5500, #ff9900);
-            box-shadow: 0 6px 15px rgba(255, 85, 0, 0.5);
-        }
+        .dropbtn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 6px 14px; border-radius: 8px; font-size: 0.9rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.3s; white-space: nowrap; }
+        .light-theme .dropbtn { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #1a1a1a; }
         
         .dropdown-content { 
             display: none; 
@@ -113,7 +70,7 @@
             overflow: hidden; 
             border: 1px solid var(--border); 
             top: 120%; 
-            left: 0; 
+            left: 0; /* Menü soldan başlar */
         }
         .light-theme .dropdown-content { box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); }
         
@@ -178,26 +135,8 @@
         .countdown-timer { display: flex; justify-content: center; gap: 10px; font-size: 1.5rem; font-weight: bold; color: white; font-family: monospace; }
         .time-unit { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 8px; min-width: 40px; }
         .time-label { font-size: 0.6rem; opacity: 0.7; font-family: sans-serif; margin-top: 2px; }
-        
+        .live-blink { color: #ff0040; animation: blink 1s infinite; font-size: 2rem; font-weight: 800; display: none; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-
-        /* Yeni Maçı İzle Butonu Tasarımı */
-        .watch-match-btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            background: linear-gradient(45deg, #ff0040, #ff4d00);
-            color: white; padding: 12px 25px; border-radius: 25px;
-            font-weight: 800; text-decoration: none; font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(255, 0, 64, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 2px solid transparent;
-            margin-top: 5px;
-        }
-        .watch-match-btn i { font-size: 1.3rem; }
-        .watch-match-btn:hover, .watch-match-btn:focus, .watch-match-btn.focused {
-            transform: scale(1.08); 
-            box-shadow: 0 6px 20px rgba(255, 0, 64, 0.7);
-            border-color: #fff;
-        }
         
         .poll-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; display: none; }
         .poll-question { font-weight: bold; margin-bottom: 10px; color: var(--text); display: block; }
@@ -498,6 +437,10 @@
             <div class="dropdown-content">
                 <a href="go:combo" class="focusable"><i class="fas fa-search"></i> Combo Tarama</a>
                 <a href="go:panel" class="focusable"><i class="fas fa-server"></i> IPTV Panel Kontrol</a>
+                
+                <!-- YENİ LİNK EKLEME ALANI -->
+                <!-- <a href="go:kendi_linkim" class="focusable"><i class="fas fa-star"></i> Yeni Özellik</a> -->
+                <!-- <a href="go:baska_link" class="focusable"><i class="fas fa-link"></i> Diğer Sayfa</a> -->
             </div>
         </div>
         
@@ -523,13 +466,7 @@
                 <div class="time-unit"><span id="cdMins">00</span><span class="time-label">DAK</span></div>:
                 <div class="time-unit"><span id="cdSecs">00</span><span class="time-label">SAN</span></div>
             </div>
-            
-            <!-- YENİ GÜNCELLENMİŞ CANLI BİLDİRİMİ VE MAÇI İZLE BUTONU -->
-            <div id="liveIndicator" style="display: none; text-align: center; margin-top: 15px;">
-                <div style="color: #ff0040; animation: blink 1s infinite; font-size: 2rem; font-weight: 800; margin-bottom: 15px;">CANLI 🔴</div>
-                <a href="go:spor" class="watch-match-btn focusable"><i class="fas fa-play-circle"></i> MAÇI İZLE</a>
-            </div>
-
+            <div id="liveIndicator" class="live-blink">CANLI 🔴</div>
         </div>
 
         <div id="pollBox" class="poll-box">
@@ -829,14 +766,8 @@ ${message || "[Dosya/Resim]"}`;
             countdownInterval = setInterval(() => {
                 const now = new Date().getTime();
                 const distance = targetTime - now;
-                if (distance < 0) { 
-                    clearInterval(countdownInterval); 
-                    document.getElementById("countdownTimer").style.display = "none"; 
-                    document.getElementById("liveIndicator").style.display = "block"; 
-                    return; 
-                }
-                document.getElementById("countdownTimer").style.display = "flex"; 
-                document.getElementById("liveIndicator").style.display = "none";
+                if (distance < 0) { clearInterval(countdownInterval); document.getElementById("countdownTimer").style.display = "none"; document.getElementById("liveIndicator").style.display = "block"; return; }
+                document.getElementById("countdownTimer").style.display = "flex"; document.getElementById("liveIndicator").style.display = "none";
                 document.getElementById("cdDays").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
                 document.getElementById("cdHours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 document.getElementById("cdMins").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -1113,6 +1044,7 @@ ${message || "[Dosya/Resim]"}`;
                     if (currentIndex === -1) {
                         if (visibleFocusables.length > 0) visibleFocusables[0].focus();
                     } else {
+                        // Spatial Navigation Logic
                         const currentRect = currentFocus.getBoundingClientRect();
                         let bestCandidate = null;
                         let minDistance = Infinity;
@@ -1121,6 +1053,7 @@ ${message || "[Dosya/Resim]"}`;
                             if (candidate === currentFocus) return;
                             const candRect = candidate.getBoundingClientRect();
                             
+                            // Direction filtering
                             let isDirectionCorrect = false;
                             if (key === 'ArrowDown') isDirectionCorrect = candRect.top >= currentRect.top + (currentRect.height/2);
                             if (key === 'ArrowUp') isDirectionCorrect = candRect.bottom <= currentRect.top + (currentRect.height/2);
@@ -1128,6 +1061,7 @@ ${message || "[Dosya/Resim]"}`;
                             if (key === 'ArrowLeft') isDirectionCorrect = candRect.right <= currentRect.left + (currentRect.width/2);
 
                             if (isDirectionCorrect) {
+                                // Euclidean distance
                                 const dx = (candRect.left + candRect.width/2) - (currentRect.left + currentRect.width/2);
                                 const dy = (candRect.top + candRect.height/2) - (currentRect.top + currentRect.height/2);
                                 const dist = Math.sqrt(dx*dx + dy*dy);
@@ -1147,11 +1081,13 @@ ${message || "[Dosya/Resim]"}`;
                         }
                     }
                 } else if (key === 'Backspace' || key === 'Escape' || e.keyCode === 461 || e.keyCode === 8) {
+                    // FIX: If typing in an input field, do NOT treat Backspace as "Back Button"
                     const tag = document.activeElement.tagName.toLowerCase();
                     if ((key === 'Backspace' || e.keyCode === 8) && (tag === 'input' || tag === 'textarea')) {
-                        return; 
+                        return; // Let default delete happen
                     }
 
+                    // Back button logic for navigation
                     const openModals = document.querySelectorAll('.modal[style*="display: flex"]');
                     if(openModals.length > 0) {
                         e.preventDefault();
