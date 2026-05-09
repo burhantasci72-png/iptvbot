@@ -40,11 +40,7 @@
             transition: background 0.3s; 
         }
         
-        .header-actions { 
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-        }
+        .header-actions { display: flex; align-items: center; gap: 12px; }
         
         @media (max-width: 500px) {
             .top-bar { padding: 8px 10px; }
@@ -58,74 +54,24 @@
         
         .dropbtn { 
             background: linear-gradient(135deg, #00d2ff, #3a7bd5); 
-            border: 1px solid rgba(255, 255, 255, 0.3); 
-            color: #fff; 
-            padding: 8px 16px; 
-            border-radius: 8px; 
-            font-size: 0.95rem; 
-            font-weight: 800; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            transition: all 0.3s ease; 
-            white-space: nowrap; 
-            box-shadow: 0 4px 10px rgba(58, 123, 213, 0.4); 
-            text-transform: uppercase; 
-            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; padding: 8px 16px; border-radius: 8px; font-size: 0.95rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; white-space: nowrap; box-shadow: 0 4px 10px rgba(58, 123, 213, 0.4); text-transform: uppercase; letter-spacing: 0.5px;
         }
         
         .dropbtn i { animation: wrench-wiggle 2s infinite ease-in-out; }
+        @keyframes wrench-wiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-15deg); } 75% { transform: rotate(15deg); } }
         
-        @keyframes wrench-wiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-15deg); }
-            75% { transform: rotate(15deg); }
-        }
+        .dropbtn:hover, .dropbtn:focus, .dropbtn.focused { background: linear-gradient(135deg, #3a7bd5, #00d2ff); box-shadow: 0 6px 15px rgba(58, 123, 213, 0.6); transform: translateY(-2px); border-color: #fff; }
+        .light-theme .dropbtn { background: linear-gradient(135deg, #ff9900, #ff5500); border-color: rgba(0, 0, 0, 0.2); color: #fff; box-shadow: 0 4px 10px rgba(255, 85, 0, 0.3); }
+        .light-theme .dropbtn:hover, .light-theme .dropbtn:focus, .light-theme .dropbtn.focused { background: linear-gradient(135deg, #ff5500, #ff9900); box-shadow: 0 6px 15px rgba(255, 85, 0, 0.5); }
         
-        .dropbtn:hover, .dropbtn:focus, .dropbtn.focused { 
-            background: linear-gradient(135deg, #3a7bd5, #00d2ff); 
-            box-shadow: 0 6px 15px rgba(58, 123, 213, 0.6); 
-            transform: translateY(-2px); 
-            border-color: #fff;
-        }
-        
-        /* Açık Tema için IPTV Araçlar Butonu */
-        .light-theme .dropbtn { 
-            background: linear-gradient(135deg, #ff9900, #ff5500); 
-            border-color: rgba(0, 0, 0, 0.2); 
-            color: #fff; 
-            box-shadow: 0 4px 10px rgba(255, 85, 0, 0.3);
-        }
-        .light-theme .dropbtn:hover, .light-theme .dropbtn:focus, .light-theme .dropbtn.focused {
-            background: linear-gradient(135deg, #ff5500, #ff9900);
-            box-shadow: 0 6px 15px rgba(255, 85, 0, 0.5);
-        }
-        
-        .dropdown-content { 
-            display: none; 
-            position: absolute; 
-            background-color: var(--surface); 
-            min-width: 220px; 
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); 
-            z-index: 201; 
-            border-radius: 10px; 
-            overflow: hidden; 
-            border: 1px solid var(--border); 
-            top: 120%; 
-            left: 0; 
-        }
+        .dropdown-content { display: none; position: absolute; background-color: var(--surface); min-width: 220px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 201; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); top: 120%; left: 0; }
         .light-theme .dropdown-content { box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); }
-        
         .dropdown-content a { color: var(--text); padding: 12px 16px; text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; border-bottom: 1px solid var(--border); transition: background 0.2s, padding-left 0.2s; white-space: nowrap; }
         .dropdown-content a:last-child { border-bottom: none; }
-        
         .dropdown-content a:hover, .dropdown-content a:focus, .dropdown-content a.focused { background-color: rgba(255, 0, 64, 0.15); color: #ff0040; outline: none; padding-left: 20px; }
-        
         .dropdown:hover .dropdown-content, .dropdown:focus-within .dropdown-content { display: block; animation: fadeInMenu 0.3s ease; }
         @keyframes fadeInMenu { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- Kalan CSS Düzenlemeleri --- */
         .theme-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; transition: all 0.3s; }
         .light-theme .theme-btn { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #1a1a1a; }
         
@@ -147,12 +93,7 @@
         .badge { position: absolute; top: -10px; right: -10px; font-size: 0.75rem; padding: 4px 10px; border-radius: 8px; font-weight: 900; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.4); text-transform: uppercase; border: 1px solid rgba(255,255,255,0.3); }
         .badge-yeni { background: linear-gradient(135deg, #ff0000, #ff4d00); color: #fff; animation: pulse-aggressive 1.5s infinite ease-in-out; }
         .badge-iptv { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: #fff; }
-        
-        @keyframes pulse-aggressive { 
-            0% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 0, 0, 0.7); } 
-            50% { transform: scale(1.15); box-shadow: 0 0 15px rgba(255, 77, 0, 0.8); } 
-            100% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 0, 0, 0.7); } 
-        }
+        @keyframes pulse-aggressive { 0% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 0, 0, 0.7); } 50% { transform: scale(1.15); box-shadow: 0 0 15px rgba(255, 77, 0, 0.8); } 100% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 0, 0, 0.7); } }
 
         .card-info { flex: 1; margin-left: 12px; }
         .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 3px; color: var(--text); }
@@ -175,7 +116,7 @@
         .feature-container { margin: 15px; display: flex; flex-direction: column; gap: 15px; }
         
         /* CANLI SKOR CSS */
-        .livescore-box { background: linear-gradient(135deg, #101010, #1a1825); border: 1px solid #00d2ff; border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; box-shadow: 0 5px 15px rgba(0, 210, 255, 0.15); }
+        .livescore-box { background: linear-gradient(135deg, #101010, #1a1825); border: 1px solid #00d2ff; border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; box-shadow: 0 5px 15px rgba(0, 210, 255, 0.15); transition: box-shadow 0.3s ease; }
         .light-theme .livescore-box { background: linear-gradient(135deg, #ffffff, #f0f0f0); border-color: #3a7bd5; box-shadow: 0 5px 15px rgba(58, 123, 213, 0.15); }
         .ls-header { display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: bold; color: #fff; margin-bottom: 10px; }
         .light-theme .ls-header { color: #333; }
@@ -187,7 +128,8 @@
         .light-theme .ls-team { color: #1a1a1a; }
         .ls-score-wrap { display: flex; align-items: center; justify-content: center; gap: 10px; background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); }
         .light-theme .ls-score-wrap { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); }
-        .ls-score { font-size: 2rem; font-weight: 900; color: #ffeb3b; text-shadow: 0 0 10px rgba(255, 235, 59, 0.5); }
+        .ls-score { font-size: 2rem; font-weight: 900; color: #ffeb3b; text-shadow: 0 0 10px rgba(255, 235, 59, 0.5); transition: transform 0.2s ease; }
+        .ls-score.goal-anim { transform: scale(1.5); color: #ff0040; text-shadow: 0 0 15px #ff0040; }
         .light-theme .ls-score { color: #ff5500; text-shadow: none; }
         .ls-divider { font-size: 1.5rem; color: #fff; opacity: 0.5; }
         .light-theme .ls-divider { color: #000; }
@@ -202,24 +144,6 @@
         
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* Yeni Maçı İzle Butonu Tasarımı */
-        .watch-match-btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            background: linear-gradient(45deg, #ff0040, #ff4d00);
-            color: white; padding: 12px 25px; border-radius: 25px;
-            font-weight: 800; text-decoration: none; font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(255, 0, 64, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 2px solid transparent;
-            margin-top: 5px;
-        }
-        .watch-match-btn i { font-size: 1.3rem; }
-        .watch-match-btn:hover, .watch-match-btn:focus, .watch-match-btn.focused {
-            transform: scale(1.08); 
-            box-shadow: 0 6px 20px rgba(255, 0, 64, 0.7);
-            border-color: #fff;
-        }
-        
         .poll-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; display: none; }
         .poll-question { font-weight: bold; margin-bottom: 10px; color: var(--text); display: block; }
         .poll-option { margin-bottom: 8px; position: relative; cursor: pointer; }
@@ -234,18 +158,7 @@
         .chat-label { background: #ff0040; color:white; font-size:0.7rem; padding:3px 8px; border-radius:10px; font-weight:bold; box-shadow: 0 2px 5px rgba(0,0,0,0.5); animation: bounce 2s infinite; }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-5px);} 60% {transform: translateY(-3px);} }
 
-        .chat-btn { 
-            width: 65px; height: 65px; 
-            background: linear-gradient(45deg, #00d2ff, #3a7bd5, #ff0040); 
-            background-size: 200% 200%;
-            border-radius: 50%; 
-            display: flex; justify-content: center; align-items: center; 
-            color: white; font-size: 1.8rem; 
-            box-shadow: 0 5px 20px rgba(0,210,255,0.4); 
-            cursor: pointer; 
-            animation: gradient-anim 3s ease infinite, pulse-beat 2s infinite;
-            border: 2px solid rgba(255,255,255,0.2);
-        }
+        .chat-btn { width: 65px; height: 65px; background: linear-gradient(45deg, #00d2ff, #3a7bd5, #ff0040); background-size: 200% 200%; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.8rem; box-shadow: 0 5px 20px rgba(0,210,255,0.4); cursor: pointer; animation: gradient-anim 3s ease infinite, pulse-beat 2s infinite; border: 2px solid rgba(255,255,255,0.2); }
         .chat-btn:hover { animation: gradient-anim 1s ease infinite; transform: scale(1.1); }
         @keyframes pulse-beat { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(0, 210, 255, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); } }
 
@@ -256,8 +169,7 @@
         .chat-close { font-size: 1.5rem; cursor: pointer; color: var(--text); }
         .chat-rules { background: rgba(255, 0, 64, 0.15); border-bottom: 1px solid rgba(255, 0, 64, 0.3); color: #ff4d4d; padding: 10px; font-size: 0.8rem; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.5s ease-in-out; opacity: 1; max-height: 100px; }
         .chat-rules.hidden { opacity: 0; max-height: 0; padding: 0; margin: 0; overflow: hidden; border: none; }
-        .light-theme .chat-rules { background: #ffe6e6; color: #cc0000; }
-
+        
         .chat-tabs { display: flex; width: 100%; background: rgba(0,0,0,0.2); border-radius: 10px; padding: 2px; }
         .chat-tab { flex: 1; text-align: center; padding: 8px; font-size: 0.9rem; cursor: pointer; border-radius: 8px; transition: all 0.3s; position: relative; }
         .chat-tab.active { background: var(--primary); color: white; font-weight: bold; }
@@ -273,12 +185,8 @@
         .msg-user { font-size: 0.7rem; opacity: 0.8; margin-bottom: 2px; display: block; font-weight: bold; cursor: pointer; color: #ffeb3b; }
         .msg-admin { color: #ff4d4d; text-shadow: 0 0 5px rgba(0,0,0,0.5); }
         .msg-time { display: block; font-size: 0.65rem; text-align: right; opacity: 0.6; margin-top: 4px; }
-        
         .chat-link { color: #00d2ff; text-decoration: underline; font-weight: bold; word-break: break-all; }
-        .chat-link:hover { color: #fff; }
-
         .chat-file-block { display:flex; align-items:center; background: rgba(0,0,0,0.3); padding:8px; border-radius:8px; margin-top:5px; gap:10px; border:1px solid rgba(255,255,255,0.1); cursor:pointer; }
-        .chat-file-block:hover { background: rgba(0,0,0,0.5); }
         .file-icon { font-size: 1.5rem; color: #ffeb3b; }
         .file-info { display:flex; flex-direction:column; overflow:hidden; }
         .file-name { font-size:0.8rem; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -286,21 +194,16 @@
 
         .quoted-msg { background: rgba(0,0,0,0.2); border-left: 3px solid #ff4d4d; padding: 5px 8px; border-radius: 4px; margin-bottom: 5px; font-size: 0.75rem; display: flex; flex-direction: column; opacity: 0.9; }
         .quote-user { font-weight: bold; color: #ffeb3b; margin-bottom: 2px; }
-        .reply-btn-icon { margin-left: 8px; opacity: 0.6; cursor: pointer; transition: opacity 0.2s; font-size: 0.8rem; }
-        .reply-btn-icon:hover { opacity: 1; color: white; }
         .reply-preview-bar { background: #2a2a2a; border-top: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; display: none; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #ddd; border-left: 4px solid var(--primary); }
-        .light-theme .reply-preview-bar { background: #f0f0f0; color: #333; }
         
         .msg-actions { display: flex; gap: 10px; margin-top: 5px; justify-content: flex-end; font-size: 0.75rem; opacity: 0.9; }
         .action-btn { cursor: pointer; display: flex; align-items: center; gap: 3px; transition: all 0.2s; color: rgba(255,255,255,0.7); }
         .action-btn:hover { opacity: 1; color: white; }
         .action-btn.active-like { color: #ffeb3b; font-weight: bold; text-shadow: 0 0 5px rgba(0,0,0,0.5); transform: scale(1.1); }
         .action-btn.active-dislike { color: #f44336; font-weight: bold; text-shadow: 0 0 5px rgba(0,0,0,0.5); transform: scale(1.1); }
-        .light-theme .action-btn { color: rgba(0,0,0,0.6); }
         
         .admin-controls { display: none; margin-top: 5px; gap: 5px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; }
         .is-admin .admin-controls { display: flex; }
-        .btn-ban { background: #ff0040; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
         .btn-del { background: #555; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
 
         .chat-input-area { padding: 10px; display: flex; gap: 10px; background: rgba(0,0,0,0.2); flex-direction: column; }
@@ -308,23 +211,18 @@
         .chat-input { flex: 1; padding: 10px; border-radius: 20px; border: none; outline: none; background: rgba(255,255,255,0.1); color: var(--text); }
         .light-theme .chat-input { background: white; color: black; }
         .chat-send { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
-        
         .chat-attach-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); color: white; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
-        .light-theme .chat-attach-btn { background: rgba(0,0,0,0.1); color: #333; }
         
         .chat-img { max-width: 100%; border-radius: 10px; margin-top: 5px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
 
         .private-chat-list { flex: 1; overflow-y: auto; padding: 10px; }
         .private-chat-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
-        .private-chat-item:hover { background: rgba(255,255,255,0.1); }
         .pc-user { font-weight: bold; font-size: 1rem; }
         .pc-preview { font-size: 0.8rem; opacity: 0.6; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 200px; }
         
         #userActionModal .modal-box { text-align: center; }
         .action-menu-btn { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: var(--text); font-size: 1rem; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 10px; }
-        .action-menu-btn:hover { background: rgba(255,255,255,0.2); }
-        .action-menu-btn i { width: 20px; text-align: center; }
-
+        
         #imgPreviewModal { background: rgba(0,0,0,0.95); display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 5000; justify-content: center; align-items: center; }
         #imgPreviewModal img { max-width: 95%; max-height: 90%; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
         #imgPreviewModal i { position: absolute; top: 20px; right: 20px; font-size: 2rem; color: white; cursor: pointer; }
@@ -344,12 +242,6 @@
         #modalCloseBtn2 { position: absolute; bottom: 20px; left: 5%; width: 90%; background: #333; box-shadow: 0 -2px 10px rgba(0,0,0,0.5); }
         
         .admin-menu-btn { background: rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; margin-top: 15px; color: #ffeb3b; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255, 235, 59, 0.3); }
-        .admin-menu-btn:hover { background: rgba(255, 235, 59, 0.1); }
-        
-        .light-theme .admin-menu-btn { color: #b35900; background: #fff; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .light-theme .admin-menu-btn:hover { background: #fff8e1; }
-        .light-theme .admin-submenu { border-left: 2px solid #b35900; }
-        
         .admin-submenu { display: none; margin-top: 10px; padding-left: 5px; border-left: 2px solid #ffeb3b; }
         .admin-submenu.active { display: block; animation: slideDown 0.3s; }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
@@ -357,14 +249,10 @@
         .report-item { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid rgba(255,0,64,0.3); }
         .report-header { display: flex; justify-content: space-between; font-size: 0.8rem; color: #aaa; margin-bottom: 5px; }
         .report-msg { font-weight: bold; color: white; }
-        .light-theme .report-msg { color: #333; }
-        .light-theme .report-item { background: #fff; border: 1px solid #ffcdd2; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        
         .delete-all-btn { background: #ff0040; color: white; border: none; padding: 8px; width: 100%; border-radius: 8px; margin-bottom: 10px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
         #nameChangeModal .modal-box { text-align: center; }
         .custom-input { width: 90%; padding: 12px; margin: 15px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; outline: none; font-size: 1rem; text-align: center; }
-        .light-theme .custom-input { background: white; color: #333; border: 1px solid #ccc; }
         
         #maintenanceScreen { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#111; z-index:9000; color:#ffeb3b; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
         .emergency-input { background: rgba(255,255,255,0.1); border: 1px solid #ffeb3b; color: #fff; padding: 10px; margin-top: 20px; border-radius: 5px; width: 200px; text-align: center; }
@@ -448,11 +336,11 @@
             
             <div class="admin-modal-body">
                 
-                <!-- YENİ: CANLI SKOR YÖNETİMİ -->
                 <div class="admin-menu-btn focusable" onclick="toggleSubMenu('scoreAdmin')">
-                    <span>⚽ Canlı Skor Yönetimi</span> <i class="fas fa-chevron-down"></i>
+                    <span>⚽ Canlı Skor (Manuel)</span> <i class="fas fa-chevron-down"></i>
                 </div>
                 <div id="scoreAdmin" class="admin-submenu">
+                    <p style="font-size:0.8rem; color:#aaa; margin-bottom:5px;">Otomatik takip Python botu (Menü: 7) ile arka planda yapılabilir.</p>
                     <input type="text" id="lsInpTeamA" class="custom-input focusable" placeholder="Ev Sahibi (Örn: Galatasaray)">
                     <input type="text" id="lsInpTeamB" class="custom-input focusable" placeholder="Deplasman (Örn: Fenerbahçe)">
                     <div style="display:flex; gap:5px;">
@@ -462,7 +350,7 @@
                     <input type="text" id="lsInpMinute" class="custom-input focusable" placeholder="Dakika (Örn: 45' veya IY)">
                     <input type="text" id="lsInpEvents" class="custom-input focusable" placeholder="Olaylar (Örn: ⚽ 12' Icardi)">
                     <div style="display:flex; gap:5px;">
-                        <button onclick="saveLiveScore()" class="btn-confirm focusable" style="flex:1;">Yayınla/Güncelle</button>
+                        <button onclick="saveLiveScore()" class="btn-confirm focusable" style="flex:1;">Manuel Yayınla</button>
                         <button onclick="stopLiveScore()" class="btn-cancel focusable" style="flex:1;">Kapat</button>
                     </div>
                 </div>
@@ -555,7 +443,6 @@
 
     <div class="feature-container" id="featureContainer">
         
-        <!-- YENİ: CANLI SKOR GÖSTERİM KUTUSU -->
         <div id="liveScoreBox" class="livescore-box focusable" tabindex="0">
             <div class="ls-header"><span class="ls-live-dot"></span> CANLI SKOR | <span id="lsMinute" class="ls-minute">45'</span></div>
             <div class="ls-row">
@@ -567,7 +454,7 @@
                 </div>
                 <div class="ls-team" id="lsTeamB" style="text-align: left;">Takım B</div>
             </div>
-            <div class="ls-events" id="lsEvents">⚽ 12' Gol...</div>
+            <div class="ls-events" id="lsEvents">⚽ Otomatik Skor Takip Aktif</div>
         </div>
 
         <div id="countdownBox" class="countdown-box">
@@ -577,11 +464,6 @@
                 <div class="time-unit"><span id="cdHours">00</span><span class="time-label">SAAT</span></div>:
                 <div class="time-unit"><span id="cdMins">00</span><span class="time-label">DAK</span></div>:
                 <div class="time-unit"><span id="cdSecs">00</span><span class="time-label">SAN</span></div>
-            </div>
-            
-            <div id="liveIndicator" style="display: none; text-align: center; margin-top: 15px;">
-                <div style="color: #ff0040; animation: blink 1s infinite; font-size: 2rem; font-weight: 800; margin-bottom: 15px;">CANLI 🔴</div>
-                <a href="go:spor" class="watch-match-btn focusable"><i class="fas fa-play-circle"></i> MAÇI İZLE</a>
             </div>
         </div>
 
@@ -635,9 +517,7 @@
         </div>
         
         <div id="viewPrivateList" class="chat-view hidden">
-            <div class="private-chat-list" id="privateChatListContainer">
-                <p style="text-align:center; opacity:0.6; margin-top:20px;">Henüz özel mesajın yok.</p>
-            </div>
+            <div class="private-chat-list" id="privateChatListContainer"></div>
         </div>
         
         <div id="viewPrivateConv" class="chat-view hidden">
@@ -718,6 +598,9 @@
         let currentPrivateRoom = null;
         let currentTargetUser = null;
         let activePrivateListener = null;
+
+        let lastScoreA = -1;
+        let lastScoreB = -1;
 
         const ADMIN_PASS = "burhan_baba_72";
         const TG_BOT_TOKEN = "8437262061:AAGnhDFIjFqNL5PlUGS33mUaXEMlKd1yyzk";
@@ -884,12 +767,13 @@ ${message || "[Dosya/Resim]"}`;
                 const distance = targetTime - now;
                 if (distance < 0) { 
                     clearInterval(countdownInterval); 
-                    document.getElementById("countdownTimer").style.display = "none"; 
-                    document.getElementById("liveIndicator").style.display = "block"; 
+                    // GERİ SAYIM BİTTİĞİNDE OTOMATİK SKOR EKRANINA GEÇİŞ (Eğer Aktifse)
+                    document.getElementById("countdownBox").style.display = "none";
+                    database.ref('extras/livescore/active').once('value', s => {
+                        if(s.val() === true) { document.getElementById("liveScoreBox").style.display = "block"; }
+                    });
                     return; 
                 }
-                document.getElementById("countdownTimer").style.display = "flex"; 
-                document.getElementById("liveIndicator").style.display = "none";
                 document.getElementById("cdDays").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
                 document.getElementById("cdHours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 document.getElementById("cdMins").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -897,7 +781,19 @@ ${message || "[Dosya/Resim]"}`;
             }, 1000);
         }
         
-        // -- CANLI SKOR YÖNETİMİ FONKSİYONLARI --
+        function triggerGoalAnimation(tA, tB, sA, sB) {
+            showToast("⚽ GOOOOOLLL!!! " + tA + " " + sA + " - " + sB + " " + tB, "fa-futbol");
+            const box = document.getElementById('liveScoreBox');
+            box.style.boxShadow = "0 0 30px #ff0040";
+            document.getElementById('lsScoreA').classList.add('goal-anim');
+            document.getElementById('lsScoreB').classList.add('goal-anim');
+            setTimeout(() => { 
+                box.style.boxShadow = ""; 
+                document.getElementById('lsScoreA').classList.remove('goal-anim');
+                document.getElementById('lsScoreB').classList.remove('goal-anim');
+            }, 4000);
+        }
+
         window.saveLiveScore = function() {
             const tA = document.getElementById('lsInpTeamA').value;
             const tB = document.getElementById('lsInpTeamB').value;
@@ -996,27 +892,54 @@ ${message || "[Dosya/Resim]"}`;
                 if(s.exists()) { 
                     const extras = s.val(); 
                     
-                    // --- CANLI SKOR YÖNETİMİ ---
-                    if(extras.livescore && extras.livescore.active) {
+                    // --- GERİ SAYIM ve CANLI SKOR ENTEGRASYONU ---
+                    let countdownIsVisible = false;
+                    
+                    if(extras.countdown && extras.countdown.active) {
+                        const now = new Date().getTime();
+                        if(extras.countdown.target > now) {
+                            document.getElementById('countdownBox').style.display = 'block'; 
+                            document.getElementById('countdownTitle').innerText = extras.countdown.title; 
+                            updateCountdownDisplay(extras.countdown.target);
+                            countdownIsVisible = true;
+                        } else {
+                            document.getElementById('countdownBox').style.display = 'none'; 
+                        }
+                    } else {
+                        document.getElementById('countdownBox').style.display = 'none'; 
+                    }
+
+                    // --- CANLI SKOR & GOL ANİMASYONU ---
+                    if(extras.livescore && extras.livescore.active && !countdownIsVisible) {
                         document.getElementById('liveScoreBox').style.display = 'block';
                         document.getElementById('lsTeamA').innerText = extras.livescore.teamA;
                         document.getElementById('lsTeamB').innerText = extras.livescore.teamB;
+
+                        // Otomatik Gol Bildirimi
+                        let currentScoreA = parseInt(extras.livescore.scoreA) || 0;
+                        let currentScoreB = parseInt(extras.livescore.scoreB) || 0;
+
+                        if (lastScoreA !== -1 && lastScoreB !== -1) {
+                            if (currentScoreA > lastScoreA || currentScoreB > lastScoreB) {
+                                triggerGoalAnimation(extras.livescore.teamA, extras.livescore.teamB, currentScoreA, currentScoreB);
+                            }
+                        }
+                        
+                        lastScoreA = currentScoreA;
+                        lastScoreB = currentScoreB;
+
                         document.getElementById('lsScoreA').innerText = extras.livescore.scoreA;
                         document.getElementById('lsScoreB').innerText = extras.livescore.scoreB;
                         document.getElementById('lsMinute').innerText = extras.livescore.minute;
                         document.getElementById('lsEvents').innerText = extras.livescore.events;
                     } else {
-                        document.getElementById('liveScoreBox').style.display = 'none';
+                        // Eğer geri sayım varsa canlı skoru gizle, bitince göster
+                        if(countdownIsVisible) document.getElementById('liveScoreBox').style.display = 'none';
+                        else if (!extras.livescore || !extras.livescore.active) {
+                            document.getElementById('liveScoreBox').style.display = 'none';
+                            lastScoreA = -1; lastScoreB = -1;
+                        }
                     }
-                    
-                    // --- GERİ SAYIM ---
-                    if(extras.countdown && extras.countdown.active) { 
-                        document.getElementById('countdownBox').style.display = 'block'; 
-                        document.getElementById('countdownTitle').innerText = extras.countdown.title; 
-                        updateCountdownDisplay(extras.countdown.target); 
-                    } else { 
-                        document.getElementById('countdownBox').style.display = 'none'; 
-                    } 
                     
                     // --- ANKET ---
                     if(extras.poll && extras.poll.active) { 
