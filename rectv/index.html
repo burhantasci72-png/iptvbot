@@ -11,7 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     
-    <!-- Video.js Kütüphaneleri -->
+    <!-- Video.js Kütüphaneleri (Kusursuz STB/HLS Desteği İçin) -->
     <link href="https://vjs.zencdn.net/7.20.3/video-js.min.css" rel="stylesheet">
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
 
@@ -337,12 +337,12 @@
             
             <div class="admin-modal-body">
                 
-                <!-- GÜNCELLENMİŞ PLAYER YÖNETİMİ (VIDEO.JS STB DESTEKLİ) -->
+                <!-- GÜNCELLENMİŞ PLAYER YÖNETİMİ (VIDEO.JS DUAL) -->
                 <div class="admin-menu-btn focusable" onclick="toggleSubMenu('streamAdmin')">
-                    <span>📺 Maç Yayını (Iframe & Dahili Player)</span> <i class="fas fa-chevron-down"></i>
+                    <span>📺 Maç Yayını (Iframe & Video.js)</span> <i class="fas fa-chevron-down"></i>
                 </div>
                 <div id="streamAdmin" class="admin-submenu">
-                    <p style="font-size:0.8rem; color:#aaa; margin-bottom:5px;">Link video ise kendi Video.js oynatıcımızda, değilse Iframe olarak açılır.</p>
+                    <p style="font-size:0.8rem; color:#aaa; margin-bottom:5px;">Link m3u8 veya ts/mac ise tam uyumlu dahili oynatıcıda açılır.</p>
                     <input type="text" id="stream1Inp" class="custom-input focusable" placeholder="Kanal 1 Linki (Zorunlu)">
                     <input type="text" id="stream2Inp" class="custom-input focusable" placeholder="Kanal 2 Linki (Opsiyonel)">
                     <input type="text" id="stream3Inp" class="custom-input focusable" placeholder="Kanal 3 Linki (Opsiyonel)">
@@ -827,6 +827,7 @@ ${message || "[Dosya/Resim]"}`;
         function evaluateVisibility() {
             const now = new Date().getTime();
             if (window.countdownData.active && window.countdownData.target > now) {
+                // Geri sayım aktifse Player ve Skoru Gizle
                 document.getElementById('countdownBox').style.display = 'block';
                 document.getElementById('liveScoreBox').style.display = 'none';
                 document.getElementById('streamBox').style.display = 'none';
@@ -835,6 +836,7 @@ ${message || "[Dosya/Resim]"}`;
                 if(matchVjsPlayer) matchVjsPlayer.pause();
                 document.getElementById('matchIframe').src = "";
             } else {
+                // Geri Sayım Yok Veya Bitti -> Player ve Skoru Göster
                 document.getElementById('countdownBox').style.display = 'none';
                 
                 if (window.livescoreDataActive) document.getElementById('liveScoreBox').style.display = 'block';
@@ -853,7 +855,7 @@ ${message || "[Dosya/Resim]"}`;
                 if (distance < 0) { 
                     clearInterval(countdownInterval); 
                     window.countdownData.active = false;
-                    evaluateVisibility(); 
+                    evaluateVisibility(); // Geri sayım bitince Player ve Skoru aç!
                     return; 
                 }
                 document.getElementById("cdDays").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -956,7 +958,7 @@ ${message || "[Dosya/Resim]"}`;
                 iframe.style.display = 'none';
                 videoEl.style.display = 'block';
                 
-                // REFERER VE USER AGENT AYARLAMASI (VIDEO.JS İÇİN)
+                // REFERER VE USER AGENT AYARLAMASI (SADECE DEĞER GİRİLDİYSE EKLENİR)
                 if (window.currentStreams.referer || window.currentStreams.userAgent) {
                     videojs.Vhs.xhr.beforeRequest = function(options) {
                         options.headers = options.headers || {};
@@ -964,6 +966,9 @@ ${message || "[Dosya/Resim]"}`;
                         if(window.currentStreams.userAgent) options.headers['User-Agent'] = window.currentStreams.userAgent;
                         return options;
                     };
+                } else {
+                    // Kutular boşsa CDN'leri bozmaması için ayarı sıfırla
+                    videojs.Vhs.xhr.beforeRequest = undefined;
                 }
 
                 let mime = getMimeType(formattedUrl);
@@ -988,11 +993,8 @@ ${message || "[Dosya/Resim]"}`;
 
                 showToast(current.title + " oynatılıyor", "fa-play");
                 
-                // Genel referer/ua varsa eklenebilir, yoksa boş kalır.
-                videojs.Vhs.xhr.beforeRequest = function(options) {
-                    options.headers = options.headers || {};
-                    return options;
-                };
+                // Normal kanallar için referer ayarını sıfırla (Bozulmayı önler)
+                videojs.Vhs.xhr.beforeRequest = undefined;
 
                 fullVjsPlayer.src({ type: finalType, src: finalUrl });
                 fullVjsPlayer.play();
@@ -1459,29 +1461,45 @@ ${message || "[Dosya/Resim]"}`;
             });
         }
 
-        // INIT VİDEO.JS PLAYER'LARI
+        // INIT VİDEO.JS PLAYER'LARI VE RECONNECT ALGORİTMASI (Sinema.html klonu)
         function initVideoPlayers() {
             matchVjsPlayer = videojs('matchVideo', { language: 'tr', loadingSpinner: true, controls: true, autoplay: true, preload: 'auto' });
             fullVjsPlayer = videojs('fullVideo', { language: 'tr', loadingSpinner: true, controls: true, autoplay: true, preload: 'auto' });
             
-            function reconnect(player) {
-                const src = player.src();
-                const type = player.currentType();
-                if(src) {
-                    showToast("Bağlantı zayıf, yenileniyor...", "fa-sync fa-spin");
-                    player.error(null);
-                    player.src({ type: type, src: src });
-                    player.play();
-                }
+            function setupReconnect(player, timeoutVar) {
+                player.on('waiting', function() {
+                    clearTimeout(window[timeoutVar]);
+                    window[timeoutVar] = setTimeout(() => {
+                        const src = player.src();
+                        const type = player.currentType();
+                        if(src) {
+                            showToast("Bağlantı zayıf, yenileniyor...", "fa-sync fa-spin");
+                            player.error(null);
+                            player.src({ type: type, src: src });
+                            player.play();
+                        }
+                    }, 10000);
+                });
+
+                player.on('playing', function() { clearTimeout(window[timeoutVar]); });
+
+                player.on('error', function() {
+                    clearTimeout(window[timeoutVar]);
+                    window[timeoutVar] = setTimeout(() => {
+                        const src = player.src();
+                        const type = player.currentType();
+                        if(src) {
+                            showToast("Yeniden bağlanılıyor...", "fa-sync fa-spin");
+                            player.error(null);
+                            player.src({ type: type, src: src });
+                            player.play();
+                        }
+                    }, 5000);
+                });
             }
 
-            matchVjsPlayer.on('waiting', function() { clearTimeout(matchReconnectTimeout); matchReconnectTimeout = setTimeout(() => reconnect(matchVjsPlayer), 10000); });
-            matchVjsPlayer.on('playing', function() { clearTimeout(matchReconnectTimeout); });
-            matchVjsPlayer.on('error', function() { clearTimeout(matchReconnectTimeout); matchReconnectTimeout = setTimeout(() => reconnect(matchVjsPlayer), 5000); });
-
-            fullVjsPlayer.on('waiting', function() { clearTimeout(fullReconnectTimeout); fullReconnectTimeout = setTimeout(() => reconnect(fullVjsPlayer), 10000); });
-            fullVjsPlayer.on('playing', function() { clearTimeout(fullReconnectTimeout); });
-            fullVjsPlayer.on('error', function() { clearTimeout(fullReconnectTimeout); fullReconnectTimeout = setTimeout(() => reconnect(fullVjsPlayer), 5000); });
+            setupReconnect(matchVjsPlayer, 'matchReconnectTimeout');
+            setupReconnect(fullVjsPlayer, 'fullReconnectTimeout');
         }
 
         (function() { 
