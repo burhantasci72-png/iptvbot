@@ -26,37 +26,13 @@
             border-color: #fff;
         }
         
-        /* --- YENİLENMİŞ LOGOSUZ TOP BAR YAPISI --- */
-        .top-bar { 
-            padding: 10px 15px; 
-            background: var(--surface); 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
-            transition: background 0.3s; 
-        }
-        
+        .top-bar { padding: 10px 15px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: background 0.3s; }
         .header-actions { display: flex; align-items: center; gap: 12px; }
         
-        @media (max-width: 500px) {
-            .top-bar { padding: 8px 10px; }
-            .dropbtn { font-size: 0.8rem; padding: 6px 10px; }
-            .header-actions { gap: 8px; }
-            .online-badge { padding: 4px 8px; font-size: 0.75rem; }
-        }
+        @media (max-width: 500px) { .top-bar { padding: 8px 10px; } .dropbtn { font-size: 0.8rem; padding: 6px 10px; } .header-actions { gap: 8px; } .online-badge { padding: 4px 8px; font-size: 0.75rem; } }
         
-        /* --- YENİ IPTV ARAÇLAR MENÜSÜ CSS (GELİŞTİRİLMİŞ) --- */
         .dropdown { position: relative; display: inline-block; z-index: 200; }
-        
-        .dropbtn { 
-            background: linear-gradient(135deg, #00d2ff, #3a7bd5); 
-            border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; padding: 8px 16px; border-radius: 8px; font-size: 0.95rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; white-space: nowrap; box-shadow: 0 4px 10px rgba(58, 123, 213, 0.4); text-transform: uppercase; letter-spacing: 0.5px;
-        }
-        
+        .dropbtn { background: linear-gradient(135deg, #00d2ff, #3a7bd5); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; padding: 8px 16px; border-radius: 8px; font-size: 0.95rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; white-space: nowrap; box-shadow: 0 4px 10px rgba(58, 123, 213, 0.4); text-transform: uppercase; letter-spacing: 0.5px; }
         .dropbtn i { animation: wrench-wiggle 2s infinite ease-in-out; }
         @keyframes wrench-wiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-15deg); } 75% { transform: rotate(15deg); } }
         
@@ -135,6 +111,17 @@
         .light-theme .ls-divider { color: #000; }
         .ls-events { font-size: 0.8rem; color: #aaa; margin-top: 10px; font-style: italic; min-height: 20px; }
         .light-theme .ls-events { color: #666; }
+
+        /* YENİ: IFRAME PLAYER CSS */
+        .stream-box { background: var(--surface); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; display: none; box-shadow: 0 5px 15px rgba(255, 0, 64, 0.2); }
+        .light-theme .stream-box { background: #fff; border-color: #ff5500; box-shadow: 0 5px 15px rgba(255, 85, 0, 0.1); }
+        .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; background: #000; border: 1px solid rgba(255,255,255,0.1); }
+        .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .stream-channels { display: flex; justify-content: center; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .ch-btn { flex: 1; min-width: 80px; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,0,64,0.5); background: rgba(0,0,0,0.3); color: white; font-weight: bold; cursor: pointer; transition: all 0.3s; text-align: center; }
+        .ch-btn.active, .ch-btn:focus, .ch-btn.focused { background: linear-gradient(135deg, #ff0040, #ff4d00); border-color: #fff; box-shadow: 0 4px 10px rgba(255, 0, 64, 0.5); transform: scale(1.05); }
+        .light-theme .ch-btn { color: #333; background: #f0f0f0; border-color: #ff5500; }
+        .light-theme .ch-btn.active, .light-theme .ch-btn:focus, .light-theme .ch-btn.focused { background: linear-gradient(135deg, #ff5500, #ff9900); color: #fff; border-color: #ff5500; }
 
         .countdown-box { background: linear-gradient(135deg, #1a1825, #000); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; }
         .countdown-title { color: var(--primary); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
@@ -336,6 +323,21 @@
             
             <div class="admin-modal-body">
                 
+                <!-- YENİ IFRAME PLAYER YÖNETİMİ -->
+                <div class="admin-menu-btn focusable" onclick="toggleSubMenu('streamAdmin')">
+                    <span>📺 Maç Yayını (İframe)</span> <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="streamAdmin" class="admin-submenu">
+                    <p style="font-size:0.8rem; color:#aaa; margin-bottom:5px;">Not: Sadece linki veya tam iframe kodunu yapıştırın, sistem otomatik algılar.</p>
+                    <input type="text" id="stream1Inp" class="custom-input focusable" placeholder="Kanal 1 Linki (Zorunlu)">
+                    <input type="text" id="stream2Inp" class="custom-input focusable" placeholder="Kanal 2 Linki (Opsiyonel)">
+                    <input type="text" id="stream3Inp" class="custom-input focusable" placeholder="Kanal 3 Linki (Opsiyonel)">
+                    <div style="display:flex; gap:5px;">
+                        <button onclick="saveStreams()" class="btn-confirm focusable" style="flex:1;">Yayınla</button>
+                        <button onclick="stopStreams()" class="btn-cancel focusable" style="flex:1;">Kapat</button>
+                    </div>
+                </div>
+
                 <div class="admin-menu-btn focusable" onclick="toggleSubMenu('scoreAdmin')">
                     <span>⚽ Canlı Skor (Manuel)</span> <i class="fas fa-chevron-down"></i>
                 </div>
@@ -443,6 +445,18 @@
 
     <div class="feature-container" id="featureContainer">
         
+        <!-- YENİ IFRAME PLAYER KUTUSU (Geri Sayım Bitince Gözükür) -->
+        <div id="streamBox" class="stream-box">
+            <div class="iframe-container">
+                <iframe id="matchIframe" allowfullscreen></iframe>
+            </div>
+            <div class="stream-channels" id="streamChannelsContainer">
+                <button id="btnCh1" class="ch-btn focusable" onclick="changeStream(1)">Kanal 1</button>
+                <button id="btnCh2" class="ch-btn focusable" onclick="changeStream(2)">Kanal 2</button>
+                <button id="btnCh3" class="ch-btn focusable" onclick="changeStream(3)">Kanal 3</button>
+            </div>
+        </div>
+
         <div id="liveScoreBox" class="livescore-box focusable" tabindex="0">
             <div class="ls-header"><span class="ls-live-dot"></span> CANLI SKOR | <span id="lsMinute" class="ls-minute">45'</span></div>
             <div class="ls-row">
@@ -602,6 +616,12 @@
         let lastScoreA = -1;
         let lastScoreB = -1;
 
+        // Visibility Flags
+        window.countdownData = { active: false, target: 0 };
+        window.livescoreDataActive = false;
+        window.streamDataActive = false;
+        window.currentStreams = { ch1: '', ch2: '', ch3: '' };
+
         const ADMIN_PASS = "burhan_baba_72";
         const TG_BOT_TOKEN = "8437262061:AAGnhDFIjFqNL5PlUGS33mUaXEMlKd1yyzk";
         const TG_CHAT_ID = "666941331";
@@ -760,18 +780,35 @@ ${message || "[Dosya/Resim]"}`;
             });
         }
 
-        function updateCountdownDisplay(targetTime) {
+        // --- MERKEZİ GÖRÜNÜM KONTROLÜ (Geri Sayım Bittiyse Player'ı Aç) ---
+        function evaluateVisibility() {
+            const now = new Date().getTime();
+            if (window.countdownData.active && window.countdownData.target > now) {
+                // Geri sayım aktifse Player ve Skoru Gizle
+                document.getElementById('countdownBox').style.display = 'block';
+                document.getElementById('liveScoreBox').style.display = 'none';
+                document.getElementById('streamBox').style.display = 'none';
+            } else {
+                // Geri Sayım Yok Veya Bitti -> Player ve Skoru Göster
+                document.getElementById('countdownBox').style.display = 'none';
+                
+                if (window.livescoreDataActive) document.getElementById('liveScoreBox').style.display = 'block';
+                else document.getElementById('liveScoreBox').style.display = 'none';
+                
+                if (window.streamDataActive) document.getElementById('streamBox').style.display = 'block';
+                else document.getElementById('streamBox').style.display = 'none';
+            }
+        }
+
+        function updateCountdownDisplay() {
             if (countdownInterval) clearInterval(countdownInterval);
             countdownInterval = setInterval(() => {
                 const now = new Date().getTime();
-                const distance = targetTime - now;
+                const distance = window.countdownData.target - now;
                 if (distance < 0) { 
                     clearInterval(countdownInterval); 
-                    // GERİ SAYIM BİTTİĞİNDE OTOMATİK SKOR EKRANINA GEÇİŞ (Eğer Aktifse)
-                    document.getElementById("countdownBox").style.display = "none";
-                    database.ref('extras/livescore/active').once('value', s => {
-                        if(s.val() === true) { document.getElementById("liveScoreBox").style.display = "block"; }
-                    });
+                    window.countdownData.active = false;
+                    evaluateVisibility(); // Geri sayım bitince Player ve Skoru aç!
                     return; 
                 }
                 document.getElementById("cdDays").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -794,6 +831,43 @@ ${message || "[Dosya/Resim]"}`;
             }, 4000);
         }
 
+        // --- MAÇ YAYINI PLAYER (IFRAME) SİSTEMİ ---
+        function extractUrl(val) {
+            if (!val) return '';
+            const srcMatch = val.match(/src\s*=\s*"([^"]+)"/i) || val.match(/src\s*=\s*'([^']+)'/i);
+            if (srcMatch) return srcMatch[1];
+            return val;
+        }
+
+        window.saveStreams = function() {
+            const ch1 = document.getElementById('stream1Inp').value;
+            const ch2 = document.getElementById('stream2Inp').value;
+            const ch3 = document.getElementById('stream3Inp').value;
+            if(ch1 || ch2 || ch3) {
+                database.ref('extras/streams').set({ active: true, ch1: ch1, ch2: ch2, ch3: ch3 });
+                showToast("Maç Yayını Aktif Edildi!", "fa-tv");
+            } else {
+                showToast("En az Kanal 1 Linki giriniz!", "fa-exclamation");
+            }
+        };
+
+        window.stopStreams = function() {
+            database.ref('extras/streams/active').set(false);
+            showToast("Maç Yayını Kapatıldı", "fa-times");
+        };
+
+        window.changeStream = function(num) {
+            const iframe = document.getElementById('matchIframe');
+            document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+            const btn = document.getElementById('btnCh' + num);
+            if(btn) btn.classList.add('active');
+            
+            if(num === 1 && window.currentStreams.ch1) iframe.src = window.currentStreams.ch1;
+            if(num === 2 && window.currentStreams.ch2) iframe.src = window.currentStreams.ch2;
+            if(num === 3 && window.currentStreams.ch3) iframe.src = window.currentStreams.ch3;
+        };
+
+        // --- SKOR, ANKET VB. SİSTEMLER ---
         window.saveLiveScore = function() {
             const tA = document.getElementById('lsInpTeamA').value;
             const tB = document.getElementById('lsInpTeamB').value;
@@ -803,20 +877,15 @@ ${message || "[Dosya/Resim]"}`;
             const ev = document.getElementById('lsInpEvents').value || "";
             
             if(tA && tB) {
-                database.ref('extras/livescore').set({
-                    active: true, teamA: tA, teamB: tB, scoreA: sA, scoreB: sB, minute: min, events: ev
-                });
+                database.ref('extras/livescore').set({ active: true, teamA: tA, teamB: tB, scoreA: sA, scoreB: sB, minute: min, events: ev });
                 showToast("Skor Yayınlandı!", "fa-futbol");
             } else {
                 showToast("Takım A ve Takım B zorunlu!", "fa-exclamation-triangle");
             }
         };
         
-        window.stopLiveScore = function() {
-            database.ref('extras/livescore/active').set(false);
-            showToast("Skor Tablosu Kapatıldı", "fa-times");
-        };
-
+        window.stopLiveScore = function() { database.ref('extras/livescore/active').set(false); showToast("Skor Kapatıldı", "fa-times"); };
+        
         function votePoll(option) { if(localStorage.getItem('poll_voted') === 'true') { showToast("Zaten oy kullandınız!", "fa-exclamation"); return; } database.ref('extras/poll/votes_' + option).transaction(c => (c || 0) + 1); localStorage.setItem('poll_voted', 'true'); showToast("Oyunuz kaydedildi", "fa-check"); }
         function updatePollDisplay(data) { const total = (data.votes_opt1 || 0) + (data.votes_opt2 || 0); const p1 = total === 0 ? 0 : Math.round((data.votes_opt1 / total) * 100); const p2 = total === 0 ? 0 : Math.round((data.votes_opt2 / total) * 100); document.getElementById('displayPollQuestion').innerText = data.question; document.getElementById('displayOpt1').innerText = data.opt1; document.getElementById('displayOpt2').innerText = data.opt2; document.getElementById('bar1').style.width = p1 + "%"; document.getElementById('percent1').innerText = p1 + "%"; document.getElementById('bar2').style.width = p2 + "%"; document.getElementById('percent2').innerText = p2 + "%"; }
         window.savePoll = function() { const q = document.getElementById('pollQuestion').value; const o1 = document.getElementById('pollOpt1').value; const o2 = document.getElementById('pollOpt2').value; if(q && o1 && o2) { database.ref('extras/poll').set({ active: true, question: q, opt1: o1, opt2: o2, votes_opt1: 0, votes_opt2: 0 }); showToast("Anket Başlatıldı", "fa-check"); } };
@@ -856,11 +925,7 @@ ${message || "[Dosya/Resim]"}`;
             if(isChatLocked && !isAdmin && currentTab === 'global') { showToast("Sohbet kilitli!", "fa-lock"); return; }
             showToast("Dosya yükleniyor...", "fa-cog fa-spin");
             const reader = new FileReader();
-            reader.onload = (e) => {
-                const dataURL = e.target.result; 
-                const fileData = { name: file.name, data: dataURL };
-                sendMediaMsg(null, fileData);
-            };
+            reader.onload = (e) => { const dataURL = e.target.result; sendMediaMsg(null, { name: file.name, data: dataURL }); };
             reader.readAsDataURL(file);
             event.target.value = '';
         }
@@ -873,8 +938,8 @@ ${message || "[Dosya/Resim]"}`;
                 database.ref('global_chat').push(messageData);
             } else if (currentTab === 'private' && currentPrivateRoom) {
                 const messageData = { user: myUserName, uuid: myUUID, time: Date.now() };
-                if(imgData) { messageData.image = imgData; }
-                if(fileData) { messageData.file = fileData; }
+                if(imgData) messageData.image = imgData;
+                if(fileData) messageData.file = fileData;
                 database.ref('private_chats/' + currentPrivateRoom).push(messageData);
                 const desc = imgData ? "📷 Resim" : "📎 Dosya";
                 database.ref('user_inbox/' + currentTargetUser.uuid + '/' + myUUID).set({ lastMsg: desc, timestamp: Date.now(), name: myUserName });
@@ -892,30 +957,21 @@ ${message || "[Dosya/Resim]"}`;
                 if(s.exists()) { 
                     const extras = s.val(); 
                     
-                    // --- GERİ SAYIM ve CANLI SKOR ENTEGRASYONU ---
-                    let countdownIsVisible = false;
-                    
-                    if(extras.countdown && extras.countdown.active) {
-                        const now = new Date().getTime();
-                        if(extras.countdown.target > now) {
-                            document.getElementById('countdownBox').style.display = 'block'; 
-                            document.getElementById('countdownTitle').innerText = extras.countdown.title; 
-                            updateCountdownDisplay(extras.countdown.target);
-                            countdownIsVisible = true;
-                        } else {
-                            document.getElementById('countdownBox').style.display = 'none'; 
-                        }
+                    // --- 1. GERİ SAYIM ---
+                    window.countdownData = extras.countdown || { active: false, target: 0 };
+                    if(window.countdownData.active) {
+                        document.getElementById('countdownTitle').innerText = window.countdownData.title;
+                        updateCountdownDisplay();
                     } else {
-                        document.getElementById('countdownBox').style.display = 'none'; 
+                        if (countdownInterval) clearInterval(countdownInterval);
                     }
 
-                    // --- CANLI SKOR & GOL ANİMASYONU ---
-                    if(extras.livescore && extras.livescore.active && !countdownIsVisible) {
-                        document.getElementById('liveScoreBox').style.display = 'block';
+                    // --- 2. CANLI SKOR ---
+                    if(extras.livescore && extras.livescore.active) {
+                        window.livescoreDataActive = true;
                         document.getElementById('lsTeamA').innerText = extras.livescore.teamA;
                         document.getElementById('lsTeamB').innerText = extras.livescore.teamB;
 
-                        // Otomatik Gol Bildirimi
                         let currentScoreA = parseInt(extras.livescore.scoreA) || 0;
                         let currentScoreB = parseInt(extras.livescore.scoreB) || 0;
 
@@ -925,21 +981,43 @@ ${message || "[Dosya/Resim]"}`;
                             }
                         }
                         
-                        lastScoreA = currentScoreA;
-                        lastScoreB = currentScoreB;
+                        lastScoreA = currentScoreA; lastScoreB = currentScoreB;
 
                         document.getElementById('lsScoreA').innerText = extras.livescore.scoreA;
                         document.getElementById('lsScoreB').innerText = extras.livescore.scoreB;
                         document.getElementById('lsMinute').innerText = extras.livescore.minute;
                         document.getElementById('lsEvents').innerText = extras.livescore.events;
                     } else {
-                        // Eğer geri sayım varsa canlı skoru gizle, bitince göster
-                        if(countdownIsVisible) document.getElementById('liveScoreBox').style.display = 'none';
-                        else if (!extras.livescore || !extras.livescore.active) {
-                            document.getElementById('liveScoreBox').style.display = 'none';
-                            lastScoreA = -1; lastScoreB = -1;
-                        }
+                        window.livescoreDataActive = false;
+                        lastScoreA = -1; lastScoreB = -1;
                     }
+                    
+                    // --- 3. MAÇ YAYINI (IFRAME PLAYER) ---
+                    if(extras.streams && extras.streams.active) {
+                        window.streamDataActive = true;
+                        window.currentStreams = {
+                            ch1: extractUrl(extras.streams.ch1),
+                            ch2: extractUrl(extras.streams.ch2),
+                            ch3: extractUrl(extras.streams.ch3)
+                        };
+                        
+                        document.getElementById('btnCh1').style.display = window.currentStreams.ch1 ? 'block' : 'none';
+                        document.getElementById('btnCh2').style.display = window.currentStreams.ch2 ? 'block' : 'none';
+                        document.getElementById('btnCh3').style.display = window.currentStreams.ch3 ? 'block' : 'none';
+                        
+                        const iframe = document.getElementById('matchIframe');
+                        if(!iframe.src || iframe.src === window.location.href) {
+                            if(window.currentStreams.ch1) { changeStream(1); }
+                            else if(window.currentStreams.ch2) { changeStream(2); }
+                            else if(window.currentStreams.ch3) { changeStream(3); }
+                        }
+                    } else {
+                        window.streamDataActive = false;
+                        document.getElementById('matchIframe').src = "";
+                    }
+
+                    // --- EKRAN GÖRÜNÜMÜNÜ GÜNCELLE ---
+                    evaluateVisibility();
                     
                     // --- ANKET ---
                     if(extras.poll && extras.poll.active) { 
