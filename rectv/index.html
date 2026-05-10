@@ -11,9 +11,9 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     
-    <!-- Video.js Kütüphaneleri -->
-    <link href="https://vjs.zencdn.net/7.20.3/video-js.min.css" rel="stylesheet">
-    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <!-- Video.js Kütüphaneleri (Güncellendi ve Siyah Ekran Sorununa Karşı Güçlendirildi) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.10.0/video-js.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.10.0/video.min.js"></script>
 
     <style>
         :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; --text: #e8e6e3; --card-bg: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.03); }
@@ -337,7 +337,6 @@
             
             <div class="admin-modal-body">
                 
-                <!-- GÜNCELLENMİŞ PLAYER YÖNETİMİ (VIDEO.JS STB DESTEKLİ) -->
                 <div class="admin-menu-btn focusable" onclick="toggleSubMenu('streamAdmin')">
                     <span>📺 Maç Yayını (Iframe & Dahili Player)</span> <i class="fas fa-chevron-down"></i>
                 </div>
@@ -462,13 +461,13 @@
 
     <div class="feature-container" id="featureContainer">
         
-        <!-- YENİ DUAL PLAYER (IFRAME + VIDEO.JS) KUTUSU (MAÇ YAYINI İÇİN) -->
+        <!-- YENİ DUAL PLAYER (IFRAME + VIDEO.JS) KUTUSU -->
         <div id="streamBox" class="stream-box">
             <div class="quick-close-btn focusable" onclick="stopStreams()" title="Yayını Kapat"><i class="fas fa-times"></i></div>
             <div class="iframe-container" id="playerWrapper">
                 <iframe id="matchIframe" allowfullscreen style="display:none;"></iframe>
-                <!-- VIDEO.JS OYNATICISI (Maç İçin) -->
-                <video id="matchVideo" tabindex="0" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" style="display:none; width: 100%; height: 100%; position: absolute; top:0; left:0;">
+                <!-- VIDEO.JS OYNATICISI (Maç İçin - vjs-fill eklendi) -->
+                <video id="matchVideo" tabindex="0" crossorigin="anonymous" class="video-js vjs-default-skin vjs-big-play-centered vjs-fill" controls preload="auto" style="display:none; position: absolute; top:0; left:0;">
                     <source src="" type="">
                 </video>
             </div>
@@ -595,7 +594,6 @@
     <div class="modal" id="modal">
         <div class="modal-box">
             <h3 id="mTitle" style="text-align:center; margin-top:0; color:var(--primary);"></h3>
-            <!-- YENİ: DAHİLİ OYNATICI SEÇENEĞİ EKLENDİ -->
             <div class="opt focusable" id="builtinPlayerBtn"><i class="fas fa-play-circle" style="color:var(--primary)"></i> <b>Dahili Oynatıcı (İzle)</b></div>
             <div class="opt focusable" id="wuffy"><i class="fas fa-play" style="color:var(--primary)"></i> <b>Wuffy Player</b></div>
             <div class="opt focusable" id="xpola"><i class="fas fa-rocket" style="color:var(--primary)"></i> <b>Xpola Player</b></div>
@@ -609,7 +607,7 @@
     <!-- YENİ: NORMAL KANALLAR İÇİN TAM EKRAN DAHİLİ OYNATICI (VİDEO.JS) -->
     <div id="fullPlayerContainer" style="display:none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: black; z-index: 3000;">
         <button id="closeFullPlayerBtn" tabindex="0" class="focusable" style="position: absolute; top: 20px; right: 20px; z-index: 4000; background: rgba(227, 10, 23, 0.8); color: white; border: 2px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;"><i class="fas fa-times"></i> Yayını Kapat</button>
-        <video id="fullVideo" tabindex="0" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" style="width: 100%; height: 100%;">
+        <video id="fullVideo" tabindex="0" crossorigin="anonymous" class="video-js vjs-default-skin vjs-big-play-centered vjs-fill" controls preload="auto">
             <source src="" type="">
         </video>
     </div>
@@ -941,7 +939,6 @@ ${message || "[Dosya/Resim]"}`;
             if(!urlToPlay) return;
 
             const iframe = document.getElementById('matchIframe');
-            const videoEl = document.getElementById('matchVideo');
             
             // Temizlik
             iframe.src = "";
@@ -954,10 +951,10 @@ ${message || "[Dosya/Resim]"}`;
 
             if(isVideo) {
                 iframe.style.display = 'none';
-                videoEl.style.display = 'block';
+                matchVjsPlayer.el().style.display = 'block'; // Videojs div wrapper'ını göster
                 
                 // REFERER VE USER AGENT AYARLAMASI (VIDEO.JS İÇİN)
-                if (window.currentStreams.referer || window.currentStreams.userAgent) {
+                if (videojs.Vhs && (window.currentStreams.referer || window.currentStreams.userAgent)) {
                     videojs.Vhs.xhr.beforeRequest = function(options) {
                         options.headers = options.headers || {};
                         if(window.currentStreams.referer) options.headers['Referer'] = window.currentStreams.referer;
@@ -971,7 +968,7 @@ ${message || "[Dosya/Resim]"}`;
                 matchVjsPlayer.play();
             } 
             else {
-                videoEl.style.display = 'none';
+                matchVjsPlayer.el().style.display = 'none'; // Videojs div wrapper'ını gizle
                 iframe.style.display = 'block';
                 iframe.src = urlToPlay;
             }
@@ -982,17 +979,19 @@ ${message || "[Dosya/Resim]"}`;
             if(current.url && current.url !== "#") {
                 document.getElementById('modal').style.display='none';
                 document.getElementById('fullPlayerContainer').style.display = 'block';
+                fullVjsPlayer.el().style.display = 'block';
                 
                 let finalUrl = formatStreamUrl(current.url);
                 let finalType = getMimeType(finalUrl);
 
                 showToast(current.title + " oynatılıyor", "fa-play");
                 
-                // Genel referer/ua varsa eklenebilir, yoksa boş kalır.
-                videojs.Vhs.xhr.beforeRequest = function(options) {
-                    options.headers = options.headers || {};
-                    return options;
-                };
+                if (videojs.Vhs) {
+                    videojs.Vhs.xhr.beforeRequest = function(options) {
+                        options.headers = options.headers || {};
+                        return options;
+                    };
+                }
 
                 fullVjsPlayer.src({ type: finalType, src: finalUrl });
                 fullVjsPlayer.play();
@@ -1172,7 +1171,11 @@ ${message || "[Dosya/Resim]"}`;
                     } else {
                         window.streamDataActive = false;
                         document.getElementById('matchIframe').src = "";
-                        if(matchVjsPlayer) { matchVjsPlayer.pause(); matchVjsPlayer.src(''); }
+                        if(matchVjsPlayer) { 
+                            matchVjsPlayer.pause(); 
+                            matchVjsPlayer.src(''); 
+                            matchVjsPlayer.el().style.display = 'none';
+                        }
                     }
 
                     // --- EKRAN GÖRÜNÜMÜNÜ GÜNCELLE ---
@@ -1459,10 +1462,27 @@ ${message || "[Dosya/Resim]"}`;
             });
         }
 
-        // INIT VİDEO.JS PLAYER'LARI
+        // INIT VİDEO.JS PLAYER'LARI (SİYAH EKRAN/GÖRÜNTÜ YOK DÜZELTMESİ)
         function initVideoPlayers() {
-            matchVjsPlayer = videojs('matchVideo', { language: 'tr', loadingSpinner: true, controls: true, autoplay: true, preload: 'auto' });
-            fullVjsPlayer = videojs('fullVideo', { language: 'tr', loadingSpinner: true, controls: true, autoplay: true, preload: 'auto' });
+            const vjsOptions = { 
+                language: 'tr', 
+                loadingSpinner: true, 
+                controls: true, 
+                autoplay: true, 
+                preload: 'auto',
+                html5: {
+                    vhs: {
+                        overrideNative: true, // Native tarayıcı hatasını atlar (Siyah Ekran Sorununun Kesin Çözümü)
+                        enableLowInitialPlaylist: true,
+                        smoothQualityChange: true
+                    },
+                    nativeAudioTracks: false,
+                    nativeVideoTracks: false
+                }
+            };
+
+            matchVjsPlayer = videojs('matchVideo', vjsOptions);
+            fullVjsPlayer = videojs('fullVideo', vjsOptions);
             
             function reconnect(player) {
                 const src = player.src();
