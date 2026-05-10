@@ -10,10 +10,6 @@
     <!-- FIREBASE (Compat) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-    
-    <!-- HLS.js & MPEGTS.js (M3U8 & STB MAC TS DESTEĞİ İÇİN) -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mpegts.js@1.7.3/dist/mpegts.min.js"></script>
 
     <style>
         :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; --text: #e8e6e3; --card-bg: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.03); }
@@ -121,12 +117,11 @@
         .ls-events { font-size: 0.8rem; color: #aaa; margin-top: 10px; font-style: italic; min-height: 20px; }
         .light-theme .ls-events { color: #666; }
 
-        /* YENİ: TRI-PLAYER (IFRAME + HLS + TS/STB) CSS */
+        /* YENİ: IFRAME PLAYER CSS */
         .stream-box { background: var(--surface); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; display: none; position: relative; box-shadow: 0 5px 15px rgba(255, 0, 64, 0.2); }
         .light-theme .stream-box { background: #fff; border-color: #ff5500; box-shadow: 0 5px 15px rgba(255, 85, 0, 0.1); }
         .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; background: #000; border: 1px solid rgba(255,255,255,0.1); margin-top: 5px;}
         .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .iframe-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; outline: none; border: none; }
         .stream-channels { display: flex; justify-content: center; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
         .ch-btn { flex: 1; min-width: 80px; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,0,64,0.5); background: rgba(0,0,0,0.3); color: white; font-weight: bold; cursor: pointer; transition: all 0.3s; text-align: center; }
         .ch-btn.active, .ch-btn:focus, .ch-btn.focused { background: linear-gradient(135deg, #ff0040, #ff4d00); border-color: #fff; box-shadow: 0 4px 10px rgba(255, 0, 64, 0.5); transform: scale(1.05); }
@@ -333,18 +328,15 @@
             
             <div class="admin-modal-body">
                 
-                <!-- GÜNCELLENMİŞ PLAYER YÖNETİMİ (M3U8 & IFRAME + BAŞLIKLAR) -->
+                <!-- YENİ IFRAME PLAYER YÖNETİMİ -->
                 <div class="admin-menu-btn focusable" onclick="toggleSubMenu('streamAdmin')">
-                    <span>📺 Maç Yayını (Iframe & M3U8 & TS)</span> <i class="fas fa-chevron-down"></i>
+                    <span>📺 Maç Yayını (İframe)</span> <i class="fas fa-chevron-down"></i>
                 </div>
                 <div id="streamAdmin" class="admin-submenu">
-                    <p style="font-size:0.8rem; color:#aaa; margin-bottom:5px;">Link m3u8 veya ts/mac ise kendi oynatıcımızda, değilse Iframe olarak açılır.</p>
+                    <p style="font-size:0.8rem; color:#aaa; margin-bottom:5px;">Not: Sadece linki veya tam iframe kodunu yapıştırın, sistem otomatik algılar.</p>
                     <input type="text" id="stream1Inp" class="custom-input focusable" placeholder="Kanal 1 Linki (Zorunlu)">
                     <input type="text" id="stream2Inp" class="custom-input focusable" placeholder="Kanal 2 Linki (Opsiyonel)">
                     <input type="text" id="stream3Inp" class="custom-input focusable" placeholder="Kanal 3 Linki (Opsiyonel)">
-                    <input type="text" id="streamRefInp" class="custom-input focusable" placeholder="Referer (İsteğe Bağlı)" style="border-color:#00d2ff;">
-                    <input type="text" id="streamUaInp" class="custom-input focusable" placeholder="User-Agent (İsteğe Bağlı)" style="border-color:#00d2ff;">
-                    
                     <div style="display:flex; gap:5px;">
                         <button onclick="saveStreams()" class="btn-confirm focusable" style="flex:1;">Yayınla</button>
                         <button onclick="stopStreams()" class="btn-cancel focusable" style="flex:1;">Kapat</button>
@@ -458,12 +450,11 @@
 
     <div class="feature-container" id="featureContainer">
         
-        <!-- YENİ TRI-PLAYER (IFRAME + HLS + TS/STB) KUTUSU -->
+        <!-- YENİ IFRAME PLAYER KUTUSU (Hızlı Kapatma Butonu İle) -->
         <div id="streamBox" class="stream-box">
             <div class="quick-close-btn focusable" onclick="stopStreams()" title="Yayını Kapat"><i class="fas fa-times"></i></div>
-            <div class="iframe-container" id="playerWrapper">
-                <iframe id="matchIframe" allowfullscreen style="display:none;"></iframe>
-                <video id="hlsVideo" controls playsinline style="display:none; width: 100%; height: 100%; position: absolute; top:0; left:0; object-fit: contain; background: #000;"></video>
+            <div class="iframe-container">
+                <iframe id="matchIframe" allowfullscreen></iframe>
             </div>
             <div class="stream-channels" id="streamChannelsContainer">
                 <button id="btnCh1" class="ch-btn focusable" onclick="changeStream(1)">Kanal 1</button>
@@ -633,15 +624,12 @@
 
         let lastScoreA = -1;
         let lastScoreB = -1;
-        
-        let hlsInstance = null; // HLS.js Player Instance
-        let mpegtsInstance = null; // MPEGTS.js Player Instance
 
         // Visibility Flags
         window.countdownData = { active: false, target: 0 };
         window.livescoreDataActive = false;
         window.streamDataActive = false;
-        window.currentStreams = { ch1: '', ch2: '', ch3: '', referer: '', userAgent: '' };
+        window.currentStreams = { ch1: '', ch2: '', ch3: '' };
 
         const ADMIN_PASS = "burhan_baba_72";
         const TG_BOT_TOKEN = "8437262061:AAGnhDFIjFqNL5PlUGS33mUaXEMlKd1yyzk";
@@ -805,16 +793,12 @@ ${message || "[Dosya/Resim]"}`;
         function evaluateVisibility() {
             const now = new Date().getTime();
             if (window.countdownData.active && window.countdownData.target > now) {
+                // Geri sayım aktifse Player ve Skoru Gizle
                 document.getElementById('countdownBox').style.display = 'block';
                 document.getElementById('liveScoreBox').style.display = 'none';
                 document.getElementById('streamBox').style.display = 'none';
-                
-                // Geri sayım aktifse Player'ı durdur
-                if(hlsInstance) { hlsInstance.destroy(); hlsInstance = null; }
-                if(mpegtsInstance) { mpegtsInstance.destroy(); mpegtsInstance = null; }
-                document.getElementById('matchIframe').src = "";
-                document.getElementById('hlsVideo').pause();
             } else {
+                // Geri Sayım Yok Veya Bitti -> Player ve Skoru Göster
                 document.getElementById('countdownBox').style.display = 'none';
                 
                 if (window.livescoreDataActive) document.getElementById('liveScoreBox').style.display = 'block';
@@ -833,7 +817,7 @@ ${message || "[Dosya/Resim]"}`;
                 if (distance < 0) { 
                     clearInterval(countdownInterval); 
                     window.countdownData.active = false;
-                    evaluateVisibility(); 
+                    evaluateVisibility(); // Geri sayım bitince Player ve Skoru aç!
                     return; 
                 }
                 document.getElementById("cdDays").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -856,7 +840,7 @@ ${message || "[Dosya/Resim]"}`;
             }, 4000);
         }
 
-        // --- MAÇ YAYINI TRI-PLAYER (IFRAME + HLS + TS) SİSTEMİ ---
+        // --- MAÇ YAYINI PLAYER (IFRAME) SİSTEMİ ---
         function extractUrl(val) {
             if (!val) return '';
             const srcMatch = val.match(/src\s*=\s*"([^"]+)"/i) || val.match(/src\s*=\s*'([^']+)'/i);
@@ -868,13 +852,8 @@ ${message || "[Dosya/Resim]"}`;
             const ch1 = document.getElementById('stream1Inp').value;
             const ch2 = document.getElementById('stream2Inp').value;
             const ch3 = document.getElementById('stream3Inp').value;
-            const ref = document.getElementById('streamRefInp').value;
-            const ua = document.getElementById('streamUaInp').value;
-            
             if(ch1 || ch2 || ch3) {
-                database.ref('extras/streams').set({ 
-                    active: true, ch1: ch1, ch2: ch2, ch3: ch3, referer: ref, userAgent: ua 
-                });
+                database.ref('extras/streams').set({ active: true, ch1: ch1, ch2: ch2, ch3: ch3 });
                 showToast("Maç Yayını Aktif Edildi!", "fa-tv");
             } else {
                 showToast("En az Kanal 1 Linki giriniz!", "fa-exclamation");
@@ -887,88 +866,14 @@ ${message || "[Dosya/Resim]"}`;
         };
 
         window.changeStream = function(num) {
+            const iframe = document.getElementById('matchIframe');
             document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
             const btn = document.getElementById('btnCh' + num);
             if(btn) btn.classList.add('active');
             
-            let urlToPlay = '';
-            if(num === 1) urlToPlay = window.currentStreams.ch1;
-            if(num === 2) urlToPlay = window.currentStreams.ch2;
-            if(num === 3) urlToPlay = window.currentStreams.ch3;
-            
-            if(!urlToPlay) return;
-
-            const iframe = document.getElementById('matchIframe');
-            const video = document.getElementById('hlsVideo');
-            
-            // Temizlik
-            iframe.src = "";
-            if(hlsInstance) { hlsInstance.destroy(); hlsInstance = null; }
-            if(mpegtsInstance) { mpegtsInstance.destroy(); mpegtsInstance = null; }
-            video.pause(); video.removeAttribute('src'); video.load();
-
-            const lowerUrl = urlToPlay.toLowerCase();
-            const isM3U8 = lowerUrl.includes('m3u8');
-            const isTS = lowerUrl.includes('.ts') || lowerUrl.includes('extension=ts') || (lowerUrl.includes('mac=') && !isM3U8);
-
-            // 1. M3U8 Kontrolü (HLS.js)
-            if(isM3U8) {
-                iframe.style.display = 'none';
-                video.style.display = 'block';
-                
-                if (Hls.isSupported()) {
-                    const config = {};
-                    if(window.currentStreams.referer || window.currentStreams.userAgent) {
-                        config.xhrSetup = function(xhr, url) {
-                            if(window.currentStreams.referer) {
-                                try { xhr.setRequestHeader('Referer', window.currentStreams.referer); } catch(e) {}
-                            }
-                            if(window.currentStreams.userAgent) {
-                                try { xhr.setRequestHeader('User-Agent', window.currentStreams.userAgent); } catch(e) {}
-                            }
-                        };
-                    }
-                    hlsInstance = new Hls(config);
-                    hlsInstance.loadSource(urlToPlay);
-                    hlsInstance.attachMedia(video);
-                    hlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
-                        video.play().catch(err => console.log("Otomatik oynatma engellendi", err));
-                    });
-                } 
-                else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                    video.src = urlToPlay;
-                    video.addEventListener('loadedmetadata', function() { video.play(); });
-                } else {
-                    showToast("Tarayıcınız HLS formatını desteklemiyor.", "fa-exclamation");
-                }
-            } 
-            // 2. TS (MPEG-TS STB) Kontrolü (mpegts.js)
-            else if (isTS && typeof mpegts !== 'undefined') {
-                iframe.style.display = 'none';
-                video.style.display = 'block';
-                
-                if (mpegts.getFeatureList().mseLivePlayback) {
-                    mpegtsInstance = mpegts.createPlayer({
-                        type: 'm2ts', // TS streams support
-                        isLive: true,
-                        url: urlToPlay,
-                        cors: true
-                    }, { enableWorker: true, lazyLoadMaxDuration: 3 * 60, seekType: 'range' });
-                    
-                    mpegtsInstance.attachMediaElement(video);
-                    mpegtsInstance.load();
-                    mpegtsInstance.play().catch(err => console.log("TS Oynatma Hatası:", err));
-                } else {
-                    video.src = urlToPlay;
-                    video.play().catch(e => console.log(e));
-                }
-            }
-            // 3. Normal Link veya Iframe Kontrolü
-            else {
-                video.style.display = 'none';
-                iframe.style.display = 'block';
-                iframe.src = urlToPlay;
-            }
+            if(num === 1 && window.currentStreams.ch1) iframe.src = window.currentStreams.ch1;
+            if(num === 2 && window.currentStreams.ch2) iframe.src = window.currentStreams.ch2;
+            if(num === 3 && window.currentStreams.ch3) iframe.src = window.currentStreams.ch3;
         };
 
         // --- SKOR, ANKET VB. SİSTEMLER ---
@@ -1096,36 +1001,21 @@ ${message || "[Dosya/Resim]"}`;
                         lastScoreA = -1; lastScoreB = -1;
                     }
                     
-                    // --- 3. MAÇ YAYINI DUAL (IFRAME/HLS/TS) PLAYER ---
+                    // --- 3. MAÇ YAYINI (IFRAME PLAYER) ---
                     if(extras.streams && extras.streams.active) {
                         window.streamDataActive = true;
                         window.currentStreams = {
                             ch1: extractUrl(extras.streams.ch1),
                             ch2: extractUrl(extras.streams.ch2),
-                            ch3: extractUrl(extras.streams.ch3),
-                            referer: extras.streams.referer || '',
-                            userAgent: extras.streams.userAgent || ''
+                            ch3: extractUrl(extras.streams.ch3)
                         };
                         
-                        // Yalnızca linki olan butonları göster
                         document.getElementById('btnCh1').style.display = window.currentStreams.ch1 ? 'block' : 'none';
                         document.getElementById('btnCh2').style.display = window.currentStreams.ch2 ? 'block' : 'none';
                         document.getElementById('btnCh3').style.display = window.currentStreams.ch3 ? 'block' : 'none';
                         
-                        // Admin Panel Input Güncellemesi
-                        if(document.getElementById('stream1Inp')) {
-                            document.getElementById('stream1Inp').value = extras.streams.ch1 || '';
-                            document.getElementById('stream2Inp').value = extras.streams.ch2 || '';
-                            document.getElementById('stream3Inp').value = extras.streams.ch3 || '';
-                            document.getElementById('streamRefInp').value = extras.streams.referer || '';
-                            document.getElementById('streamUaInp').value = extras.streams.userAgent || '';
-                        }
-
-                        // Eğer çalan bir şey yoksa ilk dolu kanalı başlat
                         const iframe = document.getElementById('matchIframe');
-                        const video = document.getElementById('hlsVideo');
-                        
-                        if((!iframe.src || iframe.src === window.location.href) && (!video.src && !hlsInstance && !mpegtsInstance)) {
+                        if(!iframe.src || iframe.src === window.location.href) {
                             if(window.currentStreams.ch1) { changeStream(1); }
                             else if(window.currentStreams.ch2) { changeStream(2); }
                             else if(window.currentStreams.ch3) { changeStream(3); }
@@ -1133,10 +1023,6 @@ ${message || "[Dosya/Resim]"}`;
                     } else {
                         window.streamDataActive = false;
                         document.getElementById('matchIframe').src = "";
-                        if(hlsInstance) { hlsInstance.destroy(); hlsInstance = null; }
-                        if(mpegtsInstance) { mpegtsInstance.destroy(); mpegtsInstance = null; }
-                        const video = document.getElementById('hlsVideo');
-                        video.pause(); video.removeAttribute('src'); video.load();
                     }
 
                     // --- EKRAN GÖRÜNÜMÜNÜ GÜNCELLE ---
@@ -1415,7 +1301,7 @@ ${message || "[Dosya/Resim]"}`;
             if(isAdmin) { 
                 document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; 
                 document.getElementById('adminBtn').style.display = "flex"; 
-                document.body.classList.add('admin-mode'); 
+                document.body.classList.add('admin-mode'); // YÖNETİCİ MODUNU HTML'E TANIMLA
             } 
             render(); 
             setTimeout(listenToData, 500); 
