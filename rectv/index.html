@@ -10,6 +10,10 @@
     <!-- FIREBASE (Compat) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    
+    <!-- Video.js Kütüphaneleri -->
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.min.css" rel="stylesheet">
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
 
     <style>
         :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; --text: #e8e6e3; --card-bg: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.03); }
@@ -117,7 +121,7 @@
         .ls-events { font-size: 0.8rem; color: #aaa; margin-top: 10px; font-style: italic; min-height: 20px; }
         .light-theme .ls-events { color: #666; }
 
-        /* YENİ: IFRAME PLAYER CSS */
+        /* YENİ: DUAL (IFRAME + VIDEO.JS) PLAYER CSS */
         .stream-box { background: var(--surface); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; display: none; position: relative; box-shadow: 0 5px 15px rgba(255, 0, 64, 0.2); }
         .light-theme .stream-box { background: #fff; border-color: #ff5500; box-shadow: 0 5px 15px rgba(255, 85, 0, 0.1); }
         .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; background: #000; border: 1px solid rgba(255,255,255,0.1); margin-top: 5px;}
@@ -127,6 +131,11 @@
         .ch-btn.active, .ch-btn:focus, .ch-btn.focused { background: linear-gradient(135deg, #ff0040, #ff4d00); border-color: #fff; box-shadow: 0 4px 10px rgba(255, 0, 64, 0.5); transform: scale(1.05); }
         .light-theme .ch-btn { color: #333; background: #f0f0f0; border-color: #ff5500; }
         .light-theme .ch-btn.active, .light-theme .ch-btn:focus, .light-theme .ch-btn.focused { background: linear-gradient(135deg, #ff5500, #ff9900); color: #fff; border-color: #ff5500; }
+
+        /* VİDEO JS STİLLERİ (BÜYÜK PLAY BUTONU VB.) */
+        .video-js .vjs-big-play-button { color: white; line-height: 66px; height: 70px; width: 70px; border: 2px solid #fff; border-radius: 90px; left: 50%; top: 50%; margin-top: -35px; margin-left: -35px; background-color: var(--primary); transition: 0.4s; }
+        .video-js .vjs-control-bar { background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%); }
+        .video-js .vjs-play-progress, .video-js .vjs-volume-level { background-color: var(--primary); }
 
         .countdown-box { background: linear-gradient(135deg, #1a1825, #000); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; }
         .countdown-title { color: var(--primary); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
@@ -328,15 +337,18 @@
             
             <div class="admin-modal-body">
                 
-                <!-- YENİ IFRAME PLAYER YÖNETİMİ -->
+                <!-- GÜNCELLENMİŞ PLAYER YÖNETİMİ (VIDEO.JS STB DESTEKLİ) -->
                 <div class="admin-menu-btn focusable" onclick="toggleSubMenu('streamAdmin')">
-                    <span>📺 Maç Yayını (İframe)</span> <i class="fas fa-chevron-down"></i>
+                    <span>📺 Maç Yayını (Iframe & Dahili Player)</span> <i class="fas fa-chevron-down"></i>
                 </div>
                 <div id="streamAdmin" class="admin-submenu">
-                    <p style="font-size:0.8rem; color:#aaa; margin-bottom:5px;">Not: Sadece linki veya tam iframe kodunu yapıştırın, sistem otomatik algılar.</p>
+                    <p style="font-size:0.8rem; color:#aaa; margin-bottom:5px;">Link video ise kendi Video.js oynatıcımızda, değilse Iframe olarak açılır.</p>
                     <input type="text" id="stream1Inp" class="custom-input focusable" placeholder="Kanal 1 Linki (Zorunlu)">
                     <input type="text" id="stream2Inp" class="custom-input focusable" placeholder="Kanal 2 Linki (Opsiyonel)">
                     <input type="text" id="stream3Inp" class="custom-input focusable" placeholder="Kanal 3 Linki (Opsiyonel)">
+                    <input type="text" id="streamRefInp" class="custom-input focusable" placeholder="Referer (İsteğe Bağlı)" style="border-color:#00d2ff;">
+                    <input type="text" id="streamUaInp" class="custom-input focusable" placeholder="User-Agent (İsteğe Bağlı)" style="border-color:#00d2ff;">
+                    
                     <div style="display:flex; gap:5px;">
                         <button onclick="saveStreams()" class="btn-confirm focusable" style="flex:1;">Yayınla</button>
                         <button onclick="stopStreams()" class="btn-cancel focusable" style="flex:1;">Kapat</button>
@@ -450,11 +462,15 @@
 
     <div class="feature-container" id="featureContainer">
         
-        <!-- YENİ IFRAME PLAYER KUTUSU (Hızlı Kapatma Butonu İle) -->
+        <!-- YENİ DUAL PLAYER (IFRAME + VIDEO.JS) KUTUSU (MAÇ YAYINI İÇİN) -->
         <div id="streamBox" class="stream-box">
             <div class="quick-close-btn focusable" onclick="stopStreams()" title="Yayını Kapat"><i class="fas fa-times"></i></div>
-            <div class="iframe-container">
-                <iframe id="matchIframe" allowfullscreen></iframe>
+            <div class="iframe-container" id="playerWrapper">
+                <iframe id="matchIframe" allowfullscreen style="display:none;"></iframe>
+                <!-- VIDEO.JS OYNATICISI (Maç İçin) -->
+                <video id="matchVideo" tabindex="0" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" style="display:none; width: 100%; height: 100%; position: absolute; top:0; left:0;">
+                    <source src="" type="">
+                </video>
             </div>
             <div class="stream-channels" id="streamChannelsContainer">
                 <button id="btnCh1" class="ch-btn focusable" onclick="changeStream(1)">Kanal 1</button>
@@ -575,9 +591,12 @@
         </div>
     </div>
     
+    <!-- NORMAL KANALLAR İÇİN OYNATMA SEÇENEKLERİ MODALI -->
     <div class="modal" id="modal">
         <div class="modal-box">
             <h3 id="mTitle" style="text-align:center; margin-top:0; color:var(--primary);"></h3>
+            <!-- YENİ: DAHİLİ OYNATICI SEÇENEĞİ EKLENDİ -->
+            <div class="opt focusable" id="builtinPlayerBtn"><i class="fas fa-play-circle" style="color:var(--primary)"></i> <b>Dahili Oynatıcı (İzle)</b></div>
             <div class="opt focusable" id="wuffy"><i class="fas fa-play" style="color:var(--primary)"></i> <b>Wuffy Player</b></div>
             <div class="opt focusable" id="xpola"><i class="fas fa-rocket" style="color:var(--primary)"></i> <b>Xpola Player</b></div>
             <div class="opt focusable" id="externalWeb" style="background: rgba(255,171,0,0.1); border: 1px solid #ffab00;">
@@ -585,6 +604,14 @@
             </div>
             <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:12px; border-radius:10px; border:none; background:#333; color:white; margin-top:10px; cursor:pointer; font-weight:bold;" id="modalCloseBtn" class="focusable">Vazgeç</button>
         </div>
+    </div>
+
+    <!-- YENİ: NORMAL KANALLAR İÇİN TAM EKRAN DAHİLİ OYNATICI (VİDEO.JS) -->
+    <div id="fullPlayerContainer" style="display:none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: black; z-index: 3000;">
+        <button id="closeFullPlayerBtn" tabindex="0" class="focusable" style="position: absolute; top: 20px; right: 20px; z-index: 4000; background: rgba(227, 10, 23, 0.8); color: white; border: 2px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;"><i class="fas fa-times"></i> Yayını Kapat</button>
+        <video id="fullVideo" tabindex="0" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" style="width: 100%; height: 100%;">
+            <source src="" type="">
+        </video>
     </div>
 
     <script>const categoryData = { 'iptv_list': { 'items': [{"title": "YENİ XTREAM ADRESLER", "url": "http://4.438069.xyz:8080/get.php?username=mustSim&password=aTKj92RSXE&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/uJgwI", "is_new": true, "added_date": "08.05.2026"}, {"title": "EOUROGOLD İPTV ADRESLERİ EKLENDİ", "url": "http://eurogold4k.xyz:8080/get.php?username=xc14991&password=bEh7KSZcyjcT&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/TRHQf", "is_new": true, "added_date": "08.05.2026"}, {"title": "STB EMU KODLAR EKLENDİ", "url": "#", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/CqY47B", "is_new": false, "added_date": "06.05.2026"}, {"title": "1100 İPTV ADRESLERİ EKLENDİ", "url": "http://maxgoldx.xyz:2095/get.php?username=mhmt2308&password=mhmt0609yy00&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/dL2Nor", "is_new": false, "added_date": "05.05.2026"}, {"title": "TOMTV İPTV LİNKLER", "url": "http://190502.tomtv.eu/get.php?username=OsmanKoroglu12Ay&password=uXNza2Fbaeag&type=m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Uz9", "is_new": false, "added_date": "03.05.2026"}, {"title": "TELENYUM İPTV LİNK EKLENDİ", "url": "https://broken-night-dffb.deathlesstelenyu.workers.dev/viptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/FuT8", "is_new": false, "added_date": "02.05.2026"}, {"title": "Bentankur iptv list", "url": "https://file.garden/Z-hq5n4Shk27aY58/bentankur.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/NSfT", "is_new": false, "added_date": "01.05.2026"}, {"title": "TİGER İPTV PANEL LİNKLER", "url": "http://tigervip26.xyz:8080/get.php?username=curry30ym..35&password=w5xgSCQ57yy4.35&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/A3hsr7", "is_new": false, "added_date": "01.05.2026"}, {"title": "107x YENİ PREMİUM İPTV", "url": "http://eurogold4k.xyz:8080/get.php?username=DavidSeals&password=g5jWPXc&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/4PYTPE", "is_new": false, "added_date": "29.04.2026"}, {"title": "HARY İPTV PANEL", "url": "https://hary.meno24074.workers.dev/deathless.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/K8pS", "is_new": false, "added_date": "27.04.2026"}, {"title": "PLUTO İPTV ADRESİ EKLENDİ", "url": "https://deathless.short.gy/Pluto-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/5pZ14", "is_new": false, "added_date": "24.04.2026"}, {"title": "STV>M3U LİNKLER EKLENDİ", "url": "#", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ZA8765", "is_new": false, "added_date": "21.04.2026"}, {"title": "5 SİNİRSİZ İPTV ADRESİ EKLENDİ", "url": "https://broken-night-dffb.deathlesstelenyu.workers.dev/dth-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8fION", "is_new": false, "added_date": "21.04.2026"}, {"title": "YENİ İPTV LİSTELER İKİYUZ ADET", "url": "http://iptvturkie.xyz:2095/get.php?username=2aby1359&password=f8KmATQSZS&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/rPk", "is_new": false, "added_date": "19.04.2026"}, {"title": "467 ADET İPTV LİSTE VİP", "url": "http://euteck.xyz:2095/get.php?username=aa7564&password=aa2207yy00&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/wWne", "is_new": false, "added_date": "18.04.2026"}, {"title": "316x CALİSAN İPTV LİNKLER", "url": "http://51.91.105.31:57050/get.php?username=VgEGukKf8Dhg&password=LF5TNYufTuAA&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/uXDa", "is_new": false, "added_date": "16.04.2026"}, {"title": "267X ADET XTREAM İPTV LİNK", "url": "http://tv34.co:8080/get.php?username=Dursunbulbul&password=rJGZkHuERUZG&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/2MZbo", "is_new": false, "added_date": "15.04.2026"}, {"title": "257 ADET AKTİF İPTV LİNKLER EKLENDİ", "url": "http://ekobayi789.xyz:8080/get.php?username=arda90&password=rm3xVsvdKA&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/63H0", "is_new": false, "added_date": "14.04.2026"}, {"title": "33 STB EMU KODLAR EKLENDİ", "url": "#", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/e4VQis", "is_new": false, "added_date": "13.04.2026"}, {"title": "98 BOL İCERİKLİ İPTV LER", "url": "http://oguzhantv.store:8080/get.php?username=altun2222&password=ebf10591d84caee9&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/268415", "is_new": false, "added_date": "12.04.2026"}, {"title": "VELORA İPTV LİNK EKLENDİ", "url": "https://file.garden/Z-hq5n4Shk27aY58/Velora-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/7MeKaU", "is_new": false, "added_date": "11.04.2026"}, {"title": "47 YENİ İPTV LİNKLER TAZE CEKİLDİ", "url": "http://86.107.179.250/get.php?username=2712Ertugrul2021&password=2712-son-2022&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Cy7", "is_new": false, "added_date": "10.04.2026"}, {"title": "170  İZLETVPRO İPTV LİSTE", "url": "http://izletvhd.xyz:8080/get.php?username=ncpby0909&password=cnk.6636&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/jqCMds", "is_new": false, "added_date": "09.04.2026"}, {"title": "928 İPTV XTREAM LİSTELER", "url": "http://hayattv.pepbox.xyz:2095/get.php?username=grkt2715&password=1d00212becbf89bb&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/lWT7", "is_new": false, "added_date": "09.04.2026"}, {"title": "44 YENİ İPTV CALİSAN LİSTE", "url": "http://nuhproxtv.shop:8080/get.php?username=Dogatlas1&password=C3mB8VPKs8&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/55PNE3", "is_new": false, "added_date": "08.04.2026"}, {"title": "KALİTELİ İPTV LİSTELER", "url": "http://electranextssp.xyz:8080/get.php?username=TameraL12ay382827&password=Aker45tamer227277&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Nidr0s", "is_new": false, "added_date": "06.04.2026"}, {"title": "33 KALİTELİ İPTV LİSTELER", "url": "╔══════════════════════════════════════╗", "image": "╠══════════════════════════════════════╣", "web_link_url": "║   🚀 IPTV BOT - V31 (FIXED EDIT)     ║", "is_new": false, "added_date": "06.04.2026"}, {"title": "23 STB EMU MAC KODLARİ", "url": "https://file.garden/aMCMLdwOhlHjDvvq/KaliteliYayinMac.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Svwp", "is_new": false, "added_date": "05.04.2026"}, {"title": "YENİ AKTİF İPTV LİNKLER EKLENDİ", "url": "http://germanvip.art:2095/get.php?username=mrtsnm2612&password=2049c793ece4e064&type=m3u_plus", "image": "hmt2873:ykt.2309", "web_link_url": "https://ay.live/n07Aek", "is_new": false, "added_date": "04.04.2026"}, {"title": "YENİ İPTV LİSTELER EKLENDİ", "url": "http://kgms.xyz:80/get.php?username=emrahlehimler&password=G4wQ5ctyud&type=m3u_plus&output=mpegts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/cKEPJ", "is_new": false, "added_date": "04.04.2026"}, {"title": "OZEL İPTV LİNK EKLENDİ", "url": "http://electranextssp.xyz:8080/get.php?username=Mustafaerdogan0268&password=bTz5wGmKrm&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/WUWFz", "is_new": false, "added_date": "04.04.2026"}, {"title": "YENİ İPTV LİSTELER EKLENDİ", "url": "http://abe4kiptv.shop:8080/get.php?username=ysr3457&password=ysr1354&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/9qvKBk", "is_new": false, "added_date": "03.04.2026"}, {"title": "1209 PrimeTv panel iptv", "url": "http://primetv4k.xyz:2095/get.php?username=mss1201&password=mss0201dd00bb&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/pDQvJ", "is_new": false, "added_date": "01.04.2026"}, {"title": "17 TURKİYE STB EMU MAC ADRESLERİ", "url": "http://germanyservers1.net:8080/get.php?username=hkRAoyqU&password=QrhsAHnq&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/qrh", "is_new": false, "added_date": "31.03.2026"}, {"title": "GEEMANY SERVER İPTV ADRESLER EKKENDİ", "url": "http://germanyservers1.net:8080/get.php?username=hkRAoyqU&password=QrhsAHnq&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/b8h2", "is_new": false, "added_date": "31.03.2026"}, {"title": "40 PUHTV PANEL İPTV", "url": "http://puhtvhd.shop:8080/get.php?username=rafet2990&password=2990rafet&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/AgFbdJ", "is_new": false, "added_date": "27.03.2026"}, {"title": "1600 Kisilik iptv listeler", "url": "http://pluton.enjoysat.biz:8282/get.php?username=bigbosstn1&password=Mrov5VnBdU6tXs7k&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/3S2", "is_new": false, "added_date": "25.03.2026"}, {"title": "97 YENİ İOTV LİSTELER EKLENDİ", "url": "http://storetvx.xyz:2095/get.php?username=ckesim&password=20092008tth&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/rLcpN", "is_new": false, "added_date": "23.03.2026"}, {"title": "YENİ AKTİF İPTV LİSTELER EKLENDİ", "url": "http://piaylgbuslxs8ua98elr7e.rexmaximl.shop:8080/get.php?username=4feprAW64J&password=zMgx7YsjNj&type=m3u&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8Me", "is_new": false, "added_date": "23.03.2026"}, {"title": "Bitis 2030 3 baglanti iptv", "url": "http://piaylgbuslxs8ua98elr7e.rexmaximl.shop:8080//get.php?username=gkhn5319&password=D6ssrpYuw8tJ&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/CkZHUo", "is_new": false, "added_date": "22.03.2026"}, {"title": "8 BEİNBET İPTV PANEL", "url": "http://apk.beinbet.online:8080/get.php?username=Ramazanturkoz&password=bcQJB9d665&type=m3u_plus&output=ts", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/gXxHEi", "is_new": false, "added_date": "21.03.2026"}, {"title": "13 STB MAC TO M#U LİNLER EKLENDİ", "url": "https://file.garden/aMCMLdwOhlHjDvvq/INADINATV_MAC_18_03_0029.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/qmD", "is_new": false, "added_date": "18.03.2026"}, {"title": "400 KİSİLİK İPTV M#U", "url": "http://x55.dreamiptv.nl:5500/get.php?username=beinsport&password=sportkanalio&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/XfyvU5", "is_new": false, "added_date": "17.03.2026"}, {"title": "NOX İPTV ADRESLERİ EKLENDİ", "url": "http://86.107.179.250:80/get.php?username=sevgil1507&password=6wlhYqv0RG&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ypYgfa", "is_new": false, "added_date": "12.03.2026"}, {"title": "1262 XTREAM İPTV M#U LİNKLER", "url": "http://hayattv.pepbox.xyz:2095/get.php?username=mhmt2308&password=mhmt0609yy00&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/56Sx", "is_new": false, "added_date": "11.03.2026"}, {"title": "ELECTRA İPTV LİNK", "url": "http://electranextssp.xyz:8080/get.php?username=yilmazmorgul00215&password=9neJMh9HvUs2&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/pnU", "is_new": false, "added_date": "09.03.2026"}, {"title": "186MAXİM İPTV ELADRESLERİ EKLENDİ", "url": "http://koxgo.shop:8080/get.php?username=2qQRFPLfd8&password=RWJKywTAgY&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/GydN", "is_new": false, "added_date": "09.03.2026"}, {"title": "SPOR İPTV PANEL SİNİRSİZ", "url": "https://bot.enoragame68.workers.dev/bot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/hNK", "is_new": false, "added_date": "08.03.2026"}, {"title": "WATHCED İPTV", "url": "https://file.garden/Z-hq5n4Shk27aY58/Watched-DeaTHLesS-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/yT8", "is_new": false, "added_date": "07.03.2026"}, {"title": "WERS İPTV", "url": "https://file.garden/Z-hq5n4Shk27aY58/deathless-wers.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/SuHV", "is_new": false, "added_date": "03.03.2026"}, {"title": "645X İPTV LİSTE EKLENDİ", "url": "http://tvzafer55.shop:8080/get.php?username=0241907furkan&password=1907furkan024052&type=m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/98WJ", "is_new": false, "added_date": "01.03.2026"}, {"title": "COKLU İPTV LİNKLER", "url": "https://file.garden/Z-hq5n4Shk27aY58/Gora-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/wldRY", "is_new": false, "added_date": "28.02.2026"}, {"title": "VİALENT İPTV", "url": "https://file.garden/Z-hq5n4Shk27aY58/Vialent-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/bYHd", "is_new": false, "added_date": "27.02.2026"}, {"title": "SİNİRSİZ İPTV LİNK", "url": "https://bot.enoragame68.workers.dev/bot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Stvod", "is_new": false, "added_date": "26.02.2026"}, {"title": "TV MERKEZİ 2 İPTV", "url": "http://tvmerkezi5.org:8080/get.php?username=wcBKD74gxX&password=bHUQxDrpRB&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/3TMRm3", "is_new": false, "added_date": "25.02.2026"}, {"title": "CONNEKT İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/cennetiptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/INz8l", "is_new": false, "added_date": "25.02.2026"}, {"title": "FRUKU İPTV LİNK", "url": "https://file.garden/Z-hq5n4Shk27aY58/Fruko-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/taI", "is_new": false, "added_date": "25.02.2026"}, {"title": "TVMERKEZİ İPTV", "url": "http://tvmerkezi5.org:8080/get.php?username=SaschaJurdzinski&password=bjd2SFKqsj&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/63U", "is_new": false, "added_date": "19.02.2026"}, {"title": "80 BİN İCERİKLİ İPTV M3U", "url": "https://broken-night-dffb.deathlesstelenyu.workers.dev/dth-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/qPwD4", "is_new": false, "added_date": "18.02.2026"}, {"title": "JEROM İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/jeromiptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/bX6CG", "is_new": false, "added_date": "17.02.2026"}, {"title": "8SİNİRSİZ İPTV EDRESLERİ", "url": "https://file.garden/Z-hq5n4Shk27aY58/Gora-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/wl0tRf", "is_new": false, "added_date": "16.02.2026"}, {"title": "GORA İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/Gora-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/j0gJ", "is_new": false, "added_date": "14.02.2026"}, {"title": "EKALİTE İPTV", "url": "http://ekalite.xyz:8080/get.php?username=ilyasmad2k25&password=se8r1JBX8x&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DVGiD", "is_new": false, "added_date": "12.02.2026"}, {"title": "HALO İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/Halo-iptv-1.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8nhk5e", "is_new": false, "added_date": "11.02.2026"}, {"title": "EKALİTE İPTV", "url": "http://ekalite.xyz:8080/get.php?username=sametreisoglu6217tr&password=dYkXQEA&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/tB1", "is_new": false, "added_date": "09.02.2026"}, {"title": "VENOM İPTV", "url": "https://DeaTHLesS.short.gy/Wenom-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/MWU0", "is_new": false, "added_date": "08.02.2026"}, {"title": "MERO İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/Mero-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/9t6WT", "is_new": false, "added_date": "06.02.2026"}, {"title": "TENET İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/Tenet-iptv-1.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/9eq", "is_new": false, "added_date": "05.02.2026"}, {"title": "762 XTREAM İPTV", "url": "http://tvzafer55.shop:8080/get.php?username=1907Fener&password=Fener1907&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/HN2VpJ", "is_new": false, "added_date": "02.02.2026"}, {"title": "KORUYUCU İPTV LİNK", "url": "https://file.garden/Z-hq5n4Shk27aY58/Koruyucu-ozel-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/KVF", "is_new": false, "added_date": "31.01.2026"}, {"title": "KALİTE XYZ İPTV", "url": "http://ekalite.xyz:8080/get.php?username=volkantahmaz&password=keWJ2QuwRw&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/PDf", "is_new": false, "added_date": "30.01.2026"}, {"title": "VATROK İPTV LİNİK", "url": "https://file.garden/Z-hq5n4Shk27aY58/Watrok-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/UAa", "is_new": false, "added_date": "29.01.2026"}, {"title": "HERON İPTV LİNK", "url": "https://file.garden/Z-hq5n4Shk27aY58/neron-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/2rbhTH", "is_new": false, "added_date": "28.01.2026"}, {"title": "600 KİSİLİK İPTV", "url": "http://tv.devtv.nl/get.php?username=Trexx&password=Trex1fhgd2z&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/VKbxEh", "is_new": false, "added_date": "25.01.2026"}, {"title": "MEGA SPORT BOT İPTV", "url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/0yLE8", "is_new": false, "added_date": "24.01.2026"}, {"title": "XTREAM İPTV KODLAR EKLENDİ", "url": "http://babatv.online:8080/get.php?username=Q1S68BKR&password=9U4F7AZ5&type=m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/qKcnO", "is_new": false, "added_date": "23.01.2026"}, {"title": "GOOD İPTV EKLENDİ", "url": "http://tv1site.com:8080/get.php?username=vns171&password=cMynxFnug3bG&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/AYJnPc", "is_new": false, "added_date": "22.01.2026"}, {"title": "711X İPTV LİSTE EKLENDİ", "url": "http://protv65.shop:8080/get.php?username=fk4608&password=fk00xy&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/h7pa", "is_new": false, "added_date": "21.01.2026"}, {"title": "JOKER İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/Joker-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/pRN", "is_new": false, "added_date": "20.01.2026"}, {"title": "SUPMOT İPTV İNDİR", "url": "https://file.garden/Z-hq5n4Shk27aY58/supmot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/sBLi", "is_new": false, "added_date": "19.01.2026"}, {"title": "10 ADET MAC ADRESİ İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/inadinamackod.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ZZ5c", "is_new": false, "added_date": "18.01.2026"}, {"title": "KRİSTAL İPTV EKLENDİ", "url": "https://file.garden/Z-hq5n4Shk27aY58/Kristal-iptv-W.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8Gxpf", "is_new": false, "added_date": "18.01.2026"}, {"title": "SMARTES2 İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=zrdQ5UHD&password=q82fkQT&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/xAdwL", "is_new": false, "added_date": "17.01.2026"}, {"title": "10 BİN KİSİLİK İPTV", "url": "https://broken-night-dffb.deathlesstelenyu.workers.dev/dth-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/QfCR", "is_new": false, "added_date": "16.01.2026"}, {"title": "SMART İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=utSzxq7SY6&password=dj1yyFAQJy&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/5kQj", "is_new": false, "added_date": "15.01.2026"}, {"title": "YENİ SPORT İPTV", "url": "https://file.garden/Z-hq5n4Shk27aY58/sport-connec.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Ry1l", "is_new": false, "added_date": "14.01.2026"}, {"title": "10 SİNİRSİZ İPTV M3U", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/7LxRP8", "is_new": false, "added_date": "13.01.2026"}, {"title": "SMARTZONE İPTV", "url": "http://smartzone1.xyz:8080/get.php?username=gRNhEpGh3m&password=fmaAdfkHXJ&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/q9fMZa", "is_new": false, "added_date": "12.01.2026"}, {"title": "MEGA İPTV İNDİR", "url": "https://file.garden/Z-hq5n4Shk27aY58/megaiptv-X.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/G7TFl", "is_new": false, "added_date": "11.01.2026"}, {"title": "1500 MAX SPORTS İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/nadina-1500-Max-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Se6xQ", "is_new": false, "added_date": "09.01.2026"}, {"title": "QUANTUM İPTV LİST", "url": "https://file.garden/Z-hq5n4Shk27aY58/Kuantum-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/8Xy9", "is_new": false, "added_date": "08.01.2026"}, {"title": "FULL BOT İPTV SPORTS", "url": "https://deathless.short.gy/Full-Bot-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/ld7M", "is_new": false, "added_date": "07.01.2026"}, {"title": "Ekalite iptv m3u", "url": "http://ekalite.xyz:8080/get.php?username=ibrahimtak&password=qwkRZHAwaK&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/4eoXDj", "is_new": false, "added_date": "06.01.2026"}, {"title": "D SPORTS M3U ADRESİ EKLEND", "url": "https://file.garden/Z-hq5n4Shk27aY58/DTH-Sports.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/w2Avb", "is_new": false, "added_date": "05.01.2026"}, {"title": "30 ADET İPTV M3U LİSTE", "url": "http://maisonxp.click/get.php?username=thay123&password=thay123&type=m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/zcn3j7", "is_new": false, "added_date": "04.01.2026"}, {"title": "ELİTE MAC ADRESLERİ İPTV", "url": "https://file.garden/aMCMLdwOhlHjDvvq/playlist.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DfpE", "is_new": false, "added_date": "04.01.2026"}, {"title": "KARMA İPTV 23K", "url": "https://file.garden/Z-hq5n4Shk27aY58/Karma-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6WmReB", "is_new": false, "added_date": "03.01.2026"}, {"title": "Yeni iptv liste", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/0cKg", "is_new": false, "added_date": "02.01.2026"}, {"title": "Turkiye Connect iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Turkiye-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6Dr", "is_new": false, "added_date": "01.01.2026"}, {"title": "9500 İPTV M3U LİNKLER YİLBASİ OZEL", "url": "http://ss.wancolonel.xyz:8080/get.php?username=Denisurlu&password=Muri3091&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/3hJ9te", "is_new": false, "added_date": "31.12.2025"}, {"title": "3 Adet İptv link", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/KCwKj", "is_new": false, "added_date": "30.12.2025"}, {"title": "XTREAM İPTV LİSTELER EKLENDİ", "url": "http://s1.eldest99.xyz:8080/get.php?username=hdkaptantv3706&password=kptn@8723706&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/Clqz", "is_new": false, "added_date": "29.12.2025"}, {"title": "FİLM EKSENİ İPTV", "url": "https://raw.githubusercontent.com/sultansmgr/smart/refs/heads/main/FilmEkseni.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQESVvVD7PLGjrzbMvNGvIFOhRBoSxzoGBFLm3iG-xX1ZEArpkhkSItDVY&s=10", "web_link_url": "https://ay.live/qCS", "is_new": false, "added_date": "28.12.2025"}, {"title": "B. Conneckt İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/b-connect.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/67w", "is_new": false, "added_date": "28.12.2025"}, {"title": "Spor Kanallari bot iptv", "url": "https://izleyici.aykara463.workers.dev/DeaTHLesS.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/9GlX", "is_new": false, "added_date": "27.12.2025"}, {"title": "100 Bin kisilik iptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/DeaTHLesS-TG-iptv.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/6QE", "is_new": false, "added_date": "27.12.2025"}, {"title": "Hibrit İptv", "url": "https://file.garden/Z-hq5n4Shk27aY58/Toplu-Paket-V.m3u", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/eAAA7K", "is_new": false, "added_date": "27.12.2025"}, {"title": "553 Adet iptv Liste", "url": "http://otom.191462.xyz:8080/get.php?username=Veritech319&password=Dtx10012023@&type=m3u_plus", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10", "web_link_url": "https://ay.live/DGKU", "is_new": false, "added_date": "27.12.2025"}] } }; const activeCategoryKey = 'iptv_list';</script>
@@ -616,6 +643,7 @@
         let isChatLocked = false;
         let countdownInterval;
         let rulesTimeout;
+        let lastFocusedElement = null; // TV Kumanda navigasyonu için
 
         let currentTab = 'global'; 
         let currentPrivateRoom = null;
@@ -624,12 +652,18 @@
 
         let lastScoreA = -1;
         let lastScoreB = -1;
+        
+        // VIDEO.JS PLAYER INSTANCE'LARI
+        let matchVjsPlayer;
+        let fullVjsPlayer;
+        let matchReconnectTimeout = null;
+        let fullReconnectTimeout = null;
 
         // Visibility Flags
         window.countdownData = { active: false, target: 0 };
         window.livescoreDataActive = false;
         window.streamDataActive = false;
-        window.currentStreams = { ch1: '', ch2: '', ch3: '' };
+        window.currentStreams = { ch1: '', ch2: '', ch3: '', referer: '', userAgent: '' };
 
         const ADMIN_PASS = "burhan_baba_72";
         const TG_BOT_TOKEN = "8437262061:AAGnhDFIjFqNL5PlUGS33mUaXEMlKd1yyzk";
@@ -793,12 +827,14 @@ ${message || "[Dosya/Resim]"}`;
         function evaluateVisibility() {
             const now = new Date().getTime();
             if (window.countdownData.active && window.countdownData.target > now) {
-                // Geri sayım aktifse Player ve Skoru Gizle
                 document.getElementById('countdownBox').style.display = 'block';
                 document.getElementById('liveScoreBox').style.display = 'none';
                 document.getElementById('streamBox').style.display = 'none';
+                
+                // Geri sayım aktifse Player'ı durdur
+                if(matchVjsPlayer) matchVjsPlayer.pause();
+                document.getElementById('matchIframe').src = "";
             } else {
-                // Geri Sayım Yok Veya Bitti -> Player ve Skoru Göster
                 document.getElementById('countdownBox').style.display = 'none';
                 
                 if (window.livescoreDataActive) document.getElementById('liveScoreBox').style.display = 'block';
@@ -817,7 +853,7 @@ ${message || "[Dosya/Resim]"}`;
                 if (distance < 0) { 
                     clearInterval(countdownInterval); 
                     window.countdownData.active = false;
-                    evaluateVisibility(); // Geri sayım bitince Player ve Skoru aç!
+                    evaluateVisibility(); 
                     return; 
                 }
                 document.getElementById("cdDays").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -840,7 +876,28 @@ ${message || "[Dosya/Resim]"}`;
             }, 4000);
         }
 
-        // --- MAÇ YAYINI PLAYER (IFRAME) SİSTEMİ ---
+        // =======================================================
+        // URL FORMATTING VE MIME TİPİ (VİDEO.JS İÇİN STB MAC / TS)
+        // =======================================================
+        function formatStreamUrl(url) {
+            if (!url) return url;
+            let formattedUrl = url;
+            // Eger extension=ts varsa m3u8 yap
+            if (formattedUrl.includes('extension=ts')) formattedUrl = formattedUrl.replace('extension=ts', 'extension=m3u8');
+            // Eger .ts varsa .m3u8 yap (parametreleri bozmadan)
+            if (formattedUrl.split('?')[0].endsWith('.ts')) formattedUrl = formattedUrl.replace(/\.ts(\?|$)/, '.m3u8$1');
+            return formattedUrl;
+        }
+
+        function getMimeType(url) {
+            if (!url) return 'application/x-mpegurl'; 
+            const lowerUrl = url.toLowerCase();
+            if (lowerUrl.includes('.m3u8') || lowerUrl.includes('extension=m3u8')) return 'application/x-mpegurl';
+            if (lowerUrl.includes('.mp4')) return 'video/mp4';
+            return 'application/x-mpegurl'; 
+        }
+
+        // --- MAÇ YAYINI DUAL PLAYER (IFRAME + VIDEO.JS) SİSTEMİ ---
         function extractUrl(val) {
             if (!val) return '';
             const srcMatch = val.match(/src\s*=\s*"([^"]+)"/i) || val.match(/src\s*=\s*'([^']+)'/i);
@@ -852,8 +909,13 @@ ${message || "[Dosya/Resim]"}`;
             const ch1 = document.getElementById('stream1Inp').value;
             const ch2 = document.getElementById('stream2Inp').value;
             const ch3 = document.getElementById('stream3Inp').value;
+            const ref = document.getElementById('streamRefInp').value;
+            const ua = document.getElementById('streamUaInp').value;
+            
             if(ch1 || ch2 || ch3) {
-                database.ref('extras/streams').set({ active: true, ch1: ch1, ch2: ch2, ch3: ch3 });
+                database.ref('extras/streams').set({ 
+                    active: true, ch1: ch1, ch2: ch2, ch3: ch3, referer: ref, userAgent: ua 
+                });
                 showToast("Maç Yayını Aktif Edildi!", "fa-tv");
             } else {
                 showToast("En az Kanal 1 Linki giriniz!", "fa-exclamation");
@@ -865,16 +927,89 @@ ${message || "[Dosya/Resim]"}`;
             showToast("Maç Yayını Kapatıldı", "fa-times");
         };
 
+        // YAYIN KANALI DEĞİŞTİRME FONKSİYONU
         window.changeStream = function(num) {
-            const iframe = document.getElementById('matchIframe');
             document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
             const btn = document.getElementById('btnCh' + num);
             if(btn) btn.classList.add('active');
             
-            if(num === 1 && window.currentStreams.ch1) iframe.src = window.currentStreams.ch1;
-            if(num === 2 && window.currentStreams.ch2) iframe.src = window.currentStreams.ch2;
-            if(num === 3 && window.currentStreams.ch3) iframe.src = window.currentStreams.ch3;
+            let urlToPlay = '';
+            if(num === 1) urlToPlay = window.currentStreams.ch1;
+            if(num === 2) urlToPlay = window.currentStreams.ch2;
+            if(num === 3) urlToPlay = window.currentStreams.ch3;
+            
+            if(!urlToPlay) return;
+
+            const iframe = document.getElementById('matchIframe');
+            const videoEl = document.getElementById('matchVideo');
+            
+            // Temizlik
+            iframe.src = "";
+            matchVjsPlayer.pause();
+            matchVjsPlayer.src('');
+
+            const formattedUrl = formatStreamUrl(urlToPlay);
+            const lowerUrl = formattedUrl.toLowerCase();
+            const isVideo = lowerUrl.includes('m3u8') || lowerUrl.includes('.ts') || lowerUrl.includes('mac=') || lowerUrl.includes('.mp4');
+
+            if(isVideo) {
+                iframe.style.display = 'none';
+                videoEl.style.display = 'block';
+                
+                // REFERER VE USER AGENT AYARLAMASI (VIDEO.JS İÇİN)
+                if (window.currentStreams.referer || window.currentStreams.userAgent) {
+                    videojs.Vhs.xhr.beforeRequest = function(options) {
+                        options.headers = options.headers || {};
+                        if(window.currentStreams.referer) options.headers['Referer'] = window.currentStreams.referer;
+                        if(window.currentStreams.userAgent) options.headers['User-Agent'] = window.currentStreams.userAgent;
+                        return options;
+                    };
+                }
+
+                let mime = getMimeType(formattedUrl);
+                matchVjsPlayer.src({ type: mime, src: formattedUrl });
+                matchVjsPlayer.play();
+            } 
+            else {
+                videoEl.style.display = 'none';
+                iframe.style.display = 'block';
+                iframe.src = urlToPlay;
+            }
         };
+
+        // NORMAL KANAL (MENÜDEN SEÇİLEN) DAHİLİ OYNATICI (VIDEO.JS) BAŞLATMA
+        document.getElementById('builtinPlayerBtn').onclick = () => {
+            if(current.url && current.url !== "#") {
+                document.getElementById('modal').style.display='none';
+                document.getElementById('fullPlayerContainer').style.display = 'block';
+                
+                let finalUrl = formatStreamUrl(current.url);
+                let finalType = getMimeType(finalUrl);
+
+                showToast(current.title + " oynatılıyor", "fa-play");
+                
+                // Genel referer/ua varsa eklenebilir, yoksa boş kalır.
+                videojs.Vhs.xhr.beforeRequest = function(options) {
+                    options.headers = options.headers || {};
+                    return options;
+                };
+
+                fullVjsPlayer.src({ type: finalType, src: finalUrl });
+                fullVjsPlayer.play();
+                
+                // Odaklama (TV için)
+                setTimeout(() => document.getElementById('closeFullPlayerBtn').focus(), 100);
+            }
+        };
+
+        document.getElementById('closeFullPlayerBtn').addEventListener('click', () => {
+            document.getElementById('fullPlayerContainer').style.display = 'none';
+            fullVjsPlayer.pause();
+            fullVjsPlayer.src(''); 
+            if(document.fullscreenElement) document.exitFullscreen();
+            if(lastFocusedElement) lastFocusedElement.focus();
+        });
+
 
         // --- SKOR, ANKET VB. SİSTEMLER ---
         window.saveLiveScore = function() {
@@ -1001,21 +1136,35 @@ ${message || "[Dosya/Resim]"}`;
                         lastScoreA = -1; lastScoreB = -1;
                     }
                     
-                    // --- 3. MAÇ YAYINI (IFRAME PLAYER) ---
+                    // --- 3. MAÇ YAYINI DUAL (IFRAME/VIDEO.JS) PLAYER ---
                     if(extras.streams && extras.streams.active) {
                         window.streamDataActive = true;
                         window.currentStreams = {
                             ch1: extractUrl(extras.streams.ch1),
                             ch2: extractUrl(extras.streams.ch2),
-                            ch3: extractUrl(extras.streams.ch3)
+                            ch3: extractUrl(extras.streams.ch3),
+                            referer: extras.streams.referer || '',
+                            userAgent: extras.streams.userAgent || ''
                         };
                         
+                        // Yalnızca linki olan butonları göster
                         document.getElementById('btnCh1').style.display = window.currentStreams.ch1 ? 'block' : 'none';
                         document.getElementById('btnCh2').style.display = window.currentStreams.ch2 ? 'block' : 'none';
                         document.getElementById('btnCh3').style.display = window.currentStreams.ch3 ? 'block' : 'none';
                         
+                        // Admin Panel Input Güncellemesi
+                        if(document.getElementById('stream1Inp')) {
+                            document.getElementById('stream1Inp').value = extras.streams.ch1 || '';
+                            document.getElementById('stream2Inp').value = extras.streams.ch2 || '';
+                            document.getElementById('stream3Inp').value = extras.streams.ch3 || '';
+                            document.getElementById('streamRefInp').value = extras.streams.referer || '';
+                            document.getElementById('streamUaInp').value = extras.streams.userAgent || '';
+                        }
+
+                        // Eğer çalan bir şey yoksa ilk dolu kanalı başlat
                         const iframe = document.getElementById('matchIframe');
-                        if(!iframe.src || iframe.src === window.location.href) {
+                        
+                        if((!iframe.src || iframe.src === window.location.href) && (!matchVjsPlayer.src())) {
                             if(window.currentStreams.ch1) { changeStream(1); }
                             else if(window.currentStreams.ch2) { changeStream(2); }
                             else if(window.currentStreams.ch3) { changeStream(3); }
@@ -1023,6 +1172,7 @@ ${message || "[Dosya/Resim]"}`;
                     } else {
                         window.streamDataActive = false;
                         document.getElementById('matchIframe').src = "";
+                        if(matchVjsPlayer) { matchVjsPlayer.pause(); matchVjsPlayer.src(''); }
                     }
 
                     // --- EKRAN GÖRÜNÜMÜNÜ GÜNCELLE ---
@@ -1211,7 +1361,11 @@ ${message || "[Dosya/Resim]"}`;
                 const likes = globalLikeCounts[safeKey] || 0; 
                 const isLiked = myLikes.includes(safeKey) ? 'liked' : ''; 
                 card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${badgeHTML}</div><div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta"><span>${item.added_date}</span> <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span><span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span><span class="stat-badge"><i class="fas fa-exclamation-triangle stat-report" onclick="openReportModal(event, '${item.title}')"></i></span></div></div><i class="fas fa-play-circle play-icon"></i>`; 
-                card.onclick = () => { current = item; incrementViewCount(item.title); document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; }; 
+                card.onclick = () => { 
+                    current = item; incrementViewCount(item.title); document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; 
+                    lastFocusedElement = card; // Odağı yakala
+                    setTimeout(() => document.getElementById('builtinPlayerBtn').focus(), 50); // Menü açıldığında Dahili Oynatıcıya odaklan
+                }; 
                 container.appendChild(card); 
             }); 
             if (items.length > itemsPerPage) loadMoreBtn.classList.remove('hidden'); else loadMoreBtn.classList.add('hidden'); 
@@ -1220,7 +1374,7 @@ ${message || "[Dosya/Resim]"}`;
         document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url !== "#") { const url = current.web_link_url; window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=' + (url.startsWith('https') ? 'https' : 'http') + ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;component=com.android.chrome/com.google.android.apps.chrome.Main;end'; document.getElementById('modal').style.display='none'; } };
         document.getElementById('wuffy').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
         document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
-        window.onclick = (e) => { if(e.target == document.getElementById('modal')) document.getElementById('modal').style.display='none'; if(e.target == document.getElementById('confirmModal')) closeConfirm(); if(e.target == document.getElementById('adminPanelModal')) document.getElementById('adminPanelModal').style.display='none'; if(e.target == document.getElementById('nameChangeModal')) document.getElementById('nameChangeModal').style.display='none'; if(e.target == document.getElementById('userActionModal')) document.getElementById('userActionModal').style.display='none'; }
+        window.onclick = (e) => { if(e.target == document.getElementById('modal')) { document.getElementById('modal').style.display='none'; if(lastFocusedElement) lastFocusedElement.focus(); } if(e.target == document.getElementById('confirmModal')) closeConfirm(); if(e.target == document.getElementById('adminPanelModal')) document.getElementById('adminPanelModal').style.display='none'; if(e.target == document.getElementById('nameChangeModal')) document.getElementById('nameChangeModal').style.display='none'; if(e.target == document.getElementById('userActionModal')) document.getElementById('userActionModal').style.display='none'; }
 
         // --- TV BOX NAVIGATION LOGIC ---
         function handleRemoteControl() {
@@ -1237,8 +1391,10 @@ ${message || "[Dosya/Resim]"}`;
 
                 if (key === 'Enter') {
                     if (currentFocus && visibleFocusables.includes(currentFocus)) {
-                        currentFocus.click();
-                        if(currentFocus.tagName === 'INPUT') currentFocus.focus();
+                        if(currentFocus.tagName !== 'INPUT') {
+                            e.preventDefault();
+                            currentFocus.click();
+                        }
                     }
                 } else if (key === 'ArrowDown' || key === 'ArrowUp' || key === 'ArrowLeft' || key === 'ArrowRight') {
                     e.preventDefault();
@@ -1284,15 +1440,48 @@ ${message || "[Dosya/Resim]"}`;
                         return; 
                     }
 
+                    // Video oynatıcılar açıksa kapat
+                    if (document.getElementById('fullPlayerContainer').style.display === 'block') {
+                        e.preventDefault();
+                        document.getElementById('closeFullPlayerBtn').click();
+                        return;
+                    }
+
                     const openModals = document.querySelectorAll('.modal[style*="display: flex"]');
                     if(openModals.length > 0) {
                         e.preventDefault();
                         openModals.forEach(m => m.style.display = 'none');
+                        if(lastFocusedElement) lastFocusedElement.focus();
                     } else if (document.getElementById('chatModal').classList.contains('active')) {
                         toggleChat();
                     }
                 }
             });
+        }
+
+        // INIT VİDEO.JS PLAYER'LARI
+        function initVideoPlayers() {
+            matchVjsPlayer = videojs('matchVideo', { language: 'tr', loadingSpinner: true, controls: true, autoplay: true, preload: 'auto' });
+            fullVjsPlayer = videojs('fullVideo', { language: 'tr', loadingSpinner: true, controls: true, autoplay: true, preload: 'auto' });
+            
+            function reconnect(player) {
+                const src = player.src();
+                const type = player.currentType();
+                if(src) {
+                    showToast("Bağlantı zayıf, yenileniyor...", "fa-sync fa-spin");
+                    player.error(null);
+                    player.src({ type: type, src: src });
+                    player.play();
+                }
+            }
+
+            matchVjsPlayer.on('waiting', function() { clearTimeout(matchReconnectTimeout); matchReconnectTimeout = setTimeout(() => reconnect(matchVjsPlayer), 10000); });
+            matchVjsPlayer.on('playing', function() { clearTimeout(matchReconnectTimeout); });
+            matchVjsPlayer.on('error', function() { clearTimeout(matchReconnectTimeout); matchReconnectTimeout = setTimeout(() => reconnect(matchVjsPlayer), 5000); });
+
+            fullVjsPlayer.on('waiting', function() { clearTimeout(fullReconnectTimeout); fullReconnectTimeout = setTimeout(() => reconnect(fullVjsPlayer), 10000); });
+            fullVjsPlayer.on('playing', function() { clearTimeout(fullReconnectTimeout); });
+            fullVjsPlayer.on('error', function() { clearTimeout(fullReconnectTimeout); fullReconnectTimeout = setTimeout(() => reconnect(fullVjsPlayer), 5000); });
         }
 
         (function() { 
@@ -1301,13 +1490,14 @@ ${message || "[Dosya/Resim]"}`;
             if(isAdmin) { 
                 document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; 
                 document.getElementById('adminBtn').style.display = "flex"; 
-                document.body.classList.add('admin-mode'); // YÖNETİCİ MODUNU HTML'E TANIMLA
+                document.body.classList.add('admin-mode'); 
             } 
             render(); 
             setTimeout(listenToData, 500); 
             setTimeout(initPresence, 1000); 
             setTimeout(listenToAllPrivateChats, 1500);
             setTimeout(handleRemoteControl, 1000); 
+            setTimeout(initVideoPlayers, 500);
         })();
     </script>
 </body>
