@@ -95,21 +95,27 @@
         .ch-btn { flex: 1; min-width: 80px; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,0,64,0.5); background: rgba(0,0,0,0.3); color: white; font-weight: bold; cursor: pointer; transition: all 0.3s; text-align: center; }
         .ch-btn.active, .ch-btn:focus, .ch-btn.focused { background: linear-gradient(135deg, #ff0040, #ff4d00); border-color: #fff; box-shadow: 0 4px 10px rgba(255, 0, 64, 0.5); transform: scale(1.05); }
 
-        /* ========= SİYAH EKRAN KESİN CSS ÇÖZÜMÜ ========= */
+        /* ========= SİYAH EKRAN KESİN CSS ÇÖZÜMÜ GÜNCELLEMESİ ========= */
         .video-js { 
             width: 100% !important; 
             height: 100% !important; 
             background-color: #000 !important; 
             position: absolute !important; 
-            top: 0; left: 0; 
+            top: 0 !important; left: 0 !important; 
+            z-index: 1 !important; /* Arkaplanın önünde, UI'ın arkasında tut */
         }
         .video-js .vjs-tech { 
             width: 100% !important; 
             height: 100% !important; 
-            object-fit: contain !important; /* Videonun sıfır piksele düşmesini engeller */
+            object-fit: contain !important; /* Görüntünün sıkışıp kaybolmasını önler */
+            position: absolute !important;
+            top: 0 !important; left: 0 !important;
+            z-index: 1 !important; 
         }
-        .video-js .vjs-big-play-button { color: white; line-height: 66px; height: 70px; width: 70px; border: 2px solid #fff; border-radius: 90px; left: 50%; top: 50%; margin-top: -35px; margin-left: -35px; background-color: var(--primary); transition: 0.4s; }
-        .video-js .vjs-control-bar { background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%); }
+        /* Siyah perdenin (poster) donmasını engelle */
+        .video-js .vjs-poster { background: transparent !important; display: none !important; }
+        .video-js .vjs-big-play-button { z-index: 10; color: white; line-height: 66px; height: 70px; width: 70px; border: 2px solid #fff; border-radius: 90px; left: 50%; top: 50%; margin-top: -35px; margin-left: -35px; background-color: var(--primary); transition: 0.4s; }
+        .video-js .vjs-control-bar { z-index: 10; background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%); }
         .video-js .vjs-play-progress, .video-js .vjs-volume-level { background-color: var(--primary); }
 
         .countdown-box { background: linear-gradient(135deg, #1a1825, #000); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; text-align: center; position: relative; overflow: hidden; display: none; }
@@ -436,7 +442,7 @@
             <div class="quick-close-btn focusable" onclick="stopStreams()" title="Yayını Kapat"><i class="fas fa-times"></i></div>
             <div class="iframe-container" id="playerWrapper">
                 <iframe id="matchIframe" allowfullscreen style="display:none;"></iframe>
-                <!-- VIDEO.JS OYNATICISI (Maç İçin) - Playsinline ve CSS Siyah Ekran Çözümü -->
+                <!-- VIDEO.JS OYNATICISI (Maç İçin) -->
                 <div id="matchVideoContainer" style="display:none; width:100%; height:100%; position:absolute; top:0; left:0;">
                     <video id="matchVideo" playsinline tabindex="0" crossorigin="anonymous" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto">
                         <source src="" type="">
@@ -839,7 +845,7 @@ ${message || "[Dosya/Resim]"}`;
         }
 
         // =======================================================
-        // URL FORMATTING VE MIME TİPİ
+        // URL FORMATTING VE MIME TİPİ DÜZENLEMESİ (GELİŞMİŞ)
         // =======================================================
         function formatStreamUrl(url) {
             if (!url) return url;
@@ -853,7 +859,9 @@ ${message || "[Dosya/Resim]"}`;
             if (!url) return 'application/x-mpegurl'; 
             const lowerUrl = url.toLowerCase();
             if (lowerUrl.includes('.m3u8') || lowerUrl.includes('extension=m3u8')) return 'application/x-mpegurl';
+            if (lowerUrl.includes('.ts') || lowerUrl.includes('extension=ts')) return 'video/mp2t'; // TS dosyası format dedektörü
             if (lowerUrl.includes('.mp4')) return 'video/mp4';
+            if (lowerUrl.includes('.mkv')) return 'video/x-matroska';
             return 'application/x-mpegurl'; 
         }
 
@@ -914,9 +922,12 @@ ${message || "[Dosya/Resim]"}`;
 
                 let mime = getMimeType(formattedUrl);
                 matchVjsPlayer.src({ type: mime, src: formattedUrl });
+                matchVjsPlayer.load(); // ZORLA BUFFER TEMİZLE VE YENİDEN YÜKLE
                 matchVjsPlayer.ready(function() {
-                    this.play();
-                    // UI Yenilemesi (Boyut Hesaplama Garantisi)
+                    let playPromise = this.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => console.log("Oynatma hatası:", error));
+                    }
                     setTimeout(() => { this.trigger('resize'); }, 200);
                 });
             } 
@@ -940,8 +951,12 @@ ${message || "[Dosya/Resim]"}`;
                 if (videojs.Vhs) { videojs.Vhs.xhr.beforeRequest = function(options) { options.headers = options.headers || {}; return options; }; }
 
                 fullVjsPlayer.src({ type: finalType, src: finalUrl });
+                fullVjsPlayer.load(); // ZORLA YENİDEN YÜKLE (Buffer çakışmasını engeller)
                 fullVjsPlayer.ready(function() {
-                    this.play();
+                    let playPromise = this.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => console.log("Oynatma hatası:", error));
+                    }
                     setTimeout(() => { this.trigger('resize'); }, 200);
                 });
                 
@@ -1364,28 +1379,30 @@ ${message || "[Dosya/Resim]"}`;
                 controls: true, 
                 autoplay: true, 
                 preload: 'auto',
-                playsinline: true, // Mobil tarayıcılar (iOS vb.) için zorunludur. Sesi çalıp videoyu siyah ekranda bırakmasını engeller.
+                playsinline: true, 
                 html5: {
                     vhs: {
-                        overrideNative: true, // Tarayıcı codec yetersizliğini ezerek Video.js motorunu devreye sokar
+                        overrideNative: false, // DONANIM HIZLANDIRMAYA İZİN VER! Siyah ekranın 1 Numaralı çözümü.
                         enableLowInitialPlaylist: true,
                         smoothQualityChange: true,
-                        handlePartialData: true // Bozuk IPTV akış paketlerini tolere eder
-                    },
-                    nativeAudioTracks: false,
-                    nativeVideoTracks: false
+                        handlePartialData: true,
+                        experimentalBufferBasedABR: true
+                    }
+                    // YAZILIMA ZORLAYAN 'nativeVideoTracks: false' KOMUTU SİLİNDİ
                 }
             };
 
             matchVjsPlayer = videojs('matchVideo', vjsOptions);
             fullVjsPlayer = videojs('fullVideo', vjsOptions);
 
+            // Gelişmiş H.265 (HEVC) Dedektörü
             function checkCodec(player) {
                 setTimeout(() => {
-                    if (player.videoWidth() === 0 && !player.paused()) {
-                        showToast("Uyarı: Görüntü yoksa formatınız H.265 (HEVC) olabilir. Tarayıcı desteklemiyor.", "fa-exclamation-triangle");
+                    // Cihaz sadece sesi açabilmiş (0x0 boyutta) ve oynatmaya devam ediyorsa
+                    if (player.videoWidth() === 0 && !player.paused() && !player.seeking()) {
+                        showToast("⚠️ Sadece Ses Var! Yayın formatı H.265(HEVC) olabilir. Harici Oynatıcı (Wuffy/Xpola) kullanın.", "fa-exclamation-triangle");
                     }
-                }, 3000);
+                }, 4500);
             }
 
             matchVjsPlayer.on('loadedmetadata', function() { checkCodec(matchVjsPlayer); });
@@ -1398,7 +1415,9 @@ ${message || "[Dosya/Resim]"}`;
                     showToast("Bağlantı zayıf, yenileniyor...", "fa-sync fa-spin");
                     player.error(null);
                     player.src({ type: type, src: src });
-                    player.play();
+                    player.load();
+                    let p = player.play();
+                    if(p !== undefined) p.catch(e => {});
                 }
             }
 
