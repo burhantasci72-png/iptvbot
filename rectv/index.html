@@ -899,15 +899,16 @@ ${message || "[Dosya/Resim]"}`;
             const iframe = document.getElementById('matchIframe');
             iframe.src = "";
             
-            // DÜZELTME: Siyah Ekran / Donma yaşamamak için buffer tamamen sıfırlanmalıdır
+            // DONMA SORUNU ÇÖZÜMÜ: reset() komutu DOM elementini çökerttiği için kaldırıldı.
+            // Bunun yerine sadece duraklatıp kaynak (src) temizleniyor.
             if(matchVjsPlayer) {
                 matchVjsPlayer.pause();
-                matchVjsPlayer.reset();
+                matchVjsPlayer.src('');
             }
 
             const formattedUrl = formatStreamUrl(urlToPlay);
             const lowerUrl = formattedUrl.toLowerCase();
-            const isVideo = lowerUrl.includes('m3u8') || lowerUrl.includes('.ts') || lowerUrl.includes('mac=') || lowerUrl.includes('.mp4');
+            const isVideo = lowerUrl.includes('m3u8') || lowerUrl.includes('.ts') || lowerUrl.includes('mac=') || lowerUrl.includes('.mp4') || lowerUrl.includes('.mkv');
 
             if(isVideo) {
                 iframe.style.display = 'none';
@@ -916,7 +917,6 @@ ${message || "[Dosya/Resim]"}`;
                 if (videojs.Vhs && (window.currentStreams.referer || window.currentStreams.userAgent)) {
                     videojs.Vhs.xhr.beforeRequest = function(options) {
                         options.headers = options.headers || {};
-                        // Tarayıcı güvenlik gereği 'Referer' manuel olarak XHR ile değiştirilemez. Try-catch eklendi.
                         try {
                             if(window.currentStreams.referer) options.headers['Referer'] = window.currentStreams.referer;
                             if(window.currentStreams.userAgent) options.headers['User-Agent'] = window.currentStreams.userAgent;
@@ -936,6 +936,7 @@ ${message || "[Dosya/Resim]"}`;
                 setTimeout(() => { matchVjsPlayer.trigger('resize'); }, 200);
             } 
             else {
+                // IFRAME MANTIĞI YENİDEN ÇALIŞIYOR: (Reset fonksiyonu kalktığı için kod buraya ulaşacak)
                 document.getElementById('matchVideoContainer').style.display = 'none';
                 iframe.style.display = 'block';
                 iframe.src = urlToPlay;
@@ -952,10 +953,9 @@ ${message || "[Dosya/Resim]"}`;
 
                 showToast(current.title + " oynatılıyor", "fa-play");
                 
-                // DÜZELTME: Farklı IPTV linkine geçişte buffer'ı kesin temizle! (Siyah ekran %100 Çözümü)
                 if(fullVjsPlayer) {
                     fullVjsPlayer.pause();
-                    fullVjsPlayer.reset();
+                    fullVjsPlayer.src('');
                 }
                 
                 if (videojs.Vhs) { videojs.Vhs.xhr.beforeRequest = function(options) { options.headers = options.headers || {}; return options; }; }
@@ -975,8 +975,10 @@ ${message || "[Dosya/Resim]"}`;
 
         document.getElementById('closeFullPlayerBtn').addEventListener('click', () => {
             document.getElementById('fullPlayerContainer').style.display = 'none';
-            fullVjsPlayer.pause();
-            fullVjsPlayer.src(''); 
+            if(fullVjsPlayer) {
+                fullVjsPlayer.pause();
+                fullVjsPlayer.src(''); 
+            }
             if(document.fullscreenElement) document.exitFullscreen();
             if(lastFocusedElement) lastFocusedElement.focus();
         });
