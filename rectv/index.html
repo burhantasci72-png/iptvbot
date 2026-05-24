@@ -15,15 +15,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.10.0/video-js.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.10.0/video.min.js"></script>
 
-    <!-- HLS.js (Üst Düzey Yayın Motoru) -->
+    <!-- HLS.js (.m3u8 Yayın Motoru) -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    
+    <!-- MPEGTS.js (Saf .ts Panel Yayınları İçin Eklendi) -->
+    <script src="https://cdn.jsdelivr.net/npm/mpegts.js@latest/dist/mpegts.min.js"></script>
 
     <style>
         :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; --text: #e8e6e3; --card-bg: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.03); }
         body { background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 20px; transition: background 0.3s, color 0.3s; overflow-x: hidden; }
         body.light-theme { --bg: #f5f5f5; --surface: #ffffff; --text: #1a1a1a; --card-bg: #ffffff; --border: #e0e0e0; }
         
-        /* HIZLI KAPATMA BUTONLARI */
         .quick-close-btn { display: none !important; position: absolute; top: 10px; right: 10px; font-size: 1rem; color: #fff; background: rgba(255, 0, 64, 0.8); border-radius: 50%; width: 26px; height: 26px; align-items: center; justify-content: center; cursor: pointer; z-index: 10; border: 1px solid rgba(255,255,255,0.3); transition: transform 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
         body.admin-mode .quick-close-btn { display: flex !important; }
         .quick-close-btn:hover, .quick-close-btn.focused { transform: scale(1.15); background: #ff0040; border-color: #fff; }
@@ -94,30 +96,14 @@
         .stream-box { background: var(--surface); border: 1px solid var(--primary); border-radius: 15px; padding: 15px; display: none; position: relative; box-shadow: 0 5px 15px rgba(255, 0, 64, 0.2); }
         .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; background: #000; border: 1px solid rgba(255,255,255,0.1); margin-top: 5px;}
         
-        /* IFRAME GÖRÜNÜM DÜZELTMESİ (Üstte Kalması İçin Z-Index Eklendi) */
         .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; z-index: 10; background: #000; }
         
         .stream-channels { display: flex; justify-content: center; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
         .ch-btn { flex: 1; min-width: 80px; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,0,64,0.5); background: rgba(0,0,0,0.3); color: white; font-weight: bold; cursor: pointer; transition: all 0.3s; text-align: center; }
         .ch-btn.active, .ch-btn:focus, .ch-btn.focused { background: linear-gradient(135deg, #ff0040, #ff4d00); border-color: #fff; box-shadow: 0 4px 10px rgba(255, 0, 64, 0.5); transform: scale(1.05); }
 
-        /* ========= SİYAH EKRAN KESİN CSS ÇÖZÜMÜ GÜNCELLEMESİ ========= */
-        .video-js { 
-            width: 100% !important; 
-            height: 100% !important; 
-            background-color: #000 !important; 
-            position: absolute !important; 
-            top: 0 !important; left: 0 !important; 
-            z-index: 1 !important; 
-        }
-        .video-js .vjs-tech { 
-            width: 100% !important; 
-            height: 100% !important; 
-            object-fit: contain !important; 
-            position: absolute !important;
-            top: 0 !important; left: 0 !important;
-            z-index: 1 !important; 
-        }
+        .video-js { width: 100% !important; height: 100% !important; background-color: #000 !important; position: absolute !important; top: 0 !important; left: 0 !important; z-index: 1 !important; }
+        .video-js .vjs-tech { width: 100% !important; height: 100% !important; object-fit: contain !important; position: absolute !important; top: 0 !important; left: 0 !important; z-index: 1 !important; }
         .video-js .vjs-poster { background: transparent !important; display: none !important; }
         .video-js .vjs-big-play-button { z-index: 10; color: white; line-height: 66px; height: 70px; width: 70px; border: 2px solid #fff; border-radius: 90px; left: 50%; top: 50%; margin-top: -35px; margin-left: -35px; background-color: var(--primary); transition: 0.4s; }
         .video-js .vjs-control-bar { z-index: 10; background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%); }
@@ -446,10 +432,8 @@
             <div class="quick-close-btn focusable" onclick="stopStreams()" title="Yayını Kapat"><i class="fas fa-times"></i></div>
             
             <div class="iframe-container" id="playerWrapper">
-                <!-- IFRAME YAPI VE Z-INDEX FIX -->
                 <iframe id="matchIframe" allowfullscreen style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; border:0; z-index:10; background:#000;"></iframe>
                 
-                <!-- VİDEO YAPI VE WRAPPER FIX -->
                 <div id="matchVideoWrapper" style="display:none; width:100%; height:100%; position:absolute; top:0; left:0; z-index:1;">
                     <video id="matchVideo" playsinline crossorigin="anonymous" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto"></video>
                 </div>
@@ -574,7 +558,6 @@
         </div>
     </div>
     
-    <!-- NORMAL KANALLAR İÇİN OYNATMA SEÇENEKLERİ MODALI -->
     <div class="modal" id="modal">
         <div class="modal-box">
             <h3 id="mTitle" style="text-align:center; margin-top:0; color:var(--primary);"></h3>
@@ -588,7 +571,6 @@
         </div>
     </div>
 
-    <!-- YENİ: NORMAL KANALLAR İÇİN TAM EKRAN DAHİLİ OYNATICI -->
     <div id="fullPlayerContainer" style="display:none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: black; z-index: 3000;">
         <button id="closeFullPlayerBtn" tabindex="0" class="focusable" style="position: absolute; top: 20px; right: 20px; z-index: 4000; background: rgba(227, 10, 23, 0.8); color: white; border: 2px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;"><i class="fas fa-times"></i> Yayını Kapat</button>
         <div id="fullVideoWrapper" style="width:100%; height:100%;">
@@ -849,14 +831,12 @@ ${message || "[Dosya/Resim]"}`;
         }
 
         // =======================================================
-        // URL FORMATTING VE MIME TİPİ DÜZENLEMESİ
+        // URL FORMATTING VE MIME TİPİ DÜZENLEMESİ (TS BOZULMASI İPTAL EDİLDİ)
         // =======================================================
         function formatStreamUrl(url) {
-            if (!url) return url;
-            let formattedUrl = url;
-            if (formattedUrl.includes('extension=ts')) formattedUrl = formattedUrl.replace('extension=ts', 'extension=m3u8');
-            if (formattedUrl.split('?')[0].endsWith('.ts')) formattedUrl = formattedUrl.replace(/\.ts(\?|$)/, '.m3u8$1');
-            return formattedUrl;
+            // Eski kodda ts linklerini otomatik m3u8'e çeviren bozuk yapı silindi.
+            // Artık ts'ler mpegts.js ile, m3u8'ler hls.js ile doğal olarak oynatılacak.
+            return url;
         }
 
         function getMimeType(url) {
@@ -890,14 +870,19 @@ ${message || "[Dosya/Resim]"}`;
 
         window.stopStreams = function() { database.ref('extras/streams/active').set(false); showToast("Maç Yayını Kapatıldı", "fa-times"); };
 
-
         // ==========================================
-        // ÜST DÜZEY YAYIN OYNATICI MERKEZİ (DESTROY & REBUILD)
+        // ÜST DÜZEY YAYIN OYNATICI MERKEZİ (TS + HLS)
         // ==========================================
         function destroyPlayer(playerObj, containerId, videoId) {
             if (playerObj) {
                 if (playerObj.hlsInstance) {
                     playerObj.hlsInstance.destroy();
+                }
+                if (playerObj.mpegtsInstance) {
+                    playerObj.mpegtsInstance.pause();
+                    playerObj.mpegtsInstance.unload();
+                    playerObj.mpegtsInstance.detachMediaElement();
+                    playerObj.mpegtsInstance.destroy();
                 }
                 try { playerObj.dispose(); } catch(e) {}
             }
@@ -917,63 +902,66 @@ ${message || "[Dosya/Resim]"}`;
                 controls: true,
                 preload: 'auto',
                 html5: {
-                    vhs: { overrideNative: false }, // HLS.js entegre edeceğimiz için VHS'in müdahalesini kapatıyoruz.
+                    vhs: { overrideNative: false },
                     nativeAudioTracks: false,
                     nativeVideoTracks: false
                 }
             });
 
-            // M3U8 VE HLS.JS ENTEGRASYONU (Saran CDN ve Zorlu Linkler İçin Kusursuz Oynatma)
-            if (url.toLowerCase().includes('.m3u8') && typeof Hls !== 'undefined' && Hls.isSupported() && !isIOS) {
-                const videoEl = document.getElementById(videoId).querySelector('video');
-                const hls = new Hls({
-                    maxMaxBufferLength: 60,
-                    lowLatencyMode: true,
-                    enableWorker: true
-                });
+            const videoEl = document.getElementById(videoId).querySelector('video');
+            const lowerUrl = url.toLowerCase();
+
+            // 1. M3U8 VE HLS.JS ENTEGRASYONU (Saran CDN ve HLS Linkleri)
+            if ((lowerUrl.includes('.m3u8') || lowerUrl.includes('extension=m3u8')) && typeof Hls !== 'undefined' && Hls.isSupported() && !isIOS) {
+                const hls = new Hls({ maxMaxBufferLength: 60, lowLatencyMode: true, enableWorker: true });
                 
                 hls.loadSource(url);
                 hls.attachMedia(videoEl);
                 
                 hls.on(Hls.Events.MANIFEST_PARSED, function() {
                     let p = player.play();
-                    if(p !== undefined) {
-                        p.catch(e => {
-                            console.log("Otomatik oynatma engeli:", e);
-                            player.muted(true); // Sessiz oynatarak donmayı engeller
-                            player.play();
-                            showToast("Sesi açmak için ekrana dokunun", "fa-volume-mute");
-                        });
+                    if(p !== undefined && typeof p.catch === 'function') {
+                        p.catch(e => { player.muted(true); player.play(); showToast("Sesi açmak için ekrana dokunun", "fa-volume-mute"); });
                     }
                 });
 
                 hls.on(Hls.Events.ERROR, function(event, data) {
                     if (data.fatal) {
-                        if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-                            console.log("Ağ hatası onarılıyor...");
-                            hls.startLoad();
-                        } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-                            console.log("Medya hatası onarılıyor...");
-                            hls.recoverMediaError();
-                        } else {
-                            hls.destroy();
-                            showToast("Yayın koptu, yeniden deneyin.", "fa-exclamation");
-                        }
+                        if (data.type === Hls.ErrorTypes.NETWORK_ERROR) { hls.startLoad(); } 
+                        else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) { hls.recoverMediaError(); } 
+                        else { hls.destroy(); showToast("Yayın koptu, yeniden deneyin.", "fa-exclamation"); }
                     }
                 });
+                player.hlsInstance = hls; 
+
+            // 2. RAW TS VE MPEGTS.JS ENTEGRASYONU (IPTV PANEL TS Linkleri İçin Kesin Çözüm)
+            } else if ((lowerUrl.endsWith('.ts') || lowerUrl.includes('.ts?') || lowerUrl.includes('extension=ts')) && typeof mpegts !== 'undefined' && mpegts.getFeatureList().mseLivePlayback && !isIOS) {
+                const mpegtsPlayer = mpegts.createPlayer({
+                    type: 'mpegts',
+                    isLive: true,
+                    url: url
+                });
                 
-                player.hlsInstance = hls; // Yok ederken bağlantıyı kesmek için değişkene atıyoruz
+                mpegtsPlayer.attachMediaElement(videoEl);
+                mpegtsPlayer.load();
+                
+                let p = mpegtsPlayer.play();
+                if(p !== undefined && typeof p.catch === 'function') {
+                    p.catch(e => {
+                        player.muted(true);
+                        mpegtsPlayer.play();
+                        showToast("Sesi açmak için ekrana dokunun", "fa-volume-mute");
+                    });
+                }
+                player.mpegtsInstance = mpegtsPlayer;
+
+            // 3. MP4, MKV VEYA iOS CİHAZLAR İÇİN STANDART OYNATMA
             } else {
-                // MP4, TS veya iOS Cihazlar İçin Standart Oynatma
                 player.src({ type: getMimeType(url), src: url });
                 player.ready(function() {
                     let p = this.play();
-                    if (p !== undefined) {
-                        p.catch(e => { 
-                            this.muted(true); 
-                            this.play(); 
-                            showToast("Sesi açmak için ekrana dokunun", "fa-volume-mute");
-                        });
+                    if (p !== undefined && typeof p.catch === 'function') {
+                        p.catch(e => { this.muted(true); this.play(); showToast("Sesi açmak için ekrana dokunun", "fa-volume-mute"); });
                     }
                 });
             }
@@ -993,9 +981,8 @@ ${message || "[Dosya/Resim]"}`;
             if(!urlToPlay) return;
 
             const iframe = document.getElementById('matchIframe');
-            iframe.src = ""; // Eski iframe durdurulur
+            iframe.src = ""; 
             
-            // DONMA SORUNU ÇÖZÜMÜ: Önceki oynatıcıyı temizle ve sıfırdan kur!
             matchVjsPlayer = destroyPlayer(matchVjsPlayer, 'matchVideoWrapper', 'matchVideo');
 
             const formattedUrl = formatStreamUrl(urlToPlay);
@@ -1005,11 +992,9 @@ ${message || "[Dosya/Resim]"}`;
             if(isVideo) {
                 iframe.style.display = 'none';
                 document.getElementById('matchVideoWrapper').style.display = 'block'; 
-                
                 matchVjsPlayer = createPlayer('matchVideo', formattedUrl);
             } 
             else {
-                // IFRAME MANTIĞI DÜZELTİLDİ:
                 document.getElementById('matchVideoWrapper').style.display = 'none';
                 iframe.style.display = 'block';
                 iframe.src = urlToPlay;
@@ -1024,7 +1009,6 @@ ${message || "[Dosya/Resim]"}`;
                 let finalUrl = formatStreamUrl(current.url);
                 showToast(current.title + " oynatılıyor", "fa-play");
                 
-                // Tam ekran oynatıcıyı da tamamen sıfırla ve yeniden kur
                 fullVjsPlayer = destroyPlayer(fullVjsPlayer, 'fullVideoWrapper', 'fullVideo');
                 fullVjsPlayer = createPlayer('fullVideo', finalUrl);
                 
@@ -1155,7 +1139,6 @@ ${message || "[Dosya/Resim]"}`;
                             document.getElementById('streamUaInp').value = extras.streams.userAgent || '';
                         }
                         
-                        // İframe'de olan sayfa yenilendiğinde aynı kanalı devam ettir
                         const iframe = document.getElementById('matchIframe');
                         if((!iframe.src || iframe.src === window.location.href) && !matchVjsPlayer) {
                             if(window.currentStreams.ch1) { changeStream(1); }
@@ -1357,7 +1340,6 @@ ${message || "[Dosya/Resim]"}`;
         document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
         window.onclick = (e) => { if(e.target == document.getElementById('modal')) { document.getElementById('modal').style.display='none'; if(lastFocusedElement) lastFocusedElement.focus(); } if(e.target == document.getElementById('confirmModal')) closeConfirm(); if(e.target == document.getElementById('adminPanelModal')) document.getElementById('adminPanelModal').style.display='none'; if(e.target == document.getElementById('nameChangeModal')) document.getElementById('nameChangeModal').style.display='none'; if(e.target == document.getElementById('userActionModal')) document.getElementById('userActionModal').style.display='none'; }
 
-        // --- TV BOX NAVIGATION LOGIC ---
         function handleRemoteControl() {
             document.addEventListener('keydown', function(e) {
                 const key = e.key;
