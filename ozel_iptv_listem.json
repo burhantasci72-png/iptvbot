@@ -1,6 +1,27 @@
 [
     {
         "title": "🔥 31.43.191.125 (1 Adet) - 21:32",
+        "m3u_url": "http://31.43.191.125:8080/get.php?username=20102023&password=123456789&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/xx9982",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "02.06.2026"
+    },
+    {
+        "title": "🔥 ISPA.SELFIP.CO (9 Adet) - 21:32",
+        "m3u_url": "http://ispa.selfip.co/get.php?username=02ricnin74&password=ninosb52&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/xx9982",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "02.06.2026"
+    },
+    {
+        "title": "🔥 DHN1.XYZ (3 Adet) - 21:32",
+        "m3u_url": "http://dhn1.xyz/get.php?username=muhammetpst&password=lfvmMOLYZp&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/xx9982",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "02.06.2026"
+    },
+    {
+        "title": "🔥 31.43.191.125 (1 Adet) - 21:32",
         "m3u_url": "http://31.43.191.125:8080/get.php?username=08072024LC&password=08072024LC&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/cxOPL",
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
