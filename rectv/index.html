@@ -13,7 +13,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.10.0/video-js.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.10.0/video.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- GELİŞMİŞ OYNATICI MOTORLARI: HLS 1.4.12 VE MPEGTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.4.12/hls.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mpegts.js@1.7.3/dist/mpegts.min.js"></script>
 
     <style>
         :root { --hue: 345; --primary: hsl(var(--hue), 100%, 50%); --bg: #0f0a1a; --surface: #1a1825; --text: #e8e6e3; --card-bg: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.03); }
@@ -887,11 +889,15 @@ ${message || "[Dosya/Resim]"}`;
 
         // ==========================================
         // ÜST DÜZEY YAYIN OYNATICI MERKEZİ (DESTROY & REBUILD)
+        // Yeni Eklenen Gelişmiş HLS ve MPEGTS Motoru
         // ==========================================
         function destroyPlayer(playerObj, containerId, videoId) {
             if (playerObj) {
                 if (playerObj.hlsInstance) {
                     playerObj.hlsInstance.destroy();
+                }
+                if (playerObj.mpegtsInstance) {
+                    playerObj.mpegtsInstance.destroy();
                 }
                 try { playerObj.dispose(); } catch(e) {}
             }
@@ -911,66 +917,175 @@ ${message || "[Dosya/Resim]"}`;
                 controls: true,
                 preload: 'auto',
                 html5: {
-                    vhs: { overrideNative: false }, // HLS.js entegre edeceğimiz için VHS'in müdahalesini kapatıyoruz.
+                    vhs: { overrideNative: false }, 
                     nativeAudioTracks: false,
                     nativeVideoTracks: false
                 }
             });
 
-            // M3U8 VE HLS.JS ENTEGRASYONU (Saran CDN ve Zorlu Linkler İçin Kusursuz Oynatma)
-            if (url.toLowerCase().includes('.m3u8') && typeof Hls !== 'undefined' && Hls.isSupported() && !isIOS) {
-                const videoEl = document.getElementById(videoId).querySelector('video');
-                const hls = new Hls({
-                    maxMaxBufferLength: 60,
-                    lowLatencyMode: true,
-                    enableWorker: true
-                });
-                
-                hls.loadSource(url);
-                hls.attachMedia(videoEl);
-                
-                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+            const videoEl = document.getElementById(videoId).querySelector('video');
+            
+            // Oynatma Motoru Değişkenleri
+            player.fallbackLevel = 0;
+            player.streamUrl = url;
+            player.hlsInstance = null;
+            player.mpegtsInstance = null;
+            player.fallbackTimer = null;
+
+            const urlLower = url.toLowerCase();
+            const isLiveFlag = urlLower.includes('/live/') || (!urlLower.includes('/movie/') && !urlLower.includes('/series/') && !urlLower.endsWith('.mp4'));
+            const isTs = urlLower.includes('.ts') || urlLower.includes('/ts/');
+
+            function clearEngines() {
+                clearTimeout(player.fallbackTimer);
+                if (player.hlsInstance) { player.hlsInstance.destroy(); player.hlsInstance = null; }
+                if (player.mpegtsInstance) { player.mpegtsInstance.destroy(); player.mpegtsInstance = null; }
+            }
+
+            function engineFailed() {
+                console.warn("Oynatma başarısız: Seviye " + player.fallbackLevel);
+                clearEngines();
+                player.fallbackLevel++;
+                executeFallback();
+            }
+
+            function engineSuccess() {
+                clearTimeout(player.fallbackTimer);
+                let p = player.play();
+                if(p !== undefined) {
+                    p.catch(e => {
+                        console.log("Otomatik oynatma engeli:", e);
+                        player.muted(true); 
+                        player.play();
+                        showToast("Sesi açmak için ekrana dokunun", "fa-volume-mute");
+                    });
+                }
+            }
+
+            function startEngineTimer() {
+                clearTimeout(player.fallbackTimer);
+                player.fallbackTimer = setTimeout(() => {
+                    console.warn("Zaman Aşımı: Yöntem " + player.fallbackLevel);
+                    engineFailed();
+                }, 8000);
+            }
+
+            function tryHlsMode(testUrl) {
+                if (typeof Hls !== 'undefined' && Hls.isSupported() && !isIOS) {
+                    const hls = new Hls({
+                        enableWorker: true,
+                        lowLatencyMode: isLiveFlag,
+                        backBufferLength: 30,
+                        maxBufferLength: 60,
+                        liveSyncDurationCount: 3
+                    });
+                    hls.loadSource(testUrl);
+                    hls.attachMedia(videoEl);
+                    hls.on(Hls.Events.MANIFEST_PARSED, engineSuccess);
+                    hls.on(Hls.Events.ERROR, function(event, data) {
+                        if (data.fatal) {
+                            if (data.type === Hls.ErrorTypes.NETWORK_ERROR && data.details !== Hls.ErrorDetails.MANIFEST_LOAD_ERROR) {
+                                hls.startLoad();
+                            } else {
+                                engineFailed();
+                            }
+                        }
+                    });
+                    player.hlsInstance = hls;
+                } else if (videoEl.canPlayType('application/vnd.apple.mpegurl')) {
+                    tryNativeMode(testUrl);
+                } else {
+                    engineFailed();
+                }
+            }
+
+            function tryMpegTsMode(testUrl) {
+                if (typeof mpegts !== 'undefined' && mpegts.isSupported() && !isIOS) {
+                    const mpegtsPlayer = mpegts.createPlayer({
+                        type: 'mpegts',
+                        isLive: isLiveFlag,
+                        url: testUrl,
+                        cors: true
+                    }, {
+                        enableWorker: true,
+                        lazyLoad: !isLiveFlag,
+                        lazyLoadMaxDuration: 3 * 60,
+                        lazyLoadRecoverDuration: 30,
+                        enableStashBuffer: !isLiveFlag,
+                        stashInitialSize: 128,
+                        liveBufferLatencyChasing: isLiveFlag,
+                        liveBufferLatencyMaxLatency: 3
+                    });
+                    mpegtsPlayer.attachMediaElement(videoEl);
+                    mpegtsPlayer.load();
+                    videoEl.onloadedmetadata = engineSuccess;
+                    mpegtsPlayer.on(mpegts.Events.ERROR, engineFailed);
+                    player.mpegtsInstance = mpegtsPlayer;
+                } else {
+                    engineFailed();
+                }
+            }
+
+            function tryNativeMode(testUrl) {
+                player.src({ type: getMimeType(testUrl), src: testUrl });
+                player.ready(function() {
                     let p = player.play();
                     if(p !== undefined) {
-                        p.catch(e => {
-                            console.log("Otomatik oynatma engeli:", e);
-                            player.muted(true); // Sessiz oynatarak donmayı engeller
+                        p.then(engineSuccess).catch(e => {
+                            player.muted(true);
                             player.play();
-                            showToast("Sesi açmak için ekrana dokunun", "fa-volume-mute");
                         });
                     }
                 });
-
-                hls.on(Hls.Events.ERROR, function(event, data) {
-                    if (data.fatal) {
-                        if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-                            console.log("Ağ hatası onarılıyor...");
-                            hls.startLoad();
-                        } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-                            console.log("Medya hatası onarılıyor...");
-                            hls.recoverMediaError();
-                        } else {
-                            hls.destroy();
-                            showToast("Yayın koptu, yeniden deneyin.", "fa-exclamation");
-                        }
-                    }
-                });
-                
-                player.hlsInstance = hls; // Yok ederken bağlantıyı kesmek için değişkene atıyoruz
-            } else {
-                // MP4, TS veya iOS Cihazlar İçin Standart Oynatma
-                player.src({ type: getMimeType(url), src: url });
-                player.ready(function() {
-                    let p = this.play();
-                    if (p !== undefined) {
-                        p.catch(e => { 
-                            this.muted(true); 
-                            this.play(); 
-                            showToast("Sesi açmak için ekrana dokunun", "fa-volume-mute");
-                        });
-                    }
+                player.on('error', function() {
+                    engineFailed();
                 });
             }
+
+            function executeFallback() {
+                clearEngines();
+                let testUrl = player.streamUrl;
+                let lvl = player.fallbackLevel;
+
+                if (lvl > 4) {
+                    showToast("Yayın koptu veya erişilemiyor.", "fa-exclamation");
+                    return;
+                }
+
+                startEngineTimer();
+
+                // Yedekleme 5 Aşamalı Stratejisi
+                if (lvl === 0) {
+                    if (isLiveFlag && isTs) {
+                        tryHlsMode(testUrl.replace(/\.ts($|\?)/i, '.m3u8$1'));
+                    } else if (!isLiveFlag && isTs) {
+                        tryMpegTsMode(testUrl);
+                    } else {
+                        tryHlsMode(testUrl);
+                    }
+                } else if (lvl === 1) {
+                    if (isLiveFlag && isTs) {
+                        tryMpegTsMode(testUrl);
+                    } else if (!isLiveFlag && isTs) {
+                        tryHlsMode(testUrl.replace(/\.ts($|\?)/i, '.m3u8$1'));
+                    } else {
+                        engineFailed();
+                    }
+                } else if (lvl === 2) {
+                    tryNativeMode(testUrl);
+                } else if (lvl === 3) {
+                    const proxiedUrl = 'https://corsproxy.io/?' + encodeURIComponent(testUrl.replace(/\.ts($|\?)/i, '.m3u8$1'));
+                    tryHlsMode(proxiedUrl);
+                } else if (lvl === 4) {
+                    const proxiedUrl = 'https://corsproxy.io/?' + encodeURIComponent(testUrl);
+                    if (isTs) tryMpegTsMode(proxiedUrl);
+                    else engineFailed();
+                }
+            }
+
+            // Döngüyü başlat
+            executeFallback();
+
             return player;
         }
 
