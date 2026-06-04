@@ -445,7 +445,7 @@
             <div class="quick-close-btn focusable" onclick="stopStreams()" title="Yayını Kapat"><i class="fas fa-times"></i></div>
             
             <div class="iframe-container" id="playerWrapper">
-                <iframe id="matchIframe" allowfullscreen style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; border:0; z-index:10; background:#000;"></iframe>
+                <iframe id="matchIframe" allowfullscreen allow="autoplay; encrypted-media" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; border:0; z-index:10; background:#000;"></iframe>
                 
                 <div id="matchVideoWrapper" style="display:none; width:100%; height:100%; position:absolute; top:0; left:0; z-index:1;">
                     <video id="matchVideo" playsinline crossorigin="anonymous" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto"></video>
@@ -584,9 +584,14 @@
         </div>
     </div>
 
+    <!-- YENİ: DAHİLİ OYNATICI (TAM EKRAN) KISMINA İFRAME DESTEĞİ EKLENDİ -->
     <div id="fullPlayerContainer" style="display:none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: black; z-index: 3000;">
         <button id="closeFullPlayerBtn" tabindex="0" class="focusable" style="position: absolute; top: 20px; right: 20px; z-index: 4000; background: rgba(227, 10, 23, 0.8); color: white; border: 2px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;"><i class="fas fa-times"></i> Yayını Kapat</button>
-        <div id="fullVideoWrapper" style="width:100%; height:100%;">
+        
+        <!-- YENİ EKLENEN IFRAME -->
+        <iframe id="fullIframe" allowfullscreen allow="autoplay; encrypted-media" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; border:0; z-index:10; background:#000;"></iframe>
+        
+        <div id="fullVideoWrapper" style="width:100%; height:100%; position:absolute; top:0; left:0; z-index:1;">
             <video id="fullVideo" playsinline crossorigin="anonymous" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto"></video>
         </div>
     </div>
@@ -886,10 +891,29 @@ ${message || "[Dosya/Resim]"}`;
 
         window.stopStreams = function() { database.ref('extras/streams/active').set(false); showToast("Maç Yayını Kapatıldı", "fa-times"); };
 
+        // ==========================================
+        // Gelişmiş IFRAME vs VIDEO Tespit Mantığı
+        // (TheoPlayer, DiesTV vb. linkler kesin Iframe sayılır)
+        // ==========================================
+        function checkIsVideo(url) {
+            if(!url) return false;
+            let low = url.toLowerCase();
+            
+            // Eğer theoplayer, diestv6, selcuksportshd gibi bilindik web oynatıcılar ise iframe'dir.
+            if (low.includes('iframe') || low.includes('embed') || low.includes('.html') || low.includes('/channel?id=')) {
+                return false; 
+            }
+            
+            // Stalker portal (mac=) veya m3u8/ts içeriyorsa video kabul et
+            if (low.includes('.m3u8') || low.includes('.ts') || low.includes('mac=') || low.includes('.mp4') || low.includes('.mkv')) {
+                return true;
+            }
+            
+            return false;
+        }
 
         // ==========================================
         // ÜST DÜZEY YAYIN OYNATICI MERKEZİ (DESTROY & REBUILD)
-        // Yeni Eklenen Gelişmiş HLS ve MPEGTS Motoru
         // ==========================================
         function destroyPlayer(playerObj, containerId, videoId) {
             if (playerObj) {
@@ -1054,7 +1078,6 @@ ${message || "[Dosya/Resim]"}`;
 
                 startEngineTimer();
 
-                // Yedekleme 5 Aşamalı Stratejisi
                 if (lvl === 0) {
                     if (isLiveFlag && isTs) {
                         tryHlsMode(testUrl.replace(/\.ts($|\?)/i, '.m3u8$1'));
@@ -1083,7 +1106,6 @@ ${message || "[Dosya/Resim]"}`;
                 }
             }
 
-            // Döngüyü başlat
             executeFallback();
 
             return player;
@@ -1102,29 +1124,27 @@ ${message || "[Dosya/Resim]"}`;
             if(!urlToPlay) return;
 
             const iframe = document.getElementById('matchIframe');
-            iframe.src = ""; // Eski iframe durdurulur
+            iframe.src = ""; 
             
-            // DONMA SORUNU ÇÖZÜMÜ: Önceki oynatıcıyı temizle ve sıfırdan kur!
             matchVjsPlayer = destroyPlayer(matchVjsPlayer, 'matchVideoWrapper', 'matchVideo');
 
             const formattedUrl = formatStreamUrl(urlToPlay);
-            const lowerUrl = formattedUrl.toLowerCase();
-            const isVideo = lowerUrl.includes('m3u8') || lowerUrl.includes('.ts') || lowerUrl.includes('mac=') || lowerUrl.includes('.mp4') || lowerUrl.includes('.mkv');
+            
+            const isVideo = checkIsVideo(formattedUrl);
 
             if(isVideo) {
                 iframe.style.display = 'none';
                 document.getElementById('matchVideoWrapper').style.display = 'block'; 
-                
                 matchVjsPlayer = createPlayer('matchVideo', formattedUrl);
             } 
             else {
-                // IFRAME MANTIĞI DÜZELTİLDİ:
                 document.getElementById('matchVideoWrapper').style.display = 'none';
                 iframe.style.display = 'block';
-                iframe.src = urlToPlay;
+                iframe.src = urlToPlay; // Orjinal linki kullan
             }
         };
 
+        // KARTLARA TIKLANINCA ÇALIŞAN TAM EKRAN OYNATICI (Dahili Oynatıcı)
         document.getElementById('builtinPlayerBtn').onclick = () => {
             if(current.url && current.url !== "#") {
                 document.getElementById('modal').style.display='none';
@@ -1133,9 +1153,21 @@ ${message || "[Dosya/Resim]"}`;
                 let finalUrl = formatStreamUrl(current.url);
                 showToast(current.title + " oynatılıyor", "fa-play");
                 
-                // Tam ekran oynatıcıyı da tamamen sıfırla ve yeniden kur
+                const isVideo = checkIsVideo(finalUrl);
+                
                 fullVjsPlayer = destroyPlayer(fullVjsPlayer, 'fullVideoWrapper', 'fullVideo');
-                fullVjsPlayer = createPlayer('fullVideo', finalUrl);
+                
+                if(isVideo) {
+                    document.getElementById('fullIframe').style.display = 'none';
+                    document.getElementById('fullIframe').src = '';
+                    document.getElementById('fullVideoWrapper').style.display = 'block';
+                    fullVjsPlayer = createPlayer('fullVideo', finalUrl);
+                } else {
+                    // Iframe Linkiyse
+                    document.getElementById('fullVideoWrapper').style.display = 'none';
+                    document.getElementById('fullIframe').style.display = 'block';
+                    document.getElementById('fullIframe').src = current.url; // Orjinal URL korundu
+                }
                 
                 setTimeout(() => document.getElementById('closeFullPlayerBtn').focus(), 100);
             }
@@ -1143,6 +1175,11 @@ ${message || "[Dosya/Resim]"}`;
 
         document.getElementById('closeFullPlayerBtn').addEventListener('click', () => {
             document.getElementById('fullPlayerContainer').style.display = 'none';
+            
+            // Iframe'i de temizle ve kapat
+            document.getElementById('fullIframe').src = "";
+            document.getElementById('fullIframe').style.display = 'none';
+            
             fullVjsPlayer = destroyPlayer(fullVjsPlayer, 'fullVideoWrapper', 'fullVideo');
             if(document.fullscreenElement) document.exitFullscreen();
             if(lastFocusedElement) lastFocusedElement.focus();
