@@ -677,7 +677,9 @@
 
         function sendTelegramNotification(user, message) {
             if(isAdmin || !TG_BOT_TOKEN || TG_BOT_TOKEN.includes("BURAYA") || !TG_CHAT_ID) return;
-            const text = `💬 Yeni Mesaj: ${user}\n\n${message || "[Dosya/Resim]"}`;
+            const text = `💬 Yeni Mesaj: ${user}
+
+${message || "[Dosya/Resim]"}`;
             const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage?chat_id=${TG_CHAT_ID}&text=${encodeURIComponent(text)}`;
             fetch(url).catch(e => console.error("TG Error:", e));
         }
@@ -1251,7 +1253,7 @@
             let userDisplay = msg.user;
             if(msg.isAdminMsg) userDisplay = `<span class="msg-admin"><i class="fas fa-shield-alt"></i> YÖNETİCİ</span>`;
             
-            const safeText = msg.text ? msg.text.replace(/'/g, "\\'").replace(/"/g, '&quot;') : "";
+            const safeText = msg.text ? msg.text.replace(/'/g, "\'").replace(/"/g, '&quot;') : "";
             const safeImg = msg.image || "";
             let userClickAction = `onclick="openUserActionModal('${msg.uuid}', '${msg.user}', '${key}', '${safeText}', '${safeImg}')"`;
             
@@ -1344,7 +1346,7 @@
             if (items.length > itemsPerPage) loadMoreBtn.classList.remove('hidden'); else loadMoreBtn.classList.add('hidden'); 
         }
         function loadMore() { const items = categoryData[activeCategoryKey].items; const cards = document.querySelectorAll('.card'); const loadMoreBtn = document.getElementById('loadMoreBtn'); for (let i = currentlyShown; i < Math.min(currentlyShown + itemsPerPage, items.length); i++) { if (cards[i]) cards[i].classList.remove('hidden'); } currentlyShown += itemsPerPage; if (currentlyShown >= items.length) loadMoreBtn.classList.add('hidden'); }
-        document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url !== "#") { const url = current.web_link_url; window.location.href = 'intent://' + url.replace(/^https?:\\/\\//, '') + '#Intent;scheme=' + (url.startsWith('https') ? 'https' : 'http') + ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;component=com.android.chrome/com.google.android.apps.chrome.Main;end'; document.getElementById('modal').style.display='none'; } };
+        document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url !== "#") { const url = current.web_link_url; window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=' + (url.startsWith('https') ? 'https' : 'http') + ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;component=com.android.chrome/com.google.android.apps.chrome.Main;end'; document.getElementById('modal').style.display='none'; } };
         document.getElementById('wuffy').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
         document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
         window.onclick = (e) => { if(e.target == document.getElementById('modal')) { document.getElementById('modal').style.display='none'; if(lastFocusedElement) lastFocusedElement.focus(); } if(e.target == document.getElementById('confirmModal')) closeConfirm(); if(e.target == document.getElementById('adminPanelModal')) document.getElementById('adminPanelModal').style.display='none'; if(e.target == document.getElementById('nameChangeModal')) document.getElementById('nameChangeModal').style.display='none'; if(e.target == document.getElementById('userActionModal')) document.getElementById('userActionModal').style.display='none'; }
