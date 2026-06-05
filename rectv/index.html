@@ -1493,7 +1493,10 @@ ${message || "[Dosya/Resim]"}`;
                 const isLiked = myLikes.includes(safeKey) ? 'liked' : ''; 
                 const timeHTML = item.added_time ? ` &nbsp;<i class="far fa-clock"></i> ${item.added_time}` : '';
                 
-                card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${badgeHTML}</div><div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta"><span>${item.added_date}${timeHTML}</span> <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span><span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span><span class="stat-badge"><i class="fas fa-exclamation-triangle stat-report" onclick="openReportModal(event, '${item.title}')"></i></span></div></div><i class="fas fa-play-circle play-icon"></i>`; 
+                // --- İŞARETLEDİĞİNİZ İKONLAR BURADAN KALDIRILDI ---
+                card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${badgeHTML}</div><div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta"><span>${item.added_date}${timeHTML}</span> <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span><span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span></div></div>`; 
+                // ----------------------------------------------------
+                
                 card.onclick = () => { 
                     current = item; incrementViewCount(item.title); document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; 
                     lastFocusedElement = card;
