@@ -53,6 +53,14 @@
         .container { padding: 15px; }
         .card { background: var(--card-bg); border-radius: 15px; padding: 10px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 1px solid var(--border); position: relative; transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         .card.hidden { display: none; }
+        
+        /* ADMİN GİZLEME CSS */
+        .force-hidden { display: none !important; }
+        .admin-delete-btn { display: none; align-items: center; justify-content: center; padding: 15px; margin: 8px 0; border-radius: 12px; background: rgba(255,0,64,0.1); border: 1px solid #ff0040; gap: 10px; cursor: pointer; color: #ff4d4d; transition: background 0.3s; }
+        .admin-delete-btn:hover { background: rgba(255,0,64,0.3); color: #fff; }
+        body.admin-mode .admin-delete-btn { display: flex; }
+        /* ------------------ */
+
         .img-box { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
         .card-img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
         
@@ -584,6 +592,12 @@
             <div class="opt focusable" id="externalWeb" style="background: rgba(255,171,0,0.1); border: 1px solid #ffab00;">
                 <i class="fas fa-external-link-alt" style="color:#ffab00"></i> <b style="color:#ffab00">Tarayıcıda Aç / İndir</b>
             </div>
+            
+            <!-- ADMIN SİL BUTONU -->
+            <div class="admin-delete-btn focusable" id="adminDeleteCardBtn" onclick="deleteCurrentCard()">
+                <i class="fas fa-trash-alt"></i> <b>SİSTEMDEN SİL (Herkes İçin)</b>
+            </div>
+
             <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:12px; border-radius:10px; border:none; background:#333; color:white; margin-top:10px; cursor:pointer; font-weight:bold;" id="modalCloseBtn" class="focusable">Vazgeç</button>
         </div>
     </div>
@@ -631,6 +645,7 @@
         let countdownInterval;
         let rulesTimeout;
         let lastFocusedElement = null;
+        window.hiddenCards = {}; // Gizlenen kartları tutacak objemiz
 
         let currentTab = 'global'; 
         let currentPrivateRoom = null;
@@ -1267,7 +1282,34 @@ ${message || "[Dosya/Resim]"}`;
         
         function emergencyLogin() { const pass = document.getElementById('emergencyPass').value; if(pass === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; alert("Yönetici girişi başarılı!"); location.reload(); } else { alert("Hatalı şifre!"); } }
 
+        function applyHiddenCards() {
+            document.querySelectorAll('.card').forEach(card => {
+                const tEl = card.querySelector('.card-name');
+                if(tEl) {
+                    const k = sanitizeKey(tEl.innerText);
+                    if(window.hiddenCards && window.hiddenCards[k]) card.classList.add('force-hidden');
+                    else card.classList.remove('force-hidden');
+                }
+            });
+        }
+
+        window.deleteCurrentCard = function() {
+            if(!isAdmin || !current || !current.title) return;
+            if(confirm("Bu kartı KALICI olarak tüm kullanıcılardan silmek istediğinize emin misiniz?")) {
+                const safeKey = sanitizeKey(current.title);
+                database.ref('hidden_cards/' + safeKey).set(true);
+                showToast("Kart Sistemden Silindi!", "fa-trash");
+                document.getElementById('modal').style.display = 'none';
+            }
+        };
+
         function listenToData() {
+            // GİZLENMİŞ KARTLARI DİNLE VE ANINDA UYGULA
+            database.ref('hidden_cards').on('value', (s) => {
+                window.hiddenCards = s.exists() ? s.val() : {};
+                applyHiddenCards();
+            });
+
             database.ref('extras').on('value', (s) => { 
                 if(s.exists()) { 
                     const extras = s.val(); 
@@ -1492,6 +1534,10 @@ ${message || "[Dosya/Resim]"}`;
                 const likes = globalLikeCounts[safeKey] || 0; 
                 const isLiked = myLikes.includes(safeKey) ? 'liked' : ''; 
                 const timeHTML = item.added_time ? ` &nbsp;<i class="far fa-clock"></i> ${item.added_time}` : '';
+                
+                if(window.hiddenCards && window.hiddenCards[safeKey]) {
+                    card.classList.add('force-hidden');
+                }
                 
                 // --- İŞARETLEDİĞİNİZ İKONLAR BURADAN KALDIRILDI ---
                 card.innerHTML = `<div class="img-box"><img src="${item.image}" class="card-img" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10'"> ${badgeHTML}</div><div class="card-info"><div class="card-name">${item.title}</div><div class="card-meta"><span>${item.added_date}${timeHTML}</span> <span class="stat-badge"><i class="fas fa-eye stat-eye"></i> <span class="count-val-eye">${views}</span></span><span class="stat-badge"><i class="fas fa-heart stat-heart ${isLiked}" onclick="toggleLike(event, '${item.title}')"></i> <span class="count-val-heart">${likes}</span></span></div></div>`; 
