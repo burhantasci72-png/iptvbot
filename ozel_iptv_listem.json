@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 D875.DTV - İPTV LİNKLER (4 Adet)",
+        "m3u_url": "http://d875.dtv.homes:80/get.php?username=nb0854254085421&password=ia5e1rn3q5&type=m3u_plus",
+        "web_link_url": "https://ay.live/DjJdp",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "11.06.2026",
+        "added_time": "20:20"
+    },
+    {
+        "title": "🔥 D875.DTV - İPTV LİNKLER (4 Adet)",
         "m3u_url": "http://d875.dtv.homes:80/get.php?username=95ium40a6k&password=24f5vekoqu&type=m3u_plus",
         "web_link_url": "https://ay.live/pf3Cxf",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2386,14 +2394,6 @@
     {
         "title": "🔥 PORTAL.WOAB - İPTV LİNKLER (2 Adet)",
         "m3u_url": "http://portal.woab.top:8080/get.php?username=chicomentiroso&password=M9N6YzjKVI&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/iFoPd",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "07.06.2026",
-        "added_time": "12:08"
-    },
-    {
-        "title": "🔥 PORTAL.POROTOM - İPTV LİNKLER (3 Adet)",
-        "m3u_url": "http://portal.porotom.com:8080/get.php?username=oJGwUF7f&password=IOpegs83&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/iFoPd",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "07.06.2026",
