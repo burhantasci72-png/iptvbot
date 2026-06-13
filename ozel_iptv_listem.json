@@ -1,5 +1,21 @@
 [
     {
+        "title": "🔥 XVISNET - İPTV LİNKLER (4 Adet)",
+        "m3u_url": "http://xvisnet.xyz:8080/get.php?username=Saladin&password=x050123x&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/dVCtfY",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "13.06.2026",
+        "added_time": "13:46"
+    },
+    {
+        "title": "🔥 TFX1 - İPTV LİNKLER (4 Adet)",
+        "m3u_url": "http://tfx1.com:8080/get.php?username=brthomas&password=t170426s&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/dVCtfY",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "13.06.2026",
+        "added_time": "13:46"
+    },
+    {
         "title": "🔥 HLMTV - İPTV LİNKLER (2 Adet)",
         "m3u_url": "http://hlmtv.shop:80/get.php?username=cerkezyalcin1&password=1yalcincerkez&type=m3u_plus",
         "web_link_url": "https://ay.live/2huNvJ",
@@ -2378,22 +2394,6 @@
     {
         "title": "🔥 THALRION - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://thalrion.xyz:8080/get.php?username=Semidervishi10&password=fzacKeA&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/iFoPd",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "07.06.2026",
-        "added_time": "12:08"
-    },
-    {
-        "title": "🔥 TCINE - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://tcine.top:80/get.php?username=exx4cfg&password=h9bfy11&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/iFoPd",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "07.06.2026",
-        "added_time": "12:08"
-    },
-    {
-        "title": "🔥 TEAM.PLUS-STREAM - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://team.plus-stream.com:8080/get.php?username=SalYesil7706&password=a8ufd926Ez&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/iFoPd",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "07.06.2026",
