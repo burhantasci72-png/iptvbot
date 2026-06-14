@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 WEBTV5 - İPTV LİNKLER (1 Adet)",
+        "m3u_url": "http://webtv5.xyz:8080/get.php?username=onursako&password=9DB8372K&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/hlDiX",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "14.06.2026",
+        "added_time": "16:40"
+    },
+    {
         "title": "🔥 CDN.AMAZON-CLOUD - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://cdn.amazon-cloud.services:8080/get.php?username=onursako&password=9DB8372K&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/K9mj",
@@ -2386,14 +2394,6 @@
     {
         "title": "🔥 TVIGATE - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://tvigate.com:2095/get.php?username=basemxhussam&password=Ljvz6abUs4&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/iFoPd",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "07.06.2026",
-        "added_time": "12:08"
-    },
-    {
-        "title": "🔥 TVGOLD-MAX - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://tvgold-max.info:8089/get.php?username=8935141842834&password=4715628103781&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/iFoPd",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "07.06.2026",
