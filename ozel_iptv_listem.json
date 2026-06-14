@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 PORTAL.PRIWES - İPTV LİNKLER (13 Adet)",
+        "m3u_url": "http://portal.priwes.com:8080/get.php?username=deomerakat&password=RUe5eEkRV&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/t3sWy",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "15.06.2026",
+        "added_time": "00:12"
+    },
+    {
+        "title": "🔥 PORTAL.PRIWES - İPTV LİNKLER (13 Adet)",
         "m3u_url": "http://portal.priwes.com:8080/get.php?username=vjWdnya7&password=o6BaXRVY&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/2udII",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2386,14 +2394,6 @@
     {
         "title": "🔥 VPN.DINODNS - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://vpn.dinodns.xyz:80/get.php?username=8e4684ccc4&password=c87c36a47315&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/iFoPd",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "07.06.2026",
-        "added_time": "12:08"
-    },
-    {
-        "title": "🔥 VOD-4K - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://vod-4k.info:8089/get.php?username=8362072142013&password=1731732710615&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/iFoPd",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "07.06.2026",
