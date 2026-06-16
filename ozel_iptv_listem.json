@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 IPTVTURKIE - İPTV LİNKLER (7 Adet)",
+        "m3u_url": "http://iptvturkie.xyz:8080/get.php?username=cm7382tv&password=cmm1906yy00&type=m3u_plus",
+        "web_link_url": "https://ay.live/CSzVeD",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "16.06.2026",
+        "added_time": "07:54"
+    },
+    {
         "title": "🔥 IPTVTURKIE - İPTV LİNKLER (8 Adet)",
         "m3u_url": "http://iptvturkie.xyz:8080/get.php?username=hmt3295&password=hmt0712yy00&type=m3u_plus",
         "web_link_url": "https://ay.live/zi5V7O",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "09.06.2026",
         "added_time": "06:46"
-    },
-    {
-        "title": "🔥 TV34 - İPTV LİNKLER (6 Adet)",
-        "m3u_url": "http://tv34.co:8080/get.php?username=hbp025krvn&password=Q2XqxHfmTw&type=m3u_plus&output=mpegts",
-        "web_link_url": "https://ay.live/ypFhHh",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "09.06.2026",
-        "added_time": "06:45"
     }
 ]
