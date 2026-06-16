@@ -1,6 +1,22 @@
 [
     {
         "title": "🔥 185.149.120 - İPTV LİNKLER (13 Adet)",
+        "m3u_url": "http://185.149.120.89:8080/get.php?username=am35kgnt&password=3QOon4nbHH&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/5tU",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "17.06.2026",
+        "added_time": "00:13"
+    },
+    {
+        "title": "🔥 185.149.120 - İPTV LİNKLER (13 Adet)",
+        "m3u_url": "http://185.149.120.89:8080/get.php?username=Murrofx&password=WxZHMx2qSw&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/cEVJje",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "17.06.2026",
+        "added_time": "00:13"
+    },
+    {
+        "title": "🔥 185.149.120 - İPTV LİNKLER (13 Adet)",
         "m3u_url": "http://185.149.120.89:8080/get.php?username=WXzKHmaj&password=nokOgNoB&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/GY7yJx",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2382,21 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "10.06.2026",
         "added_time": "10:29"
-    },
-    {
-        "title": "🔥 TEKNO072 - İPTV LİNKLER (7 Adet)",
-        "m3u_url": "http://tekno072.xyz:8080/get.php?username=srkn5030&password=srk0408gg00&type=m3u_plus&output=mpegts",
-        "web_link_url": "https://ay.live/QX69Bt",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "10.06.2026",
-        "added_time": "10:28"
-    },
-    {
-        "title": "🔥 TEKNO072 - İPTV LİNKLER (7 Adet)",
-        "m3u_url": "http://tekno072.xyz:8080/get.php?username=mmhh28252&password=hm22112yy00&type=m3u_plus&output=mpegts",
-        "web_link_url": "https://ay.live/jlTOuE",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "10.06.2026",
-        "added_time": "10:28"
     }
 ]
