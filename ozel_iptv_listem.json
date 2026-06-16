@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 STORETVIP - İPTV LİNKLER (6 Adet)",
+        "m3u_url": "http://storetvip.shop:8080/get.php?username=mhmt9179&password=ykt.200124&type=m3u",
+        "web_link_url": "https://ay.live/VUgR6",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "16.06.2026",
+        "added_time": "21:41"
+    },
+    {
+        "title": "🔥 STORETVIP - İPTV LİNKLER (6 Adet)",
         "m3u_url": "http://storetvip.shop:8080/get.php?username=CHGbKukFv5&password=UWdGBFgWT3&type=m3u",
         "web_link_url": "https://ay.live/SL43U",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "10.06.2026",
         "added_time": "10:27"
-    },
-    {
-        "title": "🔥 SUNX101 - İPTV LİNKLER (5 Adet)",
-        "m3u_url": "http://sunx101.xyz:80/get.php?username=cemaldemircan&password=9BahxdaG2V&type=m3u",
-        "web_link_url": "https://ay.live/tIk",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "10.06.2026",
-        "added_time": "00:31"
     }
 ]
