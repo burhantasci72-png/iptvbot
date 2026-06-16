@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 185.149.120 - İPTV LİNKLER (13 Adet)",
+        "m3u_url": "http://185.149.120.89:8080/get.php?username=L8M9PT6A&password=Th20ziSv&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/URZqm0",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "17.06.2026",
+        "added_time": "00:14"
+    },
+    {
+        "title": "🔥 185.149.120 - İPTV LİNKLER (13 Adet)",
         "m3u_url": "http://185.149.120.89:8080/get.php?username=f602wxGY&password=9W2MDICC3xYfWdz4&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/FMWI",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2386,14 +2394,6 @@
     {
         "title": "🔥 TEKNO072 - İPTV LİNKLER (7 Adet)",
         "m3u_url": "http://tekno072.xyz:8080/get.php?username=aaby7970&password=aab1709dd00&type=m3u_plus&output=mpegts",
-        "web_link_url": "#",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "10.06.2026",
-        "added_time": "10:30"
-    },
-    {
-        "title": "🔥 TEKNO072 - İPTV LİNKLER (7 Adet)",
-        "m3u_url": "http://tekno072.xyz:8080/get.php?username=Ramazanberkcan&password=beYCtCrMkU&type=m3u_plus&output=mpegts",
         "web_link_url": "#",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "10.06.2026",
