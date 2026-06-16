@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 IKRTVNEW - İPTV LİNKLER (8 Adet)",
+        "m3u_url": "http://ikrtvnew.com:2095/get.php?username=ismailsuruc&password=8be8adb4a4998b82&type=m3u_plus",
+        "web_link_url": "https://ay.live/qM7kA",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "16.06.2026",
+        "added_time": "07:18"
+    },
+    {
+        "title": "🔥 IKRTVNEW - İPTV LİNKLER (8 Adet)",
         "m3u_url": "http://ikrtvnew.com:2095/get.php?username=dmm6163cep&password=dmm0406gg00&type=m3u_plus",
         "web_link_url": "https://ay.live/hwHic7",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "08.06.2026",
         "added_time": "00:29"
-    },
-    {
-        "title": "🔥 VIP058ESMERTV - İPTV LİNKLER (13 Adet)",
-        "m3u_url": "http://vip058esmertv.live:8080/get.php?username=Christos&password=bGNBwzrz&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/ku8g",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "08.06.2026",
-        "added_time": "00:28"
     }
 ]
