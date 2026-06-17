@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 GERMANYSERVERS2 - İPTV LİNKLER (8 Adet)",
+        "m3u_url": "http://germanyservers2.net:8080/get.php?username=ramo&password=123&type=m3u_plus",
+        "web_link_url": "https://ay.live/kfY",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "17.06.2026",
+        "added_time": "06:14"
+    },
+    {
+        "title": "🔥 GERMANYSERVERS2 - İPTV LİNKLER (8 Adet)",
         "m3u_url": "http://germanyservers2.net:8080/get.php?username=harunkurubas&password=n7P3URJCT2&type=m3u_plus",
         "web_link_url": "https://ay.live/Ef9",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "10.06.2026",
         "added_time": "15:31"
-    },
-    {
-        "title": "🔥 STORETVIP - İPTV LİNKLER (7 Adet)",
-        "m3u_url": "http://storetvip.shop:8080/get.php?username=024yunus&password=hande2424&type=m3u_plus&output=mpegts",
-        "web_link_url": "https://ay.live/179X",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "10.06.2026",
-        "added_time": "14:02"
     }
 ]
