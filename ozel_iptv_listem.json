@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 86.107.179 - İPTV LİNKLER (8 Adet)",
+        "m3u_url": "http://86.107.179.250:80/get.php?username=gunaydin4601&password=22092023asd&type=m3u_plus",
+        "web_link_url": "https://ay.live/wZX9us",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "17.06.2026",
+        "added_time": "06:09"
+    },
+    {
         "title": "🔥 185.149.120 - İPTV LİNKLER (13 Adet)",
         "m3u_url": "http://185.149.120.89:8080/get.php?username=L8M9PT6A&password=Th20ziSv&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/URZqm0",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "10.06.2026",
         "added_time": "10:31"
-    },
-    {
-        "title": "🔥 TEKNO072 - İPTV LİNKLER (7 Adet)",
-        "m3u_url": "http://tekno072.xyz:8080/get.php?username=aaby7970&password=aab1709dd00&type=m3u_plus&output=mpegts",
-        "web_link_url": "#",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "10.06.2026",
-        "added_time": "10:30"
     }
 ]
