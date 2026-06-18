@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 PLAYERAPI - İPTV LİNKLER (3 Adet)",
+        "m3u_url": "http://playerapi.site:8080/get.php?username=MetinDede&password=CVyH587bZDpz&type=m3u_plus",
+        "web_link_url": "https://ay.live/5P3",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "18.06.2026",
+        "added_time": "07:22"
+    },
+    {
+        "title": "🔥 PLAYERAPI - İPTV LİNKLER (3 Adet)",
         "m3u_url": "http://playerapi.site:8080/get.php?username=mehmettangi&password=tangimehmet&type=m3u_plus",
         "web_link_url": "https://ay.live/eaCc",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "11.06.2026",
         "added_time": "20:20"
-    },
-    {
-        "title": "🔥 D875.DTV - İPTV LİNKLER (5 Adet)",
-        "m3u_url": "http://d875.dtv.homes:80/get.php?username=joe1df6a78uq19&password=2pengqlkzrfew1&type=m3u_plus",
-        "web_link_url": "https://ay.live/SJmhp",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "11.06.2026",
-        "added_time": "20:19"
     }
 ]
