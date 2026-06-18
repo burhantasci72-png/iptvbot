@@ -1,5 +1,21 @@
 [
     {
+        "title": "🔥 86.107.179 - İPTV LİNKLER (4 Adet)",
+        "m3u_url": "http://86.107.179.250/get.php?username=hamza1308&password=fzQ5UkGxC7&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/RtbuO",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "18.06.2026",
+        "added_time": "13:31"
+    },
+    {
+        "title": "🔥 T01X - İPTV LİNKLER (10 Adet)",
+        "m3u_url": "http://t01x.xyz:8080/get.php?username=neso77watv&password=nd17&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/RtbuO",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "18.06.2026",
+        "added_time": "13:31"
+    },
+    {
         "title": "🔥 86.107.179 - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://86.107.179.250/get.php?username=matay0608&password=kpyzyjMSVF&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/jSGC",
@@ -2382,21 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "11.06.2026",
         "added_time": "23:05"
-    },
-    {
-        "title": "🔥 D875.DTV - İPTV LİNKLER (4 Adet)",
-        "m3u_url": "http://d875.dtv.homes:80/get.php?username=51o9lcwdny&password=vypvk572ih&type=m3u_plus",
-        "web_link_url": "https://ay.live/6dF7Oy",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "11.06.2026",
-        "added_time": "20:21"
-    },
-    {
-        "title": "🔥 D875.DTV - İPTV LİNKLER (4 Adet)",
-        "m3u_url": "http://d875.dtv.homes:80/get.php?username=link4tv_695074&password=h57hW4Yy&type=m3u_plus",
-        "web_link_url": "https://ay.live/00wY",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "11.06.2026",
-        "added_time": "20:21"
     }
 ]
