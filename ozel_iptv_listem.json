@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 IPZEN - İPTV LİNKLER (3 Adet)",
+        "m3u_url": "http://ipzen.store:8080/get.php?username=Umut06&password=QUpumtttfypZ&type=m3u_plus",
+        "web_link_url": "https://ay.live/YDTdiO",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "18.06.2026",
+        "added_time": "17:19"
+    },
+    {
+        "title": "🔥 IPZEN - İPTV LİNKLER (3 Adet)",
         "m3u_url": "http://ipzen.store:8080/get.php?username=Unalk&password=7zqAYzRJQKNP&type=m3u_plus",
         "web_link_url": "https://ay.live/InYKj",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "12.06.2026",
         "added_time": "00:06"
-    },
-    {
-        "title": "🔥 D875.DTV - İPTV LİNKLER (4 Adet)",
-        "m3u_url": "http://d875.dtv.homes:80/get.php?username=51o9lcwdny&password=vypvk572ih&type=m3u_plus",
-        "web_link_url": "https://ay.live/VMNx",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "12.06.2026",
-        "added_time": "00:05"
     }
 ]
