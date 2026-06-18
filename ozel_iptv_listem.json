@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 VM-STREAM - İPTV LİNKLER (4 Adet)",
+        "m3u_url": "http://vm-stream.live:8080/get.php?username=LabinotBruder&password=eDdW6jj&type=m3u_plus",
+        "web_link_url": "https://ay.live/Sxf",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "18.06.2026",
+        "added_time": "07:16"
+    },
+    {
         "title": "🔥 EURVIP - İPTV LİNKLER (5 Adet)",
         "m3u_url": "http://eurvip.xyz:2095/get.php?username=Ibokuzen&password=kcM6bexq1P&type=m3u_plus",
         "web_link_url": "https://ay.live/gPow",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "11.06.2026",
         "added_time": "12:20"
-    },
-    {
-        "title": "🔥 BASKENTCITYHD - İPTV LİNKLER (4 Adet)",
-        "m3u_url": "http://baskentcityhd.xyz:8080/get.php?username=nhMPC3ty6t&password=h9UhETM3u7&type=m3u_plus",
-        "web_link_url": "https://ay.live/jwG1g",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "11.06.2026",
-        "added_time": "03:15"
     }
 ]
