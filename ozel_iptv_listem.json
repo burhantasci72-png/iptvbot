@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 MAXIM985SRV.SVRCDNCORE - İPTV LİNKLER (6 Adet)",
+        "m3u_url": "http://maxim985srv.svrcdncore.shop:8080/get.php?username=ll0716&password=ll.412&type=m3u_plus",
+        "web_link_url": "#",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "19.06.2026",
+        "added_time": "23:02"
+    },
+    {
+        "title": "🔥 MAXIM985SRV.SVRCDNCORE - İPTV LİNKLER (6 Adet)",
         "m3u_url": "http://maxim985srv.svrcdncore.shop:8080/xmltv.php?username=thr7502&password=bTBBRd4ZA7CK",
         "web_link_url": "#",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "14.06.2026",
         "added_time": "16:00"
-    },
-    {
-        "title": "🔥 WU09 - İPTV LİNKLER (5 Adet)",
-        "m3u_url": "http://wu09.pro:8080/get.php?username=TPyBNq7yEJxJ&password=aBC6Z9RcdaWv&type=m3u_plus",
-        "web_link_url": "https://ay.live/60tb",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "14.06.2026",
-        "added_time": "15:55"
     }
 ]
