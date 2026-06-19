@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 DHN1 - İPTV LİNKLER (8 Adet)",
+        "m3u_url": "http://dhn1.xyz:8080/get.php?username=hmiG28vnql&password=DCLcUOTr7n&type=m3u_plus",
+        "web_link_url": "https://ay.live/xfIc",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "19.06.2026",
+        "added_time": "07:32"
+    },
+    {
         "title": "🔥 DHN1 - İPTV LİNKLER (2 Adet)",
         "m3u_url": "http://dhn1.xyz:8080/get.php?username=vWAZpMN0&password=m2p5rH8&type=m3u_plus",
         "web_link_url": "https://ay.live/V0GCvG",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "13.06.2026",
         "added_time": "00:15"
-    },
-    {
-        "title": "🔥 WORLDCLASSTV - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://worldclasstv.xyz:8080/get.php?username=5j3ve26L6g&password=tCMcK6HPmW&type=m3u_plus",
-        "web_link_url": "https://ay.live/p348D",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "12.06.2026",
-        "added_time": "22:08"
     }
 ]
