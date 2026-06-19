@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 UYDU - İPTV LİNKLER (8 Adet)",
+        "m3u_url": "http://uydu.site:8080/get.php?username=reinhard02&password=rrr0606hh00&type=m3u_plus",
+        "web_link_url": "https://ay.live/S8P",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "19.06.2026",
+        "added_time": "07:36"
+    },
+    {
+        "title": "🔥 UYDU - İPTV LİNKLER (8 Adet)",
         "m3u_url": "http://uydu.site:8080/get.php?username=hsn1777&password=hss0702yy00&type=m3u_plus",
         "web_link_url": "https://ay.live/HFj3a9",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2387,14 +2395,6 @@
         "title": "🔥 NXBRUSH - İPTV LİNKLER (8 Adet)",
         "m3u_url": "http://nxbrush.xyz:8080/get.php?username=coskundemir&password=AWybYE5dx4&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/RToG",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "13.06.2026",
-        "added_time": "00:38"
-    },
-    {
-        "title": "🔥 NXBRUSH - İPTV LİNKLER (8 Adet)",
-        "m3u_url": "http://nxbrush.xyz:8080/get.php?username=bircande&password=bwTLYQAwZx&type=m3u_plus&output=mpegts",
-        "web_link_url": "https://ay.live/xeM4bR",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "13.06.2026",
         "added_time": "00:38"
