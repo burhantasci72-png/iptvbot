@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 SONBARHD - İPTV LİNKLER (3 Adet)",
+        "m3u_url": "http://sonbarhd.com:8080/get.php?username=3yM3ncy0fd&password=UlDzXWt5Xu&type=m3u_plus",
+        "web_link_url": "#",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "19.06.2026",
+        "added_time": "12:28"
+    },
+    {
         "title": "🔥 SONBARHD - İPTV LİNKLER (2 Adet)",
         "m3u_url": "http://sonbarhd.com:8080/get.php?username=LoJ8xl5crS&password=QniCxXYkGH&type=m3u_plus",
         "web_link_url": "#",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "13.06.2026",
         "added_time": "16:06"
-    },
-    {
-        "title": "🔥 MAXMARE - İPTV LİNKLER (8 Adet)",
-        "m3u_url": "http://maxmare.cfd:8080/get.php?username=halil5412&password=5qFFuAEWX2&type=m3u_plus",
-        "web_link_url": "https://ay.live/h5098",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "13.06.2026",
-        "added_time": "15:37"
     }
 ]
