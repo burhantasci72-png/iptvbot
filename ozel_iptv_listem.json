@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 MAXIM985SRV.SVRCDNCORE - İPTV LİNKLER (6 Adet)",
+        "m3u_url": "http://maxim985srv.svrcdncore.shop:8080/xmltv.php?username=tlh6694&password=bh.tlh003",
+        "web_link_url": "https://ay.live/p5cp1",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "19.06.2026",
+        "added_time": "23:02"
+    },
+    {
+        "title": "🔥 MAXIM985SRV.SVRCDNCORE - İPTV LİNKLER (6 Adet)",
         "m3u_url": "http://maxim985srv.svrcdncore.shop:8080/get.php?username=rcp3457&password=cn.26122023&type=m3u_plus",
         "web_link_url": "https://ay.live/aXCU",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "14.06.2026",
         "added_time": "15:37"
-    },
-    {
-        "title": "🔥 KULIS2026 - İPTV LİNKLER (12 Adet)",
-        "m3u_url": "http://kulis2026.xyz:8080/get.php?username=kaan35tufkci&password=tufekci35kn&type=m3u_plus",
-        "web_link_url": "https://ay.live/nwDZ",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "14.06.2026",
-        "added_time": "09:35"
     }
 ]
