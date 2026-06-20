@@ -1,5 +1,21 @@
 [
     {
+        "title": "🔥 PLAYERAPI - İPTV LİNKLER (4 Adet)",
+        "m3u_url": "http://playerapi.site:8080/get.php?username=alpertanrikulu2538&password=cGgCBpYh&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/vc9h",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "20.06.2026",
+        "added_time": "21:47"
+    },
+    {
+        "title": "🔥 Z3R0-VIP - İPTV LİNKLER (4 Adet)",
+        "m3u_url": "http://z3r0-vip.com:8080/get.php?username=AmDav&password=c5d36GNFJ6&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/vc9h",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "20.06.2026",
+        "added_time": "21:47"
+    },
+    {
         "title": "🔥 Z3R0-VIP - İPTV LİNKLER (2 Adet)",
         "m3u_url": "http://z3r0-vip.com:8080/get.php?username=asa7586TR&password=hqqYTPwN5q&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/Bz4KG",
@@ -2379,22 +2395,6 @@
         "title": "🔥 DPSMARTONE - İPTV LİNKLER (8 Adet)",
         "m3u_url": "http://dpsmartone.xyz:2095/get.php?username=fth2318&password=fth1211yykk&type=m3u_plus",
         "web_link_url": "https://ay.live/8fP5R",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "16.06.2026",
-        "added_time": "07:52"
-    },
-    {
-        "title": "🔥 DPSMARTONE - İPTV LİNKLER (7 Adet)",
-        "m3u_url": "http://dpsmartone.xyz:2095/get.php?username=ctn1005cep&password=ctn0601cc00bb&type=m3u_plus",
-        "web_link_url": "https://ay.live/lNMAiW",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "16.06.2026",
-        "added_time": "07:52"
-    },
-    {
-        "title": "🔥 DPSMARTONE - İPTV LİNKLER (8 Adet)",
-        "m3u_url": "http://dpsmartone.xyz:2095/get.php?username=bb7538tvgg&password=bb0609yy00&type=m3u_plus",
-        "web_link_url": "https://ay.live/NL1",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "16.06.2026",
         "added_time": "07:52"
