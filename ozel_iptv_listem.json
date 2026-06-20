@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 D.DEVTV - İPTV LİNKLER (1 Adet)",
+        "m3u_url": "http://d.devtv.cc:80/get.php?username=Sukru.celik&password=cUXta4Qn&type=m3u_plus",
+        "web_link_url": "https://ay.live/uPhAI",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "20.06.2026",
+        "added_time": "18:18"
+    },
+    {
         "title": "🔥 134884.YGZ88 - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://134884.ygz88.com:80/get.php?username=yalcinsert&password=4rs24u68tw&type=m3u_plus",
         "web_link_url": "https://ay.live/HKy",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "16.06.2026",
         "added_time": "07:19"
-    },
-    {
-        "title": "🔥 IKRTVNEW - İPTV LİNKLER (8 Adet)",
-        "m3u_url": "http://ikrtvnew.com:2095/get.php?username=Christian.&password=rnCmAtWGAU&type=m3u_plus",
-        "web_link_url": "https://ay.live/tm7",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "16.06.2026",
-        "added_time": "07:18"
     }
 ]
