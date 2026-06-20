@@ -1,5 +1,29 @@
 [
     {
+        "title": "🔥 PLAYERAPI - İPTV LİNKLER (2 Adet)",
+        "m3u_url": "http://playerapi.site:8080/get.php?username=beratbasat&password=Z1fYyZ6ZfD&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/vY6B",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "20.06.2026",
+        "added_time": "21:47"
+    },
+    {
+        "title": "🔥 DGIREY07 - İPTV LİNKLER (5 Adet)",
+        "m3u_url": "http://dgirey07.xyz:2095/get.php?username=azad3579&password=qwPpMQKwdf&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/vY6B",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "20.06.2026",
+        "added_time": "21:47"
+    },
+    {
+        "title": "🔥 Z3R0-VIP - İPTV LİNKLER (1 Adet)",
+        "m3u_url": "http://z3r0-vip.com:8080/get.php?username=biricik&password=0101&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/vY6B",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "20.06.2026",
+        "added_time": "21:47"
+    },
+    {
         "title": "🔥 PLAYERAPI - İPTV LİNKLER (4 Adet)",
         "m3u_url": "http://playerapi.site:8080/get.php?username=alpertanrikulu2538&password=cGgCBpYh&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/vc9h",
@@ -2374,29 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "16.06.2026",
         "added_time": "07:53"
-    },
-    {
-        "title": "🔥 DPSMARTONE - İPTV LİNKLER (4 Adet)",
-        "m3u_url": "http://dpsmartone.xyz:2095/get.php?username=yngrr1306&password=ynng0613gg00&type=m3u_plus",
-        "web_link_url": "https://ay.live/uIhFv",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "16.06.2026",
-        "added_time": "07:53"
-    },
-    {
-        "title": "🔥 DPSMARTONE - İPTV LİNKLER (8 Adet)",
-        "m3u_url": "http://dpsmartone.xyz:2095/get.php?username=M.erenkaya&password=h1dTwA4Rcs&type=m3u_plus",
-        "web_link_url": "https://ay.live/1HPG",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "16.06.2026",
-        "added_time": "07:53"
-    },
-    {
-        "title": "🔥 DPSMARTONE - İPTV LİNKLER (8 Adet)",
-        "m3u_url": "http://dpsmartone.xyz:2095/get.php?username=fth2318&password=fth1211yykk&type=m3u_plus",
-        "web_link_url": "https://ay.live/8fP5R",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "16.06.2026",
-        "added_time": "07:52"
     }
 ]
