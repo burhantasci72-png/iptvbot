@@ -1,6 +1,22 @@
 [
     {
         "title": "🔥 PLAYERAPI - İPTV LİNKLER (4 Adet)",
+        "m3u_url": "http://playerapi.site:8080/get.php?username=ahmetcaskurlu289831&password=j9K48j4Sv7PX1&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/p6paVZ",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "20.06.2026",
+        "added_time": "21:46"
+    },
+    {
+        "title": "🔥 Z3R0-VIP - İPTV LİNKLER (4 Adet)",
+        "m3u_url": "http://z3r0-vip.com:8080/get.php?username=Ahmetnayir5323&password=5URNB2Kkqd&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/p6paVZ",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "20.06.2026",
+        "added_time": "21:46"
+    },
+    {
+        "title": "🔥 PLAYERAPI - İPTV LİNKLER (4 Adet)",
         "m3u_url": "http://playerapi.site:8080/get.php?username=agitrubarTR&password=dZq18AKKhW&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/hMxg11",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2382,21 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "16.06.2026",
         "added_time": "07:24"
-    },
-    {
-        "title": "🔥 CTN34 - İPTV LİNKLER (8 Adet)",
-        "m3u_url": "http://ctn34.xyz:8080/get.php?username=azad3579&password=qwPpMQKwdf&type=m3u_plus",
-        "web_link_url": "https://ay.live/1qUd",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "16.06.2026",
-        "added_time": "07:24"
-    },
-    {
-        "title": "🔥 CTN34 - İPTV LİNKLER (8 Adet)",
-        "m3u_url": "http://ctn34.xyz:8080/get.php?username=ctn1005tv&password=ctn0601zz00ss33&type=m3u_plus",
-        "web_link_url": "https://ay.live/McgC",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "16.06.2026",
-        "added_time": "07:21"
     }
 ]
