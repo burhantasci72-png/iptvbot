@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 KBCBW - İPTV LİNKLER (3 Adet)",
+        "m3u_url": "http://kbcbw.xyz:8080/get.php?username=JYcXuGPuf2&password=wD9hRDKDKr&type=m3u_plus",
+        "web_link_url": "https://ay.live/KyZtK",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "20.06.2026",
+        "added_time": "10:14"
+    },
+    {
         "title": "🔥 PROTV - İPTV LİNKLER (3 Adet)",
         "m3u_url": "http://protv.pw:57050/get.php?username=hzC6JFUhUKrC&password=YMyBBLHXyE54&type=m3u_plus",
         "web_link_url": "https://ay.live/8AG",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "16.06.2026",
         "added_time": "05:56"
-    },
-    {
-        "title": "🔥 LINE-GALAXY - İPTV LİNKLER (7 Adet)",
-        "m3u_url": "http://line-galaxy.online/get.php?username=6d1ca7eed7&password=4f57e77d2502&type=m3u_plus",
-        "web_link_url": "https://ay.live/yPxp",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "16.06.2026",
-        "added_time": "05:37"
     }
 ]
