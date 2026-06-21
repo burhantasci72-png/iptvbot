@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 MYTV.DONVOLGA - İPTV LİNKLER (1 Adet)",
+        "m3u_url": "http://mytv.donvolga.com:8080/get.php?username=nejla&password=nejla&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/x66Szg",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "21.06.2026",
+        "added_time": "15:31"
+    },
+    {
         "title": "🔥 MYLOIPTV.MYLOTV - İPTV LİNKLER (3 Adet)",
         "m3u_url": "http://myloiptv.mylotv.biz:57050/get.php?username=ARNCgVkDaXnW&password=9yPfCr4FGuqH&type=m3u_plus",
         "web_link_url": "https://ay.live/n5KFn",
@@ -2387,14 +2395,6 @@
         "title": "🔥 PLAYERAPI - İPTV LİNKLER (3 Adet)",
         "m3u_url": "http://playerapi.site:8080/get.php?username=m.akkaya&password=grPJfrp&type=m3u_plus",
         "web_link_url": "https://ay.live/9NOiWQ",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "18.06.2026",
-        "added_time": "07:23"
-    },
-    {
-        "title": "🔥 PLAYERAPI - İPTV LİNKLER (4 Adet)",
-        "m3u_url": "http://playerapi.site:8080/get.php?username=gQZ5Dw8y&password=fQpHyHS8&type=m3u_plus",
-        "web_link_url": "https://ay.live/ZIQW0",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "18.06.2026",
         "added_time": "07:23"
