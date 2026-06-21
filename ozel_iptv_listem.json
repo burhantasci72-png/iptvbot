@@ -1,5 +1,21 @@
 [
     {
+        "title": "🔥 PORTAL.PRIWES - İPTV LİNKLER (4 Adet)",
+        "m3u_url": "http://portal.priwes.com:8080/get.php?username=qsTpbPC8&password=IdjL0Gfu&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/U9aI",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "21.06.2026",
+        "added_time": "08:55"
+    },
+    {
+        "title": "🔥 EUTECK - İPTV LİNKLER (9 Adet)",
+        "m3u_url": "http://euteck.xyz:2095/get.php?username=suleyman7600&password=suleyman.7600&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/U9aI",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "21.06.2026",
+        "added_time": "08:55"
+    },
+    {
         "title": "🔥 PORTAL.PRIWES - İPTV LİNKLER (13 Adet)",
         "m3u_url": "http://portal.priwes.com:8080/get.php?username=tambul2019&password=145873s211&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/6zl3k",
@@ -2382,21 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "17.06.2026",
         "added_time": "06:13"
-    },
-    {
-        "title": "🔥 86.107.179 - İPTV LİNKLER (8 Adet)",
-        "m3u_url": "http://86.107.179.250:80/get.php?username=Sedat1Almanya&password=jkCUjGxPdE&type=m3u_plus",
-        "web_link_url": "https://ay.live/Lnd",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "17.06.2026",
-        "added_time": "06:09"
-    },
-    {
-        "title": "🔥 86.107.179 - İPTV LİNKLER (8 Adet)",
-        "m3u_url": "http://86.107.179.250:80/get.php?username=ahmetcetin16&password=22072023&type=m3u_plus",
-        "web_link_url": "https://ay.live/GkuDKL",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "17.06.2026",
-        "added_time": "06:09"
     }
 ]
