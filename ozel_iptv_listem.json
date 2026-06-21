@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 PORTAL.PRIWES - İPTV LİNKLER (13 Adet)",
+        "m3u_url": "http://portal.priwes.com:8080/get.php?username=Enderkinar&password=sWoPNn2mIn&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/1JZn",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "21.06.2026",
+        "added_time": "10:11"
+    },
+    {
+        "title": "🔥 PORTAL.PRIWES - İPTV LİNKLER (13 Adet)",
         "m3u_url": "http://portal.priwes.com:8080/get.php?username=bahadircav&password=b3zn5fo8h&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/kZGE",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "17.06.2026",
         "added_time": "06:34"
-    },
-    {
-        "title": "🔥 0G7HLJF4WX.SASA24 - İPTV LİNKLER (8 Adet)",
-        "m3u_url": "http://0g7hljf4wx.sasa24.xyz:80/get.php?username=mgg_luciatufano&password=xpwH8B63wQ&type=m3u_plus",
-        "web_link_url": "https://ay.live/OGB",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "17.06.2026",
-        "added_time": "06:33"
     }
 ]
