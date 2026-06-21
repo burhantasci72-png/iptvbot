@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 PORTAL.PRIWES - İPTV LİNKLER (13 Adet)",
+        "m3u_url": "http://portal.priwes.com:8080/get.php?username=deomerakat&password=RUe5eEkRV&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/gvo",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "21.06.2026",
+        "added_time": "10:13"
+    },
+    {
+        "title": "🔥 PORTAL.PRIWES - İPTV LİNKLER (13 Adet)",
         "m3u_url": "http://portal.priwes.com:8080/get.php?username=ahmetzerdal&password=y27m9a890&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/zfay",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "18.06.2026",
         "added_time": "07:16"
-    },
-    {
-        "title": "🔥 EURVIP - İPTV LİNKLER (5 Adet)",
-        "m3u_url": "http://eurvip.xyz:2095/get.php?username=Ibokuzen&password=kcM6bexq1P&type=m3u_plus",
-        "web_link_url": "https://ay.live/gPow",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "17.06.2026",
-        "added_time": "07:37"
     }
 ]
