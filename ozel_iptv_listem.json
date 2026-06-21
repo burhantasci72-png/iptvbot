@@ -1,6 +1,22 @@
 [
     {
         "title": "🔥 MYLOIPTV.MYLOTV - İPTV LİNKLER (3 Adet)",
+        "m3u_url": "http://myloiptv.mylotv.biz:57050/get.php?username=ARNCgVkDaXnW&password=9yPfCr4FGuqH&type=m3u_plus",
+        "web_link_url": "https://ay.live/n5KFn",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "21.06.2026",
+        "added_time": "15:20"
+    },
+    {
+        "title": "🔥 MYLOIPTV.MYLOTV - İPTV LİNKLER (2 Adet)",
+        "m3u_url": "http://myloiptv.mylotv.biz:57050/get.php?username=reVnyfBM3xKe&password=8mzLY3MfUsR4&type=m3u_plus",
+        "web_link_url": "https://ay.live/W7EG0t",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "21.06.2026",
+        "added_time": "15:20"
+    },
+    {
+        "title": "🔥 MYLOIPTV.MYLOTV - İPTV LİNKLER (3 Adet)",
         "m3u_url": "http://myloiptv.mylotv.biz:57050/get.php?username=ACAkfxZ8RM&password=kB5BHeKXkW&type=m3u_plus",
         "web_link_url": "https://ay.live/RK6hT",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2382,21 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "18.06.2026",
         "added_time": "07:23"
-    },
-    {
-        "title": "🔥 PLAYERAPI - İPTV LİNKLER (4 Adet)",
-        "m3u_url": "http://playerapi.site:8080/get.php?username=cihanozkanTR&password=j4JfqacXTM&type=m3u_plus",
-        "web_link_url": "https://ay.live/xRwf2m",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "18.06.2026",
-        "added_time": "07:23"
-    },
-    {
-        "title": "🔥 PLAYERAPI - İPTV LİNKLER (4 Adet)",
-        "m3u_url": "http://playerapi.site:8080/get.php?username=Yunustokgoz&password=c1KAkKCGyX&type=m3u_plus",
-        "web_link_url": "https://ay.live/aDqfl",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "18.06.2026",
-        "added_time": "07:22"
     }
 ]
