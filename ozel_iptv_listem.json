@@ -1,5 +1,21 @@
 [
     {
+        "title": "🔥 185.149.120 - İPTV LİNKLER (8 Adet)",
+        "m3u_url": "http://185.149.120.89:8080/get.php?username=4e12eda8cfaae112&password=cad10b&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/SjMQ",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "21.06.2026",
+        "added_time": "08:53"
+    },
+    {
+        "title": "🔥 2510STR - İPTV LİNKLER (5 Adet)",
+        "m3u_url": "http://2510str.xyz/get.php?username=08dca6383aaf&password=24bd086582&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/SjMQ",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "21.06.2026",
+        "added_time": "08:53"
+    },
+    {
         "title": "🔥 2510STR - İPTV LİNKLER (14 Adet)",
         "m3u_url": "http://2510str.xyz/get.php?username=feb7cf539917&password=f3b7bb399d&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/VltWSX",
@@ -2382,21 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "16.06.2026",
         "added_time": "23:09"
-    },
-    {
-        "title": "🔥 STORETVIP - İPTV LİNKLER (4 Adet)",
-        "m3u_url": "http://storetvip.shop:8080/get.php?username=belerefon_15&password=15belerefon_15&type=m3u",
-        "web_link_url": "https://ay.live/95K",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "16.06.2026",
-        "added_time": "21:42"
-    },
-    {
-        "title": "🔥 STORETVIP - İPTV LİNKLER (6 Adet)",
-        "m3u_url": "http://storetvip.shop:8080/get.php?username=mhmt9179&password=ykt.200124&type=m3u",
-        "web_link_url": "https://ay.live/VUgR6",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "16.06.2026",
-        "added_time": "21:41"
     }
 ]
