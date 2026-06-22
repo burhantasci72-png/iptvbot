@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 VIPMAX - İPTV LİNKLER (13 Adet)",
+        "m3u_url": "http://vipmax.site:8080/get.php?username=evlat&password=CsKXTAAqvX&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/ZDJ",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "22.06.2026",
+        "added_time": "22:05"
+    },
+    {
+        "title": "🔥 VIPMAX - İPTV LİNKLER (13 Adet)",
         "m3u_url": "http://vipmax.site:8080/get.php?username=hca147&password=b9WUBGMEP&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/HEjqjY",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2386,14 +2394,6 @@
     {
         "title": "🔥 3W.UNALAN1 - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://3w.unalan1.xyz:8080/get.php?username=madenc0505&password=azx09z11t2024&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/D9wob",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "21.06.2026",
-        "added_time": "19:55"
-    },
-    {
-        "title": "🔥 M2.REDD-XC - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://m2.redd-xc.com:80/get.php?username=OmRKrC2012&password=cGxFwazfmmQ5&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/D9wob",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "21.06.2026",
