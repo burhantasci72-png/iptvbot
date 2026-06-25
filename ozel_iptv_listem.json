@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 217.182.34 - İPTV LİNKLER (5 Adet)",
+        "m3u_url": "http://217.182.34.226:8000/get.php?username=Nihatgulec&password=EEu3ZSZ0Jx&type=m3u_plus",
+        "web_link_url": "https://ay.live/4wvqV",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "25.06.2026",
+        "added_time": "12:26"
+    },
+    {
+        "title": "🔥 217.182.34 - İPTV LİNKLER (5 Adet)",
         "m3u_url": "http://217.182.34.226:8000/get.php?username=Serdarsivasli&password=88drmFTPanFZ&type=m3u_plus",
         "web_link_url": "https://ay.live/FKr",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2386,14 +2394,6 @@
     {
         "title": "🔥 EU.IPSTICK - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://eu.ipstick.net:2086/get.php?username=gralpergok01&password=p4xZ9F6hwyz&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/D9wob",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "21.06.2026",
-        "added_time": "19:55"
-    },
-    {
-        "title": "🔥 LIST4K - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://list4k.online:8080/get.php?username=Julio071325&password=9vBWznTECW&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/D9wob",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "21.06.2026",
