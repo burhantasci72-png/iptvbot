@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 CMS.WELTIPTV - İPTV LİNKLER (1 Adet)",
+        "m3u_url": "http://cms.weltiptv.com:8000/get.php?username=OXBAySpYMq&password=8l9WISicYa&type=m3u_plus",
+        "web_link_url": "https://ay.live/LQH",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "25.06.2026",
+        "added_time": "15:26"
+    },
+    {
         "title": "🔥 217.182.34 - İPTV LİNKLER (3 Adet)",
         "m3u_url": "http://217.182.34.226:8000/get.php?username=Yunusozcan&password=juKhFtdWAB&type=m3u_plus",
         "web_link_url": "https://ay.live/qbUs",
@@ -2386,14 +2394,6 @@
     {
         "title": "🔥 SV.TIRAV - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://sv.tirav.net:8080/get.php?username=dfbae55d9e42&password=d0:d0:03:2f:c5:16&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/D9wob",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "21.06.2026",
-        "added_time": "19:55"
-    },
-    {
-        "title": "🔥 TR.SAMSUNTV - İPTV LİNKLER (2 Adet)",
-        "m3u_url": "http://tr.samsuntv.club:80/get.php?username=Private1620&password=Tms@0875dv&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/D9wob",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "21.06.2026",
