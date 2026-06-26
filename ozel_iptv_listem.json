@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 D875.DTV - İPTV LİNKLER (14 Adet)",
+        "m3u_url": "http://d875.dtv.homes:80/get.php?username=joharekarime&password=hhvog067ud&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/rAwY",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "26.06.2026",
+        "added_time": "08:58"
+    },
+    {
+        "title": "🔥 D875.DTV - İPTV LİNKLER (14 Adet)",
         "m3u_url": "http://d875.dtv.homes:80/get.php?username=5f1prt6ele&password=7f028p9na0&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/kmco",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "25.06.2026",
         "added_time": "15:26"
-    },
-    {
-        "title": "🔥 217.182.34 - İPTV LİNKLER (3 Adet)",
-        "m3u_url": "http://217.182.34.226:8000/get.php?username=Yunusozcan&password=juKhFtdWAB&type=m3u_plus",
-        "web_link_url": "https://ay.live/qbUs",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "25.06.2026",
-        "added_time": "12:34"
     }
 ]
