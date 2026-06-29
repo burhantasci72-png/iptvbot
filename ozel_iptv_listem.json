@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 HKPREMIUMTV - İPTV LİNKLER (14 Adet)",
+        "m3u_url": "http://hkpremiumtv.xyz:8080/get.php?username=MichaelKonig&password=ge1FARuMg7&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/iKtCe9",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "29.06.2026",
+        "added_time": "22:44"
+    },
+    {
+        "title": "🔥 HKPREMIUMTV - İPTV LİNKLER (14 Adet)",
         "m3u_url": "http://hkpremiumtv.xyz:8080/get.php?username=adf7281&password=7137281&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/S3k7S",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2386,14 +2394,6 @@
     {
         "title": "🔥 YRC.LUX-PREMIUM-OTT - İPTV LİNKLER (2 Adet)",
         "m3u_url": "http://yrc.lux-premium-ott.xyz:80/get.php?username=MRHQMOEOH1&password=W5ZZLVAKHI&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/eyJ1c2VyX2lkIjo1MjQ3MzUsImNhdGVnb3J5IjowLCJ1cmwiOiJodHRwcyUzQSUyRiUyRmRwYXN0ZS5jb20lMkZCUUVKUFdMNFMifQ==",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "26.06.2026",
-        "added_time": "10:46"
-    },
-    {
-        "title": "🔥 YGKBHGRQ.CWDN-SMART4K - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://ygkbhgrq.cwdn-smart4k.space:80/get.php?username=P3TSJP3H&password=S5SQ59D8&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/eyJ1c2VyX2lkIjo1MjQ3MzUsImNhdGVnb3J5IjowLCJ1cmwiOiJodHRwcyUzQSUyRiUyRmRwYXN0ZS5jb20lMkZCUUVKUFdMNFMifQ==",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "26.06.2026",
