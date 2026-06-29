@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 FXMAG2 - İPTV LİNKLER (5 Adet)",
+        "m3u_url": "http://fxmag2.com:8080/get.php?username=ismailtv&password=aPRJy8Hp&type=m3u_plus",
+        "web_link_url": "https://ay.live/e1UMtm",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "29.06.2026",
+        "added_time": "11:59"
+    },
+    {
+        "title": "🔥 FXMAG2 - İPTV LİNKLER (5 Adet)",
         "m3u_url": "http://fxmag2.com:8080/get.php?username=4e12eda8cfaae112&password=cad10b&type=m3u_plus",
         "web_link_url": "https://ay.live/cEeM9",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2386,14 +2394,6 @@
     {
         "title": "🔥 SPD.BLC-ATENA - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://spd.blc-atena.com:80/get.php?username=48267500884&password=53378105945&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/eyJ1c2VyX2lkIjo1MjQ3MzUsImNhdGVnb3J5IjowLCJ1cmwiOiJodHRwcyUzQSUyRiUyRmRwYXN0ZS5jb20lMkZCTDQ2WFhVMkcifQ==",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "26.06.2026",
-        "added_time": "10:07"
-    },
-    {
-        "title": "🔥 SMART-OOTT - İPTV LİNKLER (2 Adet)",
-        "m3u_url": "http://smart-oott.xyz:80/get.php?username=ee66c14888&password=e2c40c247e5e&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/eyJ1c2VyX2lkIjo1MjQ3MzUsImNhdGVnb3J5IjowLCJ1cmwiOiJodHRwcyUzQSUyRiUyRmRwYXN0ZS5jb20lMkZCTDQ2WFhVMkcifQ==",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "26.06.2026",
