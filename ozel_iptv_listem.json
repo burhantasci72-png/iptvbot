@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 GENEL.AXIS5G - İPTV LİNKLER (5 Adet)",
+        "m3u_url": "http://genel.axis5g.xyz:8080/get.php?username=5g.samet91011&password=qs3wKapjDVCx&type=m3u",
+        "web_link_url": "https://ay.live/jst",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "01.07.2026",
+        "added_time": "00:05"
+    },
+    {
+        "title": "🔥 GENEL.AXIS5G - İPTV LİNKLER (5 Adet)",
         "m3u_url": "http://genel.axis5g.xyz:8080/get.php?username=5gcandost63&password=Dn767HDPSAwGZCrw&type=m3u",
         "web_link_url": "https://ay.live/H5ZmO",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2387,14 +2395,6 @@
         "title": "🔥 PAKETLERBURDA - İPTV LİNKLER (13 Adet)",
         "m3u_url": "http://paketlerburda.com:8080/get.php?username=sahihakpolatTEX&password=kn5Z1Tjq&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/eyJ1c2VyX2lkIjo1MjQ3MzUsImNhdGVnb3J5IjowLCJ1cmwiOiJodHRwcyUzQSUyRiUyRmRwYXN0ZS5jb20lMkZFNjZNSlRSR0QifQ==",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "26.06.2026",
-        "added_time": "16:33"
-    },
-    {
-        "title": "🔥 PAKETLERBURDA - İPTV LİNKLER (15 Adet)",
-        "m3u_url": "http://paketlerburda.com:8080/get.php?username=zaferkalkan4726&password=aA9SCXur&type=m3u_plus&output=mpegts",
-        "web_link_url": "https://ay.live/eyJ1c2VyX2lkIjo1MjQ3MzUsImNhdGVnb3J5IjowLCJ1cmwiOiJodHRwcyUzQSUyRiUyRmRwYXN0ZS5jb20lMkZDMldVVFZUQ1oifQ==",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "26.06.2026",
         "added_time": "16:33"
