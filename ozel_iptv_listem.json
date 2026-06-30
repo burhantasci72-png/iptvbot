@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 EU.ZORTV1 - İPTV LİNKLER (2 Adet)",
+        "m3u_url": "http://eu.zortv1.com:8080/get.php?username=Hasandelen1512&password=ywwHVav6FD&type=m3u_plus",
+        "web_link_url": "https://ay.live/2Xf34",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "01.07.2026",
+        "added_time": "00:06"
+    },
+    {
+        "title": "🔥 EU.ZORTV1 - İPTV LİNKLER (2 Adet)",
         "m3u_url": "http://eu.zortv1.com:8080/get.php?username=Omerfaruk0210&password=GWrwVB7mzSRR&type=m3u_plus",
         "web_link_url": "https://ay.live/15TI2",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "26.06.2026",
         "added_time": "18:22"
-    },
-    {
-        "title": "🔥 YUC.147364 - İPTV LİNKLER (2 Adet)",
-        "m3u_url": "http://yuc.147364.xyz:8080/get.php?username=soyle1475&password=svc1475.5741&type=m3u_plus",
-        "web_link_url": "https://ay.live/eyJ1c2VyX2lkIjo1MjQ3MzUsImNhdGVnb3J5IjowLCJ1cmwiOiJodHRwcyUzQSUyRiUyRmRwYXN0ZS5jb20lMkY0SFZMWVgyVVkifQ==",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "26.06.2026",
-        "added_time": "17:20"
     }
 ]
