@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 STREAM.AKER-IP - İPTV LİNKLER (3 Adet)",
+        "m3u_url": "http://stream.aker-ip.tv:8080//get.php?username=PieroZappala&password=F53EH7sQq7wd&type=m3u_plus&output=m3u8",
+        "web_link_url": "https://ay.live/iyRV",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "30.06.2026",
+        "added_time": "05:41"
+    },
+    {
         "title": "🔥 STREAM.AKER-IP - İPTV LİNKLER (4 Adet)",
         "m3u_url": "http://stream.aker-ip.tv:8080//get.php?username=ilkerduman&password=ilker5496&type=m3u_plus&output=m3u8",
         "web_link_url": "https://ay.live/PubC2P",
@@ -2387,14 +2395,6 @@
         "title": "🔥 SPECIALMY - İPTV LİNKLER (4 Adet)",
         "m3u_url": "http://specialmy.xyz:8080/get.php?username=Private1620&password=Tms@0875dv&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/eyJ1c2VyX2lkIjo1MjQ3MzUsImNhdGVnb3J5IjowLCJ1cmwiOiJodHRwcyUzQSUyRiUyRmRwYXN0ZS5jb20lMkYyNzlSWUdYUFEifQ==",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "26.06.2026",
-        "added_time": "10:46"
-    },
-    {
-        "title": "🔥 ZWFFBXUG.TOKISAFA - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://zwffbxug.tokisafa.com:80/get.php?username=Z2VWMRY7&password=JMFLKE5F&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/eyJ1c2VyX2lkIjo1MjQ3MzUsImNhdGVnb3J5IjowLCJ1cmwiOiJodHRwcyUzQSUyRiUyRmRwYXN0ZS5jb20lMkY1VzJON0JVRTYifQ==",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "26.06.2026",
         "added_time": "10:46"
