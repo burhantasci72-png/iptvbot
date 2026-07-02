@@ -307,10 +307,10 @@
             <div class="admin-modal-body">
                 
                 <div class="admin-menu-btn focusable" onclick="toggleSubMenu('streamAdmin')">
-                    <span>📺 Maç Yayını (Iframe & Dahili Player)</span> <i class="fas fa-chevron-down"></i>
+                    <span>📺 Maç Yayını (Iframe)</span> <i class="fas fa-chevron-down"></i>
                 </div>
                 <div id="streamAdmin" class="admin-submenu">
-                    <p style="font-size:0.8rem; color:#aaa; margin-bottom:5px;">Link video ise kendi Video.js oynatıcımızda, değilse Iframe olarak açılır.</p>
+                    <p style="font-size:0.8rem; color:#aaa; margin-bottom:5px;">Link canlı yayın oynatıcısında Iframe olarak açılır.</p>
                     <input type="text" id="stream1Inp" class="custom-input focusable" placeholder="Kanal 1 Linki (Zorunlu)">
                     <input type="text" id="stream2Inp" class="custom-input focusable" placeholder="Kanal 2 Linki (Opsiyonel)">
                     <input type="text" id="stream3Inp" class="custom-input focusable" placeholder="Kanal 3 Linki (Opsiyonel)">
@@ -410,17 +410,9 @@
         <button class="dropbtn focusable">IPTV ARAÇLAR <i class="fas fa-tools"></i></button>
         <div class="dropdown-content">
             <a href="go:combo" class="focusable"><i class="fas fa-search"></i> Combo Tarama 1</a>
-            <!-- Yeni eklenen satır -->
-           
-           
             <a href="go:com2" class="focusable"><i class="fas fa-search"></i> Combo Tarama 2</a>
-            
-            
-            
-              <a href="go:dns" class="focusable"><i class="fas fa-search"></i> Yan DNS Tarama </a>
-             
-            <a href="go:panel" class="focusable">
-            <i class="fas fa-server"></i> IPTV Panel Kontrol</a>
+            <a href="go:dns" class="focusable"><i class="fas fa-search"></i> Yan DNS Tarama </a>
+            <a href="go:panel" class="focusable"><i class="fas fa-server"></i> IPTV Panel Kontrol</a>
             <a href="go:stb" class="focusable"><i class="fas fa-server"></i> Mac To M3u</a>
         </div>
     </div>
@@ -572,7 +564,7 @@
     <div class="modal" id="modal">
         <div class="modal-box">
             <h3 id="mTitle" style="text-align:center; margin-top:0; color:var(--primary);"></h3>
-            <div class="opt focusable" id="builtinPlayerBtn"><i class="fas fa-play-circle" style="color:var(--primary)"></i> <b>Dahili Oynatıcı (İzle)</b></div>
+            
             <div class="opt focusable" id="wuffy"><i class="fas fa-play" style="color:var(--primary)"></i> <b>Wuffy Player</b></div>
             <div class="opt focusable" id="xpola"><i class="fas fa-rocket" style="color:var(--primary)"></i> <b>Xpola Player</b></div>
             <div class="opt focusable" id="externalWeb" style="background: rgba(255,171,0,0.1); border: 1px solid #ffab00;">
@@ -585,18 +577,6 @@
             </div>
 
             <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; padding:12px; border-radius:10px; border:none; background:#333; color:white; margin-top:10px; cursor:pointer; font-weight:bold;" id="modalCloseBtn" class="focusable">Vazgeç</button>
-        </div>
-    </div>
-
-    <!-- YENİ: DAHİLİ OYNATICI (TAM EKRAN) KISMINA İFRAME DESTEĞİ EKLENDİ -->
-    <div id="fullPlayerContainer" style="display:none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: black; z-index: 3000;">
-        <button id="closeFullPlayerBtn" tabindex="0" class="focusable" style="position: absolute; top: 20px; right: 20px; z-index: 4000; background: rgba(227, 10, 23, 0.8); color: white; border: 2px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;"><i class="fas fa-times"></i> Yayını Kapat</button>
-        
-        <!-- YENİ EKLENEN IFRAME -->
-        <iframe id="fullIframe" allowfullscreen allow="autoplay; encrypted-media" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; border:0; z-index:10; background:#000;"></iframe>
-        
-        <div id="fullVideoWrapper" style="width:100%; height:100%; position:absolute; top:0; left:0; z-index:1;">
-            <video id="fullVideo" playsinline crossorigin="anonymous" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto"></video>
         </div>
     </div>
 
@@ -642,7 +622,6 @@
         let lastScoreB = -1;
         
         let matchVjsPlayer = null;
-        let fullVjsPlayer = null;
 
         window.countdownData = { active: false, target: 0 };
         window.livescoreDataActive = false;
@@ -854,9 +833,6 @@ ${message || "[Dosya/Resim]"}`;
             }, 4000);
         }
 
-        // =======================================================
-        // URL FORMATTING VE MIME TİPİ DÜZENLEMESİ
-        // =======================================================
         function formatStreamUrl(url) {
             if (!url) return url;
             let formattedUrl = url;
@@ -896,30 +872,19 @@ ${message || "[Dosya/Resim]"}`;
 
         window.stopStreams = function() { database.ref('extras/streams/active').set(false); showToast("Maç Yayını Kapatıldı", "fa-times"); };
 
-        // ==========================================
-        // Gelişmiş IFRAME vs VIDEO Tespit Mantığı
-        // (TheoPlayer, DiesTV vb. linkler kesin Iframe sayılır)
-        // ==========================================
         function checkIsVideo(url) {
             if(!url) return false;
             let low = url.toLowerCase();
             
-            // Eğer theoplayer, diestv6, selcuksportshd gibi bilindik web oynatıcılar ise iframe'dir.
             if (low.includes('iframe') || low.includes('embed') || low.includes('.html') || low.includes('/channel?id=')) {
                 return false; 
             }
-            
-            // Stalker portal (mac=) veya m3u8/ts içeriyorsa video kabul et
             if (low.includes('.m3u8') || low.includes('.ts') || low.includes('mac=') || low.includes('.mp4') || low.includes('.mkv')) {
                 return true;
             }
-            
             return false;
         }
 
-        // ==========================================
-        // ÜST DÜZEY YAYIN OYNATICI MERKEZİ (DESTROY & REBUILD)
-        // ==========================================
         function destroyPlayer(playerObj, containerId, videoId) {
             if (playerObj) {
                 if (playerObj.hlsInstance) {
@@ -954,7 +919,6 @@ ${message || "[Dosya/Resim]"}`;
 
             const videoEl = document.getElementById(videoId).querySelector('video');
             
-            // Oynatma Motoru Değişkenleri
             player.fallbackLevel = 0;
             player.streamUrl = url;
             player.hlsInstance = null;
@@ -1148,48 +1112,6 @@ ${message || "[Dosya/Resim]"}`;
                 iframe.src = urlToPlay; // Orjinal linki kullan
             }
         };
-
-        // KARTLARA TIKLANINCA ÇALIŞAN TAM EKRAN OYNATICI (Dahili Oynatıcı)
-        document.getElementById('builtinPlayerBtn').onclick = () => {
-            if(current.url && current.url !== "#") {
-                document.getElementById('modal').style.display='none';
-                document.getElementById('fullPlayerContainer').style.display = 'block';
-                
-                let finalUrl = formatStreamUrl(current.url);
-                showToast(current.title + " oynatılıyor", "fa-play");
-                
-                const isVideo = checkIsVideo(finalUrl);
-                
-                fullVjsPlayer = destroyPlayer(fullVjsPlayer, 'fullVideoWrapper', 'fullVideo');
-                
-                if(isVideo) {
-                    document.getElementById('fullIframe').style.display = 'none';
-                    document.getElementById('fullIframe').src = '';
-                    document.getElementById('fullVideoWrapper').style.display = 'block';
-                    fullVjsPlayer = createPlayer('fullVideo', finalUrl);
-                } else {
-                    // Iframe Linkiyse
-                    document.getElementById('fullVideoWrapper').style.display = 'none';
-                    document.getElementById('fullIframe').style.display = 'block';
-                    document.getElementById('fullIframe').src = current.url; // Orjinal URL korundu
-                }
-                
-                setTimeout(() => document.getElementById('closeFullPlayerBtn').focus(), 100);
-            }
-        };
-
-        document.getElementById('closeFullPlayerBtn').addEventListener('click', () => {
-            document.getElementById('fullPlayerContainer').style.display = 'none';
-            
-            // Iframe'i de temizle ve kapat
-            document.getElementById('fullIframe').src = "";
-            document.getElementById('fullIframe').style.display = 'none';
-            
-            fullVjsPlayer = destroyPlayer(fullVjsPlayer, 'fullVideoWrapper', 'fullVideo');
-            if(document.fullscreenElement) document.exitFullscreen();
-            if(lastFocusedElement) lastFocusedElement.focus();
-        });
-
 
         window.saveLiveScore = function() {
             const tA = document.getElementById('lsInpTeamA').value;
@@ -1532,7 +1454,8 @@ ${message || "[Dosya/Resim]"}`;
                 card.onclick = () => { 
                     current = item; incrementViewCount(item.title); document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; 
                     lastFocusedElement = card;
-                    setTimeout(() => document.getElementById('builtinPlayerBtn').focus(), 50);
+                    // Dahili oynatıcı kaldırıldığı için tıklandığında focus "Tarayıcıda Aç" butonuna geçecek.
+                    setTimeout(() => document.getElementById('externalWeb').focus(), 50);
                 }; 
                 container.appendChild(card); 
             }); 
@@ -1606,12 +1529,6 @@ ${message || "[Dosya/Resim]"}`;
                     const tag = document.activeElement.tagName.toLowerCase();
                     if ((key === 'Backspace' || e.keyCode === 8) && (tag === 'input' || tag === 'textarea')) {
                         return; 
-                    }
-
-                    if (document.getElementById('fullPlayerContainer').style.display === 'block') {
-                        e.preventDefault();
-                        document.getElementById('closeFullPlayerBtn').click();
-                        return;
                     }
 
                     const openModals = document.querySelectorAll('.modal[style*="display: flex"]');
