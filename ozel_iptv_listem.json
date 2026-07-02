@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 PAKETLERBURDA - İPTV LİNKLER (4 Adet)",
+        "m3u_url": "http://paketlerburda.com:8080/get.php?username=yasukan598&password=fRxyj9XN&type=m3u_plus",
+        "web_link_url": "https://ay.live/wCmIfY",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "02.07.2026",
+        "added_time": "07:38"
+    },
+    {
         "title": "🔥 PAKETLERBURDA - İPTV LİNKLER (8 Adet)",
         "m3u_url": "http://paketlerburda.com:8080/get.php?username=reinholdseintv57&password=p7Tg5RbdAX&type=m3u_plus",
         "web_link_url": "https://ay.live/opxF",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "27.06.2026",
         "added_time": "20:12"
-    },
-    {
-        "title": "🔥 AVARE - İPTV LİNKLER (4 Adet)",
-        "m3u_url": "http://avare.pw:57050/get.php?username=8y9DkgVCvKCX&password=7xSGGaeHwD&type=m3u_plus",
-        "web_link_url": "https://ay.live/mhUuFK",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "27.06.2026",
-        "added_time": "20:11"
     }
 ]
