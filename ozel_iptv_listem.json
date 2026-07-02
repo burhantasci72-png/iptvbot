@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 VIPXNEO - İPTV LİNKLER (8 Adet)",
+        "m3u_url": "http://vipxneo.fun:8080/get.php?username=hakan1919&password=ScQzHBNznU&type=m3u_plus",
+        "web_link_url": "https://ay.live/nIL83X",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "02.07.2026",
+        "added_time": "07:26"
+    },
+    {
+        "title": "🔥 VIPXNEO - İPTV LİNKLER (8 Adet)",
         "m3u_url": "http://vipxneo.fun:8080/get.php?username=Celal74&password=Cll12345&type=m3u_plus",
         "web_link_url": "https://ay.live/ZCL9s",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "27.06.2026",
         "added_time": "16:07"
-    },
-    {
-        "title": "🔥 KSL39.873532 - İPTV LİNKLER (3 Adet)",
-        "m3u_url": "http://ksl39.873532.xyz/get.php?username=Hakan9125&password=uXR6b8NTr9&type=m3u_plus",
-        "web_link_url": "https://ay.live/WhI3i",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "27.06.2026",
-        "added_time": "15:09"
     }
 ]
