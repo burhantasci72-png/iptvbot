@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 EUTECK - İPTV LİNKLER (8 Adet)",
+        "m3u_url": "http://euteck.xyz:2095/get.php?username=bdh2265&password=bdh2901dd00cc&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/3X2ow",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "02.07.2026",
+        "added_time": "17:29"
+    },
+    {
+        "title": "🔥 EUTECK - İPTV LİNKLER (8 Adet)",
         "m3u_url": "http://euteck.xyz:2095/get.php?username=bkk9055cep&password=bkk1106gg00&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/iYlDW",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2386,14 +2394,6 @@
     {
         "title": "🔥 908708660498.ELG-26 - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://908708660498.elg-26.com:80/get.php?username=tgo4gduyha&password=2s6352p15t&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/VZSVp",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "29.06.2026",
-        "added_time": "16:13"
-    },
-    {
-        "title": "🔥 LETERNEL.OTTPRO2 - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://leternel.ottpro2.org:8789/get.php?username=Gob735vzvs&password=nsYz3pS&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/VZSVp",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "29.06.2026",
