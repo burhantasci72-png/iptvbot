@@ -1,5 +1,21 @@
 [
     {
+        "title": "🔥 FILINTA - İPTV LİNKLER (2 Adet)",
+        "m3u_url": "http://filinta.eu:8080/get.php?username=serkan@percin&password=46p2KHFV4R&type=m3u_plus",
+        "web_link_url": "https://ay.live/M2lRD",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "03.07.2026",
+        "added_time": "09:32"
+    },
+    {
+        "title": "🔥 TR-2023 - İPTV LİNKLER (5 Adet)",
+        "m3u_url": "http://tr-2023.com:80/get.php?username=suleymanacar&password=JMwghf6wUF&type=m3u_plus",
+        "web_link_url": "https://ay.live/M2lRD",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "03.07.2026",
+        "added_time": "09:32"
+    },
+    {
         "title": "🔥 TR-2023 - İPTV LİNKLER (4 Adet)",
         "m3u_url": "http://tr-2023.com:80/get.php?username=Karl@Schactl&password=StJDbqDkE4A5&type=m3u_plus",
         "web_link_url": "https://ay.live/0g2",
@@ -2378,22 +2394,6 @@
     {
         "title": "🔥 BOB82.DRAVIK - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://bob82.dravik.sbs:80/get.php?username=cZaxDk9&password=qAmayCY&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/VZSVp",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "29.06.2026",
-        "added_time": "16:13"
-    },
-    {
-        "title": "🔥 HOLA.POLICYSHIELD - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://hola.policyshield.org:80/get.php?username=roxana.oanawhatsap&password=duTf4mgN&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/VZSVp",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "29.06.2026",
-        "added_time": "16:13"
-    },
-    {
-        "title": "🔥 PANTERATV - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://panteratv.fun:80/get.php?username=fiscalamerico&password=dnRkcWb&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/VZSVp",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "29.06.2026",
