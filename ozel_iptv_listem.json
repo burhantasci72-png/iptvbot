@@ -1,5 +1,21 @@
 [
     {
+        "title": "🔥 FILINTA - İPTV LİNKLER (3 Adet)",
+        "m3u_url": "http://filinta.eu:8080/get.php?username=MusaUmsal@&password=8974279@@75&type=m3u_plus",
+        "web_link_url": "https://ay.live/7brGk",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "03.07.2026",
+        "added_time": "09:32"
+    },
+    {
+        "title": "🔥 TR-2023 - İPTV LİNKLER (5 Adet)",
+        "m3u_url": "http://tr-2023.com:80/get.php?username=cakmakabdullah&password=QgbGEJLy4C&type=m3u_plus",
+        "web_link_url": "https://ay.live/7brGk",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "03.07.2026",
+        "added_time": "09:32"
+    },
+    {
         "title": "🔥 EUROPLAYIPTV - İPTV LİNKLER (7 Adet)",
         "m3u_url": "http://europlayiptv.de:8080/get.php?username=gokhannazenin&password=0jf4POgfm&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/OhHY",
@@ -2378,22 +2394,6 @@
     {
         "title": "🔥 TV.EUROFRENDS - İPTV LİNKLER (2 Adet)",
         "m3u_url": "http://tv.eurofrends.com:5500/get.php?username=cvitafrnina&password=VV08QPlF8q&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/VZSVp",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "29.06.2026",
-        "added_time": "16:13"
-    },
-    {
-        "title": "🔥 VPN-ESXTRAPRO - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://vpn-esxtrapro.pro:80/get.php?username=cq1bhjkkks&password=xh7hicyrtu&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/VZSVp",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "29.06.2026",
-        "added_time": "16:13"
-    },
-    {
-        "title": "🔥 ESPARTANOS - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://espartanos.live:8080/get.php?username=72757887-1m&password=72757887-1m&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/VZSVp",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "29.06.2026",
