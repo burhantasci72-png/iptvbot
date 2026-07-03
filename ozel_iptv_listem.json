@@ -1,5 +1,21 @@
 [
     {
+        "title": "🔥 TR-2023 - İPTV LİNKLER (4 Adet)",
+        "m3u_url": "http://tr-2023.com:80/get.php?username=Karl@Schactl&password=StJDbqDkE4A5&type=m3u_plus",
+        "web_link_url": "https://ay.live/0g2",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "03.07.2026",
+        "added_time": "09:32"
+    },
+    {
+        "title": "🔥 FILINTA - İPTV LİNKLER (2 Adet)",
+        "m3u_url": "http://filinta.eu:8080/get.php?username=nSgSK6qzcjcP&password=q5sy5w6x8GC2&type=m3u_plus",
+        "web_link_url": "https://ay.live/0g2",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "03.07.2026",
+        "added_time": "09:32"
+    },
+    {
         "title": "🔥 FILINTA - İPTV LİNKLER (2 Adet)",
         "m3u_url": "http://filinta.eu:8080/get.php?username=benim@yedek&password=hgNK34Wygc&type=m3u_plus",
         "web_link_url": "https://ay.live/Sol",
@@ -2378,22 +2394,6 @@
     {
         "title": "🔥 PANTERATV - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://panteratv.fun:80/get.php?username=fiscalamerico&password=dnRkcWb&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/VZSVp",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "29.06.2026",
-        "added_time": "16:13"
-    },
-    {
-        "title": "🔥 SUPERFLASH - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://superflash.ovh:8080/get.php?username=anual757&password=82584956&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/VZSVp",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "29.06.2026",
-        "added_time": "16:13"
-    },
-    {
-        "title": "🔥 LINE.BESTMEDIAIPTV - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://line.bestmediaiptv.online:80/get.php?username=6ccd21c4fd&password=172e1e3ca240&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/VZSVp",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "29.06.2026",
