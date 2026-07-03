@@ -1,5 +1,21 @@
 [
     {
+        "title": "🔥 FILINTA - İPTV LİNKLER (2 Adet)",
+        "m3u_url": "http://filinta.eu:8080/get.php?username=XQNGCXUxP2kp&password=mVugG9LAnDEy&type=m3u_plus",
+        "web_link_url": "https://ay.live/IsbbMY",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "03.07.2026",
+        "added_time": "09:32"
+    },
+    {
+        "title": "🔥 TR-2023 - İPTV LİNKLER (5 Adet)",
+        "m3u_url": "http://tr-2023.com:80/xmltv.php?username=XQNGCXUxP2kp&password=mVugG9LAnDEy",
+        "web_link_url": "https://ay.live/IsbbMY",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "03.07.2026",
+        "added_time": "09:32"
+    },
+    {
         "title": "🔥 FILINTA - İPTV LİNKLER (3 Adet)",
         "m3u_url": "http://filinta.eu:8080/get.php?username=MusaUmsal@&password=8974279@@75&type=m3u_plus",
         "web_link_url": "https://ay.live/7brGk",
@@ -2378,22 +2394,6 @@
     {
         "title": "🔥 ESPA12864.SELFIP - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://espa12864.selfip.co:80/get.php?username=ciroanna&password=sasmu&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/VZSVp",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "29.06.2026",
-        "added_time": "16:13"
-    },
-    {
-        "title": "🔥 LINE.LIONDNSCLOUD - İPTV LİNKLER (2 Adet)",
-        "m3u_url": "http://line.liondnscloud.ru:80/get.php?username=2gcY2746&password=qNhE7808&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/VZSVp",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "29.06.2026",
-        "added_time": "16:13"
-    },
-    {
-        "title": "🔥 TV.EUROFRENDS - İPTV LİNKLER (2 Adet)",
-        "m3u_url": "http://tv.eurofrends.com:5500/get.php?username=cvitafrnina&password=VV08QPlF8q&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/VZSVp",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "29.06.2026",
