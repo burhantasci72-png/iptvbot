@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 WU09 - İPTV LİNKLER (9 Adet)",
+        "m3u_url": "http://wu09.xyz:8080/get.php?username=qTjK3npeNK&password=zr4FyQ667b&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/esb0",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "07.07.2026",
+        "added_time": "19:09"
+    },
+    {
         "title": "🔥 WU09 - İPTV LİNKLER (15 Adet)",
         "m3u_url": "http://wu09.xyz:8080/get.php?username=blksr12kn&password=1208kn2b&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/Dq5",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "01.07.2026",
         "added_time": "00:06"
-    },
-    {
-        "title": "🔥 GENEL.AXIS5G - İPTV LİNKLER (5 Adet)",
-        "m3u_url": "http://genel.axis5g.xyz:8080/get.php?username=5g.samet91011&password=qs3wKapjDVCx&type=m3u",
-        "web_link_url": "https://ay.live/jst",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "01.07.2026",
-        "added_time": "00:05"
     }
 ]
