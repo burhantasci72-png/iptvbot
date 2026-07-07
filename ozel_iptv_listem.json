@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 WU09 - İPTV LİNKLER (16 Adet)",
+        "m3u_url": "http://wu09.xyz:8080/get.php?username=QePYxfndZuNb&password=mkJLFAyEKU3q&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/cwTID",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "07.07.2026",
+        "added_time": "19:09"
+    },
+    {
         "title": "🔥 WU09 - İPTV LİNKLER (15 Adet)",
         "m3u_url": "http://wu09.xyz:8080/get.php?username=cYhzD67vNLpb&password=2vEbrzRqaUCv&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/DeLEX",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "30.06.2026",
         "added_time": "19:09"
-    },
-    {
-        "title": "🔥 EU.ZORTV1 - İPTV LİNKLER (8 Adet)",
-        "m3u_url": "http://eu.zortv1.com:8080/get.php?username=htkEmNsZe7g2&password=yK7mHpDqbZxa&type=m3u_plus",
-        "web_link_url": "https://ay.live/aLbZ",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "30.06.2026",
-        "added_time": "16:07"
     }
 ]
