@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 TESLASOON - İPTV LİNKLER (29 Adet)",
+        "m3u_url": "http://teslasoon.com:8080/get.php?username=damyanangelov&password=pR1F1YjRn8f1&type=m3u_plus",
+        "web_link_url": "https://ay.live/LQOiAV",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "07.07.2026",
+        "added_time": "10:57"
+    },
+    {
         "title": "🔥 BVV01 - İPTV LİNKLER (16 Adet)",
         "m3u_url": "http://bvv01.com:8080/get.php?username=ySiSLInHgq&password=uiUMJZHiWm&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/XaN",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "30.06.2026",
         "added_time": "05:40"
-    },
-    {
-        "title": "🔥 HKPREMIUMTV - İPTV LİNKLER (13 Adet)",
-        "m3u_url": "http://hkpremiumtv.xyz:8080/get.php?username=7574975&password=r45fmhAY8m49&type=m3u_plus&output=mpegts",
-        "web_link_url": "https://ay.live/bHXBWp",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "29.06.2026",
-        "added_time": "22:44"
     }
 ]
