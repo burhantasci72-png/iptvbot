@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 APEX.4518411 - İPTV LİNKLER (14 Adet)",
+        "m3u_url": "http://apex.4518411.xyz:8080/get.php?username=evlat&password=CsKXTAAqvX&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/2oorM7",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "07.07.2026",
+        "added_time": "13:28"
+    },
+    {
         "title": "🔥 APEX.4518411 - İPTV LİNKLER (12 Adet)",
         "m3u_url": "http://apex.4518411.xyz:8080/get.php?username=vns203&password=vLYL6KTgHCb&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/7Rv",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "30.06.2026",
         "added_time": "06:08"
-    },
-    {
-        "title": "🔥 STREAM.AKER-IP - İPTV LİNKLER (3 Adet)",
-        "m3u_url": "http://stream.aker-ip.tv:8080//get.php?username=ResulGencboy3530&password=rwFuqT7Z&type=m3u_plus&output=m3u8",
-        "web_link_url": "https://ay.live/r26FF",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "30.06.2026",
-        "added_time": "05:41"
     }
 ]
