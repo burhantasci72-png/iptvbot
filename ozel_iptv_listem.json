@@ -2,6 +2,14 @@
     {
         "title": "🔥 ZOBURDNG - İPTV LİNKLER (15 Adet)",
         "m3u_url": "http://zoburdng.online:8080/get.php?username=planet2025&password=55MWPvcag3&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/ujBZ",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "07.07.2026",
+        "added_time": "13:30"
+    },
+    {
+        "title": "🔥 ZOBURDNG - İPTV LİNKLER (15 Adet)",
+        "m3u_url": "http://zoburdng.online:8080/get.php?username=planet2025&password=55MWPvcag3&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/IVelxY",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "07.07.2026",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "30.06.2026",
         "added_time": "10:58"
-    },
-    {
-        "title": "🔥 GENEL.AXIS5G - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://genel.axis5g.xyz:8080/get.php?username=Dayi.demirrmz&password=At83xjgRuHpFcpwa&type=m3u_plus",
-        "web_link_url": "https://ay.live/PxA2o",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "30.06.2026",
-        "added_time": "09:20"
     }
 ]
