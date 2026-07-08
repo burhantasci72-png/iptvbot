@@ -1,6 +1,22 @@
 [
     {
         "title": "🔥 PENATV187 - İPTV LİNKLER (1 Adet)",
+        "m3u_url": "http://penatv187.xyz:80/get.php?username=bilgehanulu&password=57EyTZMwjb&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/BUHTs",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "08.07.2026",
+        "added_time": "22:02"
+    },
+    {
+        "title": "🔥 HERATV46 - İPTV LİNKLER (3 Adet)",
+        "m3u_url": "http://heratv46.xyz:80/get.php?username=bilgehanulu&password=57EyTZMwjb&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/BUHTs",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "08.07.2026",
+        "added_time": "22:02"
+    },
+    {
+        "title": "🔥 PENATV187 - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://penatv187.xyz:80/get.php?username=kadiraslan7428&password=d9KpSu5wby&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/L6gzTw",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2378,22 +2394,6 @@
     {
         "title": "🔥 TX.NZRXX - İPTV LİNKLER (6 Adet)",
         "m3u_url": "http://tx.nzrxx.com:8080/get.php?username=Abdurrahmanyilmaz&password=q2wKqf6Nbu&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/Kntotg",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "02.07.2026",
-        "added_time": "09:02"
-    },
-    {
-        "title": "🔥 BAN.5855534 - İPTV LİNKLER (17 Adet)",
-        "m3u_url": "http://ban.5855534.xyz:80/get.php?username=sinto2@&password=1204snt21&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/Kntotg",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "02.07.2026",
-        "added_time": "09:02"
-    },
-    {
-        "title": "🔥 BOSSIP - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://bossip.net:80/get.php?username=guAYQ09m&password=uGF03XAzI8&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/Kntotg",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "02.07.2026",
