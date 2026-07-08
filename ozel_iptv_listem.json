@@ -1,6 +1,22 @@
 [
     {
         "title": "🔥 HERATV46 - İPTV LİNKLER (3 Adet)",
+        "m3u_url": "http://heratv46.xyz:80/xmltv.php?username=coolstorm1&password=coolstorm@1",
+        "web_link_url": "https://ay.live/lgpW2",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "08.07.2026",
+        "added_time": "22:39"
+    },
+    {
+        "title": "🔥 PENATV187 - İPTV LİNKLER (1 Adet)",
+        "m3u_url": "http://penatv187.xyz:80/get.php?username=coolstorm1&password=coolstorm@1&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/lgpW2",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "08.07.2026",
+        "added_time": "22:39"
+    },
+    {
+        "title": "🔥 HERATV46 - İPTV LİNKLER (3 Adet)",
         "m3u_url": "http://heratv46.xyz:80/get.php?username=kemalburg&password=9UzjAuqe2R&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/R3JYzf",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2378,22 +2394,6 @@
     {
         "title": "🔥 RESTREAM-LIVE.REALIPTV - İPTV LİNKLER (4 Adet)",
         "m3u_url": "http://restream-live.realiptv.to:8080/get.php?username=hankstreamer&password=sYWcksogwN&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/Kntotg",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "02.07.2026",
-        "added_time": "09:02"
-    },
-    {
-        "title": "🔥 117.55.202 - İPTV LİNKLER (2 Adet)",
-        "m3u_url": "http://117.55.202.58:8080/get.php?username=DnWvjUwE5A&password=KnaL8w0uyn&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/Kntotg",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "02.07.2026",
-        "added_time": "09:02"
-    },
-    {
-        "title": "🔥 211.OGTV - İPTV LİNKLER (8 Adet)",
-        "m3u_url": "http://211.ogtv.xyz:8080/get.php?username=v2TQdBr6&password=adXgNcB&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/Kntotg",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "02.07.2026",
