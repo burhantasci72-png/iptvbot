@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 PORTAL.PRIWES - İPTV LİNKLER (13 Adet)",
+        "m3u_url": "http://portal.priwes.com:8080/get.php?username=060400609&password=06qbY86FEgasdsad&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/iL4",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "08.07.2026",
+        "added_time": "11:41"
+    },
+    {
+        "title": "🔥 PORTAL.PRIWES - İPTV LİNKLER (13 Adet)",
         "m3u_url": "http://portal.priwes.com:8080/get.php?username=batuhanaksu&password=L0DcM3MgN&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/SMJin",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "01.07.2026",
         "added_time": "17:08"
-    },
-    {
-        "title": "🔥 MAX.4KHDRX - İPTV LİNKLER (3 Adet)",
-        "m3u_url": "http://max.4khdrx.xyz:2095/get.php?username=Jannkusch&password=tWnvF4xpGey2&type=m3u_plus&output=m3u8",
-        "web_link_url": "https://ay.live/ziUNm",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "01.07.2026",
-        "added_time": "17:07"
     }
 ]
