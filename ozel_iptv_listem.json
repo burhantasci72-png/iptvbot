@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 PORTAL.PRIWES - İPTV LİNKLER (13 Adet)",
+        "m3u_url": "http://portal.priwes.com:8080/get.php?username=ouhXz7HL&password=2PKLudDt&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/F2C",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "08.07.2026",
+        "added_time": "13:02"
+    },
+    {
+        "title": "🔥 PORTAL.PRIWES - İPTV LİNKLER (13 Adet)",
         "m3u_url": "http://portal.priwes.com:8080/get.php?username=Kj5Ezr3FVi&password=re1fVILdaU&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/lIz",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2386,14 +2394,6 @@
     {
         "title": "🔥 SA2.560293 - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://sa2.560293.xyz:8080/get.php?username=Bwpa64rcx7&password=CtNi1YJW7k&type=m3u_plus&output=mpegts",
-        "web_link_url": "https://ay.live/IA9c",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "01.07.2026",
-        "added_time": "22:17"
-    },
-    {
-        "title": "🔥 12K-SERVICE - İPTV LİNKLER (3 Adet)",
-        "m3u_url": "http://12k-service.org:80/get.php?username=9yfsbyh411&password=29xm1ec74e&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/IA9c",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "01.07.2026",
