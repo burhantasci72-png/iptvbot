@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 HERATV46 - İPTV LİNKLER (1 Adet)",
+        "m3u_url": "http://heratv46.xyz:80/get.php?username=beyaz&password=sdfsvsd141&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/z81n",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "08.07.2026",
+        "added_time": "22:01"
+    },
+    {
         "title": "🔥 PENATV187 - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://penatv187.xyz:80/get.php?username=Serdary1309&password=serdar123&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/ea6p9",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "02.07.2026",
         "added_time": "07:38"
-    },
-    {
-        "title": "🔥 PAKETLERBURDA - İPTV LİNKLER (8 Adet)",
-        "m3u_url": "http://paketlerburda.com:8080/get.php?username=reinholdseintv57&password=p7Tg5RbdAX&type=m3u_plus",
-        "web_link_url": "https://ay.live/opxF",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "02.07.2026",
-        "added_time": "07:37"
     }
 ]
