@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 MEGATV - İPTV LİNKLER (28 Adet)",
+        "m3u_url": "http://megatv.cc:8080/get.php?username=308ErncelK&password=YVqN2MVkVbPU&type=m3u_plus",
+        "web_link_url": "https://ay.live/5UDD",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "08.07.2026",
+        "added_time": "18:22"
+    },
+    {
         "title": "🔥 SADO.FUTUREXHD - İPTV LİNKLER (74 Adet)",
         "m3u_url": "http://sado.futurexhd.xyz:2095/get.php?username=127c671814a6727d&password=974f60d5b66538d9&type=m3u_plus",
         "web_link_url": "https://ay.live/f4Y",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "01.07.2026",
         "added_time": "23:19"
-    },
-    {
-        "title": "🔥 99499EF3 - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://99499ef3.com:8080/get.php?username=kenanozturksc&password=MKseLdem839be&type=m3u_plus&output=mpegts",
-        "web_link_url": "https://ay.live/vnU0w",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "01.07.2026",
-        "added_time": "22:17"
     }
 ]
