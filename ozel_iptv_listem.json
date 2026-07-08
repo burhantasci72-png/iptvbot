@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 2510STR - İPTV LİNKLER (14 Adet)",
+        "m3u_url": "http://2510str.xyz/get.php?username=bf2340bcc5&password=bc5b42f003&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/Rkr",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "08.07.2026",
+        "added_time": "11:40"
+    },
+    {
+        "title": "🔥 2510STR - İPTV LİNKLER (14 Adet)",
         "m3u_url": "http://2510str.xyz/get.php?username=107fb1a83f&password=9367dd11c1&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/3cFL",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "01.07.2026",
         "added_time": "17:06"
-    },
-    {
-        "title": "🔥 EUROPLAYIPTV - İPTV LİNKLER (7 Adet)",
-        "m3u_url": "http://europlayiptv.de:8080/get.php?username=kursatbalci&password=6jcm9brnt&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/Rk3Oob",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "01.07.2026",
-        "added_time": "00:13"
     }
 ]
