@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 NEXA8K - İPTV LİNKLER (12 Adet)",
+        "m3u_url": "http://nexa8k.store:8080/get.php?username=MAxsimen10&password=ntb7BzU1CM&type=m3u_plus",
+        "web_link_url": "https://ay.live/nk6",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "08.07.2026",
+        "added_time": "18:51"
+    },
+    {
         "title": "🔥 MYDUCK - İPTV LİNKLER (36 Adet)",
         "m3u_url": "http://myduck.xyz:2095/get.php?username=GerdMerkur&password=kQD46fEeN9&type=m3u_plus",
         "web_link_url": "https://ay.live/3f6zoa",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "02.07.2026",
         "added_time": "07:25"
-    },
-    {
-        "title": "🔥 SUNX101 - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://sunx101.xyz:80/get.php?username=LKucuk&password=LK27112021&type=m3u_plus&output=mpegts",
-        "web_link_url": "https://ay.live/iBMh",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "01.07.2026",
-        "added_time": "23:19"
     }
 ]
