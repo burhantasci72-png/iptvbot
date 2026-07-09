@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 DINO.MATV5 - İPTV LİNKLER (15 Adet)",
+        "m3u_url": "http://dino.matv5.com/get.php?username=b6fa998975&password=5344abe7c4dd&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/0LV",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "09.07.2026",
+        "added_time": "17:09"
+    },
+    {
+        "title": "🔥 DINO.MATV5 - İPTV LİNKLER (15 Adet)",
         "m3u_url": "http://dino.matv5.com/get.php?username=a47dcc1641&password=781181c427bc&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/YurXeQ",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2386,14 +2394,6 @@
     {
         "title": "🔥 KIKTVS - İPTV LİNKLER (1 Adet)",
         "m3u_url": "http://kiktvs.live:8080/get.php?username=DimitrijeNedic&password=4JS3Hdeyup&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/Kntotg",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "02.07.2026",
-        "added_time": "09:02"
-    },
-    {
-        "title": "🔥 F.PREMIUMALTA - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://f.premiumalta.site:8000/get.php?username=papaubaldo&password=r8PM7cgE&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/Kntotg",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "02.07.2026",
