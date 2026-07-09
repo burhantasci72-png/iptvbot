@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 DINO.MATV5 - İPTV LİNKLER (16 Adet)",
+        "m3u_url": "http://dino.matv5.com/get.php?username=f8daae4752&password=ba6ca13beae0&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/oqXs",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "09.07.2026",
+        "added_time": "17:09"
+    },
+    {
+        "title": "🔥 DINO.MATV5 - İPTV LİNKLER (16 Adet)",
         "m3u_url": "http://dino.matv5.com/get.php?username=ae979c1be5&password=df426ee79e0b&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/FjkN",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2386,14 +2394,6 @@
     {
         "title": "🔥 FASTOPEN - İPTV LİNKLER (2 Adet)",
         "m3u_url": "http://fastopen.live:8080/get.php?username=PVI7bELTYG&password=8uxQvWtDCS&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/Kntotg",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "02.07.2026",
-        "added_time": "09:02"
-    },
-    {
-        "title": "🔥 DIRECTO.DDNS - İPTV LİNKLER (2 Adet)",
-        "m3u_url": "http://directo.ddns.me:2082/get.php?username=skjhg87&password=202020&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/Kntotg",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "02.07.2026",
