@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 VPSSERVERDOMAIN - İPTV LİNKLER (14 Adet)",
+        "m3u_url": "http://vpsserverdomain.com:8080/get.php?username=bos&password=bos&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/fNRc",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "10.07.2026",
+        "added_time": "22:58"
+    },
+    {
+        "title": "🔥 VPSSERVERDOMAIN - İPTV LİNKLER (14 Adet)",
         "m3u_url": "http://vpsserverdomain.com:8080/get.php?username=ilkerduman&password=ilker5496&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/gqn4",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "03.07.2026",
         "added_time": "09:32"
-    },
-    {
-        "title": "🔥 EUROPLAYIPTV - İPTV LİNKLER (7 Adet)",
-        "m3u_url": "http://europlayiptv.de:8080/get.php?username=gokhannazenin&password=0jf4POgfm&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/OhHY",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "03.07.2026",
-        "added_time": "07:55"
     }
 ]
