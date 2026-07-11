@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 GEOTV - İPTV LİNKLER (7 Adet)",
+        "m3u_url": "http://geotv.space:8880/get.php?username=24918366&password=98243009&type=m3u_plus",
+        "web_link_url": "https://ay.live/4UCdk",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "11.07.2026",
+        "added_time": "20:03"
+    },
+    {
         "title": "🔥 ELIT64 - İPTV LİNKLER (126 Adet)",
         "m3u_url": "http://elit64.eu:80/get.php?username=kuArQHMw&password=jbWspnY&type=m3u_plus",
         "web_link_url": "https://ay.live/ZIE",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "03.07.2026",
         "added_time": "21:56"
-    },
-    {
-        "title": "🔥 MYDUCK - İPTV LİNKLER (5 Adet)",
-        "m3u_url": "http://myduck.xyz:2095/get.php?username=dennisties&password=PQB5Aph5zXYf&type=m3u_plus",
-        "web_link_url": "https://ay.live/1BV",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "03.07.2026",
-        "added_time": "15:24"
     }
 ]
