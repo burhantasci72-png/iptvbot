@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 VPSSERVERDOMAIN - İPTV LİNKLER (14 Adet)",
+        "m3u_url": "http://www.vpsserverdomain.com:8080/get.php?username=1136palvin&password=pfYjKMcjfh&type=m3u",
+        "web_link_url": "https://ay.live/dJ1",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "13.07.2026",
+        "added_time": "15:32"
+    },
+    {
+        "title": "🔥 VPSSERVERDOMAIN - İPTV LİNKLER (14 Adet)",
         "m3u_url": "http://www.vpsserverdomain.com:8080/get.php?username=1109palvin&password=cKytzGHHx5&type=m3u",
         "web_link_url": "https://ay.live/dud",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "07.07.2026",
         "added_time": "11:38"
-    },
-    {
-        "title": "🔥 OZELSPOR - İPTV LİNKLER (1 Adet)",
-        "m3u_url": "http://ozelspor.xyz:8080/get.php?username=GokhanX95&password=Rt7BmQ82Kz&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/0L3",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "07.07.2026",
-        "added_time": "11:09"
     }
 ]
