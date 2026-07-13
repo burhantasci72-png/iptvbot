@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 GALASHOPTV - İPTV LİNKLER (22 Adet)",
+        "m3u_url": "http://galashoptv.shop:8080/get.php?username=hidoyunus&password=kSRFMhqQy2&type=m3u_plus",
+        "web_link_url": "https://ay.live/fctD57",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "13.07.2026",
+        "added_time": "18:00"
+    },
+    {
         "title": "🔥 VPSSERVERDOMAIN - İPTV LİNKLER (13 Adet)",
         "m3u_url": "http://www.vpsserverdomain.com:8080/get.php?username=155palvin&password=gc7BYfxu&type=m3u",
         "web_link_url": "https://ay.live/sOGog",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "07.07.2026",
         "added_time": "13:28"
-    },
-    {
-        "title": "🔥 WU09 - İPTV LİNKLER (2 Adet)",
-        "m3u_url": "http://wu09.xyz:8080/xmltv.php?username=cmmky1711&password=kaya1711c",
-        "web_link_url": "https://ay.live/ZVLN",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "07.07.2026",
-        "added_time": "12:41"
     }
 ]
