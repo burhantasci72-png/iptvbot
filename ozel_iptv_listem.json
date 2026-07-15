@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 EUROPLAYIPTV - İPTV LİNKLER (4 Adet)",
+        "m3u_url": "http://europlayiptv.de:8080/client_area/index.php?username=mikailciris&password=ou822F2H&submit",
+        "web_link_url": "#",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "15.07.2026",
+        "added_time": "21:53"
+    },
+    {
         "title": "🔥 TEOS.STREAM-EUROPA - İPTV LİNKLER (11 Adet)",
         "m3u_url": "http://teos.stream-europa.com:8080/get.php?username=remziyilmazTR&password=cHD2x1mT2B&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/tRYD",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "08.07.2026",
         "added_time": "14:22"
-    },
-    {
-        "title": "🔥 TFX1 - İPTV LİNKLER (64 Adet)",
-        "m3u_url": "http://tfx1.com:8080/get.php?username=rfKT3YUyf6&password=pbHPF6DPjA&type=m3u_plus",
-        "web_link_url": "https://ay.live/ar8Cq2",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "08.07.2026",
-        "added_time": "13:42"
     }
 ]
