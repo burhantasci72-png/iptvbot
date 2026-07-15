@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 TEOS.STREAM-EUROPA - İPTV LİNKLER (11 Adet)",
+        "m3u_url": "http://teos.stream-europa.com:8080/get.php?username=remziyilmazTR&password=cHD2x1mT2B&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/tRYD",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "15.07.2026",
+        "added_time": "17:55"
+    },
+    {
+        "title": "🔥 TEOS.STREAM-EUROPA - İPTV LİNKLER (11 Adet)",
         "m3u_url": "http://teos.stream-europa.com:8080/get.php?username=ilkerduman&password=ilker5496&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/qiQls",
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "08.07.2026",
         "added_time": "13:42"
-    },
-    {
-        "title": "🔥 PORTAL.PRIWES - İPTV LİNKLER (5 Adet)",
-        "m3u_url": "http://portal.priwes.com:8080/get.php?username=0bnyLvaj&password=TxJWU94i&type=m3u_plus&output=ts",
-        "web_link_url": "https://ay.live/ZW3aM",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "08.07.2026",
-        "added_time": "13:02"
     }
 ]
