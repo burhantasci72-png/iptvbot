@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 STATIC.226.199.132.142.CLIENTS.YOUR-SERVER - İPTV LİNKLER (6 Adet)",
+        "m3u_url": "http://static.226.199.132.142.clients.your-server.de:2095/get.php?username=hilalargun&password=k5FXszzd9FMtU&type=m3u_plus",
+        "web_link_url": "https://ay.live/2Gnn",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "15.07.2026",
+        "added_time": "22:52"
+    },
+    {
         "title": "🔥 SNY57 - İPTV LİNKLER (3 Adet)",
         "m3u_url": "http://sny57.com:8080/get.php?username=sb6dkKd7&password=bHdd3Ws9cWJza&type=m3u_plus",
         "web_link_url": "https://ay.live/tdMh",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "08.07.2026",
         "added_time": "18:53"
-    },
-    {
-        "title": "🔥 POWER4K1 - İPTV LİNKLER (62 Adet)",
-        "m3u_url": "http://power4k1.com:8080/get.php?username=Haticebaris&password=mrseCaz&type=m3u_plus",
-        "web_link_url": "https://ay.live/QbE",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "08.07.2026",
-        "added_time": "18:52"
     }
 ]
