@@ -1,5 +1,21 @@
 [
     {
+        "title": "🔥 BOLULU.STREAM-EUROPA - İPTV LİNKLER (1 Adet)",
+        "m3u_url": "http://bolulu.stream-europa.com:8080/get.php?username=AhmetBugrahan3922&password=GaP9Nq2hAW&type=m3u_plus&output=ts",
+        "web_link_url": "#",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "15.07.2026",
+        "added_time": "21:53"
+    },
+    {
+        "title": "🔥 EGE.EFETV - İPTV LİNKLER (3 Adet)",
+        "m3u_url": "http://ege.efetv.de:8080/xmltv.php?username=86tqjjnosq&password=CrVcp33PMx",
+        "web_link_url": "#",
+        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "15.07.2026",
+        "added_time": "21:53"
+    },
+    {
         "title": "🔥 BOLULU.STREAM-EUROPA - İPTV LİNKLER (2 Adet)",
         "m3u_url": "http://bolulu.stream-europa.com:8080/client_area/index.php?username=AhmetBugrahan3922&password=GaP9Nq2hAW&submit",
         "web_link_url": "#",
@@ -2382,21 +2398,5 @@
         "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "08.07.2026",
         "added_time": "18:22"
-    },
-    {
-        "title": "🔥 SADO.FUTUREXHD - İPTV LİNKLER (74 Adet)",
-        "m3u_url": "http://sado.futurexhd.xyz:2095/get.php?username=127c671814a6727d&password=974f60d5b66538d9&type=m3u_plus",
-        "web_link_url": "https://ay.live/f4Y",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "08.07.2026",
-        "added_time": "17:27"
-    },
-    {
-        "title": "🔥 SADO.FUTUREXHD - İPTV LİNKLER (12 Adet)",
-        "m3u_url": "http://sado.futurexhd.xyz:8080/get.php?username=tfqAdHCC&password=kG4H4Y3aXW&type=m3u_plus",
-        "web_link_url": "https://ay.live/R7iay",
-        "image": "https://encrypted-tbn0gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "08.07.2026",
-        "added_time": "17:24"
     }
 ]
