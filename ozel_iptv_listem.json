@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 TOPLU LİSTE (4 Panel / 1 Sunucu) [12:19]",
+        "m3u_url": "http://apex.4518411.xyz:8080/xmltv.php?username=O56cTjW59&password=DyKMe8rHnEaJ&type=m3u_plus",
+        "web_link_url": "https://ay.live/BnfyM8",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "24.08.2026",
+        "added_time": "12:19"
+    },
+    {
+        "title": "🔥 TOPLU LİSTE (4 Panel / 1 Sunucu) [12:19]",
         "m3u_url": "http://apex.4518411.xyz:8080/get.php?username=vns058&password=QtWHtL7JkCKu&type=m3u_plus",
         "web_link_url": "https://ay.live/I8Yx4",
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "09.08.2026",
         "added_time": "19:29"
-    },
-    {
-        "title": "🔥 TOPLU LİSTE (9 Panel / 1 Sunucu) [18:59]",
-        "m3u_url": "http://pars35.cfd:80/get.php?username=kvm22&password=rxye7lt9qp&type=m3u_plus",
-        "web_link_url": "https://ay.live/OppO",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "09.08.2026",
-        "added_time": "18:59"
     }
 ]
