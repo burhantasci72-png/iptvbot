@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 TOPLU LİSTE (4 Panel / 1 Sunucu) [07:30]",
+        "m3u_url": "http://4k.cmn14.com:8080/get.php?username=bugiboy76&password=FQo3kWFafw&type=m3u_plus",
+        "web_link_url": "https://ay.live/8oWLT4",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "29.08.2026",
+        "added_time": "07:30"
+    },
+    {
+        "title": "🔥 TOPLU LİSTE (4 Panel / 1 Sunucu) [07:30]",
         "m3u_url": "http://4k.cmn14.com:8080/get.php?username=erdoganshakirov&password=vX6bvxhaZr&type=m3u_plus",
         "web_link_url": "https://ay.live/lLkpr",
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "19.08.2026",
         "added_time": "21:57"
-    },
-    {
-        "title": "🔥 TOPLU LİSTE (1 Panel / 1 Sunucu) [12:42]",
-        "m3u_url": "http://iptvturkie.xyz:2095/get.php?username=Engindogan&password=892002&type=m3u_plus",
-        "web_link_url": "https://ay.live/NLVHwo",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "19.08.2026",
-        "added_time": "12:42"
     }
 ]
