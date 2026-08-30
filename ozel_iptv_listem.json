@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 TOPLU LİSTE (2 Panel / 1 Sunucu) [22:32]",
+        "m3u_url": "http://iptv.jinbox.nl:80/xmltv.php?username=feaR4bpR&password=a6UzaSM&type=m3u_plus",
+        "web_link_url": "https://ay.live/0yzL0q",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "30.08.2026",
+        "added_time": "22:32"
+    },
+    {
+        "title": "🔥 TOPLU LİSTE (2 Panel / 1 Sunucu) [22:32]",
         "m3u_url": "http://iptv.jinbox.nl:80/get.php?username=nUy0AxDN&password=g55BMY2&type=m3u_plus",
         "web_link_url": "https://ay.live/v6eD8",
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "25.08.2026",
         "added_time": "08:29"
-    },
-    {
-        "title": "🔥 TOPLU LİSTE (31 Panel / 1 Sunucu) [22:38]",
-        "m3u_url": "http://nxbrush.xyz/get.php?username=Suheutkan&password=2rsjDY3a6Y&type=m3u",
-        "web_link_url": "https://ay.live/rJDSY",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "24.08.2026",
-        "added_time": "22:38"
     }
 ]
