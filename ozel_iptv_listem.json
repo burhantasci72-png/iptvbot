@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 TOPLU LİSTE (4 Panel / 1 Sunucu) [09:37]",
+        "m3u_url": "http://ipc.jaba.tv:8000/get.php?username=qasem22&password=1987&type=m3u_plus",
+        "web_link_url": "https://ay.live/ceN",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "06.09.2026",
+        "added_time": "09:37"
+    },
+    {
         "title": "🔥 TOPLU LİSTE (4 Panel / 1 Sunucu) [09:30]",
         "m3u_url": "http://vpn.tvrhino.world:80/get.php?username=play&password=live.php?mac=00:1A:79:91:EB:33&stream=978710&extension=ts&play_token=nq8e4Dch1y&type=m3u_plus",
         "web_link_url": "https://ay.live/puyRO",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "03.09.2026",
         "added_time": "22:17"
-    },
-    {
-        "title": "🔥 TOPLU LİSTE (3 Panel / 1 Sunucu) [21:56]",
-        "m3u_url": "http://uydu4k.xyz:8080/get.php?username=oeb7342ckr4&password=oeb0906yy00&type=m3u_plus",
-        "web_link_url": "https://ay.live/f4OELj",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "03.09.2026",
-        "added_time": "21:56"
     }
 ]
