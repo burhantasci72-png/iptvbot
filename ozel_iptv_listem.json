@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 TOPLU LİSTE (4 Panel / 1 Sunucu) [23:19]",
+        "m3u_url": "http://streamoratr.com:8080/get.php?username=sezginaslan&password=sezginaslan1&type=m3u_plus",
+        "web_link_url": "https://ay.live/2OXa",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "06.09.2026",
+        "added_time": "23:19"
+    },
+    {
         "title": "🔥 TOPLU LİSTE (2 Panel / 1 Sunucu) [23:18]",
         "m3u_url": "http://streamoratr.com:8080/get.php?username=mikailciris&password=ou822F2H&type=m3u_plus",
         "web_link_url": "https://ay.live/y7A",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "04.09.2026",
         "added_time": "00:27"
-    },
-    {
-        "title": "🔥 TOPLU LİSTE (15 Panel / 4 Sunucu) [00:26]",
-        "m3u_url": "http://comodor.xyz:57100/get.php?username=mstafa01&password=ayar54321&type=m3u_plus",
-        "web_link_url": "https://ay.live/7So6",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "04.09.2026",
-        "added_time": "00:26"
     }
 ]
