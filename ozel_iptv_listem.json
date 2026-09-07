@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 TOPLU LİSTE (4 Panel / 1 Sunucu) [20:19]",
+        "m3u_url": "http://vpn.tvrhino.world:80/get.php?username=play&password=live.php?mac=00:1A:79:34:A9:E4&stream=978710&extension=ts&play_token=nDORgXuhWf&type=m3u_plus",
+        "web_link_url": "https://ay.live/jUQSxA",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "07.09.2026",
+        "added_time": "20:19"
+    },
+    {
+        "title": "🔥 TOPLU LİSTE (4 Panel / 1 Sunucu) [20:19]",
         "m3u_url": "http://vpn.tvrhino.world:80/get.php?username=play&password=live.php?mac=00:1A:79:C5:48:46&stream=73138&extension=ts&play_token=v7W7MHYbrG&type=m3u_plus",
         "web_link_url": "https://ay.live/3Pod",
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "05.09.2026",
         "added_time": "01:20"
-    },
-    {
-        "title": "🔥 TOPLU LİSTE (2 Panel / 1 Sunucu) [00:24]",
-        "m3u_url": "http://altontestruzlegustaelnepe.neorpahe.top:8080/get.php?username=3571772923407&password=3188e4067e7d&type=m3u_plus",
-        "web_link_url": "https://ay.live/pntCJa",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "05.09.2026",
-        "added_time": "00:24"
     }
 ]
