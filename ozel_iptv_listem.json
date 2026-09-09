@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 TOPLU LİSTE (1 Panel / 1 Sunucu) [12:31]",
+        "m3u_url": "http://hlmtv.shop:8080/xmltv.php?username=umranduyar&password=d505a9uck&type=m3u_plus",
+        "web_link_url": "https://ay.live/pcfgKD",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "09.09.2026",
+        "added_time": "12:31"
+    },
+    {
+        "title": "🔥 TOPLU LİSTE (1 Panel / 1 Sunucu) [12:31]",
         "m3u_url": "http://front-main.fug-cloud.com:80/get.php?username=osawgonl6e&password=p1ntxvbg6g&type=m3u_plus",
         "web_link_url": "https://ay.live/xaW8S",
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "07.09.2026",
         "added_time": "00:44"
-    },
-    {
-        "title": "🔥 TOPLU LİSTE (2 Panel / 1 Sunucu) [00:42]",
-        "m3u_url": "http://kitap57.shop:80/get.php?username=cihanhakan1&password=vtSR55kqKh&type=m3u_plus",
-        "web_link_url": "https://ay.live/uO1P",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "07.09.2026",
-        "added_time": "00:42"
     }
 ]
