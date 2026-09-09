@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 TOPLU LİSTE (1 Panel / 1 Sunucu) [12:30]",
+        "m3u_url": "http://cinebelge.xyz/get.php?username=328R75M&password=0X6w05JdCN&type=m3u_plus",
+        "web_link_url": "https://ay.live/NkCOx",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "09.09.2026",
+        "added_time": "12:30"
+    },
+    {
+        "title": "🔥 TOPLU LİSTE (1 Panel / 1 Sunucu) [12:30]",
         "m3u_url": "http://m3u4k.xyz:80/get.php?username=545595fd3287&password=0089d66bce&type=m3u_plus",
         "web_link_url": "https://ay.live/m5V",
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "06.09.2026",
         "added_time": "23:20"
-    },
-    {
-        "title": "🔥 TOPLU LİSTE (4 Panel / 1 Sunucu) [23:19]",
-        "m3u_url": "http://streamoratr.com:8080/get.php?username=Seyfi2022&password=sruA7P2PhT&type=m3u_plus",
-        "web_link_url": "https://ay.live/eyJ1c2VyX2lkIjo1MjQ3MzUsImNhdGVnb3J5IjowLCJ1cmwiOiJodHRwcyUzQSUyRiUyRnRlbGVncmEucGglMkZJTkFESU5BLVRWLUxJU1RFLS0tMDYwOTIwMjYtMjMxNTIxLTA5LTA2LTMifQ==",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "06.09.2026",
-        "added_time": "23:19"
     }
 ]
