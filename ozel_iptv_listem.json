@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 TOPLU LİSTE (8 Panel / 6 Sunucu) [08:54]",
+        "m3u_url": "http://78.128.114.90:8000/get.php?username=0B241WtV56XK8EDG&password=ujrwXNsqBEQhlNmE&type=m3u_plus&output=ts",
+        "web_link_url": "https://ay.live/CsY",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "10.09.2026",
+        "added_time": "08:54"
+    },
+    {
         "title": "🔥 TOPLU LİSTE (1 Panel / 1 Sunucu) [08:54]",
         "m3u_url": "http://cevo1.ddns.me:8080/get.php?username=yusufkoca&password=12eylul.2022&type=m3u_plus&output=ts",
         "web_link_url": "https://ay.live/BcbeA",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "07.09.2026",
         "added_time": "19:30"
-    },
-    {
-        "title": "🔥 TOPLU LİSTE (1 Panel / 1 Sunucu) [19:29]",
-        "m3u_url": "http://dns5free.xyz:80/get.php?username=Clayton0416&password=2768FPJPanfy&type=m3u_plus",
-        "web_link_url": "https://ay.live/SAA5",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "07.09.2026",
-        "added_time": "19:29"
     }
 ]
