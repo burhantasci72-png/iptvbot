@@ -1,6 +1,14 @@
 [
     {
         "title": "🔥 TOPLU LİSTE (7 Panel / 1 Sunucu) [22:35]",
+        "m3u_url": "http://avrupatv323.com:2095/get.php?username=ahmettasci&password=14022024htt&type=m3u_plus&output=mpegts",
+        "web_link_url": "https://ay.live/wWrD4s",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "17.09.2026",
+        "added_time": "22:35"
+    },
+    {
+        "title": "🔥 TOPLU LİSTE (7 Panel / 1 Sunucu) [22:35]",
         "m3u_url": "http://avrupatv323.com:2095/get.php?username=rdv2149cep&password=rdv1205gg00&type=m3u_plus&output=mpegts",
         "web_link_url": "https://ay.live/CWsaG",
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "10.09.2026",
         "added_time": "21:41"
-    },
-    {
-        "title": "🔥 TOPLU LİSTE (4 Panel / 1 Sunucu) [21:40]",
-        "m3u_url": "http://ex1.one:8000/get.php?username=MuratDurmaz20112021&password=QYEwhP5cZsod08RB&type=m3u_plus",
-        "web_link_url": "https://ay.live/DKxf",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "10.09.2026",
-        "added_time": "21:40"
     }
 ]
