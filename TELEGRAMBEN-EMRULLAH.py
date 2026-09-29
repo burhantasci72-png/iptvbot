@@ -21,19 +21,29 @@ SITE_URL = VERCEL_URL
 # ==============================================================
 
 # ================= GÜVENLİ AYARLAR =================
-# Bu değerleri cihazındaki ortam değişkenlerinden ver; kaynak koda gizli anahtar yazma.
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "").strip()
-ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "").strip()
-TG_BOT_TOKEN = os.getenv("TG_BOT_TOKEN", "").strip()
-TG_CHAT_ID = os.getenv("TG_CHAT_ID", "").strip()
-API_ID = int(os.getenv("TELEGRAM_API_ID", "0") or 0)
-API_HASH = os.getenv("TELEGRAM_API_HASH", "").strip()
-AY_LIVE_API_KEY = os.getenv("AY_LIVE_API_KEY", "").strip()
+# Öncelik: ortam değişkeni > bot_config.json. bot_config.json GitHub'a gönderilmez.
+_PRIVATE_CONFIG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bot_config.json")
+try:
+    with open(_PRIVATE_CONFIG_PATH, "r", encoding="utf-8") as _f:
+        _PRIVATE_CONFIG = json.load(_f)
+except (OSError, ValueError):
+    _PRIVATE_CONFIG = {}
+
+def _setting(name, default=""):
+    return os.getenv(name) or str(_PRIVATE_CONFIG.get(name, default))
+
+GITHUB_TOKEN = _setting("GITHUB_TOKEN").strip()
+ADMIN_PASSWORD = _setting("ADMIN_PASSWORD").strip()
+TG_BOT_TOKEN = _setting("TG_BOT_TOKEN").strip()
+TG_CHAT_ID = _setting("TG_CHAT_ID").strip()
+API_ID = int(_setting("TELEGRAM_API_ID", "0") or 0)
+API_HASH = _setting("TELEGRAM_API_HASH").strip()
+AY_LIVE_API_KEY = _setting("AY_LIVE_API_KEY").strip()
 # =================================================
 
 # ================= INADINA TV TELEGRAM =================
-BENIM_KANALIM = os.getenv("TG_CHANNEL", "inadinatv2").strip()
-INADINATV_APK_LINK = os.getenv("INADINATV_APK_LINK", "https://t.me/inadinatv2/227").strip()
+BENIM_KANALIM = _setting("TG_CHANNEL", "inadinatv2").strip()
+INADINATV_APK_LINK = _setting("INADINATV_APK_LINK", "https://t.me/inadinatv2/227").strip()
 # =====================================================
 
 os.environ['PYDROID_KEEP_SCREEN_ON'] = '1'
