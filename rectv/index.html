@@ -273,6 +273,11 @@
         .dropbtn { min-width:132px !important; justify-content:center; padding:10px 14px !important; font-size:.84rem !important; }
         .tools-label { display:inline !important; }
         @media (max-width:500px) { .dropbtn { min-width:118px !important; padding:9px 12px !important; font-size:.78rem !important; } .header-actions { gap:5px; } }
+
+        .formatted-chat-text { display:block; width:100%; box-sizing:border-box; padding:10px 11px; border-radius:8px; background:#07090d; border:1px solid rgba(255,255,255,.16); border-left:3px solid #00d2ff; color:#f4f6f8; font-size:.86rem; line-height:1.52; letter-spacing:.01em; white-space:pre-wrap !important; overflow-wrap:anywhere; word-break:normal; }
+        .formatted-chat-text br { display:block; content:""; margin-top:2px; }
+        .light-theme .formatted-chat-text { background:#f7f9fc; border-color:#b9c5d4; border-left-color:#1476c9; color:#172033; }
+        .light-theme .formatted-chat-text br { border-color:#cbd3df; }
     </style>
 </head>
 <body>
@@ -1869,10 +1874,22 @@
     return html;
   }
 
+  function formatCopiedChatText(value){
+    var text = String(value || '').replace(/\r\n?/g, '\n').replace(/\u00a0/g, ' ');
+    text = text.replace(/[ \t]+\n/g, '\n').trim();
+    // Kopyalanan hesap çıktısındaki alanları dosya görünümündeki gibi satırlara ayırır.
+    text = text.replace(/([^\n])\s+(?=🔥\s*INADINATV)/g, '$1\n');
+    text = text.replace(/\s+(?=👤|📅|📡|📌|🌍|📺|🎬|🔗|📁|🔍)/g, '\n');
+    text = text.replace(/\n{4,}/g, '\n\n\n');
+    return text;
+  }
+
   function renderRichMessageText(text){
     var raw = String(text || '');
     if(!raw.trim()) return '<div class="msg-text"></div>';
-    return '<div class="msg-text">' + nlToBr(raw) + '</div>';
+    var formatted = formatCopiedChatText(raw);
+    var structured = /M3U:|JSON:|Bitiş:|Deep Scan:|INADINATV/i.test(formatted) || formatted.indexOf('\n') !== -1;
+    return '<div class="msg-text' + (structured ? ' formatted-chat-text' : '') + '">' + nlToBr(formatted) + '</div>';
   }
 
   function buildFileBlock(file, fileId){
