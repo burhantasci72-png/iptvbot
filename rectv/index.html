@@ -45,7 +45,7 @@
         .dropbtn { background: linear-gradient(135deg, #00d2ff, #3a7bd5); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; padding: 8px 16px; border-radius: 8px; font-size: 0.95rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; white-space: nowrap; box-shadow: 0 4px 10px rgba(58, 123, 213, 0.4); text-transform: uppercase; letter-spacing: 0.5px; }
         .dropdown-content { display: none; position: absolute; background-color: var(--surface); min-width: 220px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 201; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); top: 120%; left: 0; }
         .dropdown-content a { color: var(--text); padding: 12px 16px; text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; border-bottom: 1px solid var(--border); transition: background 0.2s, padding-left 0.2s; white-space: nowrap; }
-        .dropdown:hover .dropdown-content, .dropdown:focus-within .dropdown-content { display: block; animation: fadeInMenu 0.3s ease; }
+        .dropdown.open .dropdown-content { display: block; animation: fadeInMenu 0.18s ease; }
         @keyframes fadeInMenu { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
         .theme-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; transition: all 0.3s; }
@@ -290,6 +290,20 @@
         .light-theme .formatted-chat-text .chat-inline-link:hover,.light-theme .formatted-chat-text .chat-inline-link:focus { color:#043b69; background:#dceeff; }
         .light-theme .formatted-chat-text.collapsed-chat-text:after { background:linear-gradient(transparent,#f7f9fc); }
         .light-theme .chat-expand-btn { background:#e4f1ff; border-color:#83b6e5; color:#075fa8; }
+
+        /* Araçlar: tema yüzeyinden ayrışan okunaklı menü */
+        .dropdown-content { background:#151b2b; border:2px solid #00d2ff; box-shadow:0 12px 30px rgba(0,0,0,.65),0 0 0 3px rgba(0,210,255,.12); min-width:270px; }
+        .dropdown-content a { color:#f7fbff; background:#151b2b; padding:14px 16px; font-size:.94rem; font-weight:700; border-bottom:1px solid rgba(255,255,255,.12); }
+        .dropdown-content a i { color:#55dcff; width:22px; text-align:center; font-size:1.05rem; }
+        .dropdown-content a:hover,.dropdown-content a:focus { color:#fff; background:linear-gradient(90deg,#e90046,#bf155f); padding-left:20px; }
+        .dropdown-content a:hover i,.dropdown-content a:focus i { color:#fff; }
+        .dropdown.open .dropdown-content { display:block; animation:fadeInMenu .18s ease; }
+        .dropdown.open .dropbtn { box-shadow:0 0 0 3px rgba(255,0,64,.35),0 5px 18px rgba(0,210,255,.35); }
+        .light-theme .dropdown-content { background:#172a46; border-color:#1679bd; box-shadow:0 12px 30px rgba(20,45,75,.35),0 0 0 3px rgba(22,121,189,.12); }
+        .light-theme .dropdown-content a { color:#f7fbff; background:#172a46; border-bottom-color:rgba(255,255,255,.16); }
+        .light-theme .dropdown-content a i { color:#72ddff; }
+        .light-theme .dropdown-content a:hover,.light-theme .dropdown-content a:focus { color:#fff; background:linear-gradient(90deg,#c9003d,#8e185d); }
+        @media (max-width:500px) { .dropdown-content { min-width:calc(100vw - 30px); max-width:calc(100vw - 30px); } .dropdown-content a { padding:14px 16px; font-size:.9rem; } }
     </style>
 </head>
 <body>
@@ -468,8 +482,8 @@
     </div>
 
   <div class="top-bar">
-    <div class="dropdown">
-        <button class="dropbtn focusable" title="IPTV araçları" aria-label="IPTV araçları"><span class="tools-label">IPTV ARAÇLAR</span> <i class="fas fa-tools"></i></button>
+    <div class="dropdown" id="toolsDropdown">
+        <button type="button" class="dropbtn focusable" id="toolsToggle" onclick="toggleToolsMenu(event)" title="IPTV araçlarını aç/kapat" aria-label="IPTV araçlarını aç/kapat" aria-expanded="false"><span class="tools-label">IPTV ARAÇLAR</span> <i class="fas fa-tools"></i></button>
         <div class="dropdown-content">
             <a href="go:combo" class="focusable"><i class="fas fa-search"></i> Kombo Tarama 1</a>
 
@@ -1509,6 +1523,23 @@
         document.getElementById('btnConfirmAction').onclick = function() { if(!pendingAction) return; if(pendingAction.type === 'ban') { database.ref('banned_users/' + pendingAction.target).set(true); showToast("Kullanıcı Engellendi!", "fa-ban"); } else if (pendingAction.type === 'del') { database.ref('global_chat/' + pendingAction.target).remove(); showToast("Mesaj Silindi", "fa-trash"); } else if (pendingAction.type === 'report') { database.ref('reports').push({ channel: pendingAction.target, user: myUserName, uuid: myUUID, time: new Date().toLocaleString() }); showToast("Yöneticiye Bildirildi!", "fa-paper-plane"); } closeConfirm(); };
 
         function sanitizeKey(key) { return key.replace(/[.#$\/\[\]]/g, '_').substring(0, 50); }
+        function toggleToolsMenu(event) {
+            if(event) event.stopPropagation();
+            const dropdown = document.getElementById('toolsDropdown');
+            const button = document.getElementById('toolsToggle');
+            if(!dropdown || !button) return;
+            const isOpen = dropdown.classList.toggle('open');
+            button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        }
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('toolsDropdown');
+            if(dropdown && !dropdown.contains(event.target)) {
+                dropdown.classList.remove('open');
+                const button = document.getElementById('toolsToggle');
+                if(button) button.setAttribute('aria-expanded', 'false');
+            }
+        });
+
         function toggleTheme() { document.body.classList.toggle('light-theme'); const isLight = document.body.classList.contains('light-theme'); localStorage.setItem('theme', isLight ? 'light' : 'dark'); document.getElementById('themeBtn').innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; document.getElementById('telegramBtn').style.color = isLight ? '#1a1a1a' : 'white'; document.getElementById('modalCloseBtn').style.background = isLight ? '#e0e0e0' : '#333'; document.getElementById('modalCloseBtn').style.color = isLight ? '#1a1a1a' : 'white'; document.getElementById('modalCloseBtn2').style.background = isLight ? '#e0e0e0' : '#333'; document.getElementById('modalCloseBtn2').style.color = isLight ? '#1a1a1a' : 'white'; }
         
         function render() { 
