@@ -278,6 +278,18 @@
         .formatted-chat-text br { display:block; content:""; margin-top:2px; }
         .light-theme .formatted-chat-text { background:#f7f9fc; border-color:#b9c5d4; border-left-color:#1476c9; color:#172033; }
         .light-theme .formatted-chat-text br { border-color:#cbd3df; }
+
+        .formatted-chat-text .chat-inline-link { color:#54d8ff; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px; font-weight:700; cursor:pointer; overflow-wrap:anywhere; }
+        .formatted-chat-text .chat-inline-link:visited { color:#b98cff; }
+        .formatted-chat-text .chat-inline-link:hover,.formatted-chat-text .chat-inline-link:focus { color:#fff; background:rgba(0,210,255,.18); border-radius:3px; outline:none; }
+        .formatted-chat-text.collapsed-chat-text { max-height:360px; overflow:hidden; position:relative; }
+        .formatted-chat-text.collapsed-chat-text:after { content:""; position:absolute; left:0; right:0; bottom:0; height:58px; background:linear-gradient(transparent,#07090d); pointer-events:none; }
+        .chat-expand-btn { display:block; width:100%; margin-top:6px; padding:7px 10px; border:1px solid rgba(84,216,255,.45); border-radius:7px; background:rgba(0,210,255,.12); color:#54d8ff; font-weight:700; cursor:pointer; }
+        .light-theme .formatted-chat-text .chat-inline-link { color:#075fa8; }
+        .light-theme .formatted-chat-text .chat-inline-link:visited { color:#7040a5; }
+        .light-theme .formatted-chat-text .chat-inline-link:hover,.light-theme .formatted-chat-text .chat-inline-link:focus { color:#043b69; background:#dceeff; }
+        .light-theme .formatted-chat-text.collapsed-chat-text:after { background:linear-gradient(transparent,#f7f9fc); }
+        .light-theme .chat-expand-btn { background:#e4f1ff; border-color:#83b6e5; color:#075fa8; }
     </style>
 </head>
 <body>
@@ -1874,6 +1886,19 @@
     return html;
   }
 
+  function nlToBrWithLinks(value){
+    var safe = escapeHtml(value);
+    safe = safe.replace(/https?:\/\/[^\s<]+/gi, function(token){
+      var trailing = '';
+      while(/[.,;:!?)\]}]+$/.test(token)){
+        trailing = token.slice(-1) + trailing;
+        token = token.slice(0, -1);
+      }
+      return '<a class="chat-inline-link" data-copy-url="' + token + '" href="' + token + '" target="_blank" rel="noopener noreferrer">' + token + '</a>' + trailing;
+    });
+    return safe.split(String.fromCharCode(10)).join('<br>');
+  }
+
   function formatCopiedChatText(value){
     var text = String(value || '').replace(/\r\n?/g, '\n').replace(/\u00a0/g, ' ');
     text = text.replace(/[ \t]+\n/g, '\n').trim();
@@ -1889,7 +1914,11 @@
     if(!raw.trim()) return '<div class="msg-text"></div>';
     var formatted = formatCopiedChatText(raw);
     var structured = /M3U:|JSON:|Bitiş:|Deep Scan:|INADINATV/i.test(formatted) || formatted.indexOf('\n') !== -1;
-    return '<div class="msg-text' + (structured ? ' formatted-chat-text' : '') + '">' + nlToBr(formatted) + '</div>';
+    var longMessage = structured && (formatted.length > 1800 || formatted.split('\n').length > 24);
+    var classes = 'msg-text' + (structured ? ' formatted-chat-text' : '') + (longMessage ? ' collapsed-chat-text' : '');
+    var html = '<div class="' + classes + '">' + nlToBrWithLinks(formatted) + '</div>';
+    if(longMessage) html += '<button type="button" class="chat-expand-btn focusable">Devamını göster <i class="fas fa-chevron-down"></i></button>';
+    return html;
   }
 
   function buildFileBlock(file, fileId){
@@ -2130,7 +2159,42 @@
   window.appendPrivateMessage = appendPrivateMessagePro;
   try{ appendPrivateMessage = appendPrivateMessagePro; }catch(e){}
 
+  var longPressTimer = null;
+  var suppressInlineLinkClick = false;
+  document.addEventListener('pointerdown', function(e){
+    var link = e.target.closest ? e.target.closest('.chat-inline-link') : null;
+    if(!link) return;
+    suppressInlineLinkClick = false;
+    longPressTimer = setTimeout(function(){
+      suppressInlineLinkClick = true;
+      copyTextToClipboard(link.dataset.copyUrl || link.href);
+      link.classList.add('link-long-pressed');
+      setTimeout(function(){ link.classList.remove('link-long-pressed'); }, 700);
+    }, 650);
+  }, {passive:true});
+  ['pointerup','pointercancel','pointerleave'].forEach(function(type){
+    document.addEventListener(type, function(){
+      if(longPressTimer){ clearTimeout(longPressTimer); longPressTimer = null; }
+    }, {passive:true});
+  });
+  document.addEventListener('contextmenu', function(e){
+    var link = e.target.closest ? e.target.closest('.chat-inline-link') : null;
+    if(link){ e.preventDefault(); copyTextToClipboard(link.dataset.copyUrl || link.href); }
+  });
+
   document.addEventListener('click', function(e){
+    var inlineLink = e.target.closest ? e.target.closest('.chat-inline-link') : null;
+    if(inlineLink){
+      if(suppressInlineLinkClick){ e.preventDefault(); suppressInlineLinkClick = false; }
+      return;
+    }
+    var expandBtn = e.target.closest ? e.target.closest('.chat-expand-btn') : null;
+    if(expandBtn){
+      var block = expandBtn.previousElementSibling;
+      if(block) block.classList.remove('collapsed-chat-text');
+      expandBtn.remove();
+      return;
+    }
     var img = e.target.closest('.chat-media-image');
     if(img){
       if(typeof showImagePreview === 'function') showImagePreview(img.src);
