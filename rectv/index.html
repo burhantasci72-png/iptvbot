@@ -28,7 +28,13 @@
         .focusable { outline: none; transition: transform 0.2s, box-shadow 0.2s, background 0.2s; border: 2px solid transparent; }
         .focusable:focus, .focusable.focused { transform: scale(1.05); box-shadow: 0 0 0 4px #ff0040, 0 0 20px rgba(255, 0, 64, 0.6) !important; z-index: 100; background-color: rgba(255, 255, 255, 0.15); border-color: #fff; }
         
-        .brand-lockup { display:flex; flex-direction:column; line-height:1.05; margin:0 10px; min-width:0; } .brand-lockup strong { color:#fff; font-size:1.05rem; letter-spacing:.5px; } .brand-lockup span { color:#00d2ff; font-size:.62rem; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; }
+        .brand-lockup { flex:0 1 86px; min-width:0; margin:0 4px 0 0; overflow:hidden; }
+        .brand-lockup strong { display:block; color:#fff; font-size:.82rem; line-height:1; letter-spacing:.2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .tools-label { display:inline; }
+        .dropbtn { padding:8px 10px; font-size:.76rem; gap:5px; letter-spacing:.2px; }
+        .dropbtn i { font-size:.95rem; }
+        .top-bar { gap:7px; }
+        @media (max-width:500px) { .brand-lockup { flex-basis:72px; } .brand-lockup strong { font-size:.72rem; } .tools-label { display:none; } .dropbtn { min-width:42px; justify-content:center; padding:8px 10px; } .header-actions { gap:5px; } .online-badge { padding:6px 7px; font-size:.68rem; } .theme-btn { padding:7px 9px; } }
         .top-bar { padding: 10px 15px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: background 0.3s; }
         .header-actions { display: flex; align-items: center; gap: 12px; }
         
@@ -409,9 +415,9 @@
     </div>
 
   <div class="top-bar">
-    <div class="brand-lockup" aria-label="InAdina TV"><strong>InAdina TV</strong><span>Resmi IPTV Platformu</span></div>
+    <div class="brand-lockup" aria-label="InAdina TV"><strong>InAdina TV</strong></div>
     <div class="dropdown">
-        <button class="dropbtn focusable">IPTV ARAÇLAR <i class="fas fa-tools"></i></button>
+        <button class="dropbtn focusable" title="IPTV araçları" aria-label="IPTV araçları"><span class="tools-label">ARAÇLAR</span> <i class="fas fa-tools"></i></button>
         <div class="dropdown-content">
             <a href="go:combo" class="focusable"><i class="fas fa-search"></i> Kombo Tarama 1</a>
 
@@ -1661,6 +1667,23 @@
 .link-action-btn{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;transition:.2s;}
 .link-action-btn:hover,.link-action-btn:focus{transform:scale(1.07);background:var(--primary);border-color:#fff;}
 .chat-link-more{font-size:.75rem;opacity:.7;margin-top:8px;text-align:center;}
+.chat-link-group{margin-top:8px;padding:7px;border-radius:12px;background:linear-gradient(145deg,rgba(0,210,255,.08),rgba(255,0,64,.06));border-color:rgba(0,210,255,.18);}
+.chat-link-header{margin-bottom:6px;min-height:28px;}
+.chat-link-count{font-size:.72rem;color:#9deeff;}
+.copy-all-links{border:1px solid rgba(0,210,255,.3);background:rgba(0,210,255,.1);color:#dffbff;border-radius:7px;padding:5px 7px;font-size:.68rem;white-space:nowrap;cursor:pointer;}
+.chat-link-cards{gap:5px;}
+.chat-link-card{min-width:0;padding:6px 7px;gap:6px;border-radius:9px;background:rgba(0,0,0,.18);}
+.link-icon{width:28px;height:28px;flex:0 0 28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.78rem;}
+.link-info{min-width:0;flex:1;overflow:hidden;}
+.link-line1{display:flex;align-items:center;gap:5px;min-width:0;}
+.link-badge{font-size:.58rem;padding:2px 4px;border-radius:4px;flex:0 0 auto;}
+.link-domain{font-size:.68rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.75;}
+.link-url{font-size:.66rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.72;max-width:100%;}
+.link-btns{display:flex;gap:3px;flex:0 0 auto;}
+.link-action-btn{width:27px;height:27px;padding:0;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;}
+.msg-text{line-height:1.45;word-break:break-word;}
+.msg-content > .msg-text + .chat-link-group{margin-top:9px;}
+@media (max-width:500px){.chat-messages{padding:10px 8px;gap:8px}.chat-message-row .message-bubble{max-width:92%;}.chat-link-card{padding:5px 6px}.link-action-btn{width:25px;height:25px}.copy-all-links{font-size:.62rem;padding:5px 6px}.chat-link-count{font-size:.68rem;}}
 .msg-actions .action-btn{user-select:none;}
 .chat-scroll-btn{position:absolute;right:14px;bottom:14px;width:38px;height:38px;border-radius:50%;border:none;background:var(--primary);color:#fff;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:50;box-shadow:0 4px 12px rgba(0,0,0,.35);}
 .chat-view{position:relative;}
@@ -1839,30 +1862,21 @@
     return html;
   }
 
-  // Telegram benzeri görünüm: metin ve linkler aynı baloncukta, gönderildikleri sırayla kalır.
+  // Metni korur; linkleri Telegram benzeri kompakt kart grubuna ayırır.
   function renderRichMessageText(text){
     var raw = String(text || '');
     if(!raw.trim()) return '<div class="msg-text"></div>';
-
     var urlRegex = /https?:\/\/[^\s"'<>]+/gi;
-    var html = '';
-    var lastIndex = 0;
+    var urls = [];
     var match;
-
     while((match = urlRegex.exec(raw)) !== null){
-      var before = raw.substring(lastIndex, match.index);
-      html += nlToBr(before);
-
-      var originalUrl = cleanTrailingUrl(match[0]);
-      var trailing = match[0].substring(originalUrl.length);
-      var safeUrl = escapeAttr(originalUrl);
-      html += '<a href="' + safeUrl + '" target="_blank" rel="noopener noreferrer" class="chat-link focusable">' + escapeHtml(originalUrl) + '</a>';
-      html += nlToBr(trailing);
-      lastIndex = match.index + match[0].length;
+      var cleanUrl = cleanTrailingUrl(match[0]);
+      if(cleanUrl && urls.indexOf(cleanUrl) === -1) urls.push(cleanUrl);
     }
-
-    html += nlToBr(raw.substring(lastIndex));
-    return '<div class="msg-text">' + html + '</div>';
+    if(!urls.length) return '<div class="msg-text">' + nlToBr(raw) + '</div>';
+    var readable = raw.replace(urlRegex, '').replace(/[ \t]{2,}/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
+    var textHtml = readable ? '<div class="msg-text">' + nlToBr(readable) + '</div>' : '';
+    return textHtml + buildLinkGroup(urls);
   }
 
   function buildFileBlock(file, fileId){
