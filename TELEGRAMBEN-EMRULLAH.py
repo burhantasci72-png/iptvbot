@@ -800,7 +800,7 @@ class IPTV_Bot_Pro:
         .dropbtn { padding:8px 10px; font-size:.76rem; gap:5px; letter-spacing:.2px; }
         .dropbtn i { font-size:.95rem; }
         .top-bar { gap:7px; }
-        @media (max-width:500px) { .brand-lockup { flex-basis:72px; } .brand-lockup strong { font-size:.72rem; } .tools-label { display:none; } .dropbtn { min-width:42px; justify-content:center; padding:8px 10px; } .header-actions { gap:5px; } .online-badge { padding:6px 7px; font-size:.68rem; } .theme-btn { padding:7px 9px; } }
+        @media (max-width:500px) { .brand-lockup { flex-basis:72px; } .brand-lockup strong { font-size:.72rem; } .tools-label { display:inline !important; } .dropbtn { min-width:42px; justify-content:center; padding:8px 10px; } .header-actions { gap:5px; } .online-badge { padding:6px 7px; font-size:.68rem; } .theme-btn { padding:7px 9px; } }
         .top-bar { padding: 10px 15px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: background 0.3s; }
         .header-actions { display: flex; align-items: center; gap: 12px; }
         
@@ -1003,6 +1003,41 @@ class IPTV_Bot_Pro:
         #maintenanceScreen { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#111; z-index:9000; color:#ffeb3b; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
         .emergency-input { background: rgba(255,255,255,0.1); border: 1px solid #ffeb3b; color: #fff; padding: 10px; margin-top: 20px; border-radius: 5px; width: 200px; text-align: center; }
         .emergency-btn { background: #ffeb3b; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin-top: 10px; cursor: pointer; }
+
+        /* Açık tema kontrast düzeni */
+        .light-theme { --bg:#eef1f6; --surface:#ffffff; --text:#172033; --card-bg:#ffffff; --border:#cbd3df; }
+        .light-theme .top-bar,.light-theme .chat-modal,.light-theme .chat-header,.light-theme .chat-input-area { background:#ffffff; color:#172033; }
+        .light-theme .card { background:#ffffff; border-color:#cbd3df; box-shadow:0 2px 8px rgba(35,48,70,.12); }
+        .light-theme .card-name,.light-theme .card-meta,.light-theme .dropdown-content a,.light-theme .chat-close { color:#172033; }
+        .light-theme .card-meta { opacity:.9; }
+        .light-theme .stat-badge { background:#edf1f6; border-color:#c3ccd9; color:#253149; }
+        .light-theme .theme-btn { background:#edf1f6; border-color:#b8c2d1; color:#172033; }
+        .light-theme .online-badge { background:#e7f8ef; border-color:#8bd8ad; color:#08783e; }
+        .light-theme .dropdown-content { background:#fff; border-color:#cbd3df; box-shadow:0 8px 18px rgba(35,48,70,.18); }
+        .light-theme .dropdown-content a:hover,.light-theme .dropdown-content a:focus { background:#eaf2ff; color:#0b4f9c; }
+        .light-theme .message-bubble { background:#ffffff; color:#172033; border:1px solid #cbd3df; box-shadow:0 2px 8px rgba(35,48,70,.12); }
+        .light-theme .msg-right { background:#ffe7ef; color:#341321; border-color:#f0a9bd; }
+        .light-theme .msg-user { color:#7d1738; opacity:1; }
+        .light-theme .msg-time { color:#536174; opacity:1; }
+        .light-theme .msg-text { color:#172033; }
+        .light-theme .action-btn { color:#42516a; }
+        .light-theme .action-btn:hover { color:#b0003a; }
+        .light-theme .chat-tab { color:#172033; }
+        .light-theme .chat-tabs { background:#e8edf4; }
+        .light-theme .chat-rules { background:#fff1c7; border-color:#e4b900; color:#6b4b00; }
+        .light-theme .chat-input { background:#f7f9fc; color:#172033; border:1px solid #b8c2d1; }
+        .light-theme .chat-attach-btn { background:#e8edf4; color:#172033; border:1px solid #c0cad8; }
+        .light-theme .chat-link-group,.light-theme .chat-link-card { background:#f5f8fc; border-color:#c4cedc; }
+        .light-theme .chat-link-count,.light-theme .link-domain,.light-theme .link-url { color:#253149; opacity:1; }
+        .light-theme .copy-all-links { color:#124b88; background:#e4f1ff; border-color:#8ab8e5; }
+        .light-theme .opt { background:#f5f7fa; color:#172033; border:1px solid #cbd3df; }
+        .light-theme .action-menu-btn { background:#f0f3f7; color:#172033; }
+        .light-theme .private-chat-item { background:#f5f7fa; border:1px solid #cbd3df; color:#172033; }
+        .light-theme .reply-preview-bar { background:#eef2f7; color:#253149; border-color:#b8c2d1; }
+        .brand-lockup { display:none !important; }
+        .dropbtn { min-width:132px !important; justify-content:center; padding:10px 14px !important; font-size:.84rem !important; }
+        .tools-label { display:inline !important; }
+        @media (max-width:500px) { .dropbtn { min-width:118px !important; padding:9px 12px !important; font-size:.78rem !important; } .header-actions { gap:5px; } }
     </style>
 </head>
 <body>
@@ -1181,9 +1216,8 @@ class IPTV_Bot_Pro:
     </div>
 
   <div class="top-bar">
-    <div class="brand-lockup" aria-label="InAdina TV"><strong>InAdina TV</strong></div>
     <div class="dropdown">
-        <button class="dropbtn focusable" title="IPTV araçları" aria-label="IPTV araçları"><span class="tools-label">ARAÇLAR</span> <i class="fas fa-tools"></i></button>
+        <button class="dropbtn focusable" title="IPTV araçları" aria-label="IPTV araçları"><span class="tools-label">IPTV ARAÇLAR</span> <i class="fas fa-tools"></i></button>
         <div class="dropdown-content">
             <a href="go:combo" class="focusable"><i class="fas fa-search"></i> Kombo Tarama 1</a>
 
@@ -1353,7 +1387,6 @@ class IPTV_Bot_Pro:
     <div class="modal" id="modal">
         <div class="modal-box">
             <h3 id="mTitle" style="text-align:center; margin-top:0; color:var(--primary);"></h3>
-            <div class="opt focusable" id="builtinPlayerBtn"><i class="fas fa-play-circle" style="color:var(--primary)"></i> <b>Dahili Oynatıcı (İzle)</b></div>
             <div class="opt focusable" id="wuffy"><i class="fas fa-play" style="color:var(--primary)"></i> <b>Wuffy Player</b></div>
             <div class="opt focusable" id="xpola"><i class="fas fa-rocket" style="color:var(--primary)"></i> <b>Xpola Player</b></div>
             <div class="opt focusable" id="externalWeb" style="background: rgba(255,171,0,0.1); border: 1px solid #ffab00;">
@@ -1899,33 +1932,6 @@ class IPTV_Bot_Pro:
             }
         };
 
-        document.getElementById('builtinPlayerBtn').onclick = () => {
-            if(current.url && current.url !== "#") {
-                document.getElementById('modal').style.display='none';
-                document.getElementById('fullPlayerContainer').style.display = 'block';
-                
-                let finalUrl = formatStreamUrl(current.url);
-                showToast(current.title + " oynatılıyor", "fa-play");
-                
-                const isVideo = checkIsVideo(finalUrl);
-                
-                fullVjsPlayer = destroyPlayer(fullVjsPlayer, 'fullVideoWrapper', 'fullVideo');
-                
-                if(isVideo) {
-                    document.getElementById('fullIframe').style.display = 'none';
-                    document.getElementById('fullIframe').src = '';
-                    document.getElementById('fullVideoWrapper').style.display = 'block';
-                    fullVjsPlayer = createPlayer('fullVideo', finalUrl);
-                } else {
-                    document.getElementById('fullVideoWrapper').style.display = 'none';
-                    document.getElementById('fullIframe').style.display = 'block';
-                    document.getElementById('fullIframe').src = current.url; 
-                }
-                
-                setTimeout(() => document.getElementById('closeFullPlayerBtn').focus(), 100);
-            }
-        };
-
         document.getElementById('closeFullPlayerBtn').addEventListener('click', () => {
             document.getElementById('fullPlayerContainer').style.display = 'none';
             
@@ -2280,7 +2286,6 @@ class IPTV_Bot_Pro:
                 card.onclick = () => { 
                     current = item; incrementViewCount(item.title); document.getElementById('mTitle').innerText = item.title; document.getElementById('modal').style.display = 'flex'; 
                     lastFocusedElement = card;
-                    setTimeout(() => document.getElementById('builtinPlayerBtn').focus(), 50);
                 }; 
                 container.appendChild(card); 
             }); 
@@ -2633,21 +2638,10 @@ CHAT_UPGRADE_V2 = r"""
     return html;
   }
 
-  // Metni korur; linkleri Telegram benzeri kompakt kart grubuna ayırır.
   function renderRichMessageText(text){
     var raw = String(text || '');
     if(!raw.trim()) return '<div class="msg-text"></div>';
-    var urlRegex = /https?:\/\/[^\s"'<>]+/gi;
-    var urls = [];
-    var match;
-    while((match = urlRegex.exec(raw)) !== null){
-      var cleanUrl = cleanTrailingUrl(match[0]);
-      if(cleanUrl && urls.indexOf(cleanUrl) === -1) urls.push(cleanUrl);
-    }
-    if(!urls.length) return '<div class="msg-text">' + nlToBr(raw) + '</div>';
-    var readable = raw.replace(urlRegex, '').replace(/[ \t]{2,}/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
-    var textHtml = readable ? '<div class="msg-text">' + nlToBr(readable) + '</div>' : '';
-    return textHtml + buildLinkGroup(urls);
+    return '<div class="msg-text">' + nlToBr(raw) + '</div>';
   }
 
   function buildFileBlock(file, fileId){
