@@ -304,6 +304,17 @@
         .light-theme .dropdown-content a i { color:#72ddff; }
         .light-theme .dropdown-content a:hover,.light-theme .dropdown-content a:focus { color:#fff; background:linear-gradient(90deg,#c9003d,#8e185d); }
         @media (max-width:500px) { .dropdown-content { min-width:calc(100vw - 30px); max-width:calc(100vw - 30px); } .dropdown-content a { padding:14px 16px; font-size:.9rem; } }
+
+        .player-preference-bar { display:none; align-items:center; justify-content:space-between; gap:10px; margin:0 15px -5px; padding:9px 11px; border:1px solid rgba(0,210,255,.35); border-radius:11px; background:linear-gradient(100deg,rgba(0,210,255,.12),rgba(255,0,64,.10)); color:var(--text); font-size:.78rem; font-weight:700; }
+        .player-preference-bar .player-pref-label { display:flex; align-items:center; gap:7px; min-width:0; }
+        .player-preference-bar .player-pref-label i { color:#00d2ff; }
+        .player-visibility-toggle { border:1px solid #00d2ff; border-radius:8px; padding:7px 10px; background:#102a3b; color:#9cecff; font-weight:800; font-size:.72rem; cursor:pointer; white-space:nowrap; }
+        .player-visibility-toggle.is-off { border-color:#ff557c; background:#3a1422; color:#ffabc0; }
+        .light-theme .player-preference-bar { background:linear-gradient(100deg,#e4f5ff,#fff0f4); border-color:#8ab8d9; color:#172033; }
+        .light-theme .player-preference-bar .player-pref-label i { color:#1476c9; }
+        .light-theme .player-visibility-toggle { background:#e4f1ff; border-color:#1476c9; color:#075fa8; }
+        .light-theme .player-visibility-toggle.is-off { background:#fff0f4; border-color:#c83d63; color:#9b2044; }
+        @media (max-width:500px){ .player-preference-bar{margin:0 10px -5px;font-size:.72rem;} .player-visibility-toggle{padding:7px 8px;font-size:.68rem;} }
     </style>
 </head>
 <body>
@@ -520,6 +531,10 @@
 
     <div class="feature-container" id="featureContainer">
         
+        <div id="playerPreferenceBar" class="player-preference-bar">
+            <span class="player-pref-label"><i class="fas fa-tv"></i> <span>Admin yayını: Player görünümü</span></span>
+            <button type="button" id="playerVisibilityToggle" class="player-visibility-toggle focusable" onclick="toggleUserPlayerVisibility()" aria-pressed="true">Player Açık</button>
+        </div>
         <div id="streamBox" class="stream-box">
             <div class="quick-close-btn focusable" onclick="stopStreams()" title="Yayını Kapat"><i class="fas fa-times"></i></div>
             
@@ -870,12 +885,43 @@
             });
         }
 
+        let userPlayerVisible = localStorage.getItem('user_player_visible') !== 'false';
+
+        function updatePlayerVisibilityButton() {
+            const bar = document.getElementById('playerPreferenceBar');
+            const button = document.getElementById('playerVisibilityToggle');
+            if(!button) return;
+            button.textContent = userPlayerVisible ? 'Player Açık' : 'Player Kapalı';
+            button.classList.toggle('is-off', !userPlayerVisible);
+            button.setAttribute('aria-pressed', userPlayerVisible ? 'true' : 'false');
+            if(bar) bar.style.display = window.streamDataActive && !(window.countdownData && window.countdownData.active) ? 'flex' : 'none';
+        }
+
+        function toggleUserPlayerVisibility() {
+            userPlayerVisible = !userPlayerVisible;
+            localStorage.setItem('user_player_visible', userPlayerVisible ? 'true' : 'false');
+            if(!userPlayerVisible) {
+                const iframe = document.getElementById('matchIframe');
+                if(iframe) iframe.src = '';
+                matchVjsPlayer = destroyPlayer(matchVjsPlayer, 'matchVideoWrapper', 'matchVideo');
+                document.getElementById('matchVideoWrapper').style.display = 'none';
+            }
+            updatePlayerVisibilityButton();
+            evaluateVisibility();
+            if(userPlayerVisible && window.streamDataActive) {
+                if(window.currentStreams.ch1) changeStream(1);
+                else if(window.currentStreams.ch2) changeStream(2);
+                else if(window.currentStreams.ch3) changeStream(3);
+            }
+        }
+
         function evaluateVisibility() {
             const now = new Date().getTime();
             if (window.countdownData.active && window.countdownData.target > now) {
                 document.getElementById('countdownBox').style.display = 'block';
                 document.getElementById('liveScoreBox').style.display = 'none';
                 document.getElementById('streamBox').style.display = 'none';
+                document.getElementById('playerPreferenceBar').style.display = 'none';
                 
                 if(matchVjsPlayer) matchVjsPlayer.pause();
                 document.getElementById('matchIframe').src = "";
@@ -883,8 +929,14 @@
                 document.getElementById('countdownBox').style.display = 'none';
                 if (window.livescoreDataActive) document.getElementById('liveScoreBox').style.display = 'block';
                 else document.getElementById('liveScoreBox').style.display = 'none';
-                if (window.streamDataActive) document.getElementById('streamBox').style.display = 'block';
-                else document.getElementById('streamBox').style.display = 'none';
+                if (window.streamDataActive) {
+                    document.getElementById('playerPreferenceBar').style.display = 'flex';
+                    document.getElementById('streamBox').style.display = userPlayerVisible ? 'block' : 'none';
+                    updatePlayerVisibilityButton();
+                } else {
+                    document.getElementById('playerPreferenceBar').style.display = 'none';
+                    document.getElementById('streamBox').style.display = 'none';
+                }
             }
         }
 
@@ -1352,7 +1404,7 @@
                         }
                         
                         const iframe = document.getElementById('matchIframe');
-                        if((!iframe.src || iframe.src === window.location.href) && !matchVjsPlayer) {
+                        if(userPlayerVisible && (!iframe.src || iframe.src === window.location.href) && !matchVjsPlayer) {
                             if(window.currentStreams.ch1) { changeStream(1); }
                             else if(window.currentStreams.ch2) { changeStream(2); }
                             else if(window.currentStreams.ch3) { changeStream(3); }
