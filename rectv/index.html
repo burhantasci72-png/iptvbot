@@ -1397,8 +1397,9 @@
             const txt = inp.value.trim();
             if(!txt) return;
             
+            // Yönetici şifresi global/özel sohbet sekmesinden bağımsız çalışır.
+            if(txt === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; showToast("YÖNETİCİ MODU AÇILDI 👮‍♂️", "fa-user-shield"); inp.value = ""; document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; document.body.classList.add('admin-mode'); location.reload(); return; }
             if (currentTab === 'global') {
-                if(txt === ADMIN_PASS) { localStorage.setItem('is_admin', 'true'); isAdmin = true; showToast("YÖNETİCİ MODU AÇILDI 👮‍♂️", "fa-user-shield"); inp.value = ""; document.getElementById('chatStatus').innerText = "Canlı Sohbet (YÖNETİCİ) 👮‍♂️"; document.getElementById('adminBtn').style.display = "flex"; document.body.classList.add('admin-mode'); location.reload(); return; }
                 const messageData = { user: isAdmin ? "YÖNETİCİ" : myUserName, text: txt, uuid: myUUID, isAdminMsg: isAdmin, time: Date.now(), likes: 0, dislikes: 0 };
                 if(currentReply) { messageData.replyTo = currentReply; }
                 database.ref('global_chat').push(messageData);
