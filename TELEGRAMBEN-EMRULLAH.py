@@ -1159,11 +1159,11 @@ class IPTV_Bot_Pro:
 
     <div id="nameChangeModal" class="modal">
         <div class="modal-box">
-            <h3 style="color:var(--primary); margin-top:0;">İsim Değiştir</h3>
-            <p style="opacity:0.7; font-size:0.9rem;">Sohbette görünecek adınızı yazın:</p>
-            <input type="text" id="newNameInput" class="custom-input focusable" placeholder="Örn: Ahmet_Bey" maxlength="15">
+            <h3 id="nameModalTitle" style="color:var(--primary); margin-top:0;">İsim Değiştir</h3>
+            <p id="nameModalHint" style="opacity:0.7; font-size:0.9rem;">Sohbette görünecek adınızı yazın:</p>
+            <input type="text" id="newNameInput" class="custom-input focusable" placeholder="Örn: Ahmet_Bey" maxlength="15" autocomplete="nickname" onkeydown="if(event.key === 'Enter') saveName()">
             <div style="display:flex; gap:10px; justify-content:center;">
-                <button class="btn-cancel focusable" onclick="document.getElementById('nameChangeModal').style.display='none'">İptal</button>
+                <button id="nameModalCancel" class="btn-cancel focusable" onclick="closeNameModal()">İptal</button>
                 <button class="btn-confirm focusable" onclick="saveName()">Kaydet</button>
             </div>
         </div>
@@ -1525,10 +1525,39 @@ class IPTV_Bot_Pro:
         const ADMIN_PASS = "{{ADMIN_PASSWORD_PLACEHOLDER}}";
 
         if(!myUUID) { myUUID = 'user_' + Date.now() + '_' + Math.floor(Math.random() * 1000); localStorage.setItem('user_uuid', myUUID); }
-        if(!myUserName) { myUserName = "Misafir_" + Math.floor(Math.random() * 9000 + 1000); localStorage.setItem('chat_username', myUserName); }
+        // Yeni cihazlarda otomatik Misafir adı oluşturulmaz; sohbet için gerçek nick zorunludur.
+        if(myUserName && /^Misafir_\d+$/.test(myUserName)) { myUserName = null; localStorage.removeItem('chat_username'); }
+        let nameModalRequired = false;
 
-        function openNameModal() { document.getElementById('nameChangeModal').style.display = 'flex'; document.getElementById('newNameInput').value = myUserName; document.getElementById('newNameInput').focus(); }
-        function saveName() { const inputVal = document.getElementById('newNameInput').value.trim(); if(inputVal && inputVal !== "") { myUserName = inputVal.substring(0, 15); localStorage.setItem('chat_username', myUserName); showToast("İsim Değiştirildi: " + myUserName, "fa-check"); document.getElementById('nameChangeModal').style.display = 'none'; } else { showToast("Lütfen geçerli bir isim yazın.", "fa-exclamation"); } }
+        function openNameModal(required = false) {
+            nameModalRequired = required;
+            const modal = document.getElementById('nameChangeModal');
+            const input = document.getElementById('newNameInput');
+            const cancel = document.getElementById('nameModalCancel');
+            const title = document.getElementById('nameModalTitle');
+            const hint = document.getElementById('nameModalHint');
+            title.innerText = required ? 'Sohbete Hoş Geldiniz' : 'İsim Değiştir';
+            hint.innerText = required ? 'Sohbete katılmak için lütfen bir nick yazın. Bu nick cihazınıza kaydedilecektir.' : 'Sohbette görünecek adınızı yazın:';
+            cancel.style.display = required ? 'none' : 'inline-block';
+            input.value = required ? '' : (myUserName || '');
+            modal.style.display = 'flex';
+            setTimeout(() => input.focus(), 50);
+        }
+        function closeNameModal() {
+            if(nameModalRequired) { document.getElementById('newNameInput').focus(); return; }
+            document.getElementById('nameChangeModal').style.display = 'none';
+        }
+        function saveName() {
+            const input = document.getElementById('newNameInput');
+            const inputVal = input.value.trim().replace(/\s+/g, ' ');
+            if(inputVal.length < 2) { showToast('Lütfen en az 2 karakterli bir nick yazın.', 'fa-exclamation'); input.focus(); return; }
+            myUserName = inputVal.substring(0, 15);
+            localStorage.setItem('chat_username', myUserName);
+            const wasRequired = nameModalRequired;
+            nameModalRequired = false;
+            document.getElementById('nameChangeModal').style.display = 'none';
+            showToast(wasRequired ? 'Nick kaydedildi: ' + myUserName : 'İsim Değiştirildi: ' + myUserName, 'fa-check');
+        }
         function getUserColor(username) { let hash = 0; for (let i = 0; i < username.length; i++) { hash = username.charCodeAt(i) + ((hash << 5) - hash); } const hue = Math.abs(hash % 360); return `hsl(${hue}, 70%, 45%)`; }
         function initPresence() { const onlineRef = database.ref('online_users'); const myCon = onlineRef.push(); myCon.onDisconnect().remove(); myCon.set(true); onlineRef.on('value', (s) => { document.getElementById('onlineCount').innerText = s.numChildren(); }); }
         function showToast(message, icon="fa-info-circle") { const t = document.getElementById('toast'); t.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`; t.className = "toast show"; setTimeout(() => { t.className = t.className.replace("show", ""); }, 5000); }
@@ -2224,6 +2253,7 @@ class IPTV_Bot_Pro:
         function openReportModal(e, title) { e.stopPropagation(); openConfirmModal('report', title); }
 
         function toggleChat() {
+            if(!myUserName) { openNameModal(true); return; }
             const modal = document.getElementById('chatModal');
             modal.classList.toggle('active');
             if(modal.classList.contains('active')) {
@@ -2413,7 +2443,7 @@ class IPTV_Bot_Pro:
         document.getElementById('externalWeb').onclick = () => { if(current.web_link_url && current.web_link_url !== "#") { const url = current.web_link_url; window.location.href = 'intent://' + url.replace(/^https?:\\/\\//, '') + '#Intent;scheme=' + (url.startsWith('https') ? 'https' : 'http') + ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;component=com.android.chrome/com.google.android.apps.chrome.Main;end'; document.getElementById('modal').style.display='none'; } };
         document.getElementById('wuffy').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv;package=co.wuffy.player;end`; };
         document.getElementById('xpola').onclick = () => { if(current.url!="#") window.location.href=`intent://${btoa(current.url)}#Intent;scheme=xmtv-m3u;package=com.xpola.player;end`; };
-        window.onclick = (e) => { if(e.target == document.getElementById('modal')) { document.getElementById('modal').style.display='none'; if(lastFocusedElement) lastFocusedElement.focus(); } if(e.target == document.getElementById('confirmModal')) closeConfirm(); if(e.target == document.getElementById('adminPanelModal')) document.getElementById('adminPanelModal').style.display='none'; if(e.target == document.getElementById('nameChangeModal')) document.getElementById('nameChangeModal').style.display='none'; if(e.target == document.getElementById('userActionModal')) document.getElementById('userActionModal').style.display='none'; }
+        window.onclick = (e) => { if(e.target == document.getElementById('modal')) { document.getElementById('modal').style.display='none'; if(lastFocusedElement) lastFocusedElement.focus(); } if(e.target == document.getElementById('confirmModal')) closeConfirm(); if(e.target == document.getElementById('adminPanelModal')) document.getElementById('adminPanelModal').style.display='none'; if(e.target == document.getElementById('nameChangeModal') && !nameModalRequired) document.getElementById('nameChangeModal').style.display='none'; if(e.target == document.getElementById('userActionModal')) document.getElementById('userActionModal').style.display='none'; }
 
         function handleRemoteControl() {
             document.addEventListener('keydown', function(e) {
