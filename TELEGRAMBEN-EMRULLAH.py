@@ -152,17 +152,34 @@ class IPTV_Bot_Pro:
         return long_url
 
     def github_push(self, content_str, github_path):
-        try:
-            url = f"https://api.github.com/repos/{REPO_NAME}/contents/{github_path}"
-            headers = {"Authorization": f"token {GITHUB_TOKEN}", "Accept": "application/vnd.github.v3+json"}
-            res = requests.get(url, headers=headers)
-            sha = res.json().get("sha") if res.status_code == 200 else None
-            content_base64 = base64.b64encode(content_str.encode("utf-8")).decode("utf-8")
-            data = {"message": f"Bot Sync: {datetime.now().strftime('%H:%M:%S')}", "content": content_base64, "branch": BRANCH}
-            if sha: data["sha"] = sha
-            requests.put(url, headers=headers, json=data)
-            print(f" [V] GitHub Senkronize: {github_path}")
-        except Exception as e: print(f" [!] GitHub Hatası: {e}")
+        """GitHub Contents API'ye güvenli yazım; çakışmada SHA'yı yenileyip tekrar dener."""
+        url = f"https://api.github.com/repos/{REPO_NAME}/contents/{github_path}"
+        headers = {"Authorization": f"token {GITHUB_TOKEN}", "Accept": "application/vnd.github.v3+json"}
+        content_base64 = base64.b64encode(content_str.encode("utf-8")).decode("utf-8")
+        for attempt in range(1, 4):
+            try:
+                res = requests.get(url, headers=headers, timeout=30)
+                if res.status_code not in (200, 404):
+                    print(f" [!] GitHub SHA okunamadı ({github_path}): HTTP {res.status_code}")
+                    time.sleep(attempt)
+                    continue
+                sha = res.json().get("sha") if res.status_code == 200 else None
+                data = {"message": f"Bot Sync: {datetime.now().strftime('%H:%M:%S')}", "content": content_base64, "branch": BRANCH}
+                if sha: data["sha"] = sha
+                put = requests.put(url, headers=headers, json=data, timeout=45)
+                if put.status_code in (200, 201):
+                    print(f" [V] GitHub Senkronize: {github_path}")
+                    return True
+                print(f" [!] GitHub yazma hatası ({github_path}): HTTP {put.status_code} (deneme {attempt}/3)")
+                if put.status_code not in (409, 422):
+                    print(f"     Ayrıntı: {put.text[:240]}")
+                    return False
+                time.sleep(attempt)
+            except Exception as e:
+                print(f" [!] GitHub bağlantı hatası ({github_path}, deneme {attempt}/3): {e}")
+                time.sleep(attempt)
+        print(f" [!] GitHub senkronizasyonu başarısız: {github_path}")
+        return False
 
     def save_and_sync(self):
         if len(self.custom_iptv_list) > self.max_list_limit:
