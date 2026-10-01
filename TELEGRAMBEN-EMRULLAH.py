@@ -22,8 +22,8 @@ SITE_URL = VERCEL_URL
 # IPTV ARAÇLAR / AppCreator24 deep-link eşleştirmeleri.
 # rectv şablonundaki menü ile aynı tutulmalıdır.
 YAN_DNS_TOOLS = {
-    "panel": {"label": 'Yan DNS Tarama "PANEL"', "go": "go:yan1"},
-    "user_pass": {"label": 'Yan DNS Tarama "USER:PAS"', "go": "go:yan2"},
+    "panel": {"label": 'Yan DNS Tarama "PANEL"', "go": "go:dns"},
+    "user_pass": {"label": 'Yan DNS Tarama "USER:PAS"', "go": "go:dns2"},
     "m3u_link": {"label": 'Yan DNS Tarama "M3U LİNK"', "go": "go:yan3"},
 }
 # ==============================================================
@@ -1318,8 +1318,8 @@ class IPTV_Bot_Pro:
             <a href="go:combo6" class="focusable"><i class="fas fa-search"></i> Kombo Tarama 5 </a>
 
             <a href="go:vegatta" class="focusable"><i class="fas fa-bolt"></i> Combo Tarama Vegatta</a>
-            <a href="go:yan1" class="focusable yan-dns-link yan-dns-panel"><i class="fas fa-server"></i> Yan DNS Tarama <strong>"PANEL"</strong></a>
-            <a href="go:yan2" class="focusable yan-dns-link yan-dns-user"><i class="fas fa-user-lock"></i> Yan DNS Tarama <strong>"USER:PAS"</strong></a>
+            <a href="go:dns" class="focusable yan-dns-link yan-dns-panel"><i class="fas fa-server"></i> Yan DNS Tarama <strong>"PANEL"</strong></a>
+            <a href="go:dns2" class="focusable yan-dns-link yan-dns-user"><i class="fas fa-user-lock"></i> Yan DNS Tarama <strong>"USER:PAS"</strong></a>
             <a href="go:yan3" class="focusable yan-dns-link yan-dns-m3u"><i class="fas fa-link"></i> Yan DNS Tarama <strong>"M3U LİNK"</strong></a>
             
             <a href="go:panel" class="focusable"><i class="fas fa-server"></i> IPTV Panel Kontrol</a>
