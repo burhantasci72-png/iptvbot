@@ -3255,6 +3255,12 @@ CHAT_UPGRADE_V2 = r"""
       return;
     }
 
+    var editBtn = e.target.closest('[data-action="edit-message"]');
+    if(editBtn){
+      if(typeof openEditMessage === 'function') openEditMessage(editBtn.dataset.msgKey);
+      return;
+    }
+
     var delBtn = e.target.closest('[data-action="delete-message"]');
     if(delBtn){
       if(typeof openConfirmModal === 'function') openConfirmModal('del', delBtn.dataset.msgKey);
