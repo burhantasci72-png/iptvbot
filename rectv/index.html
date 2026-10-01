@@ -373,6 +373,17 @@
         </div>
     </div>
 
+    <div id="editMessageModal" class="modal">
+        <div class="modal-box" style="width: min(92vw, 620px);">
+            <h3 style="color:var(--primary); margin-top:0;"><i class="fas fa-pen"></i> Yönetici Mesajını Düzenle</h3>
+            <textarea id="editMessageInput" class="custom-input focusable" rows="8" maxlength="5000" placeholder="Mesaj metni..."></textarea>
+            <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:12px;">
+                <button class="btn-cancel focusable" onclick="closeEditMessage()">Vazgeç</button>
+                <button class="btn-confirm focusable" onclick="saveEditedMessage()"><i class="fas fa-save"></i> Kaydet</button>
+            </div>
+        </div>
+    </div>
+
     <div id="userActionModal" class="modal">
         <div class="modal-box">
             <h3 id="uaTitle" style="color:var(--primary); margin-top:0;">Kullanıcı İşlemleri</h3>
@@ -1470,7 +1481,13 @@
             database.ref('banned_users/' + myUUID).on('value', (s) => { if(s.exists()) { document.getElementById('bannedScreen').style.display = 'flex'; document.getElementById('chatModal').style.display = 'none'; document.querySelector('.chat-btn-container').style.display = 'none'; } });
             database.ref('channel_views').on('value', (s) => { if(s.exists()) { globalViewCounts = s.val(); updateStatsInDOM(); } });
             database.ref('channel_likes').on('value', (s) => { if(s.exists()) { globalLikeCounts = s.val(); updateStatsInDOM(); } });
-            database.ref('global_chat').limitToLast(50).on('child_changed', (snapshot) => { const msg = snapshot.val(); const likeEl = document.getElementById(`like-count-${snapshot.key}`); const dislikeEl = document.getElementById(`dislike-count-${snapshot.key}`); if(likeEl) likeEl.innerText = msg.likes || 0; if(dislikeEl) dislikeEl.innerText = msg.dislikes || 0; });
+            database.ref('global_chat').limitToLast(50).on('child_changed', (snapshot) => {
+                const msg = snapshot.val();
+                const old = document.getElementById('msg-' + snapshot.key);
+                if(old) old.remove();
+                if(typeof appendMessagePro === 'function') appendMessagePro(msg, snapshot.key);
+                else appendMessage(msg, snapshot.key);
+            });
             database.ref('global_chat').limitToLast(50).on('child_added', (snapshot) => { const msg = snapshot.val(); appendMessage(msg, snapshot.key); });
             database.ref('global_chat').on('child_removed', (snapshot) => { const el = document.getElementById('msg-' + snapshot.key); if(el) el.remove(); });
         }
@@ -2204,7 +2221,7 @@
       (adminMessage ? '<span class="msg-admin"><i class="fas fa-shield-alt"></i> YÖNETİCİ</span>' : escapeHtml(displayName)) +
     '</span>';
 
-    var timeHTML = '<span class="msg-time">' + formatTime(msg.time || Date.now()) + '</span>';
+    var timeHTML = '<span class="msg-time">' + formatTime(msg.time || Date.now()) + (msg.editedAt ? ' · düzenlendi' : '') + '</span>';
 
     var myReactions = {};
     try{
@@ -2223,7 +2240,10 @@
 
     var adminControls = '';
     if(typeof isAdmin !== 'undefined' && isAdmin){
-      adminControls = '<div class="admin-controls"><button class="btn-del focusable" data-action="delete-message" data-msg-key="' + key + '">🗑️ SİL</button></div>';
+      var editButton = (adminMessage && typeof msg.text === 'string')
+        ? '<button class="btn-edit focusable" data-action="edit-message" data-msg-key="' + key + '">✏️ DÜZENLE</button>'
+        : '';
+      adminControls = '<div class="admin-controls">' + editButton + '<button class="btn-del focusable" data-action="delete-message" data-msg-key="' + key + '">🗑️ SİL</button></div>';
     }
 
     bubble.innerHTML = quoteHTML + userHtml + '<div class="msg-content">' + contentHTML + '</div>' + timeHTML + actionsHTML + adminControls;
@@ -2265,7 +2285,7 @@
       contentHTML = renderRichMessageText(msg.text);
     }
 
-    var timeHTML = '<span class="msg-time">' + formatTime(msg.time || Date.now()) + '</span>';
+    var timeHTML = '<span class="msg-time">' + formatTime(msg.time || Date.now()) + (msg.editedAt ? ' · düzenlendi' : '') + '</span>';
     var actionsHTML = '<div class="msg-actions"><span class="action-btn focusable" data-action="copy-message" title="Kopyala"><i class="fas fa-copy"></i> Kopyala</span></div>';
 
     bubble.innerHTML = '<span class="msg-user">' + escapeHtml(name) + '</span><div class="msg-content">' + contentHTML + '</div>' + timeHTML + actionsHTML;
@@ -2275,6 +2295,34 @@
 
     smartAppend(container, row);
   }
+
+  var editingMessageKey = null;
+  window.openEditMessage = function(key){
+    if(typeof isAdmin === 'undefined' || !isAdmin) return;
+    var msg = window.chatMessageCache[key];
+    if(!msg || !msg.isAdminMsg || typeof msg.text !== 'string') return;
+    editingMessageKey = key;
+    var input = document.getElementById('editMessageInput');
+    if(!input) return;
+    input.value = msg.text;
+    document.getElementById('editMessageModal').style.display = 'flex';
+    setTimeout(function(){ input.focus(); input.setSelectionRange(input.value.length, input.value.length); }, 40);
+  };
+  window.closeEditMessage = function(){
+    editingMessageKey = null;
+    var modal = document.getElementById('editMessageModal');
+    if(modal) modal.style.display = 'none';
+  };
+  window.saveEditedMessage = function(){
+    if(!editingMessageKey || typeof isAdmin === 'undefined' || !isAdmin) return;
+    var input = document.getElementById('editMessageInput');
+    var text = input ? input.value.trim() : '';
+    if(!text){ if(typeof showToast === 'function') showToast('Mesaj boş bırakılamaz', 'fa-exclamation'); return; }
+    var key = editingMessageKey;
+    database.ref('global_chat/' + key).update({text: text, editedAt: Date.now(), editedBy: (typeof myUUID !== 'undefined' ? myUUID : '')})
+      .then(function(){ closeEditMessage(); if(typeof showToast === 'function') showToast('Mesaj güncellendi', 'fa-check'); })
+      .catch(function(){ if(typeof showToast === 'function') showToast('Mesaj güncellenemedi', 'fa-exclamation'); });
+  };
 
   window.appendMessage = appendMessagePro;
   try{ appendMessage = appendMessagePro; }catch(e){}
