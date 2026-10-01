@@ -603,7 +603,10 @@ async function testPanelStatusFast(base) {
         const tid = setTimeout(() => controller.abort(), timeout);
         try {
             const response = await fetch(makeProxyUrl(url, mode), { signal: controller.signal, cache: 'no-store' });
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            // 401/403/405, panelin cevap verdiğini ancak kimlik bilgisi veya
+            // uygun HTTP yöntemi istediğini gösterir; bunlar kapalı panel değildir.
+            const reachable = response.ok || (response.status >= 400 && response.status < 500);
+            if (!reachable) throw new Error(`HTTP ${response.status}`);
             return true;
         } finally { clearTimeout(tid); }
     }));
