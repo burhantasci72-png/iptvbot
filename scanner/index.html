@@ -488,9 +488,13 @@ function getBaseUrl(input) {
     } catch(e) { return null; }
 }
 
-// Vercel/HTTPS sayfasından HTTP panel çağrıları Mixed Content ile engellenir.
+// Vercel/HTTPS sayfasından dış panel çağrıları CORS/Mixed Content ile engellenebilir.
 function getEffectiveProxy(base, selected) {
-    if (selected === 'none' && location.protocol === 'https:' && /^http:/i.test(base)) return 'corsproxy';
+    if (selected !== 'none') return selected;
+    try {
+        const panelOrigin = new URL(base, location.href).origin;
+        if (location.protocol === 'https:' && (panelOrigin !== location.origin || /^http:/i.test(base))) return 'corsproxy';
+    } catch (e) { return 'corsproxy'; }
     return selected;
 }
 function makeProxyUrl(target, mode) {
@@ -591,21 +595,24 @@ function setScanMode(m) {
 // Sadece Test Bölümünde Kullanılır (Tarama esnasında aranmaz)
 // =============================================
 async function testPanelStatusFast(base) {
-    const timeout = 7000;
+    const timeout = 4500;
     const testUrls = [`${base}/player_api.php`, `${base}/panel_api.php`, base];
     const modes = proxyFallbackModes(base, $('cors-proxy').value);
-    for (const url of testUrls) {
-        for (const mode of modes) {
-            try {
-                const controller = new AbortController();
-                const tid = setTimeout(() => controller.abort(), timeout);
-                const response = await fetch(makeProxyUrl(url, mode), { signal: controller.signal, cache: 'no-store' });
-                clearTimeout(tid);
-                if (response.ok || mode !== 'none') return true;
-            } catch (e) { /* sıradaki endpoint/proxy denenir */ }
-        }
+    const requests = testUrls.flatMap(url => modes.map(async mode => {
+        const controller = new AbortController();
+        const tid = setTimeout(() => controller.abort(), timeout);
+        try {
+            const response = await fetch(makeProxyUrl(url, mode), { signal: controller.signal, cache: 'no-store' });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return true;
+        } finally { clearTimeout(tid); }
+    }));
+    try {
+        await Promise.any(requests);
+        return true;
+    } catch (e) {
+        return false;
     }
-    return false;
 }
 
 // =============================================
@@ -629,16 +636,13 @@ async function testConnection() {
     let workingUrls = [];
     let offlineCount = 0;
 
-    for (let i = 0; i < urls.length; i++) {
-        let base = urls[i];
-        
+    let completed = 0;
+    await Promise.all(urls.map(async (base, i) => {
         let row = document.createElement('div');
         row.className = 'm-test-row testing';
         row.innerHTML = `<span class="m-test-url">${base}</span><span class="m-test-status" style="color:var(--warning)"><i class="fas fa-spinner fa-spin"></i> Deneniyor</span>`;
         logBox.appendChild(row);
         logBox.scrollTop = logBox.scrollHeight;
-        
-        $('test-stats').innerHTML = `Test ediliyor: <b>${i + 1} / ${urls.length}</b>`;
 
         let isOnline = await testPanelStatusFast(base);
 
@@ -654,7 +658,9 @@ async function testConnection() {
             addLog(`[HIZLI TEST] ${base} -> ULAŞILAMADI`, 'error');
         }
         logBox.scrollTop = logBox.scrollHeight;
-    }
+        completed++;
+        $('test-stats').innerHTML = `Test ediliyor: <b>${completed} / ${urls.length}</b>`;
+    }));
 
     $('test-stats').innerHTML = `Sonuç: <span style="color:var(--success)">${workingUrls.length} Aktif</span> | <span style="color:var(--error)">${offlineCount} Kapalı</span>`;
 
