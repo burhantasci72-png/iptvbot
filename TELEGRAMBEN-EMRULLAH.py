@@ -12,10 +12,10 @@ from urllib.parse import quote, urlparse
 import aiohttp
 
 # ================= INADINA TV YAYIN AYARLARI =================
-# Bot bundan sonra inadinatv/iptvbot deposuna ve aşağıdaki yayın adreslerine bağlanır.
-REPO_NAME = "inadinatv/iptvbot"
+# Bot, güncel platform deposuna ve aşağıdaki yayın adreslerine bağlanır.
+REPO_NAME = "inadinatv/inadinatv-platform"
 BRANCH = "main"
-GITHUB_PAGES_URL = "https://inadinatv.github.io/iptvbot/"
+GITHUB_PAGES_URL = "https://inadinatv.github.io/inadinatv-platform/"
 VERCEL_URL = "https://iptvbot-t6zv.vercel.app/"
 SITE_URL = VERCEL_URL
 
@@ -583,6 +583,16 @@ class IPTV_Bot_Pro:
         html = html.replace("{{ADMIN_PASSWORD_PLACEHOLDER}}", ADMIN_PASSWORD)
         html = html.replace("{{TG_BOT_TOKEN_PLACEHOLDER}}", TG_BOT_TOKEN) 
         html = html.replace("{{TG_CHAT_ID_PLACEHOLDER}}", TG_CHAT_ID)
+
+        # PyDroid arka planda HTML'i yeniden üretirken IPTV ARAÇLAR
+        # menüsünün yanlışlıkla eski sürüme dönmesini engelle.
+        required_yan_links = [
+            f'href="{tool["go"]}"' for tool in YAN_DNS_TOOLS.values()
+        ]
+        missing_yan_links = [link for link in required_yan_links if link not in html]
+        if missing_yan_links:
+            print(f"❌ Yan DNS menü eşleştirmesi eksik; HTML GitHub'a gönderilmedi: {missing_yan_links}")
+            return
         self.github_push(html, f"{self.html_output_subdir}/index.html")
 
     def add_list_interactive(self):
