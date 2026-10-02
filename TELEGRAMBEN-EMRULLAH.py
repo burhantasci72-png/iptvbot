@@ -30,12 +30,25 @@ YAN_DNS_TOOLS = {
 
 # ================= GÜVENLİ AYARLAR =================
 # Öncelik: ortam değişkeni > bot_config.json. bot_config.json GitHub'a gönderilmez.
-_PRIVATE_CONFIG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bot_config.json")
-try:
-    with open(_PRIVATE_CONFIG_PATH, "r", encoding="utf-8") as _f:
-        _PRIVATE_CONFIG = json.load(_f)
-except (OSError, ValueError):
-    _PRIVATE_CONFIG = {}
+_CONFIG_CANDIDATES = [
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "bot_config.json"),
+    os.path.join(os.getcwd(), "bot_config.json"),
+    "/storage/emulated/0/Download/bot_config.json",
+    "/storage/emulated/0/Download/InadinaTV/bot_config.json",
+    "/storage/emulated/0/InadinaTV/bot_config.json",
+]
+_PRIVATE_CONFIG = {}
+_PRIVATE_CONFIG_PATH = ""
+for _candidate in _CONFIG_CANDIDATES:
+    try:
+        with open(_candidate, "r", encoding="utf-8") as _f:
+            _loaded = json.load(_f)
+        if isinstance(_loaded, dict):
+            _PRIVATE_CONFIG = _loaded
+            _PRIVATE_CONFIG_PATH = _candidate
+            break
+    except (OSError, ValueError, TypeError):
+        continue
 
 def _setting(name, default=""):
     return os.getenv(name) or str(_PRIVATE_CONFIG.get(name, default))
@@ -44,9 +57,18 @@ GITHUB_TOKEN = _setting("GITHUB_TOKEN").strip()
 ADMIN_PASSWORD = _setting("ADMIN_PASSWORD").strip()
 TG_BOT_TOKEN = _setting("TG_BOT_TOKEN").strip()
 TG_CHAT_ID = _setting("TG_CHAT_ID").strip()
-API_ID = int(_setting("TELEGRAM_API_ID", "0") or 0)
+try:
+    API_ID = int(_setting("TELEGRAM_API_ID", "0") or 0)
+except (TypeError, ValueError):
+    API_ID = 0
 API_HASH = _setting("TELEGRAM_API_HASH").strip()
 AY_LIVE_API_KEY = _setting("AY_LIVE_API_KEY").strip()
+if not API_ID or not API_HASH:
+    raise RuntimeError(
+        "Telegram API ayarı eksik. Pydroid'de bot_config.json dosyasını "
+        "bot.py ile aynı klasöre veya /storage/emulated/0/Download/ klasörüne koyun; "
+        "TELEGRAM_API_ID ve TELEGRAM_API_HASH alanlarını doldurun."
+    )
 # =================================================
 
 # ================= INADINA TV TELEGRAM =================
@@ -798,7 +820,7 @@ class IPTV_Bot_Pro:
         await self.client.run_until_disconnected()
 
     def get_html_template(self):
-        return """<!DOCTYPE html>
+        return r"""<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
@@ -1651,7 +1673,7 @@ class IPTV_Bot_Pro:
 
         if(!myUUID) { myUUID = 'user_' + Date.now() + '_' + Math.floor(Math.random() * 1000); localStorage.setItem('user_uuid', myUUID); }
         // Yeni cihazlarda otomatik Misafir adı oluşturulmaz; sohbet için gerçek nick zorunludur.
-        if(myUserName && /^Misafir_\d+$/.test(myUserName)) { myUserName = null; localStorage.removeItem('chat_username'); }
+        if(myUserName && /^Misafir_\\d+$/.test(myUserName)) { myUserName = null; localStorage.removeItem('chat_username'); }
         let nameModalRequired = false;
 
         function openNameModal(required = false) {
