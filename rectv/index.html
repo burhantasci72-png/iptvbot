@@ -326,7 +326,93 @@
         .light-theme .player-visibility-toggle { background:#e4f1ff; border-color:#1476c9; color:#075fa8; }
         .light-theme .player-visibility-toggle.is-off { background:#fff0f4; border-color:#c83d63; color:#9b2044; }
         @media (max-width:500px){ .player-preference-bar{margin:0 10px -5px;font-size:.72rem;} .player-visibility-toggle{padding:7px 8px;font-size:.68rem;} }
-    </style>
+        /* Açık tema: tüm form, sohbet ve yönetim bileşenleri için yüksek kontrast */
+        body.light-theme,
+        body.light-theme * { -webkit-tap-highlight-color: rgba(176,0,58,.12); }
+        .light-theme .modal-box,
+        .light-theme #adminPanelModal .modal-box,
+        .light-theme #editMessageModal .modal-box,
+        .light-theme #confirmModal .modal-box,
+        .light-theme #userActionModal .modal-box,
+        .light-theme #nameChangeModal .modal-box { background:#ffffff; color:#172033; border-color:#b9c5d4; }
+        .light-theme .modal-box h1,
+        .light-theme .modal-box h2,
+        .light-theme .modal-box h3,
+        .light-theme .modal-box h4,
+        .light-theme .modal-box p,
+        .light-theme .modal-box label,
+        .light-theme .modal-box span,
+        .light-theme .admin-modal-body { color:#172033; }
+        .light-theme .custom-input,
+        .light-theme #editMessageInput,
+        .light-theme .modal-box input,
+        .light-theme .modal-box textarea,
+        .light-theme .modal-box select { background:#ffffff; color:#172033; caret-color:#b0003a; border:2px solid #b0003a; box-shadow:0 1px 4px rgba(23,32,51,.08); }
+        .light-theme .custom-input::placeholder,
+        .light-theme #editMessageInput::placeholder { color:#536174; opacity:1; }
+        .light-theme .custom-input:focus,
+        .light-theme #editMessageInput:focus { background:#ffffff; color:#172033; border-color:#8e185d; outline:none; box-shadow:0 0 0 3px rgba(176,0,58,.18); }
+        .light-theme .emergency-input { background:#ffffff; color:#172033; border-color:#b0003a; }
+        .light-theme .chat-header { border-bottom:1px solid #cbd3df; }
+        .light-theme .chat-header h3,
+        .light-theme #chatStatus,
+        .light-theme .chat-close,
+        .light-theme .chat-tab,
+        .light-theme .private-chat-header,
+        .light-theme #privateChatUserName { color:#172033; }
+        .light-theme .chat-tabs { border:1px solid #cbd3df; }
+        .light-theme .chat-tab.active { color:#ffffff; }
+        .light-theme .chat-rules strong,
+        .light-theme .chat-rules b { color:#5a3b00; }
+        .light-theme .message-bubble { color:#172033; }
+        .light-theme .message-bubble .msg-content,
+        .light-theme .message-bubble .msg-text,
+        .light-theme .message-bubble .formatted-chat-text { color:#172033; }
+        .light-theme .message-bubble.msg-right { color:#341321; }
+        .light-theme .message-bubble.msg-right .msg-content,
+        .light-theme .message-bubble.msg-right .msg-text { color:#341321; }
+        .light-theme .admin-msg { background:#fff1f5; border-color:#e58aa7; color:#401323; }
+        .light-theme .admin-msg .msg-content,
+        .light-theme .admin-msg .msg-text { color:#401323; }
+        .light-theme .msg-admin { color:#a60036; font-weight:800; }
+        .light-theme .msg-time { color:#536174; opacity:1; }
+        .light-theme .msg-actions { color:#42516a; }
+        .light-theme .action-btn { color:#42516a; }
+        .light-theme .action-btn:hover { color:#a60036; }
+        .light-theme .admin-controls { border-top-color:#cbd3df; }
+        .light-theme .btn-edit { background:#fff1c7; color:#6b4b00; border:1px solid #d6a700; }
+        .light-theme .btn-edit:hover,
+        .light-theme .btn-edit:focus { background:#ffe49a; color:#4c3300; }
+        .light-theme .btn-del { background:#465166; color:#ffffff; }
+        .light-theme .btn-confirm { color:#ffffff; }
+        .light-theme .btn-cancel { background:#465166; color:#ffffff; }
+        .light-theme .action-menu-btn,
+        .light-theme .admin-menu-btn,
+        .light-theme .private-chat-item,
+        .light-theme .report-item { background:#f3f6fa; color:#172033; border-color:#c1ccda; }
+        .light-theme .action-menu-btn i,
+        .light-theme .admin-menu-btn i { color:#7d1738; }
+        .light-theme .report-msg,
+        .light-theme .report-header,
+        .light-theme #bannedList,
+        .light-theme #adminReportsList { color:#172033; }
+        .light-theme .chat-input-area { border-top:1px solid #cbd3df; }
+        .light-theme .chat-input { color:#172033; background:#f7f9fc; }
+        .light-theme .chat-input::placeholder { color:#536174; opacity:1; }
+        .light-theme .chat-attach-btn { color:#172033; }
+        .light-theme .chat-send { color:#ffffff; }
+        .light-theme .chat-link-card,
+        .light-theme .chat-link-group { color:#253149; }
+        .light-theme .link-icon.web { background:#e6edf5; color:#245178; }
+        .light-theme .link-action-btn { background:#e4f1ff; color:#124b88; border-color:#8ab8e5; }
+        .light-theme .link-action-btn:hover,
+        .light-theme .link-action-btn:focus { color:#ffffff; }
+        .light-theme .chat-links-toggle { color:#075fa8; background:#e4f1ff; border-color:#83b6e5; }
+        .light-theme .quoted-msg { color:#42516a; background:#eef2f7; border-color:#b8c2d1; }
+        .light-theme .toast { background:#ffffff; color:#172033; border-color:#b9c5d4; box-shadow:0 5px 20px rgba(23,32,51,.22); }
+        .light-theme #modalCloseBtn,
+        .light-theme #modalCloseBtn2 { color:#172033 !important; background:#e3e8ef !important; }
+</style>
 </head>
 <body>
     <div id="toast" class="toast"></div>
