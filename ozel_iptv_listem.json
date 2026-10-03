@@ -1,5 +1,13 @@
 [
     {
+        "title": "🔥 TOPLU LİSTE (2 Panel / 1 Sunucu) [20:15]",
+        "m3u_url": "http://tv.zsmarters.xyz:8080/get.php?username=HasanHuseyinTV&password=ksYGdn8FWMap&type=m3u_plus",
+        "web_link_url": "https://telegra.ph/InAdina-TV-Liste---03102026-201515-10-03-2",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
+        "added_date": "03.10.2026",
+        "added_time": "20:15"
+    },
+    {
         "title": "🔥 TOPLU LİSTE (1 Panel / 1 Sunucu) [20:15]",
         "m3u_url": "http://tv.zsmarters.xyz:8080/get.php?username=FerideunlusoyTV&password=wJqCuX6vz64qDFxe&type=m3u_plus",
         "web_link_url": "https://telegra.ph/InAdina-TV-Liste---03102026-201515-10-03",
@@ -2390,13 +2398,5 @@
         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
         "added_date": "15.09.2026",
         "added_time": "02:43"
-    },
-    {
-        "title": "🔥 TOPLU LİSTE (8 Panel / 7 Sunucu) [23:15]",
-        "m3u_url": "http://line.gofast-tv.me/get.php?username=391d620b8e&password=3ed2a4f61b&type=m3u_plus&output=m3u8",
-        "web_link_url": "https://ay.live/eyJ1c2VyX2lkIjo1MjQ3MzUsImNhdGVnb3J5IjowLCJ1cmwiOiJodHRwcyUzQSUyRiUyRnRlbGVncmEucGglMkZJTkFESU5BLVRWLUxJU1RFLS0tMTQwOTIwMjYtMjMxNDQ5LTA5LTE0In0=",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yG_juMJsuYS1fMI3WD6l6yqJTAo80TL3k6NqS2G63PIwAxwarsjUuTE&s=10",
-        "added_date": "14.09.2026",
-        "added_time": "23:15"
     }
 ]
